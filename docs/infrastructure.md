@@ -21,7 +21,7 @@ All SaaS accounts use `hello@altr.run` (Google Workspace), never personal emails
 | Google Workspace | hello@altr.run | 2026-04-21 | Mukul | ✅ Active |
 | Sanity | hello@altr.run | 2026-04-21 | Mukul | ✅ Active |
 | Resend | hello@altr.run | 2026-04-21 | Mukul | ⚠️ Key rotation pending confirmation (see §6) |
-| Supabase | — | — | — | ⏳ Not yet created |
+| Supabase | hello@altr.run | 2026-04-21 | Mukul | ✅ Active (project ref `ixklnfhmnokbshgflbht`) |
 | Vercel | — | — | — | ⏳ Not yet created |
 | PostHog | — | — | — | ⏳ Deferred — create before public launch |
 | 1Password / Bitwarden (vault) | — | — | — | ⏳ Recommended before more secrets exist |
@@ -57,16 +57,19 @@ DNS records added so far:
 
 ---
 
-## 5. Supabase (pending)
+## 5. Supabase
 
 | Field | Value |
 |---|---|
-| Organization | TODO create under `hello@altr.run` |
-| Project name | `altr-landing` (proposed) |
-| Region | TODO pick (likely `us-east-1` or `eu-central-1`) |
-| Project URL | TODO (public, safe) — will be `SUPABASE_URL` |
-| DB password | TODO — store in 1Password, never here |
-| Service role key | TODO — stored as `SUPABASE_SERVICE_ROLE_KEY` in `apps/landing/.env.local` (server-only; never ship to client) |
+| Organization | `altr` (under `hello@altr.run`) |
+| Project name | `altr-landing` |
+| Project reference | `ixklnfhmnokbshgflbht` |
+| Region | TODO confirm from Supabase dashboard |
+| **Project URL** | `https://ixklnfhmnokbshgflbht.supabase.co` (public, safe; stored as `SUPABASE_URL` in env) |
+| Dashboard | https://supabase.com/dashboard/project/ixklnfhmnokbshgflbht |
+| SQL editor | https://supabase.com/dashboard/project/ixklnfhmnokbshgflbht/sql/new |
+| DB password | Stored in 1Password (`Altr – Supabase DB password`), never here |
+| Service role key | Stored as `SUPABASE_SERVICE_ROLE_KEY` in `apps/landing/.env.local` (server-only; never ship to client). Rotate at Settings → API in the dashboard. |
 | Anon key | Not used; all landing-waitlist traffic goes through server routes with the service-role key |
 
 Schema (single table; see `docs/landing-v1-plan.md` §Waitlist-backend for rationale):
