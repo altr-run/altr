@@ -1,0 +1,14 @@
+{
+  "name": "@altr/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Altr shared UI — design tokens today, React primitives once the extraction trigger fires (see docs/landing-v1-plan.md).",
+  "exports": {
+    ".": "./index.ts",
+    "./tokens/base.css": "./tokens/base.css",
+    "./tokens/desktop.css": "./tokens/desktop.css",
+    "./tokens/landing.css": "./tokens/landing.css"
+  },
+  "files": ["index.ts", "tokens"]
+}

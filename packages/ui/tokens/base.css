@@ -1,7 +1,7 @@
-/* @altr/tokens — base. Palette-independent tokens shared across apps.
+/* @altr/ui tokens — base. Palette-independent tokens shared across apps.
    Typography, radii, and colors diverge between desktop (linen + ochre)
-   and landing (white + amber); they live in tokens-desktop.css and
-   tokens-landing.css respectively. Reconciliation is deferred to v0.1 RC
+   and landing (white + amber); they live in desktop.css and landing.css
+   respectively. Reconciliation is deferred to v0.1 RC
    (see docs/landing-v1-plan.md §design-token-sharing). */
 
 :root {
