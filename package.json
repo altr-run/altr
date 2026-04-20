@@ -16,43 +16,17 @@
   },
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "vite",
-    "build": "bun run typecheck && vite build",
-    "preview": "vite preview",
-    "tauri": "tauri",
-    "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build",
-    "lint": "eslint . --max-warnings 0",
-    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^5.71.5",
-    "@tauri-apps/api": "^2.2.0",
-    "@tauri-apps/plugin-sql": "^2.2.0",
-    "@tiptap/pm": "^2.11.2",
-    "@tiptap/react": "^2.11.2",
-    "@tiptap/starter-kit": "^2.11.2",
-    "lucide-react": "^0.469.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "zustand": "^5.0.3"
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "dev": "turbo run dev",
+    "desktop:dev": "turbo run dev --filter=@altr/desktop",
+    "desktop:build": "turbo run build --filter=@altr/desktop",
+    "desktop:preview": "turbo run preview --filter=@altr/desktop",
+    "desktop:tauri:dev": "turbo run tauri:dev --filter=@altr/desktop",
+    "desktop:tauri:build": "turbo run tauri:build --filter=@altr/desktop"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.0.0",
-    "@tauri-apps/cli": "^2.2.0",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
-    "@eslint/js": "^9.18.0",
-    "@types/node": "^22.10.7",
-    "@typescript-eslint/eslint-plugin": "^8.20.0",
-    "@typescript-eslint/parser": "^8.20.0",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.18.0",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.18",
-    "globals": "^15.14.0",
-    "tailwindcss": "^4.0.0",
-    "typescript": "~5.7.3",
-    "vite": "^6.0.7"
+    "turbo": "^2.9.6"
   }
 }

@@ -13,9 +13,9 @@ pnpm-lock.yaml
 
 # --- Rust / Cargo / Tauri ---
 target/
-src-tauri/target/
-src-tauri/gen/schemas/
-src-tauri/WixTools/
+**/src-tauri/target/
+**/src-tauri/gen/schemas/
+**/src-tauri/WixTools/
 
 # --- Editor / OS ---
 .DS_Store
@@ -37,6 +37,9 @@ logs/
 
 # --- Build outputs ---
 *.tsbuildinfo
+
+# --- Turborepo ---
+.turbo/
 
 # --- Claude / gstack (user-scoped but keep repo clean) ---
 .claude/cache/
