@@ -2,6 +2,9 @@
 
 _The AI-native workspace where humans and AI teammates ship in the same room._
 
+- Repository: [github.com/altr-run/altr](https://github.com/altr-run/altr)
+- Website: [altr.run](https://altr.run)
+
 Altr is a Mac-native app where you and four named AI teammates — **Pax** (PM), **Eng** (engineer), **Dex** (designer), **Rae** (researcher) — work on the same artifacts in real time. No "sync to Linear," no "export to Figma." One loft, one graph, one flow.
 
 v0.1 ships the solo Pax + Eng loop: **idea → spec → tickets → PRs**.

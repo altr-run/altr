@@ -5,6 +5,10 @@ description = "Altr — AI-native workspace for product teams (desktop shell)"
 authors = ["Mukul Chugh <mukul@altr.run>"]
 edition = "2021"
 rust-version = "1.77"
+homepage = "https://altr.run"
+repository = "https://github.com/altr-run/altr"
+license = "UNLICENSED"
+publish = false
 
 # Keep a single crate for v0.1 (see CLAUDE.md §4 + research on GitButler).
 # When the agent runtime grows, extract `altr-core` as a library crate and
