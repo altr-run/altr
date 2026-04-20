@@ -1,0 +1,7 @@
+{
+  "name": "@altr/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Altr shared design tokens — base + desktop + landing forks."
+}

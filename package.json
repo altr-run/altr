@@ -4,7 +4,17 @@
   "version": "0.1.0",
   "type": "module",
   "packageManager": "bun@1.3.12",
+  "workspaces": ["apps/*", "packages/*"],
   "description": "Altr — the AI-native workspace where humans and AI teammates ship in the same room.",
+  "homepage": "https://altr.run",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/altr-run/altr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/altr-run/altr/issues"
+  },
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "vite",
     "build": "bun run typecheck && vite build",
