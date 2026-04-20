@@ -1,0 +1,49 @@
+# --- Bun / Node / Vite ---
+# (Bun is the sole JS package manager for this repo — see CLAUDE.md §3.
+#  Commit `bun.lock` but block the npm/yarn/pnpm lockfiles in case someone runs
+#  them by mistake.)
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# --- Rust / Cargo / Tauri ---
+target/
+src-tauri/target/
+src-tauri/gen/schemas/
+src-tauri/WixTools/
+
+# --- Editor / OS ---
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# --- Logs & temp ---
+*.log
+logs/
+*.pid
+*.seed
+.env
+.env.*
+!.env.example
+
+# --- Build outputs ---
+*.tsbuildinfo
+
+# --- Claude / gstack (user-scoped but keep repo clean) ---
+.claude/cache/
+.claude/telemetry/
+
+# --- SQLite (dev db) ---
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm

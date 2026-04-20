@@ -1,0 +1,58 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Altr",
+  "version": "0.0.1",
+  "identifier": "run.altr.desktop",
+  "build": {
+    "beforeDevCommand": "bun run dev",
+    "beforeBuildCommand": "bun run build",
+    "devUrl": "http://localhost:1420",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Altr",
+        "width": 1280,
+        "height": 800,
+        "minWidth": 960,
+        "minHeight": 600,
+        "resizable": true,
+        "fullscreen": false,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true,
+        "transparent": false,
+        "decorations": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self' ipc: http://ipc.localhost; img-src 'self' data: asset: http://asset.localhost; style-src 'self' 'unsafe-inline'; connect-src 'self' ipc: http://ipc.localhost https://api.anthropic.com"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app", "dmg"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "macOS": {
+      "minimumSystemVersion": "11.0",
+      "frameworks": [],
+      "signingIdentity": null,
+      "providerShortName": null,
+      "entitlements": null
+    },
+    "category": "DeveloperTool",
+    "shortDescription": "The AI-native workspace where humans and AI teammates ship in the same room.",
+    "longDescription": "Altr is a Mac-native workspace where humans and four named AI teammates — Pax, Eng, Dex, Rae — collaborate on the same artifacts. v0.1 ships the Pax + Eng loop: idea → spec → tickets → PRs."
+  },
+  "plugins": {
+    "sql": {
+      "preload": ["sqlite:altr.db"]
+    }
+  }
+}

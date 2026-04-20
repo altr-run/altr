@@ -1,0 +1,53 @@
+/* Altr design tokens — canonical source. Components reference var(--*),
+   never hardcoded hex. See CLAUDE.md §6 for rationale + anti-aesthetic rules. */
+
+:root {
+  /* Backgrounds — no pure white */
+  --bg-base: #fbf7f1; /* warm off-white, near-linen */
+  --bg-raised: #f5efe6;
+  --bg-elevated: #ebe3d6;
+
+  /* Text — no pure black */
+  --text-primary: #1e1a16;
+  --text-secondary: #5c544b;
+  --text-muted: #8a8176;
+
+  /* Signature accent */
+  --accent: #c4774b; /* warm ochre */
+  --accent-soft: #e7c7ae;
+
+  /* Semantic */
+  --success: #6f8c5a; /* sage */
+  --warning: #c49a4b; /* honey */
+  --error: #b55a4b; /* clay */
+
+  /* Agent marks (see CLAUDE.md §6 agent-mark table) */
+  --agent-pax: var(--accent);
+  --agent-eng: var(--success);
+  --agent-dex: var(--warning);
+  --agent-rae: var(--error);
+
+  /* Typography */
+  --font-display: "Iowan Old Style", "Söhne", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Spacing — 4px base */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-12: 48px;
+  --s-16: 64px;
+
+  /* Radii — soft but not rounded-full */
+  --r-1: 4px;
+  --r-2: 6px;
+  --r-3: 10px;
+
+  /* Borders — hairline, low-contrast */
+  --border-subtle: #e0d8c9;
+  --border-default: #d2c8b5;
+}
