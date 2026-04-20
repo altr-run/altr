@@ -60,7 +60,7 @@ altr.run/
 │       │   │   │   └── page.tsx      # the one long scroll
 │       │   │   ├── admin/            # embedded Sanity Studio
 │       │   │   └── api/
-│       │   │       └── waitlist/     # Resend + Turso route handler
+│       │   │       └── waitlist/     # Resend + Supabase route handler
 │       │   ├── sanity/
 │       │   │   ├── schemaTypes/
 │       │   │   │   ├── documents/    # site, page, pricing.tier
@@ -171,7 +171,7 @@ Fragments (reusable):
 - `cta` — link + style variant.
 - `image-with-alt` — required alt text, no empty strings.
 
-**Rule:** never store waitlist submissions (emails, IPs, UAs) in Sanity. Those go to Turso. Sanity is for *published content*.
+**Rule:** never store waitlist submissions (emails, IPs, UAs) in Sanity. Those go to Supabase. Sanity is for *published content*.
 
 ## Custom modules — spec sketch
 
@@ -259,7 +259,7 @@ src/app/
 ├── admin/              # Sanity Studio (embedded)
 ├── api/
 │   ├── waitlist/
-│   │   ├── route.ts           # POST { email } -> Turso + Resend confirm
+│   │   ├── route.ts           # POST { email } -> Supabase + Resend confirm
 │   │   └── confirm/route.ts   # GET ?token= -> mark confirmed
 │   ├── draft-mode/[...]       # SanityPress-provided
 │   └── revalidate/[...]       # SanityPress-provided, webhook-gated
