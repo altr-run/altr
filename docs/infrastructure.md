@@ -85,6 +85,29 @@ alter table public.waitlist enable row level security;
 -- no policies: anon + authenticated denied; service-role bypasses RLS
 ```
 
+### 5.1 Supabase Auth (future — v0.5+)
+
+Team-mode user identity will use **Supabase Auth** — same project, same dashboard, no new vendor. See `docs/docs-strategy.md` and 2026-04-21 session decision log for full rationale (cost trajectory beats Clerk 30×, RLS synergy, stack alignment).
+
+Currently: feature not enabled.
+
+| Field | Value |
+|---|---|
+| Primary provider | Google OAuth (matches Workspace domain `hello@altr.run`) |
+| Secondary providers | Email + password (fallback) |
+| Sign-in URL (future) | `https://altr.run/sign-in` |
+| Callback URL (future) | `https://altr.run/auth/callback` |
+| Desktop flow (future) | Tauri 2 PKCE + deep-link (`altr://auth/callback`) per documented pattern |
+| Hosted UI | No — sign-in forms built in-house with `@altr/ui` primitives |
+| RLS integration | All team-scoped tables will reference `auth.uid()` + `(auth.jwt() -> 'team_id')::text` for row-level access |
+| Allowed domains | `@altr.run` initially (team only); opens to users at v0.5 public |
+
+**Until then:** `/internal/*` content is gated by Basic Auth via Next.js middleware, using a shared `INTERNAL_DOCS_PASSWORD` env var. Rotate the password on every team-size change (join / leave / contractor offboard). Cheap, no user records, good enough until real team exists.
+
+Alternate considered: Better Auth (OSS, emerging leader). Decision: Supabase Auth wins on "already in the stack" + RLS synergy. Better Auth is the emergency exit if Supabase Auth ever lags on a specific feature.
+
+Excluded: Clerk (~30× more expensive at 50K MAU; drop-in UI advantage doesn't apply since we're building on `@altr/ui`), Auth0 (enterprise-priced, overkill), Firebase Auth (Google lock-in, different stack), WorkOS (enterprise SSO-only, not our shape).
+
 ---
 
 ## 6. Resend
@@ -142,6 +165,7 @@ This is end-user state, not project infra — the entry is here for the runbook'
 |---|---|---|
 | `SANITY_API_READ_TOKEN` | `apps/landing/.env.local` | Vercel env |
 | `SUPABASE_SERVICE_ROLE_KEY` | `apps/landing/.env.local` | Vercel env |
+| `INTERNAL_DOCS_PASSWORD` | `apps/landing/.env.local` | Vercel env (rotate on team changes) |
 | `RESEND_API_KEY` | `apps/landing/.env.local` | Vercel env |
 | `WAITLIST_SIGNING_SECRET` | `apps/landing/.env.local` | Vercel env |
 | `SANITY_REVALIDATE_SECRET` | `apps/landing/.env.local` | Vercel env |
@@ -191,6 +215,15 @@ This is end-user state, not project infra — the entry is here for the runbook'
 2. Rotate per runbook entry above
 3. If the leak hit a public place (GitHub, chat screenshot, CI logs), audit recent usage for abuse
 4. Document the incident in `NOTES/` with timestamp + what leaked + what was replaced
+
+### Rotate `INTERNAL_DOCS_PASSWORD`
+Trigger: every team-size change (join / leave / contractor offboard).
+1. Generate new password: `openssl rand -base64 24`
+2. Update `apps/landing/.env.local` on each active dev machine
+3. Update Vercel env var for `altr-landing` project
+4. Redeploy (push to `main` or `vercel --prod`)
+5. Notify remaining team members via Slack / 1Password share — never email
+6. Update 1Password entry `Altr – /internal docs password`
 
 ---
 

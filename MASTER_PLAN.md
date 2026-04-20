@@ -495,7 +495,7 @@ No pure white. No pure black. No cold greys. No default Tailwind palette.
 ### Typography
 
 - **Display/Headings:** Iowan Old Style or Söhne (serif, warm, characterful)
-- **Body:** Inter with font-features `cv11`, `ss01`
+- **Body:** Mona Sans (variable, GitHub's OSS OFL-licensed face)
 - **Monospace:** JetBrains Mono
 
 ### Spacing

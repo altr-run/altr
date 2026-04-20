@@ -157,7 +157,7 @@ Ship these as CSS variables in `src/styles/tokens.css`. Components reference `va
 
   /* Typography */
   --font-display: "Iowan Old Style", "Söhne", Georgia, serif;
-  --font-body:    "Inter", system-ui, sans-serif;
+  --font-body:    "Mona Sans", system-ui, sans-serif;
   --font-mono:    "JetBrains Mono", ui-monospace, monospace;
 
   /* Spacing: 4px base */

@@ -1,116 +1,86 @@
-# Landing v1 — Next.js + SanityPress port of v7
+# Landing v1 — Next.js + SanityPress, full docs + blog + changelog + API reference
 
-Status: **plan, not built.** Drafted 2026-04-20. Revised 2026-04-21 to swap the hand-rolled Next.js scaffold for SanityPress as the base.
+Status: **plan, not built.** Drafted 2026-04-20. Revised 2026-04-21 to swap the hand-rolled Next.js scaffold for SanityPress. Revised 2026-04-21 again to make landing the single app serving marketing + blog + docs + API reference + changelog + gated internal zones (after locking architecture decisions with Mukul). Fonts swapped Inter → Mona Sans across product.
 
 ---
 
 ## Goal
 
-Port `Altr Landing v7.html` to a Next.js 15 + Sanity CMS app on top of [SanityPress](https://sanitypress.dev) ([nuotsu/sanitypress](https://github.com/nuotsu/sanitypress)), wire a real waitlist backend, and ship it at `altr.run`. All marketing copy, pricing tiers, FAQ entries, playground examples, and ticker content are editable in the embedded Sanity Studio — no redeploys for text tweaks.
+Port `Altr Landing v7.html` to a Next.js 15 app on top of [SanityPress](https://sanitypress.dev) ([nuotsu/sanitypress-with-typegen](https://github.com/nuotsu/sanitypress-with-typegen)), and extend it to host **every public and internal content surface** for Altr:
 
-## Why SanityPress
+- Marketing (`altr.run/`)
+- Blog (`altr.run/blog`)
+- Product docs (`altr.run/docs`) — public + internal
+- API reference (`altr.run/api-reference`) — public + internal, Scalar themed
+- Tauri command reference (`altr.run/internal/tauri-reference`)
+- Changelog (`altr.run/changelog`)
+- Gated internal zones (`altr.run/internal/*`)
+- Sanity Studio (`altr.run/admin`)
+- Waitlist API + other real route handlers (`/api/*`)
 
-- Next.js 15 App Router + Sanity v3 + Tailwind 4 + React 19 — the exact stack we'd build by hand, already wired.
-- Embedded Studio (same Next.js app, route `/admin` since v4.0.0) — one Vercel project, one domain, Presentation tool on by default with live preview + click-to-edit overlays.
-- Ships 17 pre-built modules (Hero, Pricing list, Accordion list, Callout, Flag/Card/Stat/Testimonial list, etc.) — ~half of v7's sections map straight to built-ins.
-- OSS (free to clone + modify). SanityPress Pro ($10/mo) only needed for first-class i18n, which we don't need in v1.
-- We'll base off the **typegen fork** ([nuotsu/sanitypress-with-typegen](https://github.com/nuotsu/sanitypress-with-typegen)) so GROQ queries are typed from the schema — same bar as the desktop app (CLAUDE.md §7).
+One Next.js app, one Vercel deploy, one domain. Single source of truth for all public Altr content.
+
+## Why SanityPress as the base
+
+- Next.js 15 App Router + Sanity v3 + Tailwind 4 + React 19 — the exact stack we'd build by hand, already wired
+- Embedded Studio at `/admin` (SanityPress v4 convention); one Vercel project, Presentation tool on with live preview + click-to-edit
+- Ships 17 pre-built modules (Hero, Pricing, Accordion, Callout, Flag/Card/Stat/Testimonial lists) — half of v7's marketing sections map straight to built-ins
+- **Keep SanityPress's built-in `post` / `author` / `category` schemas** (previously scheduled for deletion — reversed) as our blog CMS
+- Typegen fork gives typed GROQ queries — same bar as desktop (CLAUDE.md §7)
 
 ## Non-goals (explicit cuts — defend these)
 
-- **No blog, changelog, or docs routes.** SanityPress ships with `/blog` scaffolding under `src/app/(site)/blog/`. **Delete it** in PR #3. Visible in nav as `#` links the way v7 has them until we have something to show.
 - **No analytics dashboard.** PostHog JS snippet + Vercel Web Analytics only.
 - **No A/B framework.** Ship `theme=light accent=amber hero=centered` as the only variant. Keep the data-attribute toggle; don't expose a chooser.
-- **No authentication on the public site.** Only auth in play is Sanity's own login for Studio access at `/admin`.
+- **No sign-in on the public site.** `/internal/*` gated by Basic Auth middleware (shared password via env var), upgrades to Supabase Auth in v0.5 when team mode arrives.
 - **No internationalization.** English only. Skip SanityPress Pro.
-- **No tweaks panel in production.** v7's designer tool stays in the source HTML; it doesn't ship.
+- **No tweaks panel in production.** v7's designer tool stays in source; doesn't ship.
+- **No comments on blog or docs.** Readers go to Twitter/X / GitHub Discussions.
+- **No per-component marketing pages for v0.1.** Clerk has one per component; Altr would have Pax + Eng. Not enough surface to justify; defer to v0.5.
+- **No separate docs subdomain, no `apps/docs/` workspace, no Mintlify, no Starlight.** All docs rendering in `apps/landing/` via Content Collections + in-house `@altr/ui`-based MDX components.
 
 ## Quivly-boundary check
 
-Landing is product-acquisition for Altr. Not a customer-side CS/RevOps feature. Within the §2.6 boundary. Safe to build.
+Landing serves product acquisition + user docs + engineering transparency (blog/changelog). Not customer-side CS/RevOps. Within CLAUDE.md §2.6. Safe.
 
 ---
 
-## Repo layout — conversion to bun workspaces monorepo
+## Repo layout (post-PR-#2)
 
-Current state is a flat repo at `altr-run/altr`. Convert in one PR so history is legible.
-
-Before:
-```
-altr.run/
-├── src/                 # Tauri React
-├── src-tauri/           # Rust
-├── package.json
-└── bun.lock
-```
-
-After:
 ```
 altr.run/
 ├── apps/
-│   ├── desktop/               # moved from repo root — the Tauri app
-│   │   ├── src/
-│   │   ├── src-tauri/
-│   │   ├── package.json
-│   │   └── tauri.conf.json
-│   └── landing/               # SanityPress-based Next.js app
+│   ├── desktop/                    # Tauri app (moved in PR #2)
+│   └── landing/                    # ← this plan
 │       ├── src/
 │       │   ├── app/
-│       │   │   ├── (site)/           # public routes
-│       │   │   │   └── page.tsx      # the one long scroll
-│       │   │   ├── admin/            # embedded Sanity Studio
-│       │   │   └── api/
-│       │   │       └── waitlist/     # Resend + Supabase route handler
-│       │   ├── sanity/
-│       │   │   ├── schemaTypes/
-│       │   │   │   ├── documents/    # site, page, pricing.tier
-│       │   │   │   ├── modules/      # one file per module
-│       │   │   │   └── fragments/    # reusable schema bits
-│       │   │   ├── lib/              # client, queries, loader
-│       │   │   └── presentation/     # Presentation-tool config
-│       │   ├── ui/                   # React components (1:1 with modules)
-│       │   ├── lib/
-│       │   └── sanity.config.ts
+│       │   │   ├── (marketing)/    # altr.run/, hero/pricing/FAQ, etc.
+│       │   │   ├── blog/           # altr.run/blog*
+│       │   │   ├── docs/           # altr.run/docs*
+│       │   │   ├── api-reference/  # Scalar + OpenAPI
+│       │   │   ├── changelog/      # altr.run/changelog*
+│       │   │   ├── internal/       # auth-gated via middleware
+│       │   │   │   ├── docs/
+│       │   │   │   ├── api-reference/
+│       │   │   │   └── tauri-reference/
+│       │   │   ├── admin/          # Sanity Studio
+│       │   │   └── api/            # real route handlers
+│       │   │       ├── waitlist/
+│       │   │       └── revalidate/
+│       │   ├── components/
+│       │   │   ├── DocsLayout.tsx  # shared for /docs, /api-reference, /changelog, /internal
+│       │   │   └── mdx/            # in-house Mintlify-quality MDX components
+│       │   ├── sanity/             # Studio + GROQ queries
+│       │   ├── content/            # MDX source
+│       │   │   ├── docs/
+│       │   │   └── internal/
+│       │   └── middleware.ts       # /internal/* Basic Auth gate
+│       ├── public/
+│       │   ├── llms.txt
+│       │   └── openapi.yaml        # generated at build time
 │       └── package.json
-├── packages/
-│   └── tokens/                # shared design tokens (CSS + TS)
-│       ├── tokens-base.css    # typography, spacing, semantic names
-│       ├── tokens-desktop.css # linen + ochre
-│       ├── tokens-landing.css # white + amber
-│       ├── index.ts
-│       └── package.json
-├── package.json               # workspaces manifest
-├── bun.lock                   # single lockfile at root
-├── CLAUDE.md
-├── MASTER_PLAN.md
-└── ...
-```
-
-Rationale:
-- `apps/desktop` name is clearer than leaving it unnamed at the root.
-- `packages/tokens` is the one shared primitive day 1. `packages/ui` stays unborn until the **extraction trigger** fires: 3 primitives duplicated across `apps/desktop` and `apps/landing` with matching prop shapes. TipTap editor primitives and marketing hero primitives diverge — only generics (Button, Input, Card, Dialog, Tooltip, Badge) should migrate.
-- **Shared-ready discipline** in both apps from day 1, so extraction is a lift, not a rewrite:
-  - Styling via Tailwind classes + CSS token vars only (`bg-[var(--bg-raised)]`, never hardcoded hex).
-  - No framework-specific imports in primitives — no `next/*`, no `@tauri-apps/*` inside Button/Input/etc.
-  - Props accept `className` + `asChild`/`as` for element override (Radix-style). Lets landing wrap primitives in `<Link>`, desktop wrap in `invoke` handlers, without forking the component.
-  - Neutral names — `Button`, not `PaxButton` or `MarketingButton`.
-  - Co-located at `src/components/ui/` in each app until the trigger fires.
-- SanityPress uses `src/app/` (not `app/` at app root). We follow that convention — its docs and generators assume it.
-
-Root `package.json` scripts:
-```json
-{
-  "private": true,
-  "workspaces": ["apps/*", "packages/*"],
-  "scripts": {
-    "desktop:dev":  "bun --cwd apps/desktop tauri:dev",
-    "landing:dev":  "bun --cwd apps/landing dev",
-    "landing:studio": "bun --cwd apps/landing dev # /admin served on the same dev server",
-    "landing:typegen": "bun --cwd apps/landing sanity:typegen",
-    "lint":      "bun --filter '*' lint",
-    "typecheck": "bun --filter '*' typecheck"
-  }
-}
+└── packages/
+    └── ui/                         # @altr/ui (tokens + future primitives)
 ```
 
 ## Stack (pinned)
@@ -121,22 +91,47 @@ Root `package.json` scripts:
 | Framework | Next.js 15 (App Router, RSC) | SanityPress-pinned |
 | Runtime | React 19 | SanityPress-pinned |
 | Language | TypeScript 5 strict | CLAUDE.md §7 |
+| Monorepo runner | Turborepo | Per `docs/engineering-playbook.md` — caches `build` / `typecheck` / `lint` across workspaces |
 | CMS | Sanity v3 (embedded Studio at `/admin`) | SanityPress-pinned |
-| Styling | Tailwind CSS 4 (CSS-first `@theme`) | SanityPress-pinned. Imports `packages/tokens/tokens-landing.css` |
-| Typed queries | `@sanity/codegen` via `sanity schema extract` + `sanity typegen generate` | From the typegen fork; keeps GROQ responses typed |
-| Visual Editing | `@sanity/visual-editing` + Presentation tool | On by default in SanityPress v4 |
-| Fonts | `next/font` with Instrument Serif + Inter + JetBrains Mono | v7 uses Google Fonts directly; `next/font` self-hosts for perf |
+| Styling | Tailwind CSS 4 (CSS-first `@theme`) | Imports `packages/ui/tokens/base.css` + `landing.css` |
+| MDX | Content Collections | Type-safe MDX queries for docs + internal |
+| Syntax highlighting | Shiki | Build-time, zero runtime cost |
+| Typed queries | `@sanity/codegen` via `sanity schema extract` + `sanity typegen generate` | From typegen fork |
+| Visual editing | `@sanity/visual-editing` + Presentation tool | On by default in SanityPress v4 |
+| Fonts | `next/font` with Instrument Serif + **Mona Sans** (variable) + JetBrains Mono | Self-hosted for perf. Mona Sans via `next/font/google` or `@fontsource-variable/mona-sans`. |
 | Email | [Resend](https://resend.com) | Simple, good DX, pay-as-you-go |
-| DB (waitlist) | [Supabase](https://supabase.com) (Postgres) | Aligns with the global "offload to managed SaaS" rule; free tier absorbs the waitlist load; auth + storage available if landing ever needs them |
+| DB (waitlist) | [Supabase](https://supabase.com) (Postgres) | Aligns with global "offload to managed SaaS" rule; free tier absorbs waitlist load; auth + storage available if landing ever needs them |
+| API docs | [Scalar](https://scalar.com/) (`@scalar/nextjs-api-reference`) | Themed to @altr/ui tokens (Tier 1); OpenAPI-driven; no external SaaS |
+| OpenAPI generation | `@asteasolutions/zod-to-openapi` | Zod schemas in route handlers emit OpenAPI at build time — zero drift |
+| Tauri reference | Custom `<FunctionReference>` component on @altr/ui | Tauri IPC ≠ REST; custom shape, generated from `specta` bindings + Rust doc comments |
+| Search | MiniSearch (client-side, build-time index) | Covers docs + changelog; no Algolia, no external infra |
+| Auth (`/internal/*`) | Basic Auth middleware today → Supabase Auth + Google Workspace SSO at v0.5 | Cheapest gate that doesn't leak; real auth when a team exists |
 | Icons | `lucide-react` | Same as desktop |
 | Analytics | PostHog JS + Vercel Web Analytics | Funnel + RUM |
 | Host | Vercel | One project; `apps/landing` root directory |
 
-No `shadcn/ui`, `tailwind-variants`, `cva`. SanityPress's built-in primitives are sufficient.
+No `shadcn/ui`, `tailwind-variants`, `cva`. SanityPress built-ins + @altr/ui primitives are sufficient.
+
+---
+
+## Content-source matrix
+
+| Surface | Source | Why |
+|---|---|---|
+| Marketing pages | Sanity | Non-technical editor UX, image hotspot, preview |
+| Blog (posts, authors, categories) | Sanity (SanityPress built-ins) | Editor UX, image handling, occasional-cadence writing |
+| Product docs (public + internal) | MDX in repo (`apps/landing/content/docs/**`) | Engineering-authored, ships with feature PRs, PR-reviewable |
+| API reference (OpenAPI spec) | Zod schemas → auto-generated | Single source of truth; eliminates drift |
+| Tauri command reference | `specta` bindings + Rust doc comments → auto-generated MDX | Same drift-elimination |
+| Changelog | Per-package `CHANGELOG.md` (Changesets output) → build-time MDX | Changesets already writes it |
+
+See `docs/docs-strategy.md` for full rationale on the hybrid Sanity+MDX split.
+
+---
 
 ## v7 → SanityPress module map
 
-Every section in v7 becomes either a **built-in SanityPress module** (just wire and style) or a **custom module** (schema + component we write). "All content in Sanity" means every string, image, and list item below lives in the Studio.
+Every section in v7 is either a **built-in SanityPress module** (just wire and style) or a **custom module** (schema + component we write).
 
 | v7 section | SanityPress module | Kind | Notes |
 |---|---|---|---|
@@ -149,35 +144,54 @@ Every section in v7 becomes either a **built-in SanityPress module** (just wire 
 | FAQ | **Accordion list** | built-in | Native `<details>` rendering; each item is a schema row |
 | Close CTA | **Callout** | built-in | Heading + body + CTA pointing to waitlist |
 | Stamp ("written in Altr") | `stamp.mark` | **custom** | Short text + optional href; rendered as a small footer flourish |
-| Footer | `site` singleton (built-in) | built-in | Link groups, legal text, social |
+| Footer | `site` singleton (built-in) | built-in | Minimal — 5 link groups max (see §Footer pattern) |
 | Waitlist form | `form.waitlist` | **custom** | Schema is just copy (heading, sub, CTA label, success text); component POSTs to `/api/waitlist` |
 
-**Totals:** 6 built-ins wired as-is, 4 custom modules written from scratch. The custom work is the long pole.
+**Blog additions (keep SanityPress built-ins):**
+
+| Surface | Module / doc type | Kind |
+|---|---|---|
+| Blog index | Built-in `blog` module + `post` list | built-in |
+| Blog post | Built-in `post` doctype | built-in |
+| Author page | Built-in `author` doctype | built-in |
+| Category page | Built-in `category` doctype | built-in |
+| RSS feed | `/blog/rss.xml` route handler | **custom** |
+| Per-post OG image | `/blog/[slug]/opengraph-image` via `ImageResponse` | **custom** |
+
+**Totals:** ~8 built-ins wired as-is, ~6 custom modules / routes written from scratch. Custom is the long pole.
+
+---
 
 ## Sanity schema design
 
-Documents (singletons + lists):
+**Documents (singletons + lists):**
+
 - `site` — global site config (nav links, footer link groups, legal, social, waitlist open). Extend SanityPress's default `site` singleton; don't fork it.
-- `page` — keep SanityPress's generic page doc. Home is a single `page` with slug `index`, composed from modules.
+- `page` — generic page doc. Home is a single `page` with slug `index`, composed from modules.
 - `pricing.tier` — one doc per tier (Solo, Studio, Scale). Fields: `name`, `tagline`, `priceMonthly`, `priceAnnual`, `features[]`, `ctaLabel`, `ctaHref`, `highlighted: boolean`.
 - `faq.entry` — question, answer (portable text), category, order.
+- `post` — blog post. **Keep SanityPress built-in.** Fields: title, slug, cover, publishedAt, author (ref), categories (ref[]), body (portable text), excerpt, readingTime (derived).
+- `author` — **Keep SanityPress built-in.** Fields: name, avatar, bio, social links.
+- `category` — **Keep SanityPress built-in.** Fields: name, slug, color.
 
-Modules (one schema file per module; each = `{ _type, ...fields }` inside `page.modules[]`):
-- Built-in: `hero.saas`, `flag-list`, `pricing-list`, `accordion-list`, `callout` — use SanityPress defaults, add fields only where v7 copy demands.
+**Modules** (one schema file per module; each = `{ _type, ...fields }` inside `page.modules[]`):
+
+- Built-in: `hero.saas`, `flag-list`, `pricing-list`, `accordion-list`, `callout`, `blog-list`, `blog-post` — use SanityPress defaults, add fields only where v7 copy demands.
 - Custom: `ticker.scrolling`, `playground.prompts`, `stamp.mark`, `form.waitlist` — defined in `src/sanity/schemaTypes/modules/`.
 
-Fragments (reusable):
-- `link` — inline reference or external URL with label (SanityPress provides).
-- `cta` — link + style variant.
-- `image-with-alt` — required alt text, no empty strings.
+**Fragments** (reusable):
+- `link` — inline reference or external URL with label (SanityPress provides)
+- `cta` — link + style variant
+- `image-with-alt` — required alt text, no empty strings
 
 **Rule:** never store waitlist submissions (emails, IPs, UAs) in Sanity. Those go to Supabase. Sanity is for *published content*.
+
+---
 
 ## Custom modules — spec sketch
 
 ### `ticker.scrolling`
 ```ts
-// src/sanity/schemaTypes/modules/ticker.scrolling.ts
 defineType({
   name: 'ticker.scrolling',
   type: 'object',
@@ -194,7 +208,7 @@ defineType({
   ],
 })
 ```
-Component: `src/ui/modules/TickerScrolling.tsx` — CSS marquee; items duplicated in markup for seamless loop; `prefers-reduced-motion` fallback stops animation.
+Component: `src/ui/modules/TickerScrolling.tsx` — CSS marquee; items duplicated for seamless loop; `prefers-reduced-motion` fallback stops animation.
 
 ### `playground.prompts`
 ```ts
@@ -208,197 +222,354 @@ defineType({
       fields: [
         defineField({ name: 'prompt', type: 'text' }),
         defineField({ name: 'persona', type: 'string', options: { list: ['pax', 'eng'] } }),
-        defineField({ name: 'response', type: 'array', of: [{ type: 'block' }] }),  // portable text
+        defineField({ name: 'response', type: 'array', of: [{ type: 'block' }] }),
         defineField({ name: 'typingMs', type: 'number', initialValue: 1200 }),
       ],
     }]}),
   ],
 })
 ```
-Component: client-only, cycles through prompts, types out the `response` portable text at a per-prompt `typingMs`. Interactive logic in code, every string in Sanity.
+Client-only. Cycles through prompts, types out the `response` portable text at a per-prompt `typingMs`. Interactive logic in code, every string in Sanity.
 
-### `stamp.mark`
-```ts
-defineType({
-  name: 'stamp.mark',
-  type: 'object',
-  fields: [
-    defineField({ name: 'line1', type: 'string', initialValue: 'written in' }),
-    defineField({ name: 'line2', type: 'string', initialValue: 'Altr' }),
-    defineField({ name: 'href', type: 'url' }),
-  ],
-})
-```
+### `stamp.mark` + `form.waitlist`
 
-### `form.waitlist`
-```ts
-defineType({
-  name: 'form.waitlist',
-  type: 'object',
-  fields: [
-    defineField({ name: 'heading', type: 'string' }),
-    defineField({ name: 'sub', type: 'text' }),
-    defineField({ name: 'ctaLabel', type: 'string', initialValue: 'Request access' }),
-    defineField({ name: 'placeholder', type: 'string', initialValue: 'you@domain.com' }),
-    defineField({ name: 'successMessage', type: 'string', initialValue: 'Check your inbox — confirmation link sent.' }),
-    defineField({ name: 'legal', type: 'string', description: 'fine print under the button' }),
-  ],
-})
-```
+Unchanged from prior plan. `stamp.mark` = small "written in Altr" flourish. `form.waitlist` = copy-only schema; component POSTs to `/api/waitlist`.
 
-## Routes & API
+---
 
-SanityPress layout:
+## Routes & API — full tree
+
 ```
 src/app/
-├── (site)/
-│   ├── layout.tsx      # fonts, tokens, PostHog, Presentation bridge
-│   ├── page.tsx        # renders the home page doc by modules
+├── (marketing)/
+│   ├── layout.tsx             # fonts (Mona Sans via next/font), tokens, PostHog, Presentation bridge
+│   ├── page.tsx               # renders home page doc by modules
 │   ├── not-found.tsx
-│   └── [slug]/page.tsx # future pages — built-in but no content yet
-├── admin/              # Sanity Studio (embedded)
+│   └── [slug]/page.tsx        # future generic pages
+│
+├── blog/
+│   ├── page.tsx               # featured-post + list layout
+│   ├── [slug]/page.tsx        # individual post
+│   ├── [slug]/opengraph-image.tsx    # dynamic OG from post fields
+│   ├── categories/[slug]/page.tsx    # category archive
+│   ├── authors/[slug]/page.tsx       # author archive
+│   └── rss.xml/route.ts       # RSS feed (top 20 posts)
+│
+├── docs/
+│   ├── page.tsx               # docs index (card grid)
+│   ├── [...slug]/page.tsx     # catch-all MDX renderer
+│   ├── search/route.ts        # MiniSearch index serve (build-time generated)
+│   └── opengraph-image.tsx    # shared OG for docs pages
+│
+├── api-reference/
+│   ├── page.tsx               # Scalar themed renderer, reads /public/openapi.yaml
+│   └── opengraph-image.tsx
+│
+├── changelog/
+│   ├── page.tsx               # reverse-chron index (10 per page)
+│   ├── [slug]/page.tsx        # per-version page (e.g., /changelog/desktop-v0.2.0)
+│   └── rss.xml/route.ts       # RSS feed for releases
+│
+├── internal/
+│   ├── docs/[...slug]/page.tsx
+│   ├── api-reference/page.tsx
+│   └── tauri-reference/[...slug]/page.tsx
+│
+├── admin/[[...index]]/page.tsx   # Sanity Studio
+│
 ├── api/
 │   ├── waitlist/
-│   │   ├── route.ts           # POST { email } -> Supabase + Resend confirm
-│   │   └── confirm/route.ts   # GET ?token= -> mark confirmed
-│   ├── draft-mode/[...]       # SanityPress-provided
-│   └── revalidate/[...]       # SanityPress-provided, webhook-gated
-├── opengraph-image.tsx        # dynamic OG from site singleton
+│   │   ├── route.ts              # POST { email } → Supabase + Resend confirm
+│   │   └── confirm/route.ts      # GET ?token= → mark confirmed
+│   ├── draft-mode/[...]          # SanityPress-provided
+│   └── revalidate/[...]          # SanityPress-provided, webhook-gated
+│
+├── opengraph-image.tsx           # site-wide default OG
 ├── robots.ts
-└── sitemap.ts
+├── sitemap.ts                    # includes /docs + /blog + /changelog slugs
+└── llms.txt/route.ts             # AI-era crawl directive
+│
+middleware.ts                     # /internal/* Basic Auth gate
 ```
 
-Delete before shipping: SanityPress's default `(site)/blog/` route group and `blog.*` schema files.
+---
 
-## Waitlist backend (Supabase — not a Sanity concern)
+## Changelog pipeline
+
+Pattern stolen from Clerk: per-version URL (`/changelog/desktop-v0.2.0`), RSS feed, visible category badge, shareable.
+
+### Source → build → output
+
+```
+packages/ui/CHANGELOG.md          ┐
+apps/desktop/CHANGELOG.md         ┤── parse via @changesets/get-release-plan
+                                  │   (or a custom parser walking H2 sections)
+                                  ▼
+                           scripts/build-changelog.ts
+                                  │
+                                  ▼
+apps/landing/src/content/changelog/
+                                  │
+                                  ▼
+       /changelog (index)     /changelog/[slug] (per-version)   /changelog/rss.xml
+```
+
+Build-time only — no runtime cost. CI enforces `turbo run changelog:build && git diff --exit-code` to block PRs where the source changelogs changed without the generated pages updating.
+
+### Per-entry design
+
+- Scope badge (`desktop` or `ui` tagged with `@altr/ui` color)
+- Version + date
+- Release notes (markdown → MDX, same components as docs — can embed `<Callout>`, `<CodeBlock>`, screenshots)
+- Optional "breaking changes" callout (auto-shown if Changesets marked a major bump)
+- "Copy link" + "Subscribe via RSS"
+
+### Pagination
+
+Numbered, 10 entries per page. Not infinite scroll.
+
+---
+
+## API reference pipeline
+
+### OpenAPI generation (build-time)
+
+1. Each route handler in `apps/landing/src/app/api/**` defines its request/response via Zod schemas
+2. `scripts/gen-openapi.ts` calls `@asteasolutions/zod-to-openapi` to consolidate all schemas → emits `apps/landing/public/openapi.yaml`
+3. Scalar reads `/openapi.yaml` at page load for `/api-reference` + `/internal/api-reference`
+4. CI enforces regeneration: `turbo run openapi:build && git diff --exit-code`
+
+### Scalar theming (Tier 1)
+
+`apps/landing/src/app/api-reference/page.tsx`:
+
+```tsx
+import { ApiReferenceReact } from '@scalar/api-reference-react';
+import '@scalar/api-reference-react/style.css';
+import './scalar-theme.css'; // override Scalar CSS variables with our tokens
+
+export default function ApiReferencePage() {
+  return (
+    <DocsLayout>
+      <ApiReferenceReact configuration={{
+        spec: { url: '/openapi.yaml' },
+        hideDownloadButton: false,
+        hiddenClients: ['python', 'ruby', 'go'],
+        defaultHttpClient: { targetKey: 'javascript', clientKey: 'fetch' },
+      }} />
+    </DocsLayout>
+  );
+}
+```
+
+`scalar-theme.css` remaps their CSS variables to `@altr/ui/tokens/landing.css` ones. Only showable code-sample languages for v0.1: curl + fetch (browser) + Node/Bun.
+
+### Tauri command reference (not OpenAPI)
+
+Separate pipeline (see `docs/docs-strategy.md` §4.5):
+
+1. `#[tauri::command]` in Rust with `///` doc comments + `thiserror` errors
+2. `specta` generates TS bindings → `apps/desktop/src/lib/bindings.ts`
+3. `scripts/gen-tauri-reference.ts` parses bindings + reads Rust doc comments + error enums → emits one MDX page per command under `apps/landing/src/content/internal/tauri-reference/`
+4. Rendered by custom `<FunctionReference>` at `/internal/tauri-reference/[...slug]`
+
+Committed output keeps diffs legible. Regenerated via `turbo run docs:generate`.
+
+---
+
+## Footer pattern (stolen from Clerk)
+
+Minimal. Five links, not fifty.
+
+| Column | Links |
+|---|---|
+| Product | Docs, Changelog, Pricing |
+| Company | Blog, Careers (later), Contact |
+| Engineering | GitHub, RSS |
+| Legal | Terms, Privacy |
+| Social | Twitter/X, LinkedIn |
+| Hidden | `llms.txt`, sitemap |
+
+No 200-link mega-footer. The `llms.txt` link lives at the bottom-right as a soft signal for the AI era.
+
+---
+
+## Waitlist backend (unchanged — Supabase)
 
 Two-step flow:
 
-1. `POST /api/waitlist { email }` — validates (zod), writes to Supabase (service-role key, server-side only), sends double-opt-in email via Resend with a 30-day signed token (HMAC-SHA256, not a DB-backed nonce — survives DB loss).
-2. `GET /api/waitlist/confirm?token=…` — verifies signature, marks `confirmed_at`, shows a small `/confirmed` page (also a Sanity-driven page with a `confirmation.message` module — optional, nice to have).
+1. `POST /api/waitlist { email }` — validates (zod), writes to Supabase (service-role key, server-side only), sends double-opt-in email via Resend with a 30-day signed token (HMAC-SHA256, not a DB-backed nonce — survives DB loss)
+2. `GET /api/waitlist/confirm?token=…` — verifies signature, marks `confirmed_at`, shows a small `/confirmed` page
 
-Supabase schema (single table, lives in the `public` schema; RLS **on** with zero policies so anon can't read/write — all traffic uses the service-role key on the server):
-
-```sql
-create table public.waitlist (
-  id           text primary key,            -- ULID
-  email        text not null unique,
-  created_at   timestamptz not null default now(),
-  confirmed_at timestamptz,
-  source       text,                        -- UTM / referrer
-  ua           text                         -- truncated user agent
-);
-
-alter table public.waitlist enable row level security;
--- no policies: anon + authenticated are denied by default.
-```
+Supabase schema (see `docs/landing-v1-plan.md` §Waitlist-backend for full SQL; RLS **on** with zero policies so anon can't read/write — all traffic uses service-role key on the server).
 
 Rate-limit: Vercel edge-config or in-memory map by IP. Honeypot + client rate-limit. No CAPTCHA.
 
-Environment variables:
-- `NEXT_PUBLIC_SANITY_PROJECT_ID`
-- `NEXT_PUBLIC_SANITY_DATASET` (= `production`)
+### Environment variables
+
+- `NEXT_PUBLIC_SANITY_PROJECT_ID` — `wyr088n5`
+- `NEXT_PUBLIC_SANITY_DATASET` — `production`
 - `SANITY_API_READ_TOKEN` — viewer token for drafts in preview
 - `SANITY_REVALIDATE_SECRET` — webhook secret for on-demand ISR
 - `RESEND_API_KEY`
 - `SUPABASE_URL`
-- `SUPABASE_SERVICE_ROLE_KEY` — server-only; never ship to the client
+- `SUPABASE_SERVICE_ROLE_KEY` (server-only; never ship to client)
 - `WAITLIST_SIGNING_SECRET`
 - `POSTHOG_KEY`
+- `INTERNAL_DOCS_PASSWORD` — Basic Auth for `/internal/*`; rotated with every team join/leave
 
 All in Vercel project settings; `.env.local` for dev (gitignored).
 
-## Design-token sharing
+---
 
-Move `apps/desktop/src/styles/tokens.css` to `packages/tokens/tokens-base.css` (shared: typography, spacing, semantic color names), and fork the palette into two files:
+## Design-token sharing (unchanged — see packages/ui)
 
-- `tokens-desktop.css` — linen (`#FBF7F1`) + ochre (`#C4774B`). Desktop imports both base + desktop.
-- `tokens-landing.css` — white + amber (`#D9562A`) + moss. Landing imports both base + landing.
+`packages/ui/tokens/base.css` (spacing only), `packages/ui/tokens/landing.css` (v7 white + amber palette), `packages/ui/tokens/desktop.css` (linen + ochre). Landing imports base + landing. Desktop imports base + desktop.
 
-Tailwind 4 reads from `@theme` blocks in CSS. SanityPress's `src/app/(site)/layout.tsx` gets `@import "@altr/tokens/tokens-base.css"` and `@import "@altr/tokens/tokens-landing.css"` in its global stylesheet.
+Both use **Mona Sans** (variable, OFL) as `--font-body` / `--f-sans`. Loaded via `next/font/google` in landing's `(marketing)/layout.tsx`. Loaded via CSS `@font-face` from `@fontsource-variable/mona-sans` in desktop.
 
-**File a followup:** reconcile palettes before public launch. Desktop's linen is older; v7's white+amber is the refined design. Lean landing → desktop at v0.1 RC.
+---
+
+## `llms.txt`
+
+Static at `apps/landing/public/llms.txt` per the [llmstxt.org spec](https://llmstxt.org/). Lists canonical docs URLs + product description. Linked from footer.
+
+~30 min to write. Free positioning in the AI-era crawler game.
+
+---
 
 ## Migration order (safe, PR-per-step)
 
-Five small PRs — do **not** do this in one giant commit.
-
-1. **Monorepo scaffold.** Add `packages/tokens` (copy, don't move yet; fork into base + desktop + landing at this step). Add root `package.json` with workspaces. `bun install` still works. Desktop dev loop unaffected.
-
-2. **Move desktop to apps/desktop.** `git mv src → apps/desktop/src`, `git mv src-tauri → apps/desktop/src-tauri`. Update `tauri.conf.json`, CI paths. Verify `bun run desktop:dev` end-to-end on Mac. Delete `apps/desktop/src/styles/tokens.css` in favor of importing from `@altr/tokens`.
-
-3. **Scaffold SanityPress at apps/landing.** `bunx create-sanity@latest apps/landing --template nuotsu/sanitypress-with-typegen`. Set Sanity project ID + dataset. Delete the default `blog/` route group and `blog.*` schemas. Wire token imports. Verify `bun run landing:dev` serves the default hello page and `/admin` serves Studio.
-
-4. **Port v7 built-ins.** One PR per module, typically: nav+footer (`site` singleton) → hero → pricing (+ three `pricing.tier` docs) → FAQ (accordion list) → callout → flag list (product overview). Style each to match v7. Commit after each.
-
-5. **Port v7 customs + waitlist API.** `ticker.scrolling` → `playground.prompts` → `stamp.mark` → `form.waitlist` + `/api/waitlist` route handlers. Seed all copy into Studio. Connect Resend + Supabase. Verify full waitlist flow end-to-end (submit → email → confirm).
+1. ✅ **PR #1 — monorepo scaffold** (landed `c274b30`). `packages/tokens/` + root workspaces manifest.
+2. ✅ **PR #1.5 — rename** (landed `4ae977a`). `@altr/tokens` → `@altr/ui` with nested `tokens/` subdir.
+3. ✅ **PR #2 — desktop move + Turborepo** (landed `39440e7`). `src/` + `src-tauri/` → `apps/desktop/`; added `turbo.json`; root scripts via `turbo run`.
+4. **PR #3 — SanityPress scaffold.** `bunx create-sanity@latest apps/landing --template nuotsu/sanitypress-with-typegen`. Set project ID `wyr088n5`, dataset `production`. **Keep** `/blog` route group and `blog.*` schemas. Wire `@altr/ui/tokens/landing.css`. Verify `turbo run dev --filter=@altr/landing` serves default home + `/admin`.
+5. **PR #4 — Port v7 built-ins + Clerk-inspired shell.** One sub-PR per module, roughly: nav + footer (`site` singleton) → hero → pricing (+3 `pricing.tier` docs) → FAQ → callout → flag list (product overview). Style to match v7. Implement the Clerk-minimal footer. Install Mona Sans via `next/font`. Commit after each module.
+6. **PR #5 — Port v7 customs + waitlist API.** `ticker.scrolling` → `playground.prompts` → `stamp.mark` → `form.waitlist` + `/api/waitlist`. Seed copy in Studio. Connect Resend + Supabase. Verify end-to-end flow (submit → email → confirm).
+7. **PR #6 — Docs infrastructure** (tracked by `docs/docs-strategy.md` Phase 2). Install Content Collections + Shiki. Build 12 MDX components in `apps/landing/src/components/mdx/`. Build `<DocsLayout>`. Wire `/docs` catch-all route + MiniSearch. Add `/internal/*` Basic Auth middleware.
+8. **PR #7 — Content seed.** Write 10 MDX docs pages (intro, quickstart, BYOK, 4 concept pages, 3 reference pages). Add `llms.txt`.
+9. **PR #8 — Changelog + API reference.** Build changelog MDX pipeline. Install Scalar + theme. Wire Zod → OpenAPI pipeline. Commit one example route with generated spec.
+10. **PR #9 — Blog activation.** Keep SanityPress posts schema live. Seed 1-2 real posts. Wire RSS + OG images + category/author archives.
 
 Each step is shippable. If PR #3 grows teeth (SanityPress version drift, typegen quirks), revert cleanly without losing PRs #1 + #2.
 
+---
+
 ## Deployment
 
-- Vercel project `altr-landing` connected to `altr-run/altr` repo, root directory `apps/landing`, `bun` install command.
-- Preview deploys per PR (each gets its own Studio at `$preview.altr-landing.vercel.app/admin` — fine; gated by Sanity auth).
-- Production domain `altr.run`; staging `staging.altr.run` auto-deploys `main`.
-- Desktop app repo does **not** deploy to Vercel — it has its own release channel (Sparkle, later).
-- Sanity project (one, `altr`, `production` dataset) created under a team account owned by the `altr.run` domain. Not Mukul's personal — transferability matters later.
+- Vercel project `altr-landing` connected to `altr-run/altr` repo, root directory `apps/landing`, `bun install --frozen-lockfile` install
+- Build command: `turbo run build --filter=@altr/landing`
+- Preview deploys per PR (each gets its own Studio at `$preview.altr-landing.vercel.app/admin` — fine; gated by Sanity auth)
+- Production domain `altr.run`; staging `staging.altr.run` auto-deploys `main`
+- Desktop app repo does **not** deploy to Vercel — separate release channel (Sparkle, planned)
+- Sanity project: one, `altr`, `production` dataset, org owned by `hello@altr.run`. Already created (project ID `wyr088n5`).
+
+---
 
 ## CI updates
 
 Extend `.github/workflows/lite.yml`:
 
-- **lint-landing** (ubuntu-latest): `bun install --frozen-lockfile`, `bun --cwd apps/landing sanity:typegen` (so generated types are current), `bun --cwd apps/landing lint`, `bun --cwd apps/landing typecheck`, `bun --cwd apps/landing build`.
-- **lint-ts** (existing): scope to desktop, or use `bun --filter '*' lint` to run both in parallel with per-workspace artifact caching.
-- Rust jobs stay as-is — nothing under `apps/landing` touches Rust.
-- Add a pre-commit check (or CI gate) that fails if `sanity.types.ts` is stale. Cheap insurance against untyped GROQ drift.
+- **lint-landing** (ubuntu-latest): `bun install --frozen-lockfile`, `turbo run sanity:typegen --filter=@altr/landing` (generated types current), `turbo run lint typecheck build --filter=@altr/landing`
+- **openapi-gate:** `turbo run openapi:build --filter=@altr/landing && git diff --exit-code apps/landing/public/openapi.yaml` — fails if OpenAPI YAML is stale
+- **tauri-reference-gate:** `turbo run docs:generate && git diff --exit-code apps/landing/src/content/internal/tauri-reference/` — fails if Tauri reference MDX is stale
+- **changelog-gate:** `turbo run changelog:build && git diff --exit-code apps/landing/src/content/changelog/` — fails if CHANGELOG.md rolled forward without regenerated MDX
+- **lint-ts** + **lint-rust** + **check-rust**: existing; stay as-is
+- Add a commitlint job on PR title (per `docs/engineering-playbook.md` §6)
+- Add a changeset-check job (fail if PR touches `apps/desktop/**` or `packages/ui/**` without a `.changeset/*.md` file)
+
+Separate `.github/workflows/release.yml` (new): Changesets action opens/updates a "Version Packages" PR that bumps versions + regenerates CHANGELOG.md (which then roll forward into landing's `/changelog` on next merge).
+
+---
 
 ## Definition of done (landing v1)
 
-1. `altr.run` serves v7 at parity. Lighthouse performance ≥ 95 mobile, ≥ 98 desktop.
-2. Every string, image, and list on the page is editable in `/admin` — no hardcoded copy outside layout scaffolding.
-3. Waitlist form submits successfully, confirmation email arrives within 10 seconds, confirm link works. Submission does not write to Sanity.
-4. Presentation tool shows live preview with click-to-edit overlays for all modules (built-in + custom).
-5. `sanity typegen generate` produces clean types; `tsc --noEmit` passes with `strict: true`.
-6. Theme `data-theme=light` is the only variant shipped; dark is plumbed but not linked in nav.
-7. Desktop app continues to build and run — no regressions from the monorepo move.
-8. CI green on every workflow (lint-ts, lint-landing, lint-rust, check-rust).
-9. README at the repo root reflects the monorepo layout. `apps/landing/README.md` documents SanityPress upgrade path and how to run typegen locally.
-10. `CLAUDE.md` §4 file-layout section updated. Non-negotiables unchanged.
-11. Handoff note in `NOTES/` with what shipped + deferred.
+1. `altr.run` serves v7 at parity. Lighthouse performance ≥ 95 mobile, ≥ 98 desktop
+2. Every string/image/list on the marketing page is editable in `/admin` — no hardcoded copy outside layout scaffolding
+3. Waitlist submits successfully, confirmation email arrives within 10 seconds, confirm link works. Submission does not write to Sanity.
+4. Presentation tool shows live preview with click-to-edit overlays for all modules (built-in + custom)
+5. `/docs` renders at least 5 MDX pages with working sidebar + TOC + code blocks + callouts
+6. `/changelog` renders current CHANGELOG.md content with per-version URLs + RSS
+7. `/api-reference` renders `/api/waitlist` OpenAPI via themed Scalar
+8. `/blog` renders at least 1 seeded post with RSS + OG image
+9. `/internal/*` blocks unauthenticated requests (Basic Auth)
+10. `/llms.txt` present and listed in footer
+11. `sanity typegen generate` produces clean types; `tsc --noEmit` passes with `strict: true`
+12. Theme `data-theme=light` is the only variant shipped
+13. Mona Sans loads via `next/font`; no render-blocking font FOIT/FOUT
+14. Desktop continues to build and run — no regressions from monorepo moves
+15. CI green on every workflow (lint-ts, lint-landing, lint-rust, check-rust, openapi-gate, tauri-reference-gate, changelog-gate, commitlint, changesets-check)
+16. README reflects monorepo layout. `apps/landing/README.md` documents SanityPress upgrade path + how to run typegen/openapi/changelog generators locally
+17. `CLAUDE.md` §4 file-layout section updated (drop references to the old flat layout, include `apps/landing/content/**`)
+18. Handoff note in `NOTES/` with what shipped + deferred
 
-## Open questions to resolve before starting work
+---
 
-1. **Logo.** v7 uses `a\tr` wordmark. Real or placeholder? Affects `site` singleton logo field, favicon, OG image.
-2. **Sanity organization.** Create `altr` org in Sanity under a shared `hello@altr.run` email — not Mukul's personal. Transferability matters if the company model changes.
-3. **Domain DNS.** `altr.run` — who controls the zone, and is it pointed at anything today? Same for `staging.altr.run`.
-4. **Resend + Supabase accounts.** Also under `hello@altr.run`, not personal. Supabase project org lives under the shared email too.
-5. **Copy review.** "1,240 teams waiting" and similar aspirational strings in v7 — fine as placeholder while the page is unlinked; must be truthed up before public launch.
-6. **SanityPress Pro?** $10/mo for i18n. Deferred unless we commit to a non-English market before v0.1.
-7. **Blog deletion — really?** SanityPress defaults make adding `/blog` later cheap. Confirm we want to strip it in PR #3 vs. leave it unlinked.
+## Patterns adopted from Clerk's landing
 
-## Estimated effort
+See `docs/clerk-research.md` (future) or session notes 2026-04-21 for full analysis. Key patterns:
+
+| Pattern | Where applied |
+|---|---|
+| Changelog with per-entry URLs + RSS + numbered pagination | `/changelog/[slug]` |
+| Separate blog vs. articles content types | **Skipped v0.1** — one `post` type. Split when SEO-driven pillar content arrives. |
+| Per-feature marketing pages (Clerk: `/components/sign-in`) | **Skipped v0.1** — Altr's Pax + Eng aren't yet 6 discrete marketing surfaces. Defer to v0.5. |
+| Interactive mockups over static screenshots | Playground module does this. Extend in Phase 2. |
+| Minimal footer (5-6 groups, `llms.txt` link) | `site` singleton footer |
+| Postmortems published as blog posts | Adopted — category `postmortem` added to Sanity schema |
+| `llms.txt` in footer | Added, static file |
+| Pricing: tiers + separate add-ons + comparison table | Applied to Solo/Studio/Scale. Altr still highlights one tier (Studio) — unlike Clerk's equal-weight approach. |
+| Glossary at `/glossary` for long-tail SEO | **Deferred to Phase 3.** Cheap once content is needed. |
+
+---
+
+## Open questions
+
+1. **Logo.** v7 uses `a\tr` wordmark. Real or placeholder? Affects `site` singleton logo + favicon + OG image.
+2. **Domain DNS.** Who controls `altr.run`? Is `staging.altr.run` available?
+3. **Resend + Supabase accounts.** Under `hello@altr.run`. Supabase project org name = `altr`. Pending creation (see `docs/infrastructure.md` §5).
+4. **Copy review.** v7 has aspirational stats ("1,240 teams waiting") — fine while unlinked; must be truthed before public launch.
+5. **Blog seed content.** Who writes the first 2-3 posts before the `altr.run` domain goes public? Recommend: Mukul writes a "Why Altr" post + the first post-mortem about the Turso→Supabase decision. Cheap credibility-building.
+6. **Per-feature marketing pages — really defer to v0.5?** Confirm before PR #4 planning.
+7. **SanityPress Pro?** $10/mo for i18n. Deferred unless non-English market commits before v0.1.
+8. **Basic Auth password rotation cadence.** Every 30 days? Every join/leave event? Recommend: manual rotation at team-size changes. Encode in `docs/infrastructure.md` runbook.
+
+---
+
+## Estimated effort (revised for new scope)
 
 | Task | Hours |
 |---|---|
-| PR #1 — monorepo scaffold + tokens fork | 2 |
-| PR #2 — move desktop to apps/desktop | 2 |
-| PR #3 — SanityPress scaffold, env wiring, blog strip, typegen setup | 3 |
-| PR #4 — built-in module ports (nav/footer/hero/pricing/FAQ/callout/flag-list) with v7 styling | 6–8 |
-| PR #5 — custom modules (ticker/playground/stamp/form.waitlist) | 5–7 |
-| Waitlist API — Resend + Supabase + confirm flow | 3 |
-| Visual Editing / Presentation wiring tune | 1–2 |
-| Content entry in Studio (seeding all copy) | 2 |
-| CI + deploy + domain + Sanity org setup | 2 |
-| Polish + Lighthouse pass | 2 |
+| PR #1 — monorepo scaffold + @altr/ui + tokens fork | ✅ done |
+| PR #1.5 — rename @altr/tokens → @altr/ui | ✅ done |
+| PR #2 — move desktop to apps/desktop + Turborepo | ✅ done |
+| PR #3 — SanityPress scaffold, env wiring, typegen setup | 3 |
+| PR #4 — marketing built-ins (nav/footer/hero/pricing/FAQ/callout/flag-list) + Mona Sans wiring | 7-9 |
+| PR #5 — customs (ticker/playground/stamp/form.waitlist) + /api/waitlist + Supabase + Resend | 7-9 |
+| PR #6 — Docs infra: Content Collections, 12 MDX components, `<DocsLayout>`, MiniSearch, `/internal/*` Basic Auth | 20-25 |
+| PR #7 — Docs content seed (10 MDX pages) + `llms.txt` | 6-8 |
+| PR #8 — Changelog pipeline + API reference (Scalar theme + Zod → OpenAPI) | 8-10 |
+| PR #9 — Blog activation (RSS + OG images + archives + 1-2 seeded posts) | 4-6 |
+| Tauri reference pipeline (alongside first real command, separate PR) | 4-6 |
+| Visual Editing / Presentation wiring tune | 1-2 |
+| Content entry in Studio (seeding all copy) | 2-3 |
+| CI + deploy + domain + Sanity org setup | 2-3 |
+| Polish + Lighthouse pass | 2-3 |
 
-**Total ≈ 28–33h.** ~3 Saturdays + a handful of evenings, or one two-week push. Up from the hand-rolled estimate (17–20h) because "all content in Sanity" means schema design plus Studio seeding; SanityPress absorbs structural cost but adds content-modeling cost.
+**Total ≈ 66-85 hours.** Up substantially from the prior 28-33h — reflects the shift from "landing marketing site" to "landing hosts everything (marketing + blog + docs + changelog + API reference + internal)." Still doable in 4-6 Saturdays + 6-8 evenings, or one 3-week focused push.
+
+---
 
 ## Recommendation on timing
 
+Desktop Week-1 work (graph store in `apps/desktop/src-tauri/src/graph/`) is still the more load-bearing dependency for v0.1. A four-week landing push delays the core product.
+
 Two paths:
 
-**(a) Ship the monorepo move now, defer Sanity.** Do PRs #1 + #2 this coming Saturday (~4h). Lossless win regardless — unblocks landing work without committing to the full 28–33h. Then schedule landing as its own two-week push when desktop Week-1 is behind us.
+**(a) Parallel: desktop Week-1 + landing PR #3–#5 in rotation.** Desktop evenings, landing Saturdays. Ship the minimum landing (marketing + waitlist) in 3-4 weeks while desktop progresses. Docs + changelog + API reference land after the desktop beta is closer.
 
-**(b) Full sprint.** Block two Saturdays + four evenings in the next two weeks. Ship landing v1 end-to-end. Desktop Week-1 slips by a week.
+**(b) Landing first, full scope.** Ship PRs #3–#9 in a 4-5 week landing sprint. Desktop Week-1 slips. Risk: Altr has a shiny site with nothing to sign up for.
 
-**I'd recommend (a).** Desktop Week-1 (graph store + first real `#[tauri::command]`) is the foundation everything else bolts onto. A one-week slip there is worth more than two weeks on a landing page nobody is waiting on yet.
+**(a) remains the right call.** The landing exists to generate interest; the desktop app exists to fulfill interest. Don't flip the order.
+
+Under (a), scope for "landing MVP" = PRs #3, #4, #5 = **17-21 hours**. Ship this in the first 2-3 weekends. Docs + changelog + API reference + blog follow in subsequent sprints.
