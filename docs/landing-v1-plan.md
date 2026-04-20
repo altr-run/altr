@@ -107,6 +107,7 @@ altr.run/
 | Search | MiniSearch (client-side, build-time index) | Covers docs + changelog; no Algolia, no external infra |
 | Auth (`/internal/*`) | Basic Auth middleware today → Supabase Auth + Google Workspace SSO at v0.5 | Cheapest gate that doesn't leak; real auth when a team exists |
 | Icons | `lucide-react` | Same as desktop |
+| Animations | [`motion`](https://motion.dev/) (formerly Framer Motion, renamed 2024) | Import from `motion/react`. v12+ supports React 19 natively. Used for ticker scroll, playground typewriter + response reveal, pricing card hover states, MDX component transitions (Tabs, Accordion, Dialog). `prefers-reduced-motion` honored everywhere. Shared across desktop + landing so motion language stays consistent. |
 | Analytics | PostHog JS + Vercel Web Analytics | Funnel + RUM |
 | Host | Vercel | One project; `apps/landing` root directory |
 
@@ -208,7 +209,7 @@ defineType({
   ],
 })
 ```
-Component: `src/ui/modules/TickerScrolling.tsx` — CSS marquee; items duplicated for seamless loop; `prefers-reduced-motion` fallback stops animation.
+Component: `src/ui/modules/TickerScrolling.tsx` — Motion's `<motion.div>` with `animate={{ x: [0, -width] }}` on an infinite linear tween; items duplicated for seamless loop; `useReducedMotion()` hook freezes the animation for accessibility. CSS-only fallback via `prefers-reduced-motion` media query if JS fails to load.
 
 ### `playground.prompts`
 ```ts
@@ -229,7 +230,7 @@ defineType({
   ],
 })
 ```
-Client-only. Cycles through prompts, types out the `response` portable text at a per-prompt `typingMs`. Interactive logic in code, every string in Sanity.
+Client-only. Cycles through prompts, types out the `response` portable text at a per-prompt `typingMs`. Interactive logic in code, every string in Sanity. Motion-animated: prompt card fade/slide-in on cycle, typewriter cursor blink, streaming response character reveals via Motion's staggered children (respects `useReducedMotion()`).
 
 ### `stamp.mark` + `form.waitlist`
 

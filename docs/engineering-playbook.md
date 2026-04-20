@@ -410,6 +410,92 @@ Scope (own dedicated plan doc before implementation — `docs/release-desktop.md
 
 ---
 
-## 12. Handoff note discipline
+## 12. Dependency policy — latest stable, no drift
+
+### Principle
+
+Altr runs on the **latest stable** of every runtime, framework, and library. Not latest alpha / beta / canary. Not two versions behind "because it's been working fine." Latest stable.
+
+Why:
+- Security patches and bug fixes land in current releases, not back-ported to old majors
+- Our stack is small (2 apps + 1 package) so coordinated bumps are cheap
+- Deferring bumps means fighting N versions of accumulated breaking changes when we finally do — much worse than handling them one at a time
+- Every recent tool (React 19, Next 15, Vite 7, Tauri 2) ships meaningful DX wins we shouldn't leave on the table
+
+"LTS" doesn't formally apply to JS packages (Node.js has LTS, libraries don't). Read "latest LTS" as "latest production-stable release on the default npm dist-tag" throughout this doc.
+
+### Target versions (as of 2026-04-21)
+
+| Runtime / lib | Target | Notes |
+|---|---|---|
+| React | 19 (both desktop + landing) | Landing gets React 19 natively via Next.js 15. Desktop is on 18.3 — upgrade PR scheduled (see §Open-decisions below). |
+| Next.js | 15 (landing) | Pinned by SanityPress |
+| Tauri | 2 (desktop) | Rust side on `tauri = "2"` + `tauri-build = "2"` |
+| TypeScript | 5.9+ | Both apps |
+| Vite | 7 (desktop) | Upgrade from 6 when React 19 upgrade lands |
+| Tailwind | 4 | Both apps |
+| Rust | 1.77+ | Pinned in `src-tauri/Cargo.toml`; follow stable track |
+| Bun | 1.3+ | Pinned in root `package.json` `packageManager` field |
+| Turborepo | 2.9+ | Already at latest |
+| Zustand | 5+ | Already current |
+| TanStack Query | 5+ | Track minors; major upgrades get their own PR |
+| TipTap | 3 (when released) | Currently 2.x; TipTap 3 is in beta as of April 2026 — wait for stable |
+| Motion | 12+ | Package renamed from `framer-motion`; import from `motion/react` |
+| lucide-react | latest | Tracks icon-set updates |
+
+### Bumping process
+
+Two modes, both lightweight.
+
+**Weekly-ish "stay current" sweep** (solo dev, Sunday evening 30 min):
+
+```
+bun outdated            # surface gaps
+bun update              # patch + minor bumps across the tree
+turbo run typecheck lint
+```
+
+If everything passes, commit `chore(deps): weekly sweep <date>`. If something breaks, pin the offending dep to the prior version, file an issue for the real fix, commit separately as `chore(deps): pin <name>@<version>, <reason>`.
+
+**Major bumps** (per-major, per-package, their own PR):
+
+1. Read the upgrade guide for the target version
+2. Create a branch `chore/<name>-v<major>` (e.g., `chore/react-19`)
+3. Bump the dep + co-dependent deps (e.g., React 19 → react-dom 19 + @types/react 19 + eslint-plugin-react-hooks latest)
+4. Fix type errors, runtime errors, deprecation warnings
+5. Test the primary flow manually (desktop: launch + spec edit + agent run; landing: navigate + waitlist submit)
+6. Open PR with upgrade notes in the body
+7. Merge only after you've dogfooded the resulting build for at least one session
+
+Major bumps qualify as a `chore` with a changeset `--empty` — no version bump triggered.
+
+### CI gate
+
+Lite CI doesn't enforce freshness — enforcing "always on latest" in CI causes Friday-evening fire drills. Instead:
+
+- `bun outdated` runs in a scheduled weekly workflow (`.github/workflows/deps-report.yml`) that opens or updates a single "Weekly deps report" issue summarizing what's outdated
+- **Renovate** (added in Phase 4) groups related deps into single PRs — e.g., "Bump @tauri-apps/* to 2.5" bundles all Tauri plugins together
+
+### Anti-patterns
+
+- **No pinned caret-less versions** ("`react": "18.3.1"` without `^`) unless there's a specific reason the patch range would break. Caret is the default.
+- **No `npm audit` theatre.** `npm audit` (and `bun audit`) fires on transitive deps that don't affect us. Read findings, act on ones that matter, don't auto-apply fixes that bump a 40-package sub-tree to address a ReDoS in a test-only lib.
+- **No "we'll upgrade when we need a new feature" deferral.** That's how you end up with React 17 in 2026.
+- **No mixing package managers.** Bun only. Zero npm/yarn/pnpm in the tree.
+
+### Current gap
+
+React 18.3 → React 19 upgrade is the largest outstanding bump. It's not blocking today (desktop uses React 18, landing will use React 19 natively, `@altr/ui` primitives aren't built yet so no shared-component-type mismatch exists). Tackle in a dedicated PR before the `@altr/ui` component-extraction trigger fires (see `docs/landing-v1-plan.md` §3 shared-ready rule).
+
+### Open dependency questions
+
+- [ ] **React 18 → 19 on desktop.** Schedule before `@altr/ui` extraction trigger fires. Est 2-4h (type errors, Tauri webview compat testing).
+- [ ] **TipTap 2 → 3.** Wait for stable (currently beta). Est 4-6h when it lands.
+- [ ] **Vite 6 → 7.** Couples with React 19 upgrade. Bundle together.
+- [ ] **Rust edition 2021 → 2024.** When Rust stabilizes edition 2024 (expected late 2025; verify current status before scheduling). Est 1-2h.
+
+---
+
+## 13. Handoff note discipline
 
 At the end of each coding session, write `NOTES/handoff-YYYY-MM-DD.md` per CLAUDE.md §11. Handoffs reference this playbook by link — they describe *what shipped*, not *how we work*.

@@ -86,6 +86,7 @@ Uses `@altr/ui` primitives (Button, Input, etc.) but the MDX-rendering component
 - **remark-gfm** for tables, checklists, strikethrough.
 - **remark-reading-time** for per-post metadata.
 - **MiniSearch** or **FlexSearch** for client-side search across docs + changelog at build time.
+- **[motion](https://motion.dev/)** (formerly Framer Motion) for every MDX component transition: `<Tabs>` indicator slide, `<Accordion>` expand/collapse, `<Callout>` mount fade, `<Dialog>` scale-in, `<Steps>` number ticker. Uses `<LazyMotion>` + `domAnimation` feature to keep the bundle small. Honors `useReducedMotion()` everywhere.
 
 No Algolia, no external search infra until docs volume forces it.
 
