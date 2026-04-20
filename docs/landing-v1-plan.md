@@ -399,10 +399,10 @@ No 200-link mega-footer. The `llms.txt` link lives at the bottom-right as a soft
 
 Two-step flow:
 
-1. `POST /api/waitlist { email }` — validates (zod), writes to Supabase (service-role key, server-side only), sends double-opt-in email via Resend with a 30-day signed token (HMAC-SHA256, not a DB-backed nonce — survives DB loss)
+1. `POST /api/waitlist { email }` — validates (zod), writes to Supabase (secret key = `sb_secret_*`, server-side only, bypasses RLS), sends double-opt-in email via Resend with a 30-day signed token (HMAC-SHA256, not a DB-backed nonce — survives DB loss)
 2. `GET /api/waitlist/confirm?token=…` — verifies signature, marks `confirmed_at`, shows a small `/confirmed` page
 
-Supabase schema (see `docs/landing-v1-plan.md` §Waitlist-backend for full SQL; RLS **on** with zero policies so anon can't read/write — all traffic uses service-role key on the server).
+Supabase schema (see `docs/landing-v1-plan.md` §Waitlist-backend for full SQL; RLS **on** with zero policies so anon can't read/write — all traffic uses the secret key on the server).
 
 Rate-limit: Vercel edge-config or in-memory map by IP. Honeypot + client rate-limit. No CAPTCHA.
 
@@ -414,7 +414,8 @@ Rate-limit: Vercel edge-config or in-memory map by IP. Honeypot + client rate-li
 - `SANITY_REVALIDATE_SECRET` — webhook secret for on-demand ISR
 - `RESEND_API_KEY`
 - `SUPABASE_URL`
-- `SUPABASE_SERVICE_ROLE_KEY` (server-only; never ship to client)
+- `SUPABASE_SECRET_KEY` (`sb_secret_*` — server-only; never ship to client, never paste in chat)
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (`sb_publishable_*` — public, safe in client bundle)
 - `WAITLIST_SIGNING_SECRET`
 - `POSTHOG_KEY`
 - `INTERNAL_DOCS_PASSWORD` — Basic Auth for `/internal/*`; rotated with every team join/leave

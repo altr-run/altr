@@ -69,8 +69,8 @@ DNS records added so far:
 | Dashboard | https://supabase.com/dashboard/project/ixklnfhmnokbshgflbht |
 | SQL editor | https://supabase.com/dashboard/project/ixklnfhmnokbshgflbht/sql/new |
 | DB password | Stored in 1Password (`Altr – Supabase DB password`), never here |
-| Service role key | Stored as `SUPABASE_SERVICE_ROLE_KEY` in `apps/landing/.env.local` (server-only; never ship to client). Rotate at Settings → API in the dashboard. |
-| Anon key | Not used; all landing-waitlist traffic goes through server routes with the service-role key |
+| **Publishable key** (public, client-safe) | `sb_publishable_5xSDMTUZ5mIcf6OGxG-kBw_Y04srlzR` — stored as `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in env. Replaces the legacy "anon" key. Safe to ship in client bundles (security comes from RLS policies, not from hiding this key). Used by the client-side Supabase Auth SDK when team mode lands (v0.5+). |
+| **Secret key** (server-only) | `sb_secret_*` — stored as `SUPABASE_SECRET_KEY` in `apps/landing/.env.local` (server-only; never ship to client, never paste in chat). Replaces the legacy "service_role" key. Bypasses RLS. Used by server-side route handlers for the waitlist write path. Rotate at Settings → API in the dashboard. |
 
 Schema (single table; see `docs/landing-v1-plan.md` §Waitlist-backend for rationale):
 
@@ -85,8 +85,22 @@ create table public.waitlist (
 );
 
 alter table public.waitlist enable row level security;
--- no policies: anon + authenticated denied; service-role bypasses RLS
+-- no policies: anon + authenticated denied; the secret key bypasses RLS
 ```
+
+### Direct Postgres connection (for migrations / psql)
+
+Host: `db.ixklnfhmnokbshgflbht.supabase.co:5432`
+Database: `postgres`
+User: `postgres`
+Password: stored in 1Password (`Altr – Supabase DB password`)
+
+Connection string template:
+```
+postgresql://postgres:<PASSWORD>@db.ixklnfhmnokbshgflbht.supabase.co:5432/postgres
+```
+
+Used for: schema migrations via `psql` or Prisma/Drizzle tooling; never for app runtime (runtime uses the Supabase JS SDK + secret key). Keep the password in 1Password; pull into shells via `op read 'op://altr/Supabase DB/password'`.
 
 ### 5.1 Supabase Auth (future — v0.5+)
 
@@ -167,7 +181,8 @@ This is end-user state, not project infra — the entry is here for the runbook'
 | Secret | Local dev | Production |
 |---|---|---|
 | `SANITY_API_READ_TOKEN` | `apps/landing/.env.local` | Vercel env |
-| `SUPABASE_SERVICE_ROLE_KEY` | `apps/landing/.env.local` | Vercel env |
+| `SUPABASE_SECRET_KEY` (`sb_secret_*`) | `apps/landing/.env.local` | Vercel env |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (`sb_publishable_*`) | `apps/landing/.env.local` | Vercel env — **public**, ships in bundle |
 | `INTERNAL_DOCS_PASSWORD` | `apps/landing/.env.local` | Vercel env (rotate on team changes) |
 | `RESEND_API_KEY` | `apps/landing/.env.local` | Vercel env |
 | `WAITLIST_SIGNING_SECRET` | `apps/landing/.env.local` | Vercel env |
