@@ -4,13 +4,13 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build", "typecheck"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
     },
     "typecheck": {
-      "dependsOn": ["^typecheck"]
+      "dependsOn": ["^typecheck", "sanity:typegen"]
     },
     "dev": {
       "cache": false,
@@ -19,6 +19,19 @@
     "preview": {
       "cache": false,
       "persistent": true
+    },
+    "sanity:typegen": {
+      "inputs": [
+        "src/sanity/**/*.{ts,tsx}",
+        "src/app/**/*.{ts,tsx}",
+        "src/ui/**/*.{ts,tsx}",
+        "sanity.cli.ts",
+        "sanity.config.ts"
+      ],
+      "outputs": [
+        "src/sanity/schema.json",
+        "src/sanity/types.ts"
+      ]
     },
     "tauri:dev": {
       "cache": false,

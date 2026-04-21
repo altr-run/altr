@@ -1,49 +1,62 @@
 name: lite
 
-# Thin "is it sane?" gate. See CLAUDE.md §15.
-# Heavy things (bundle, codesign, notarize) live in the release workflow, not here.
+# On-demand only. No auto-runs on push/PR.
+# Trigger via: Actions tab -> "lite" -> "Run workflow"
+# Or via gh CLI: gh workflow run lite.yml
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      job:
+        description: "Which job(s) to run"
+        type: choice
+        default: "all"
+        options:
+          - all
+          - lint-landing
+          - lint-ts
+          - lint-rust
+          - check-rust
 
 concurrency:
   group: lite-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  # ──────────────────────────────────────────────────────────────
-  # TS side — fast, runs on every push. Ubuntu because we don't
-  # need a mac for lint/typecheck and Ubuntu runners are cheap.
-  # ──────────────────────────────────────────────────────────────
   lint-ts:
+    if: ${{ inputs.job == 'all' || inputs.job == 'lint-ts' }}
     name: lint + typecheck (ts)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: "1.3.12"
-
       - run: bun install --frozen-lockfile
+      - run: bun run lint
+      - run: bun run typecheck
 
-      - name: eslint
-        run: bun run lint
+  lint-landing:
+    if: ${{ inputs.job == 'all' || inputs.job == 'lint-landing' }}
+    name: typegen + lint + typecheck (landing)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NEXT_PUBLIC_SANITY_PROJECT_ID: wyr088n5
+      NEXT_PUBLIC_SANITY_DATASET: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.12"
+      - run: bun install --frozen-lockfile
+      - run: bun run landing:typegen
+      - run: bun run --filter=@altr/landing lint
+      - run: bun run --filter=@altr/landing typecheck
 
-      - name: typecheck
-        run: bun run typecheck
-
-  # ──────────────────────────────────────────────────────────────
-  # Rust side — macOS arm64 because our target is Mac-native and
-  # Tauri 2 pulls in macOS-specific system deps (webkit2gtk is only
-  # for Linux; on macOS we use WKWebView). Running on ubuntu would
-  # be faster but misleading.
-  # ──────────────────────────────────────────────────────────────
   lint-rust:
+    if: ${{ inputs.job == 'all' || inputs.job == 'lint-rust' }}
     name: fmt + clippy (rust)
     runs-on: macos-14
     timeout-minutes: 20
@@ -52,24 +65,18 @@ jobs:
         working-directory: apps/desktop/src-tauri
     steps:
       - uses: actions/checkout@v4
-
-      - name: install rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
           targets: aarch64-apple-darwin
-
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: apps/desktop/src-tauri
-
-      - name: cargo fmt
-        run: cargo fmt --all -- --check
-
-      - name: cargo clippy
-        run: cargo clippy --all-targets --locked -- -D warnings
+      - run: cargo fmt --all -- --check
+      - run: cargo clippy --all-targets --locked -- -D warnings
 
   check-rust:
+    if: ${{ inputs.job == 'all' || inputs.job == 'check-rust' }}
     name: cargo check (rust)
     runs-on: macos-14
     timeout-minutes: 30
@@ -78,15 +85,10 @@ jobs:
         working-directory: apps/desktop/src-tauri
     steps:
       - uses: actions/checkout@v4
-
-      - name: install rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-apple-darwin
-
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: apps/desktop/src-tauri
-
-      - name: cargo check
-        run: cargo check --locked --all-targets
+      - run: cargo check --locked --all-targets

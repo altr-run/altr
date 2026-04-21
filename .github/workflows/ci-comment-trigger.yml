@@ -1,0 +1,76 @@
+name: ci-comment-trigger
+
+# Dispatch lite.yml from a PR comment.
+# Usage (anywhere in the comment body):
+#   /ci                 -> run all lite jobs
+#   /ci lint-ts         -> run only TS lint + typecheck
+#   /ci lint-landing    -> run only landing typegen + lint + typecheck
+#   /ci lint-rust       -> run only rust fmt + clippy
+#   /ci check-rust      -> run only cargo check
+#
+# Only repo members (OWNER/MEMBER/COLLABORATOR) can trigger.
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  trigger:
+    if: |
+      github.event.issue.pull_request != null &&
+      contains(github.event.comment.body, '/ci') &&
+      (github.event.comment.author_association == 'OWNER' ||
+       github.event.comment.author_association == 'MEMBER' ||
+       github.event.comment.author_association == 'COLLABORATOR')
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+      pull-requests: write
+    steps:
+      - name: react to comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID/reactions" \
+            -f "content=rocket" >/dev/null
+
+      - name: parse job name and PR head ref
+        id: parse
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: ${{ github.event.comment.body }}
+          PR_NUM: ${{ github.event.issue.number }}
+        run: |
+          # Extract the word right after /ci (single token, alnum + dash only).
+          JOB=$(printf '%s' "$BODY" | awk 'match($0,/\/ci[[:space:]]+([a-z0-9-]+)/,m){print m[1]; exit}')
+          case "${JOB:-all}" in
+            all|lint-ts|lint-landing|lint-rust|check-rust) ;;
+            *) JOB=all ;;
+          esac
+          echo "job=$JOB" >> "$GITHUB_OUTPUT"
+          REF=$(gh pr view "$PR_NUM" --json headRefName --jq .headRefName --repo "$GITHUB_REPOSITORY")
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+
+      - name: dispatch lite.yml
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB: ${{ steps.parse.outputs.job }}
+          REF: ${{ steps.parse.outputs.ref }}
+        run: |
+          gh workflow run lite.yml --ref "$REF" -f "job=$JOB" --repo "$GITHUB_REPOSITORY"
+
+      - name: ack on PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB: ${{ steps.parse.outputs.job }}
+          REF: ${{ steps.parse.outputs.ref }}
+          PR_NUM: ${{ github.event.issue.number }}
+        run: |
+          gh pr comment "$PR_NUM" \
+            --body "CI dispatched: \`lite.yml / $JOB\` on branch \`$REF\`. Watch: https://github.com/$GITHUB_REPOSITORY/actions/workflows/lite.yml" \
+            --repo "$GITHUB_REPOSITORY"
