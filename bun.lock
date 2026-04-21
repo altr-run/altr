@@ -52,6 +52,7 @@
         "@sanity/asset-utils": "^2.3.0",
         "@sanity/assist": "^6.0.4",
         "@sanity/cli": "^6.3.2",
+        "@sanity/client": "^7.21.0",
         "@sanity/code-input": "^7.1.0",
         "@sanity/codegen": "^6.0.2",
         "@sanity/dashboard": "^5.0.1",
