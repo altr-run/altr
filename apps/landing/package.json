@@ -3,9 +3,10 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev --webpack",
-		"dev:turbopack": "next dev",
-		"build": "next build --webpack",
+		"dev": "next dev",
+		"dev:webpack": "next dev --webpack",
+		"build": "next build",
+		"build:webpack": "next build --webpack",
 		"start": "next start",
 		"lint": "echo 'lint: deferred — next lint was removed in Next 16; flat eslint migration tracked for PR #4' && exit 0",
 		"typecheck": "tsc --noEmit",
@@ -43,7 +44,7 @@
 	"devDependencies": {
 		"@ianvs/prettier-plugin-sort-imports": "^4.7.1",
 		"@tailwindcss/postcss": "^4.2.3",
-		"@types/node": "^25.6.0",
+		"@types/node": "^24.12.2",
 		"@types/react": "19.2.14",
 		"@types/react-dom": "19.2.3",
 		"prettier": "^3.8.3",
