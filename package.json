@@ -24,7 +24,10 @@
     "desktop:build": "turbo run build --filter=@altr/desktop",
     "desktop:preview": "turbo run preview --filter=@altr/desktop",
     "desktop:tauri:dev": "turbo run tauri:dev --filter=@altr/desktop",
-    "desktop:tauri:build": "turbo run tauri:build --filter=@altr/desktop"
+    "desktop:tauri:build": "turbo run tauri:build --filter=@altr/desktop",
+    "landing:dev": "turbo run dev --filter=@altr/landing",
+    "landing:build": "turbo run build --filter=@altr/landing",
+    "landing:typegen": "turbo run sanity:typegen --filter=@altr/landing"
   },
   "devDependencies": {
     "turbo": "^2.9.6"
