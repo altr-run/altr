@@ -6,6 +6,10 @@ import { client } from './src/sanity/lib/client'
 const nextConfig: NextConfig = {
 	reactCompiler: true,
 
+	// Pin the workspace root so Next doesn't walk up and pick a stray
+	// lockfile in ~/ as the root (monorepo-correct).
+	outputFileTracingRoot: new URL('../../', import.meta.url).pathname,
+
 	images: {
 		localPatterns: [{ pathname: '/api/og' }],
 		remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],

@@ -6,7 +6,6 @@
 		"dev": "next dev",
 		"dev:webpack": "next dev --webpack",
 		"build": "next build",
-		"build:webpack": "next build --webpack",
 		"start": "next start",
 		"lint": "echo 'lint: deferred — next lint was removed in Next 16; flat eslint migration tracked for PR #4' && exit 0",
 		"typecheck": "tsc --noEmit",
