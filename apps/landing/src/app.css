@@ -24,6 +24,16 @@
 
 @variant headings (& :is(h1, h2, h3, h4, h5, h6));
 
+/* When the custom home page is active, hide the Sanity header/footer
+   and unwrap the <main> so the home page controls its own layout */
+body:has([data-home-page]) > header:first-of-type,
+body:has([data-home-page]) > footer:last-of-type {
+	display: none;
+}
+body:has([data-home-page]) > main {
+	display: contents;
+}
+
 @layer base {
 	@supports (interpolate-size: allow-keywords) {
 		:root {

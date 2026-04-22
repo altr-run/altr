@@ -12,14 +12,24 @@ import {
 	MODULES_QUERY,
 } from '@/sanity/lib/queries'
 import type { PAGE_QUERY_RESULT } from '@/sanity/types'
+import HomePage from '@/ui/home/home-page'
 import ModulesResolver from '@/ui/modules'
 
 type Props = {
 	params: Promise<{ slug?: string[] }>
 }
 
+function isHomePage(slug?: string[]) {
+	return !slug || slug.length === 0
+}
+
 export default async function Page({ params }: Props) {
 	const { slug } = await params
+
+	if (isHomePage(slug)) {
+		return <HomePage />
+	}
+
 	const page = await getPage(slug)
 	if (!page) notFound()
 
@@ -28,6 +38,15 @@ export default async function Page({ params }: Props) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { slug } = await params
+
+	if (isHomePage(slug)) {
+		return {
+			title: 'Altr — where humans and AI ship together',
+			description:
+				'The workspace where your team and AI teammates work in the same threads, on the same specs, toward the same PRs. Mac-native. Local-first.',
+		}
+	}
+
 	const [page, site] = await Promise.all([getPage(slug), getSite()])
 	const { title, description, image, noIndex } = page?.metadata ?? {}
 

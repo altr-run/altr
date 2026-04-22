@@ -1,4 +1,4 @@
-import { Mona_Sans } from 'next/font/google'
+import { Instrument_Serif, Inter, Mona_Sans } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { preconnect } from 'react-dom'
 import Footer from '@/ui/footer'
@@ -11,6 +11,18 @@ const fontSans = Mona_Sans({
 	variable: '--font-sans',
 })
 
+const fontSerif = Instrument_Serif({
+	subsets: ['latin'],
+	weight: '400',
+	style: ['normal', 'italic'],
+	variable: '--font-serif',
+})
+
+const fontInter = Inter({
+	subsets: ['latin'],
+	variable: '--font-inter',
+})
+
 export default async function RootLayout({
 	children,
 }: Readonly<{
@@ -21,7 +33,7 @@ export default async function RootLayout({
 	return (
 		<html
 			lang="en"
-			className={fontSans.className}
+			className={`${fontSans.className} ${fontSerif.variable} ${fontInter.variable}`}
 			data-scroll-behavior="smooth"
 		>
 			<NuqsAdapter>
