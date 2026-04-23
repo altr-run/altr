@@ -14,11 +14,12 @@ export default function Manifesto() {
 							justifyContent: 'center',
 						}}
 					>
-						§ a note from the founder
+						§ why teams switch
 					</span>
 					<h2 className={s.manifestoH2}>
-						A short manifesto, because{' '}
-						<em>we kept having the same meeting.</em>
+						Context disappears <em>between the tools.</em>
+						<br />
+						That&apos;s where the work gets lost.
 					</h2>
 				</Reveal>
 				<Reveal>
@@ -26,50 +27,33 @@ export default function Manifesto() {
 						<div className={s.manifestoMark}>&ldquo;</div>
 						<div>
 							<p>
-								<span className={s.manifestoDrop}>S</span>
-								oftware teams keep inventing new ways to
-								coordinate, and somehow we keep inventing the
-								same new way. A Slack channel becomes a Notion
-								doc becomes a Linear ticket becomes a branch
-								becomes a PR becomes a Slack channel. The
-								knowledge leaks at every boundary. Context dies
-								at every handoff.
+								<span className={s.manifestoDrop}>T</span>
+								he product signal starts in one place, the
+								decision happens in another, and the PR lands
+								somewhere else. A request becomes a thread
+								becomes a spec becomes a branch becomes a review
+								becomes a status update. The team spends more
+								time reconnecting the loop than moving it
+								forward.
 							</p>
 							<p>
-								We think the thread should just{' '}
-								<b>be the work.</b> The conversation where an
-								idea is born should be the same surface where it
-								turns into a spec, a branch, a draft PR, and a
-								merged change. Not a{' '}
-								<em>digital paper trail</em> — a single
-								continuous document.
+								Altr keeps the conversation, the artifact, and
+								the decision in the same room. The thread turns
+								into a spec, the spec stays attached to the diff,
+								and the review keeps the full trail intact.{' '}
+								<b>The work stays legible as it ships.</b>
 							</p>
 							<p>
-								We also think AI coworkers deserve{' '}
-								<b>real roles, not magic wands.</b> Not a
-								chatbot that answers questions. Not a copilot
-								that autocompletes. A coworker with a name, a
-								memory, a role you can review — one you can{' '}
-								<em>disagree with in the margins</em> and trust
-								to catch what you missed.
-							</p>
-							<p>
-								Altr is what happens when you pull those two
-								threads. It&apos;s the workspace where humans
-								and AI ship together —{' '}
-								<b>
-									as peers, in public, with the full audit
-									trail
-								</b>{' '}
-								— and where the next sprint starts where the
-								last one left off. No more status updates. No
-								more &ldquo;where&apos;s the spec?&rdquo;. Just
-								the work, and everyone, including the agents,
-								pulling their weight.
+								The result is not another AI surface. It is a
+								product workspace where humans and agents can
+								operate with the same context, the same memory,
+								and the same standard of review from first signal
+								to merged change.
 							</p>
 							<p className={s.manifestoFade}>
-								Thank you for being early. We&apos;re building
-								this in the open, one sprint at a time.
+								That is the shift: fewer handoffs, fewer shadow
+								docs, and a much tighter path from decision to
+								what actually ships.
 							</p>
 						</div>
 						<div
@@ -84,7 +68,7 @@ export default function Manifesto() {
 							<div>
 								<b>Mukul Chugh</b>
 							</div>
-							<div>Founder · April 2026</div>
+							<div>Founder · on building the loop</div>
 						</div>
 					</div>
 				</Reveal>

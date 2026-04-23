@@ -30,11 +30,11 @@
   --mint: #8fb088;
   --mint-soft: #dfe8d7;
 
-  /* Lime green — tuned darker for text on light surfaces */
-  --lime: #6F9652;
-  --lime-2: #5E8345;
-  --lime-soft: #DDE8D2;
-  --lime-ink: #2E4625;
+  /* Lime green — brighter, cleaner brand accent */
+  --lime: #7FAA4B;
+  --lime-2: #6B933D;
+  --lime-soft: #E4F0D7;
+  --lime-ink: #314C1F;
 
   /* Accent binding */
   --acc: var(--lime);
@@ -88,8 +88,8 @@
   --mint: #A8C7A0;
   --mint-soft: #2A3626;
 
-  --lime: #9BC77E;
-  --lime-2: #86B36A;
+  --lime: #B1DA83;
+  --lime-2: #97C26B;
   --lime-soft: #1A2E14;
-  --lime-ink: #D9ECCB;
+  --lime-ink: #E8F6D9;
 }

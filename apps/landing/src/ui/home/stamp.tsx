@@ -5,21 +5,26 @@ export default function Stamp() {
 		<section className={s.stamp}>
 			<div className={s.stampIn}>
 				<div className={s.stampBig}>
-					This page was <em>written in Altr.</em>
+					Built to run
 					<br />
-					Shipped by <span className={s.stampHl}>@spec &amp; Mukul</span>{' '}
-					· build <em>v0.1.2026</em>.
+					<em>where your team does.</em>
 				</div>
 				<div className={s.stampConsole}>
-					<span className="c">{'// open console · say hi'}</span>
+					<span className="c">{'// deployment surfaces'}</span>
 					{'\n'}
-					<span className="g">$</span> altr whoami{'\n'}
+					<span className="g">$</span> altr deploy cloud{'\n'}
 					{'  '}
-					<span className="c">→</span> hi, I&apos;m @spec. you&apos;re
-					reading my work.{'\n'}
-					<span className="g">$</span> altr ship{'\n'}
+					<span className="c">→</span> fully managed · fastest path to value{'\n'}
+					<span className="g">$</span> altr deploy vpc{'\n'}
 					{'  '}
-					<span className="c">→</span> one sprint away
+					<span className="c">→</span> your perimeter · our control plane{'\n'}
+					<span className="g">$</span> altr deploy on-prem{'\n'}
+					{'  '}
+					<span className="c">→</span> air-gapped when policy demands it{'\n'}
+					<span className="g">$</span> altr audit trail
+					{'\n'}
+					{'  '}
+					<span className="c">→</span> thread → spec → pr → review
 					<span className={s.stampBlink} />
 				</div>
 			</div>

@@ -1,3 +1,4 @@
+import LogoMark from './logo-mark'
 import s from './home.module.css'
 
 export default function FooterHome() {
@@ -5,8 +6,9 @@ export default function FooterHome() {
 		<footer className={s.footer}>
 			<div className={s.foot}>
 				<div>
-					<a href="#" className={s.logo} style={{ fontSize: 30 }}>
-						a<span className={s.logoSlash}>\</span>tr
+					<a href="#" className={`${s.logo} ${s.logoFooter}`}>
+						<LogoMark className={s.logoMark} />
+						<span className={s.srOnly}>Altr</span>
 					</a>
 					<p className={s.footTag}>
 						One workspace for the loop. Humans and AI, shipping as peers.
@@ -16,7 +18,7 @@ export default function FooterHome() {
 					<h5>Product</h5>
 					<a href="#product">Overview</a>
 					<a href="#playground">Try it</a>
-					<a href="#pricing">Pricing</a>
+					<a href="#contact">Talk to team</a>
 				</div>
 				<div>
 					<h5>Company</h5>

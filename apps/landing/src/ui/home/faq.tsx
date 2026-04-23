@@ -6,10 +6,6 @@ import Reveal from './reveal'
 
 const ITEMS = [
 	{
-		q: <>Is Altr <em>Mac-only?</em></>,
-		a: "For now, yes. Mac-native, not Electron. Windows and Linux are on the 2027 roadmap. We'd rather ship one great client than three mediocre ones.",
-	},
-	{
 		q: <>Where do my <em>files live?</em></>,
 		a: 'On your Mac, encrypted at rest. Agents call models over your API keys; nothing becomes training data. Full details in the security whitepaper.',
 	},
@@ -20,10 +16,6 @@ const ITEMS = [
 	{
 		q: <>How is this different from <em>Devin?</em></>,
 		a: "Devin is an autonomous cloud engineer. Altr is a workspace where humans and several agents collaborate on your machine, with humans in the driver's seat. Different problem, different shape.",
-	},
-	{
-		q: <>When is <em>public launch?</em></>,
-		a: 'Private beta coming soon, public launch later in 2026. Request access to join the beta cohort.',
 	},
 	{
 		q: <>Do you have <em>SOC 2?</em></>,
@@ -44,10 +36,12 @@ export default function FAQ() {
 				<Reveal className={s.faqHead}>
 					<div>
 						<span className={s.over} style={{ display: 'inline-block', marginBottom: 16 }}>
-							§ 04 · straight answers
+							§ faq
 						</span>
 						<h2 className={s.h2}>
-							Questions <em>we hear weekly.</em>
+							Questions serious teams ask
+							<br />
+							<em>before they switch.</em>
 						</h2>
 					</div>
 					<p className={s.lede}>

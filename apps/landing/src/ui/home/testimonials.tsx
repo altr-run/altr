@@ -5,9 +5,9 @@ const QUOTES = [
 	{
 		text: (
 			<>
-				&ldquo;<em>@spec asks better questions than I do.</em> It caught
-				an edge case in our auth flow I&apos;d been ignoring for
-				months.&rdquo;
+				&ldquo;<em>@spec asks better questions than I do.</em> The
+				thread already had the context, so the spec came out reviewable
+				in minutes, not after three meetings.&rdquo;
 			</>
 		),
 		initials: 'EJ',
@@ -18,9 +18,9 @@ const QUOTES = [
 	{
 		text: (
 			<>
-				&ldquo;We stopped spending Monday in standup.{' '}
-				<em>The spec is the standup now.</em> Three agents, four humans,
-				one thread.&rdquo;
+				&ldquo;We stopped losing the reasoning between Slack, Linear, and
+				GitHub. <em>The spec is the standup now.</em> The PR arrives with
+				the full trail attached.&rdquo;
 			</>
 		),
 		initials: 'RP',
@@ -31,9 +31,9 @@ const QUOTES = [
 	{
 		text: (
 			<>
-				&ldquo;I&apos;ve been burned by AI tools before. Altr is the
-				first where{' '}
-				<em>the agent feels like a coworker,</em> not a chatbot.&rdquo;
+				&ldquo;I&apos;ve been burned by AI tools before. Altr is the first
+				one that feels like a real operating surface for the team, not a
+				sidecar. <em>The agents show up with context.</em>&rdquo;
 			</>
 		),
 		initials: 'MC',
@@ -56,15 +56,17 @@ export default function Testimonials() {
 								marginBottom: 16,
 							}}
 						>
-							§ 04 · the word
+							§ customer proof
 						</span>
 						<h2 className={s.h2}>
-							What teams are <em>saying.</em>
+							What changes when the
+							<br />
+							<em>whole loop lives together.</em>
 						</h2>
 					</div>
 					<p className={s.lede}>
-						Seven months into private beta, 140 teams across 19 time
-						zones. Here&apos;s a sample.
+						Across beta teams, the story is consistent: less coordination
+						drag, stronger specs, and better review context.
 					</p>
 				</Reveal>
 				<Reveal>

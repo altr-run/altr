@@ -3,36 +3,30 @@ import Reveal from './reveal'
 
 const STEPS = [
 	{
-		title: 'Open a thread',
+		title: 'Human review stays central',
 		desc: (
 			<>
-				Start the way you always do — a rough idea, a Slack-style thread.
-				Mention{' '}
-				<span className={s.mono} style={{ color: 'var(--acc)' }}>
-					@spec
-				</span>
-				.
+				Agents can draft, propose, and queue work, but humans still own
+				the decision to comment, request changes, approve, and merge.
 			</>
 		),
 	},
 	{
-		title: 'Structure the spec',
-		desc: '@spec turns the thread into AC, open questions, and owner callouts. You edit; they follow.',
+		title: 'Every action has a trail',
+		desc: 'Specs, comments, diffs, and agent decisions remain attributable and reviewable. The rationale survives the sprint.',
 	},
 	{
-		title: 'Draft the PR',
+		title: 'Bring your own keys',
 		desc: (
 			<>
-				<span className={s.mono} style={{ color: 'var(--ink)' }}>
-					@eng
-				</span>{' '}
-				opens a branch, plans the work, and drafts the diff — with tests.
+				Run Altr on your stack with your model providers, or use managed
+				credits when that is faster. The control plane stays yours.
 			</>
 		),
 	},
 	{
-		title: 'Review & ship',
-		desc: "You review like any teammate's PR. Comment, request changes, merge. The loop closes.",
+		title: 'Deploy where you need it',
+		desc: 'Start local-first on Mac, then expand to dedicated environments, VPCs, or on-prem setups as security requirements tighten.',
 	},
 ]
 
@@ -42,12 +36,12 @@ export default function How() {
 			<div className={s.howIn}>
 				<Reveal className={s.howHead}>
 					<span className={s.over} style={{ display: 'inline-block', marginBottom: 20 }}>
-						§ 02 · how it works
+						§ trust and control
 					</span>
 					<h2 className={s.h2} style={{ textWrap: 'balance' }}>
-						Five minutes from <em>idea</em>
+						Enterprise discipline.
 						<br />
-						to <em>draft PR.</em>
+						<em>Built into the loop.</em>
 					</h2>
 				</Reveal>
 				<Reveal>

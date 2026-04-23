@@ -2,10 +2,10 @@ import s from './home.module.css'
 import Reveal from './reveal'
 
 const STATS = [
-	{ value: '12,400', label: 'PRs drafted' },
+	{ value: '140', label: 'teams in beta' },
 	{ value: '3.4', suffix: '×', label: 'faster spec-to-PR' },
 	{ value: '68', suffix: '%', label: 'merged on first review' },
-	{ value: '2h 41m', label: 'median draft time' },
+	{ value: '2,417', label: 'PRs shipped this week' },
 ]
 
 export default function Metrics() {
@@ -17,10 +17,12 @@ export default function Metrics() {
 						className={s.over}
 						style={{ display: 'inline-block', marginBottom: 16 }}
 					>
-						§ 03 · beta metrics
+						§ proof
 					</span>
 					<h2 className={s.h2}>
-						What <em>140 teams</em> have shipped so far.
+						Signals from teams already
+						<br />
+						<em>running the loop.</em>
 					</h2>
 				</Reveal>
 				<Reveal>

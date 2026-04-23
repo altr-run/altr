@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import LogoMark from './logo-mark'
 import s from './home.module.css'
 
 export default function Nav() {
@@ -57,13 +58,14 @@ export default function Nav() {
 			<div className={s.navIn}>
 				<div className={s.navLeft}>
 					<a href="#" className={s.logo}>
-						a<span className={s.logoSlash}>\</span>tr
+						<LogoMark className={s.logoMark} />
+						<span className={s.srOnly}>Altr</span>
 					</a>
 				</div>
 				<div className={s.navLinks}>
 					<a href="#product">Product</a>
 					<a href="#playground">Try it</a>
-					<a href="#pricing">Pricing</a>
+					<a href="#contact">Talk to team</a>
 					<a href="#faq">FAQ</a>
 					<a href="#manifesto">Manifesto</a>
 				</div>

@@ -5,18 +5,15 @@ import s from './home.module.css'
 export default function CTAClose() {
 	return (
 		<section className={s.close} id="close">
-			<span className={s.chip}>
-				<span className={s.chipDot} />
-				private beta opens <b>soon</b>
-			</span>
 			<h2 className={s.closeH2}>
-				Run your next
+				Bring your next
 				<br />
-				sprint with <span className={s.acc}>Altr.</span>
+				product loop into <span className={s.acc}>one room.</span>
 			</h2>
 			<p className={s.lede} style={{ margin: '0 auto 32px' }}>
-				Request access and we&apos;ll send your invite on day one of the
-				beta, before the waitlist sees it.
+				If your team is tired of rebuilding context between every handoff,
+				we&apos;ll walk you through Altr with your own workflow, your own
+				stack, and your own standards.
 			</p>
 			<form
 				className={s.closeForm}
@@ -39,7 +36,7 @@ export default function CTAClose() {
 				</button>
 			</form>
 			<div className={s.closeNote}>
-				no spam · unsubscribe anytime
+				founder-led onboarding · no spam · unsubscribe anytime
 			</div>
 		</section>
 	)
