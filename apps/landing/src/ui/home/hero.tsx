@@ -1,6 +1,6 @@
 'use client'
 
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import { useEffect, useState } from 'react'
 import s from './home.module.css'
 import Reveal from './reveal'
@@ -16,6 +16,13 @@ export default function Hero() {
 		}, 6500)
 		return () => window.clearInterval(interval)
 	}, [])
+
+	// track raw window scroll so animation reacts immediately on first scroll
+	const { scrollY } = useScroll()
+
+	const shotScale   = useTransform(scrollY, [0, 520], [0.72, 1.0])
+	const shotRotateX = useTransform(scrollY, [0, 520], [10, 0])
+	const shotY       = useTransform(scrollY, [0, 520], [-40, 0])
 
 	const word = ROTATING_WORDS[wordIndex]
 
@@ -98,7 +105,15 @@ export default function Hero() {
 				</div>
 			</div>
 
-			<div className={s.heroShotWrap}>
+			<motion.div
+				className={s.heroShotWrap}
+				style={{
+					scale: shotScale,
+					rotateX: shotRotateX,
+					y: shotY,
+					transformPerspective: 1200,
+				}}
+			>
 				<Reveal>
 					<div className={s.heroShot} id="product">
 						<div className={s.pcBar}>
@@ -225,7 +240,7 @@ export default function Hero() {
 						</div>
 					</div>
 				</Reveal>
-			</div>
+			</motion.div>
 		</section>
 	)
 }

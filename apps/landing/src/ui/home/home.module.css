@@ -614,7 +614,10 @@
 	--hero-ink-2: rgba(243, 247, 239, 0.78);
 	--hero-ink-3: rgba(243, 247, 239, 0.58);
 	--hero-ink-4: rgba(243, 247, 239, 0.28);
-	padding: 88px 32px 96px;
+	padding: 0 32px 0;
+	min-height: 170svh;
+	display: flex;
+	flex-direction: column;
 	border-bottom: 1px solid var(--hero-line);
 	position: relative;
 	overflow: hidden;
@@ -663,14 +666,18 @@
 }
 .heroWrap {
 	max-width: 1020px;
+	width: 100%;
 	margin: 0 auto;
 	text-align: center;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 	gap: 28px;
 	position: relative;
 	z-index: 1;
+	flex: 1;
+	padding: 140px 0 40px;
 }
 .heroNote {
 	position: absolute;
@@ -766,11 +773,13 @@
 
 /* ================= PRODUCT SHOT ================= */
 .heroShotWrap {
-	max-width: 1180px;
-	margin: 84px auto 0;
-	padding: 0 32px;
+	max-width: 1240px;
+	margin: 16px auto 0;
+	padding: 0 24px 120px;
 	position: relative;
 	z-index: 1;
+	transform-origin: center bottom;
+	perspective: 1200px;
 }
 .heroShot {
 	border-radius: var(--r-xl);
@@ -839,7 +848,7 @@
 .pcBody {
 	display: grid;
 	grid-template-columns: 1fr 340px;
-	min-height: 600px;
+	min-height: 680px;
 }
 .pcDoc {
 	padding: 40px 48px;
@@ -2256,29 +2265,44 @@
 	font-size: 18px;
 }
 .manifestoSign {
-	margin-top: 56px;
+	margin-top: 64px;
 	display: flex;
-	align-items: center;
-	gap: 16px;
 	justify-content: flex-end;
-	font-family: var(--f-mono);
-	font-size: 11.5px;
-	color: var(--ink-3);
-	letter-spacing: 0.04em;
+}
+.manifestoSigBlock {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 10px;
 }
 .manifestoSig {
-	font-family: var(--f-serif);
-	font-style: italic;
-	font-size: 28px;
+	font-family: var(--font-sig), cursive;
+	font-weight: 400;
+	font-size: 64px;
+	line-height: 1;
 	color: var(--ink);
-	transform: rotate(-2deg);
+	letter-spacing: 0.02em;
 }
-.manifestoSign b {
-	font-family: var(--f-sans);
-	font-weight: 600;
-	color: var(--ink);
-	letter-spacing: -0.01em;
-	font-size: 13px;
+.manifestoSigMeta {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 4px;
+	font-family: var(--f-mono);
+	font-size: 11px;
+	color: var(--ink-3);
+	letter-spacing: 0.05em;
+	border-top: 1px solid var(--line);
+	padding-top: 12px;
+}
+.manifestoSigLink {
+	color: var(--acc);
+	text-decoration: none;
+	letter-spacing: 0.04em;
+	transition: opacity 0.2s ease;
+}
+.manifestoSigLink:hover {
+	opacity: 0.7;
 }
 
 /* ================= SECTION SPLIT HEAD ================= */
@@ -2324,7 +2348,7 @@
 		gap: 12px;
 	}
 	.hero {
-		padding: 48px 20px 40px;
+		padding: 0 20px;
 	}
 	.heroShotWrap {
 		padding: 0 20px;

@@ -63,12 +63,19 @@ export default function Manifesto() {
 						</div>
 					</div>
 					<div className={s.manifestoSign}>
-						<span className={s.manifestoSig}>Mukul</span>
-						<div>
-							<div>
-								<b>Mukul Chugh</b>
+						<div className={s.manifestoSigBlock}>
+							<span className={s.manifestoSig}>Mukul</span>
+							<div className={s.manifestoSigMeta}>
+								<span>creating digital experiences for humans</span>
+								<a
+									href="https://mukulchugh.com"
+									target="_blank"
+									rel="noopener noreferrer"
+									className={s.manifestoSigLink}
+								>
+									mukulchugh.com →
+								</a>
 							</div>
-							<div>Founder · on building the loop</div>
 						</div>
 					</div>
 				</Reveal>

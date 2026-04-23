@@ -1,5 +1,5 @@
 import localFont from 'next/font/local'
-import { Mona_Sans } from 'next/font/google'
+import { Mona_Sans, Shalimar } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { preconnect } from 'react-dom'
 import Footer from '@/ui/footer'
@@ -11,6 +11,13 @@ const fontSans = Mona_Sans({
 	subsets: ['latin'],
 	variable: '--font-sans',
 })
+
+const fontSignature = Shalimar({
+	weight: '400',
+	subsets: ['latin'],
+	variable: '--font-sig',
+})
+
 
 const fontSerif = localFont({
 	src: [
@@ -38,7 +45,7 @@ export default async function RootLayout({
 	return (
 		<html
 			lang="en"
-			className={`${fontSans.className} ${fontSerif.variable}`}
+			className={`${fontSans.className} ${fontSerif.variable} ${fontSignature.variable}`}
 			data-scroll-behavior="smooth"
 		>
 			<NuqsAdapter>
