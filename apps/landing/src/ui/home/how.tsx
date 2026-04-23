@@ -44,19 +44,17 @@ export default function How() {
 						<em>Built into the loop.</em>
 					</h2>
 				</Reveal>
-				<Reveal>
-					<div className={s.howGrid}>
-						{STEPS.map((step, i) => (
-							<div className={s.howCell} key={i}>
-								<div className={s.howNum}>
-									{String(i + 1).padStart(2, '0')}
-								</div>
-								<h3>{step.title}</h3>
-								<p>{step.desc}</p>
+				<div className={s.howGrid}>
+					{STEPS.map((step, i) => (
+						<Reveal key={i} delay={i * 80} className={s.howCell}>
+							<div className={s.howNum}>
+								{String(i + 1).padStart(2, '0')}
 							</div>
-						))}
-					</div>
-				</Reveal>
+							<h3>{step.title}</h3>
+							<p>{step.desc}</p>
+						</Reveal>
+					))}
+				</div>
 			</div>
 		</section>
 	)

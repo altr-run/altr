@@ -80,6 +80,9 @@ export default function Hero() {
 						</span>
 					</span>
 				</h1>
+				<p className={s.heroTagline}>
+					AI workspace · spec → ticket → PR · mac-native
+				</p>
 				<p className={s.heroSub}>
 					Altr gives comms, requests, research, product signals, specs, and PRs
 					a single home, so <em>your team</em> and{' '}

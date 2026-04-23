@@ -30,17 +30,17 @@
   --mint: #8fb088;
   --mint-soft: #dfe8d7;
 
-  /* Lime green — brighter, cleaner brand accent */
-  --lime: #7FAA4B;
-  --lime-2: #6B933D;
-  --lime-soft: #E4F0D7;
-  --lime-ink: #314C1F;
+  /* Indigo — primary brand accent */
+  --indigo: #2026D2;
+  --indigo-2: #1A1FA8;
+  --indigo-soft: #E8E9FA;
+  --indigo-ink: #0D0F6B;
 
   /* Accent binding */
-  --acc: var(--lime);
-  --acc-2: var(--lime-2);
-  --acc-soft: var(--lime-soft);
-  --acc-ink: var(--lime-ink);
+  --acc: var(--indigo);
+  --acc-2: var(--indigo-2);
+  --acc-soft: var(--indigo-soft);
+  --acc-ink: var(--indigo-ink);
 
   /* Type — Next.js font variables override when available */
   --f-serif: var(--font-serif, "Season Mix"), "Iowan Old Style", "Apple Garamond", Georgia, serif;
@@ -88,8 +88,8 @@
   --mint: #A8C7A0;
   --mint-soft: #2A3626;
 
-  --lime: #B1DA83;
-  --lime-2: #97C26B;
-  --lime-soft: #1A2E14;
-  --lime-ink: #E8F6D9;
+  --indigo: #5B6AEE;
+  --indigo-2: #7A87F2;
+  --indigo-soft: #1A1B3A;
+  --indigo-ink: #C8CAFF;
 }

@@ -3,12 +3,12 @@ import Nav from './nav'
 import Hero from './hero'
 import HeroShader from './hero-shader'
 import Logos from './logos'
-import Manifesto from './manifesto'
 import Triptych from './triptych'
-import How from './how'
 import Playground from './playground'
-import Stamp from './stamp'
+import How from './how'
+import Trust from './trust'
 import Metrics from './metrics'
+import Manifesto from './manifesto'
 import Testimonials from './testimonials'
 import TalkTeam from './talk-team'
 import FAQ from './faq'
@@ -26,12 +26,12 @@ export default function HomePage() {
 				</div>
 				<div data-nav-theme="light">
 					<Logos />
-					<Manifesto />
 					<Triptych />
 					<Playground />
 					<How />
-					<Stamp />
+					<Trust />
 					<Metrics />
+					<Manifesto />
 					<Testimonials />
 					<TalkTeam />
 					<FAQ />

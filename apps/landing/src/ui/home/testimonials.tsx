@@ -69,33 +69,32 @@ export default function Testimonials() {
 						drag, stronger specs, and better review context.
 					</p>
 				</Reveal>
-				<Reveal>
-					<div className={s.testimonialsGrid}>
-						{QUOTES.map((q, i) => (
-							<div
-								key={i}
-								className={`${s.testiCell} ${i === 1 ? s.testiCellAlt : ''}`}
-							>
-								<div className={s.testiQuote}>{q.text}</div>
-								<div className={s.testiAttr}>
-									<div
-										className={`${s.testiAvatar} ${q.variant === 'dark' ? s.testiAvatarDark : ''}`}
-									>
-										{q.initials}
+				<div className={s.testimonialsGrid}>
+					{QUOTES.map((q, i) => (
+						<Reveal
+							key={i}
+							delay={i * 100}
+							className={`${s.testiCell} ${i === 1 ? s.testiCellAlt : ''}`}
+						>
+							<div className={s.testiQuote}>{q.text}</div>
+							<div className={s.testiAttr}>
+								<div
+									className={`${s.testiAvatar} ${q.variant === 'dark' ? s.testiAvatarDark : ''}`}
+								>
+									{q.initials}
+								</div>
+								<div>
+									<div className={s.testiName}>
+										{q.name}
 									</div>
-									<div>
-										<div className={s.testiName}>
-											{q.name}
-										</div>
-										<div className={s.testiRole}>
-											{q.role}
-										</div>
+									<div className={s.testiRole}>
+										{q.role}
 									</div>
 								</div>
 							</div>
-						))}
-					</div>
-				</Reveal>
+						</Reveal>
+					))}
+				</div>
 			</div>
 		</section>
 	)

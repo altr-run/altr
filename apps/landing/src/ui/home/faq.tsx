@@ -73,7 +73,9 @@ export default function FAQ() {
 									<span>{item.q}</span>
 									<span className={s.faqIcon}>+</span>
 								</button>
-								<div className={s.faqA}>{item.a}</div>
+								<div className={s.faqA}>
+							<div className={s.faqAInner}>{item.a}</div>
+						</div>
 							</div>
 						))}
 					</div>

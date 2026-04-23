@@ -1,5 +1,18 @@
 import s from './home.module.css'
 
+const NAMES = [
+	{ label: 'Northline', variant: '' },
+	{ label: 'MESA', variant: 's' },
+	{ label: 'Holt & Co', variant: '' },
+	{ label: 'runwell.sh', variant: 'u' },
+	{ label: 'Parabola', variant: '' },
+	{ label: 'BASISLY', variant: 's' },
+	{ label: 'Oak Labs', variant: '' },
+	{ label: 'Meridian', variant: '' },
+	{ label: 'LATCH', variant: 's' },
+	{ label: 'depot.dev', variant: 'u' },
+]
+
 export default function Logos() {
 	return (
 		<section className={s.logos}>
@@ -23,14 +36,23 @@ export default function Logos() {
 					active in private beta
 				</div>
 			</div>
-			<div className={s.logosRow}>
-				<span>Northline</span>
-				<span className="s">MESA</span>
-				<span>Holt &amp; Co</span>
-				<span className="u">runwell.sh</span>
-				<span>Parabola</span>
-				<span className="s">BASISLY</span>
-				<span>Oak Labs</span>
+			<div className={s.logosScroll}>
+				<div className={s.marqueeTrack}>
+					{[...NAMES, ...NAMES].map((item, i) => (
+						<span
+							key={i}
+							className={
+								item.variant === 's'
+									? s.logoNameSans
+									: item.variant === 'u'
+										? s.logoNameMono
+										: s.logoNameSerif
+							}
+						>
+							{item.label}
+						</span>
+					))}
+				</div>
 			</div>
 		</section>
 	)
