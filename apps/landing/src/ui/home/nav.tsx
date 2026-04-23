@@ -59,9 +59,6 @@ export default function Nav() {
 					<a href="#" className={s.logo}>
 						a<span className={s.logoSlash}>\</span>tr
 					</a>
-					<span className={s.navBadge}>
-						v0.1 · <b>coming soon</b>
-					</span>
 				</div>
 				<div className={s.navLinks}>
 					<a href="#product">Product</a>

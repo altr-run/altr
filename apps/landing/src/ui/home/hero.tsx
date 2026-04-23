@@ -16,28 +16,18 @@ export default function Hero() {
 		>
 			<HeroShader isHovered={isHovered} />
 			<div className={s.heroWrap}>
-				<span className={s.heroSticker}>§ v0.1 · new chapter</span>
-				<span className={s.heroNote}>
-					<b>editor&apos;s note</b>
-					The workspace we wished we&apos;d had when we started shipping
-					with AI.
-				</span>
-				<span className={s.chip}>
-					<span className={s.chipDot} />
-					private beta · <b>coming soon</b>
-				</span>
 				<h1 className={`${s.heroH} ${s.display}`}>
-					<span className={s.line}>Humans and AI,</span>
+					<span className={s.line}>Fewer handoffs.</span>
 					<span className={s.line}>
-						<em>shipping</em>{' '}
-						<span className={s.underlineHand}>the same</span>
+						More <span className={s.underlineHand}>context</span>.
 					</span>
 					<span className={s.line}>
-						product. <span className={s.acc}>Together.</span>
+						Better <span className={s.acc}>shipping.</span>
 					</span>
 				</h1>
 				<p className={s.heroSub}>
-					Altr is the workspace where <em>your team</em> and{' '}
+					Altr gives comms, requests, research, product signals, specs,
+					and PRs a single home, so <em>your team</em> and{' '}
 					<span className={`${s.mono} ${s.heroMonoAcc}`}>
 						@spec
 					</span>
@@ -49,8 +39,8 @@ export default function Hero() {
 					<span className={`${s.mono} ${s.heroMonoInk}`}>
 						@review
 					</span>{' '}
-					work in the same threads, on the same specs, toward the same
-					PRs.
+					can move as one, with context intact from first signal to
+					shipped change.
 				</p>
 				<div className={s.heroCtas}>
 					<a

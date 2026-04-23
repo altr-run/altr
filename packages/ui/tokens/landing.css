@@ -30,11 +30,11 @@
   --mint: #8fb088;
   --mint-soft: #dfe8d7;
 
-  /* Lime green — primary accent (v5/v6 mint) */
-  --lime: #B8F29A;
-  --lime-2: #9DE37C;
-  --lime-soft: #E2F6D4;
-  --lime-ink: #3F5A3C;
+  /* Lime green — tuned darker for text on light surfaces */
+  --lime: #6F9652;
+  --lime-2: #5E8345;
+  --lime-soft: #DDE8D2;
+  --lime-ink: #2E4625;
 
   /* Accent binding */
   --acc: var(--lime);
@@ -43,8 +43,8 @@
   --acc-ink: var(--lime-ink);
 
   /* Type — Next.js font variables override when available */
-  --f-serif: var(--font-serif, "Instrument Serif"), "Iowan Old Style", "Apple Garamond", Georgia, serif;
-  --f-sans: var(--font-inter, var(--font-sans, "Mona Sans")), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --f-serif: var(--font-serif, "Season Mix"), "Iowan Old Style", "Apple Garamond", Georgia, serif;
+  --f-sans: var(--font-sans, "Mona Sans"), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
 
   /* Radii */
@@ -88,8 +88,8 @@
   --mint: #A8C7A0;
   --mint-soft: #2A3626;
 
-  --lime: #B8F29A;
-  --lime-2: #9DE37C;
+  --lime: #9BC77E;
+  --lime-2: #86B36A;
   --lime-soft: #1A2E14;
-  --lime-ink: #B8F29A;
+  --lime-ink: #D9ECCB;
 }

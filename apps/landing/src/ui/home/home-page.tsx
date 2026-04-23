@@ -20,8 +20,8 @@ export default function HomePage() {
 	return (
 		<div data-home-page="">
 			<div className={s.pageShell}>
-				<Nav />
 				<div className={s.topShell} data-nav-theme="dark">
+					<Nav />
 					<Hero />
 				</div>
 				<div data-nav-theme="light">
