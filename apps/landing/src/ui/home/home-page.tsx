@@ -1,3 +1,4 @@
+import s from './home.module.css'
 import Nav from './nav'
 import Hero from './hero'
 import Ticker from './ticker'
@@ -18,24 +19,28 @@ import FooterHome from './footer-home'
 export default function HomePage() {
 	return (
 		<div data-home-page="">
-			<Nav />
-			<div>
-				<Hero />
-				<Ticker />
-				<Logos />
-				<Manifesto />
-				<Triptych />
-				<How />
-				<Metrics />
-				<Testimonials />
-				<Pullquote />
-				<Playground />
-				<Pricing />
-				<FAQ />
-				<CTAClose />
-				<Stamp />
+			<div className={s.pageShell}>
+				<Nav />
+				<div className={s.topShell} data-nav-theme="dark">
+					<Hero />
+				</div>
+				<div data-nav-theme="light">
+					<Ticker />
+					<Logos />
+					<Manifesto />
+					<Triptych />
+					<How />
+					<Metrics />
+					<Testimonials />
+					<Pullquote />
+					<Playground />
+					<Pricing />
+					<FAQ />
+					<CTAClose />
+					<Stamp />
+					<FooterHome />
+				</div>
 			</div>
-			<FooterHome />
 		</div>
 	)
 }

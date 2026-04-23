@@ -1,0 +1,1273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Altr — One-pager design system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ---------- tokens ---------- */
+  :root{
+    /* warm neutrals — linen → ink, warm-biased */
+    --paper:      #F6F1E7;   /* linen / page */
+    --paper-2:    #EFE8DA;   /* raised surface */
+    --paper-3:    #E4DCC9;   /* hairlines, sunken */
+    --stone:      #A89C82;   /* muted secondary */
+    --walnut:     #6B5F48;   /* tertiary text */
+    --ink-2:      #3A3225;   /* secondary text */
+    --ink:        #1E1A13;   /* body text / near-black, warm */
+
+    /* accents — warm, alive, not loud */
+    --ochre:      #B9823C;   /* primary accent — burnt ochre */
+    --ochre-ink:  #8A5E26;
+    --terracotta: #B95A3C;   /* alt accent option */
+    --terra-ink:  #8A3F26;
+
+    /* semantic — tuned warm */
+    --moss:   #6E7F4E;   /* subtle success */
+    --honey:  #C49A3A;   /* soft warning */
+    --brick:  #A8533F;   /* gentle error */
+
+    /* dark surfaces — warm charcoal, not black */
+    --dusk:    #2A2520;
+    --dusk-2:  #3A342D;
+
+    --radius-s: 4px;
+    --radius-m: 6px;
+    --radius-l: 10px;
+
+    --f-display: "Instrument Serif", "GT Sectra", "Tiempos", "Iowan Old Style", Georgia, serif;
+    --f-display-alt: "Newsreader", "GT Sectra", Georgia, serif;
+    --f-body:    "Geist", "Söhne", "Graphik", "Basis Grotesque", ui-sans-serif, -apple-system, Helvetica, sans-serif;
+    --f-mono:    "JetBrains Mono", "Berkeley Mono", "IBM Plex Mono", ui-monospace, monospace;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family: var(--f-body);
+    font-feature-settings: "ss01","cv11";
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .page{ max-width: 1180px; margin: 0 auto; padding: 96px 64px 160px; }
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    display:grid; grid-template-columns: 1fr auto; align-items:end;
+    padding-bottom: 32px; border-bottom: 1px solid var(--paper-3);
+    margin-bottom: 64px;
+  }
+  .masthead h1{
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 84px;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+  }
+  .masthead h1 em{ font-style: italic; color: var(--ochre-ink); }
+  .masthead .meta{
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--walnut);
+    text-align: right;
+    line-height: 1.8;
+  }
+  .kicker{
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--walnut);
+    margin-bottom: 8px;
+  }
+  .dek{
+    font-family: var(--f-display-alt);
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    max-width: 62ch;
+    font-weight: 400;
+  }
+
+  /* ---------- section chrome ---------- */
+  section{ margin: 112px 0 0; }
+  .sec-head{
+    display:grid; grid-template-columns: 160px 1fr; gap: 32px;
+    padding-bottom: 24px; margin-bottom: 40px;
+    border-top: 1px solid var(--paper-3);
+    padding-top: 32px;
+  }
+  .sec-head .no{
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--walnut);
+    padding-top: 8px;
+  }
+  .sec-head h2{
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    margin: 0 0 10px;
+  }
+  .sec-head p{
+    margin: 0;
+    font-family: var(--f-display-alt);
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 62ch;
+  }
+
+  .sec-body{ padding-left: 192px; }
+
+  /* ---------- 1. pillars ---------- */
+  .pillars{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .pillar{
+    border-top: 1px solid var(--ink);
+    padding-top: 20px;
+  }
+  .pillar .n{
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--walnut);
+    margin-bottom: 24px;
+  }
+  .pillar p{
+    font-family: var(--f-display);
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .pillar p em{ font-style: italic; color: var(--ochre-ink); }
+
+  /* ---------- 2. color ---------- */
+  .swatch-row{ display:grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 8px; }
+  .swatch{
+    aspect-ratio: 1 / 1.15;
+    border-radius: var(--radius-s);
+    border: 1px solid rgba(0,0,0,0.04);
+    position: relative;
+    overflow: hidden;
+    display:flex; align-items:flex-end;
+  }
+  .swatch .lbl{
+    padding: 10px 12px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    width: 100%;
+    display:flex; justify-content: space-between;
+    color: inherit;
+    text-transform: uppercase;
+  }
+  .swatch .lbl .name{ opacity: 0.9; }
+  .swatch .lbl .hex{ opacity: 0.65; }
+  .swatch-caption{
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--walnut);
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .accents{ display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+  .accent-card{
+    padding: 36px 32px;
+    border-radius: var(--radius-m);
+    border: 1px solid var(--paper-3);
+    background: var(--paper-2);
+    position: relative;
+    display:grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start;
+  }
+  .accent-dot{ width: 80px; height: 80px; border-radius: 50%; }
+  .accent-card h4{
+    font-family: var(--f-display); font-weight: 400;
+    font-size: 26px; letter-spacing: -0.01em; margin: 0 0 4px;
+  }
+  .accent-card .sub{
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em;
+    color: var(--walnut); text-transform: uppercase; margin-bottom: 14px;
+  }
+  .accent-card p{ margin: 0 0 10px; color: var(--ink-2); font-size: 14px; }
+  .accent-card .rec{
+    display:inline-block; margin-top: 8px;
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 3px;
+  }
+  .rec.picked{ background: var(--ink); color: var(--paper); }
+  .rec.alt{ border: 1px solid var(--paper-3); color: var(--walnut); }
+
+  .semantic{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+  .sem{
+    border: 1px solid var(--paper-3);
+    border-radius: var(--radius-m);
+    padding: 18px 20px;
+    background: var(--paper);
+    display:flex; align-items:center; gap: 14px;
+  }
+  .sem .dot{ width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .sem .t{ font-family: var(--f-display); font-size: 18px; line-height: 1.1; }
+  .sem .s{ font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--walnut); text-transform: uppercase; margin-top: 2px; }
+
+  /* ---------- 3. typography ---------- */
+  .type-block{ padding: 28px 0; border-top: 1px solid var(--paper-3); }
+  .type-block:first-child{ border-top: none; padding-top: 0; }
+  .type-label{
+    display:grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: baseline;
+    margin-bottom: 16px;
+  }
+  .type-label .meta{
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--walnut);
+    text-transform: uppercase; line-height: 1.7;
+  }
+  .type-label .meta strong{ color: var(--ink); font-weight: 500; letter-spacing: 0.12em;}
+  .type-label .chosen{
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ochre-ink);
+  }
+  .scale-row{
+    display:grid; grid-template-columns: 180px 1fr; gap: 32px; padding: 14px 0;
+    border-top: 1px dashed var(--paper-3);
+    align-items: baseline;
+  }
+  .scale-row:first-of-type{ border-top: 1px solid var(--ink); }
+  .scale-row .m{
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--walnut);
+    text-transform: uppercase;
+  }
+  .scale-row .specimen{ color: var(--ink); }
+  .s-h1{ font-family: var(--f-display); font-weight: 400; font-size: 64px; line-height: 1.02; letter-spacing: -0.02em; }
+  .s-h2{ font-family: var(--f-display); font-weight: 400; font-size: 44px; line-height: 1.08; letter-spacing: -0.015em; }
+  .s-h3{ font-family: var(--f-display); font-weight: 400; font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; }
+  .s-lead{ font-family: var(--f-display-alt); font-size: 20px; line-height: 1.45; }
+  .s-body{ font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
+  .s-small{ font-family: var(--f-body); font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+  .s-mono{ font-family: var(--f-mono); font-size: 13px; line-height: 1.5; }
+  .s-caps{ font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--walnut); }
+
+  /* ---------- 4. spacing ---------- */
+  .spacing-row{
+    display:grid; grid-template-columns: 180px 1fr; gap: 32px;
+    padding: 12px 0; border-top: 1px dashed var(--paper-3);
+    align-items: center;
+  }
+  .spacing-row:first-child{ border-top: 1px solid var(--ink); }
+  .spacing-row .lbl{ font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--walnut); text-transform: uppercase; }
+  .spacing-row .bar{ background: var(--ink); height: 12px; border-radius: 2px; }
+
+  .air-rule{
+    margin-top: 40px;
+    padding: 32px 40px;
+    border: 1px solid var(--paper-3);
+    background: var(--paper-2);
+    border-radius: var(--radius-m);
+    font-family: var(--f-display);
+    font-size: 24px;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    font-style: italic;
+    position: relative;
+  }
+  .air-rule::before{
+    content: "— RULE";
+    position: absolute; top: -9px; left: 24px;
+    background: var(--paper); padding: 0 10px;
+    font-family: var(--f-mono); font-style: normal;
+    font-size: 10px; letter-spacing: 0.18em; color: var(--walnut);
+  }
+
+  /* ---------- 5. components ---------- */
+  .comp-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .comp-card{
+    border: 1px solid var(--paper-3);
+    background: var(--paper-2);
+    border-radius: var(--radius-m);
+    padding: 32px;
+  }
+  .comp-card.full{ grid-column: 1 / -1; }
+  .comp-card h5{
+    margin: 0 0 20px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--walnut);
+    font-weight: 500;
+  }
+
+  /* sidebar nav */
+  .side-demo{
+    background: var(--paper); border-radius: var(--radius-m);
+    padding: 16px 12px; border: 1px solid var(--paper-3);
+    width: 260px;
+  }
+  .side-item{
+    display:flex; align-items:center; gap: 10px;
+    padding: 7px 10px;
+    border-radius: 5px;
+    font-size: 13.5px;
+    color: var(--ink-2);
+    cursor: default;
+  }
+  .side-item .gl{ width: 14px; height: 14px; opacity: 0.65; }
+  .side-item.hover{ background: var(--paper-2); color: var(--ink); }
+  .side-item.active{
+    background: var(--ink); color: var(--paper);
+    position: relative;
+  }
+  .side-item.active .gl{ opacity: 1; }
+  .side-state{
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em;
+    color: var(--walnut); text-transform: uppercase;
+    margin: 14px 0 6px 10px;
+  }
+  .side-state:first-child{ margin-top: 0; }
+
+  /* buttons */
+  .btn-row{ display:flex; gap: 12px; flex-wrap: wrap; align-items:center; }
+  .btn{
+    font-family: var(--f-body); font-size: 13.5px; font-weight: 500;
+    padding: 8px 16px; border-radius: 6px; border: 1px solid transparent;
+    cursor: pointer; letter-spacing: -0.005em;
+    transition: all 120ms ease;
+  }
+  .btn-primary{ background: var(--ink); color: var(--paper); }
+  .btn-primary:hover{ background: var(--dusk); }
+  .btn-secondary{ background: var(--paper); color: var(--ink); border-color: var(--paper-3); }
+  .btn-secondary:hover{ border-color: var(--walnut); }
+  .btn-ghost{ background: transparent; color: var(--ink-2); }
+  .btn-ghost:hover{ color: var(--ink); background: var(--paper-3); }
+  .btn-accent{ background: var(--ochre); color: #FFF8EC; }
+  .btn-accent:hover{ background: var(--ochre-ink); }
+  .btn-lbl{ font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em; color: var(--walnut); text-transform: uppercase; display:block; margin-top: 10px; }
+
+  /* input */
+  .inp-wrap{ max-width: 360px; }
+  .inp-lbl{ font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--walnut); text-transform: uppercase; margin-bottom: 8px; }
+  .inp{
+    width: 100%;
+    font-family: var(--f-body); font-size: 14px;
+    padding: 10px 14px;
+    background: var(--paper);
+    border: 1px solid var(--paper-3);
+    border-radius: 6px;
+    color: var(--ink);
+    outline: none;
+  }
+  .inp:focus{ border-color: var(--ochre); box-shadow: 0 0 0 3px rgba(185,130,60,0.12); }
+  .inp-hint{ font-family: var(--f-body); font-size: 12px; color: var(--walnut); margin-top: 8px; }
+
+  /* avatars */
+  .avatars{ display:flex; gap: 16px; align-items:flex-end; flex-wrap: wrap; }
+  .av{
+    display:flex; flex-direction: column; align-items:center; gap: 10px;
+  }
+  .av .mark{
+    width: 48px; height: 48px; border-radius: 10px;
+    display:flex; align-items:center; justify-content:center;
+    position: relative;
+  }
+  .av .nm{ font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--walnut); }
+  .av .nm strong{ color: var(--ink); font-weight: 500; }
+  /* human avatar: initials on linen */
+  .mark.human{
+    background: var(--paper-3); color: var(--ink);
+    font-family: var(--f-display); font-size: 20px;
+  }
+  /* agent marks — each a distinct minimal geometric mark, never a face */
+  .mark.agent{ background: var(--ink); color: var(--paper); }
+  .mark.agent.ochre{ background: var(--ochre); color: #FFF8EC; }
+  .mark.agent.walnut{ background: var(--walnut); color: var(--paper); }
+  .mark.agent.moss{ background: var(--moss); color: #F4F0E2; }
+  .mark.agent.terra{ background: var(--terracotta); color: #FFF8EC; }
+
+  /* message bubbles */
+  .thread{
+    background: var(--paper); border-radius: var(--radius-m);
+    border: 1px solid var(--paper-3);
+    padding: 24px; display:grid; gap: 20px;
+  }
+  .msg{ display:grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; }
+  .msg .mk{
+    width: 36px; height: 36px; border-radius: 8px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink: 0;
+  }
+  .msg .body .hd{
+    display:flex; gap: 10px; align-items: baseline; margin-bottom: 4px;
+  }
+  .msg .body .who{ font-weight: 500; color: var(--ink); font-size: 13.5px; }
+  .msg .body .role{ font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--walnut); text-transform: uppercase; }
+  .msg .body .t{ font-family: var(--f-mono); font-size: 10px; color: var(--stone); margin-left: auto; }
+  .msg .body .txt{ font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+  .msg .body .txt em{ color: var(--ochre-ink); font-style: italic; }
+
+  /* ---------- 6. logos ---------- */
+  .logo-variant{
+    border: 1px solid var(--paper-3);
+    background: var(--paper-2);
+    border-radius: var(--radius-m);
+    padding: 40px;
+    margin-bottom: 24px;
+    display:grid; grid-template-columns: 180px 1fr; gap: 40px;
+  }
+  .lv-meta{
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em;
+    color: var(--walnut); text-transform: uppercase;
+  }
+  .lv-meta .tag{
+    display:inline-block; background: var(--ink); color: var(--paper);
+    padding: 3px 7px; border-radius: 3px; letter-spacing: 0.14em;
+  }
+  .lv-meta h4{
+    font-family: var(--f-display); font-weight: 400; font-size: 24px;
+    letter-spacing: -0.01em; text-transform: none; color: var(--ink);
+    margin: 14px 0 10px; line-height: 1.15;
+  }
+  .lv-meta p{
+    font-family: var(--f-display-alt); font-size: 14px; line-height: 1.5;
+    color: var(--ink-2); text-transform: none; letter-spacing: 0;
+    margin: 0;
+  }
+  .lv-stage{ display:grid; gap: 20px; }
+  .lv-big{
+    background: var(--paper); border-radius: var(--radius-m);
+    min-height: 180px; display:flex; align-items:center; justify-content:center;
+    padding: 40px;
+    border: 1px solid var(--paper-3);
+  }
+  .lv-row{
+    display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+  }
+  .lv-cell{
+    background: var(--paper); border: 1px solid var(--paper-3);
+    border-radius: var(--radius-m); padding: 20px;
+    min-height: 100px;
+    display:flex; flex-direction: column; align-items:center; justify-content:center; gap: 10px;
+  }
+  .lv-cell .cap{
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em;
+    color: var(--walnut); text-transform: uppercase;
+  }
+  .dock{
+    background: linear-gradient(180deg, #EADFC9 0%, #DCD0B7 100%);
+    background: #E4DAC3;
+    border-radius: var(--radius-m);
+    padding: 20px;
+    display:flex; align-items:center; justify-content: center; gap: 16px;
+  }
+  .dock .icon-big{
+    width: 128px; height: 128px; border-radius: 28px;
+    box-shadow: 0 8px 24px -10px rgba(30,26,19,0.25), 0 2px 6px -2px rgba(30,26,19,0.1);
+    overflow: hidden;
+    display:flex; align-items:center; justify-content: center;
+  }
+  .dock .icon-small{
+    width: 32px; height: 32px; border-radius: 7px;
+    box-shadow: 0 2px 6px -2px rgba(30,26,19,0.2);
+    overflow: hidden;
+    display:flex; align-items:center; justify-content: center;
+  }
+
+  /* wordmark specific styles */
+  .wm-serif-lg{ font-family: var(--f-display); font-weight: 400; font-size: 96px; letter-spacing: -0.035em; color: var(--ink); line-height: 1; }
+  .wm-serif-sm{ font-family: var(--f-display); font-weight: 400; font-size: 32px; letter-spacing: -0.03em; color: var(--ink); line-height: 1; }
+  .wm-geo-lg{  font-family: var(--f-body); font-weight: 600; font-size: 72px; letter-spacing: -0.045em; color: var(--ink); line-height: 1; }
+  .wm-geo-sm{  font-family: var(--f-body); font-weight: 600; font-size: 28px; letter-spacing: -0.04em; color: var(--ink); line-height: 1; }
+
+  /* icon art (pure CSS/SVG placeholders — original marks) */
+  .icn-bg-paper{ background: var(--paper); }
+  .icn-bg-ink{ background: var(--ink); }
+  .icn-bg-ochre{ background: var(--ochre); }
+  .icn-bg-terra{ background: var(--terracotta); }
+  .icn-bg-dusk{ background: var(--dusk); }
+
+  footer{
+    margin-top: 160px; padding-top: 40px;
+    border-top: 1px solid var(--paper-3);
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--walnut);
+    display:flex; justify-content: space-between;
+  }
+
+  @media (max-width: 900px){
+    .page{ padding: 48px 24px 100px; }
+    .masthead{ grid-template-columns: 1fr; }
+    .masthead .meta{ text-align: left; margin-top: 20px; }
+    .masthead h1{ font-size: 56px; }
+    .sec-head{ grid-template-columns: 1fr; gap: 8px; }
+    .sec-body{ padding-left: 0; }
+    .pillars{ grid-template-columns: 1fr; }
+    .comp-grid{ grid-template-columns: 1fr; }
+    .logo-variant{ grid-template-columns: 1fr; gap: 24px; padding: 24px; }
+    .accents{ grid-template-columns: 1fr; }
+    .semantic{ grid-template-columns: 1fr; }
+    .swatch-row{ grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ MASTHEAD ============ -->
+  <header class="masthead">
+    <div>
+      <div class="kicker">One-pager · Brand & product system · v0.1</div>
+      <h1>Altr<em>.</em></h1>
+      <div class="dek">A company OS for product teams — humans and named AI teammates working together in the same quiet, well-made room. This document sets the visual voice.</div>
+    </div>
+    <div class="meta">
+      altr.run<br/>
+      20 Apr 2026<br/>
+      Internal · Living doc
+    </div>
+  </header>
+
+  <!-- ============ 1. PILLARS ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="no">01 — Pillars</div>
+      <div>
+        <h2>Brand pillars</h2>
+        <p>Three statements. Every decision — product, visual, copy — should feel like it could only have come from a place that believes these.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="pillars">
+        <div class="pillar">
+          <div class="n">I</div>
+          <p>Altr is <em>a room</em>, not a robot — a place you and your AI teammates sit down to do real work.</p>
+        </div>
+        <div class="pillar">
+          <div class="n">II</div>
+          <p>Altr is <em>craft at new scale</em> — the care of a small studio, the reach of a full team.</p>
+        </div>
+        <div class="pillar">
+          <div class="n">III</div>
+          <p>Altr is <em>quiet on purpose</em> — confidence without noise, intelligence without theatre.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. COLOR ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="no">02 — Color</div>
+      <div>
+        <h2>Color system</h2>
+        <p>Warm neutrals do the heavy lifting. One accent carries the spirit of the brand. Semantic tones are retuned into the same warm family so nothing feels bolted on.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="swatch-caption">Warm neutral base — linen to ink</div>
+      <div class="swatch-row">
+        <div class="swatch" style="background:#F6F1E7;color:#1E1A13"><div class="lbl"><span class="name">Linen</span><span class="hex">F6F1E7</span></div></div>
+        <div class="swatch" style="background:#EFE8DA;color:#1E1A13"><div class="lbl"><span class="name">Parchment</span><span class="hex">EFE8DA</span></div></div>
+        <div class="swatch" style="background:#E4DCC9;color:#1E1A13"><div class="lbl"><span class="name">Bone</span><span class="hex">E4DCC9</span></div></div>
+        <div class="swatch" style="background:#A89C82;color:#1E1A13"><div class="lbl"><span class="name">Stone</span><span class="hex">A89C82</span></div></div>
+        <div class="swatch" style="background:#6B5F48;color:#F6F1E7"><div class="lbl"><span class="name">Walnut</span><span class="hex">6B5F48</span></div></div>
+        <div class="swatch" style="background:#1E1A13;color:#F6F1E7"><div class="lbl"><span class="name">Ink</span><span class="hex">1E1A13</span></div></div>
+      </div>
+
+      <div class="swatch-caption">Accent — two options, one conviction</div>
+      <div class="accents">
+        <div class="accent-card">
+          <div class="accent-dot" style="background:#B9823C"></div>
+          <div>
+            <div class="sub">Accent A — Recommended</div>
+            <h4>Burnt Ochre</h4>
+            <p>Alive, not loud. Sits naturally on linen and ink both. Reads as earned craft — the color of aged brass, an old book spine, a warm lamp.</p>
+            <span class="rec picked">Primary pick · #B9823C</span>
+          </div>
+        </div>
+        <div class="accent-card">
+          <div class="accent-dot" style="background:#B95A3C"></div>
+          <div>
+            <div class="sub">Accent B — Alternate</div>
+            <h4>Soft Terracotta</h4>
+            <p>A half-step warmer, a half-step louder. Use if we want Altr to feel more expressive and human-first. Slightly harder to balance at scale.</p>
+            <span class="rec alt">Alt pick · #B95A3C</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="swatch-caption" style="margin-top:40px">Semantic — retuned warm, never default</div>
+      <div class="semantic">
+        <div class="sem"><div class="dot" style="background:#6E7F4E"></div><div><div class="t">Moss</div><div class="s">Success · #6E7F4E</div></div></div>
+        <div class="sem"><div class="dot" style="background:#C49A3A"></div><div><div class="t">Honey</div><div class="s">Warning · #C49A3A</div></div></div>
+        <div class="sem"><div class="dot" style="background:#A8533F"></div><div><div class="t">Brick</div><div class="s">Error · #A8533F</div></div></div>
+      </div>
+
+      <p class="s-small" style="margin-top:24px; color:var(--walnut); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em;">
+        DO NOT: gradient fills · AI-purple · startup teal · pure #FFF or #000 · holographic or glass effects.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 3. TYPOGRAPHY ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="no">03 — Type</div>
+      <div>
+        <h2>Typography</h2>
+        <p>Type does the heavy lifting. A serif with character for display, a grotesque with warmth for body, a monospace with presence for the thinking parts.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="type-block">
+        <div class="type-label">
+          <div class="meta"><strong>Display / Headings</strong><br/>Instrument Serif<br/>Alt: GT Sectra, Tiempos</div>
+          <div>
+            <div class="chosen">✦ Recommended — Instrument Serif (open-source, warm, slight old-style character). In production, license GT Sectra as the premium swap.</div>
+          </div>
+        </div>
+        <div class="scale-row"><div class="m">H1 · 64 / 65</div><div class="specimen s-h1">Build the room.</div></div>
+        <div class="scale-row"><div class="m">H2 · 44 / 48</div><div class="specimen s-h2">A studio loft for product teams.</div></div>
+        <div class="scale-row"><div class="m">H3 · 28 / 34</div><div class="specimen s-h3">Pax moved the spec to review.</div></div>
+        <div class="scale-row"><div class="m">Lead · 20 / 29</div><div class="specimen s-lead">Humans and AI teammates working alongside each other, on the same artifacts, in real time — quietly, and with care.</div></div>
+      </div>
+
+      <div class="type-block">
+        <div class="type-label">
+          <div class="meta"><strong>Body / UI</strong><br/>Geist<br/>Alt: Söhne, Graphik</div>
+          <div>
+            <div class="chosen">✦ Recommended — Geist (clean, warm-leaning grotesque, hinted well at 13–16px). Söhne is the paid swap.</div>
+          </div>
+        </div>
+        <div class="scale-row"><div class="m">Body · 15 / 23</div><div class="specimen s-body">The best product teams aren't bigger — they're closer. Altr is a single place for PMs, designers, engineers, and researchers to sit shoulder to shoulder with their AI teammates, on the same specs, in the same threads, at the same time.</div></div>
+        <div class="scale-row"><div class="m">Small · 13 / 20</div><div class="specimen s-small">Use for dense tables, metadata, secondary UI, and footnotes that support the main thread of thought.</div></div>
+        <div class="scale-row"><div class="m">Caps · 11 / 18</div><div class="specimen s-caps">Section labels · Metadata · Kickers</div></div>
+      </div>
+
+      <div class="type-block">
+        <div class="type-label">
+          <div class="meta"><strong>Mono / Code</strong><br/>JetBrains Mono<br/>Alt: Berkeley Mono, IBM Plex Mono</div>
+          <div>
+            <div class="chosen">✦ Recommended — JetBrains Mono for open-source default. Berkeley Mono is the licensed upgrade when warranted.</div>
+          </div>
+        </div>
+        <div class="scale-row"><div class="m">Mono · 13 / 20</div><div class="specimen s-mono">const session = altr.open({ room: "onboarding-v3", with: [pax, dex] });</div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 4. SPACING ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="no">04 — Space</div>
+      <div>
+        <h2>Spacing & layout</h2>
+        <p>4px base unit. The scale below is the whole language — resist adding new sizes. Whitespace is a feature, not a gap.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="spacing-row"><div class="lbl">04 · xs · Inline hairline</div><div class="bar" style="width:4px"></div></div>
+      <div class="spacing-row"><div class="lbl">08 · sm · Within element</div><div class="bar" style="width:8px"></div></div>
+      <div class="spacing-row"><div class="lbl">12 · md · Text-to-control</div><div class="bar" style="width:12px"></div></div>
+      <div class="spacing-row"><div class="lbl">16 · base · Between controls</div><div class="bar" style="width:16px"></div></div>
+      <div class="spacing-row"><div class="lbl">24 · lg · Card padding</div><div class="bar" style="width:24px"></div></div>
+      <div class="spacing-row"><div class="lbl">32 · xl · Between groups</div><div class="bar" style="width:32px"></div></div>
+      <div class="spacing-row"><div class="lbl">48 · 2xl · Section gutter</div><div class="bar" style="width:48px"></div></div>
+      <div class="spacing-row"><div class="lbl">64 · 3xl · Room between sections</div><div class="bar" style="width:64px"></div></div>
+
+      <div class="air-rule">
+        If you can add more air, add more air. An under-filled screen is almost never the problem — a cluttered one almost always is.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. COMPONENTS ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="no">05 — Components</div>
+      <div>
+        <h2>Components</h2>
+        <p>Sketch fidelity — enough to commit to proportions, radii, and color roles without pretending the library is finished.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="comp-grid">
+
+        <!-- SIDEBAR NAV -->
+        <div class="comp-card">
+          <h5>Sidebar nav item · 3 states</h5>
+          <div class="side-demo">
+            <div class="side-state">Normal</div>
+            <div class="side-item">
+              <svg class="gl" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="2.5" width="11" height="11" rx="2"/></svg>
+              Rooms
+            </div>
+            <div class="side-state">Hover</div>
+            <div class="side-item hover">
+              <svg class="gl" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5"/></svg>
+              Threads
+            </div>
+            <div class="side-state">Active</div>
+            <div class="side-item active">
+              <svg class="gl" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13V5l5-3 5 3v8"/><path d="M6 13V9h4v4"/></svg>
+              Specs
+            </div>
+          </div>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="comp-card">
+          <h5>Buttons · four weights</h5>
+          <div class="btn-row">
+            <button class="btn btn-primary">Open room</button>
+            <span class="btn-lbl">Primary</span>
+          </div>
+          <div class="btn-row" style="margin-top:20px">
+            <button class="btn btn-secondary">Invite teammate</button>
+            <span class="btn-lbl">Secondary</span>
+          </div>
+          <div class="btn-row" style="margin-top:20px">
+            <button class="btn btn-ghost">Cancel</button>
+            <span class="btn-lbl">Ghost</span>
+          </div>
+          <div class="btn-row" style="margin-top:20px">
+            <button class="btn btn-accent">Ship it</button>
+            <span class="btn-lbl">Accent (use sparingly)</span>
+          </div>
+        </div>
+
+        <!-- INPUT -->
+        <div class="comp-card">
+          <h5>Input field</h5>
+          <div class="inp-wrap">
+            <div class="inp-lbl">Room name</div>
+            <input class="inp" value="onboarding · v3" />
+            <div class="inp-hint">Rooms are where a thread of work lives — specs, files, and the teammates on it.</div>
+          </div>
+        </div>
+
+        <!-- AVATARS -->
+        <div class="comp-card">
+          <h5>Teammates · human + four AI agents</h5>
+          <div class="avatars">
+            <div class="av">
+              <div class="mark human">EL</div>
+              <div class="nm"><strong>Elena</strong><br/>Human · PM</div>
+            </div>
+            <div class="av">
+              <!-- PAX: stacked horizontal bars, like a spec outline -->
+              <div class="mark agent ochre">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+                  <path d="M5 7h14"/><path d="M5 12h10"/><path d="M5 17h6"/>
+                </svg>
+              </div>
+              <div class="nm"><strong>Pax</strong><br/>AI · PM</div>
+            </div>
+            <div class="av">
+              <!-- DEX: a framed rectangle = canvas / artboard -->
+              <div class="mark agent walnut">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <rect x="4" y="5" width="16" height="14" rx="1.5"/>
+                  <path d="M4 9h16"/>
+                </svg>
+              </div>
+              <div class="nm"><strong>Dex</strong><br/>AI · Design</div>
+            </div>
+            <div class="av">
+              <!-- ENG: two chevrons / indent = code block -->
+              <div class="mark agent">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 8l-4 4 4 4"/><path d="M15 8l4 4-4 4"/>
+                </svg>
+              </div>
+              <div class="nm"><strong>Eng</strong><br/>AI · Engineer</div>
+            </div>
+            <div class="av">
+              <!-- RAE: two concentric arcs = listening / scope -->
+              <div class="mark agent moss">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+                  <path d="M12 5a7 7 0 017 7"/>
+                  <path d="M12 9a3 3 0 013 3"/>
+                  <circle cx="12" cy="12" r="0.8" fill="currentColor" stroke="none"/>
+                </svg>
+              </div>
+              <div class="nm"><strong>Rae</strong><br/>AI · Research</div>
+            </div>
+          </div>
+          <p class="s-small" style="margin-top:22px; color: var(--walnut);">Each agent has one abstract mark tied to its craft: Pax = outline, Dex = canvas, Eng = brackets, Rae = listening arcs. No faces, no sparkles, no "A.I."</p>
+        </div>
+
+        <!-- MESSAGE THREAD -->
+        <div class="comp-card full">
+          <h5>Thread · human and AI, side by side</h5>
+          <div class="thread">
+
+            <div class="msg">
+              <div class="mk human" style="background:var(--paper-3); color: var(--ink); font-family: var(--f-display); font-size: 15px;">EL</div>
+              <div class="body">
+                <div class="hd">
+                  <span class="who">Elena</span>
+                  <span class="role">PM · Human</span>
+                  <span class="t">10:42</span>
+                </div>
+                <div class="txt">Can we cut the second onboarding step? It's adding friction without clearly moving activation.</div>
+              </div>
+            </div>
+
+            <div class="msg">
+              <div class="mk" style="background: var(--ochre); color: #FFF8EC;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+                  <path d="M5 7h14"/><path d="M5 12h10"/><path d="M5 17h6"/>
+                </svg>
+              </div>
+              <div class="body">
+                <div class="hd">
+                  <span class="who">Pax</span>
+                  <span class="role">PM · AI teammate</span>
+                  <span class="t">10:42</span>
+                </div>
+                <div class="txt">Agreed. Activation in the A-group is <em>+4.1%</em> when step 2 is skipped (n = 812, last 14 days). I've drafted the removal in <em>onboarding · v3</em> — want me to open it with Dex?</div>
+              </div>
+            </div>
+
+            <div class="msg">
+              <div class="mk human" style="background:var(--paper-3); color: var(--ink); font-family: var(--f-display); font-size: 15px;">EL</div>
+              <div class="body">
+                <div class="hd">
+                  <span class="who">Elena</span>
+                  <span class="role">PM · Human</span>
+                  <span class="t">10:43</span>
+                </div>
+                <div class="txt">Yes — loop Dex in. Let's keep the welcome screen for now.</div>
+              </div>
+            </div>
+
+          </div>
+          <p class="s-small" style="margin-top:16px; color: var(--walnut);">Same bubble shape. Same typography. Same column. The only difference is who is speaking — the point of Altr, rendered.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. LOGO EXPLORATION ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="no">06 — Logo</div>
+      <div>
+        <h2>Wordmark exploration</h2>
+        <p>Five directions. Each is a single idea stated clearly. Originals — no borrowed marks. My conviction lies with <strong style="color:var(--ink); font-weight:500;">(C) Wordmark + Threshold glyph</strong> and <strong style="color:var(--ink); font-weight:500;">(D) The leaning A</strong>.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <!-- (A) SERIF WORDMARK -->
+      <div class="logo-variant">
+        <div class="lv-meta">
+          <span class="tag">A · SERIF</span>
+          <h4>Old-world serif wordmark</h4>
+          <p>A confident Instrument Serif / Sectra-weight wordmark with a discreet lt ligature — a nod to the craft roots, to type set in metal, to something made by hand. Reads as a small press, not a startup.</p>
+        </div>
+        <div class="lv-stage">
+          <div class="lv-big">
+            <!-- Serif wordmark with lt ligature: render 'A' + custom 'lt' svg + 'r' -->
+            <div style="display:flex; align-items:baseline; gap: 0; font-family: var(--f-display); font-size: 128px; line-height: 0.9; letter-spacing: -0.035em; color: var(--ink);">
+              <span>A</span>
+              <svg width="130" height="118" viewBox="0 0 130 118" style="display:block; margin: 0 -6px;">
+                <!-- l stem -->
+                <path d="M18 8 L18 100 Q18 108 28 108 L34 108" stroke="currentColor" stroke-width="10" fill="none" stroke-linecap="round"/>
+                <!-- ligature bar connecting to t crossbar -->
+                <path d="M10 42 L82 42" stroke="currentColor" stroke-width="10" stroke-linecap="round"/>
+                <!-- t stem -->
+                <path d="M62 22 L62 100 Q62 108 72 108 L80 108" stroke="currentColor" stroke-width="10" fill="none" stroke-linecap="round"/>
+              </svg>
+              <span>r</span>
+            </div>
+          </div>
+          <div class="lv-row">
+            <div class="lv-cell">
+              <div class="wm-serif-sm">Altr</div>
+              <div class="cap">Small · 32px</div>
+            </div>
+            <div class="lv-cell">
+              <div class="wm-serif-sm" style="font-size:14px">Altr</div>
+              <div class="cap">Favicon · 14px</div>
+            </div>
+            <div class="lv-cell">
+              <div style="font-family: var(--f-mono); font-size: 10px; color: var(--walnut); letter-spacing: 0.1em; text-align:center; text-transform: uppercase; line-height: 1.6;">No glyph<br/>variant</div>
+              <div class="cap">Mark · n/a</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- (B) GEOMETRIC SANS -->
+      <div class="logo-variant">
+        <div class="lv-meta">
+          <span class="tag">B · SANS</span>
+          <h4>Geometric sans with one detail</h4>
+          <p>A quiet geometric lowercase wordmark — "altr" — with one signature: the crossbar of the 'r' lifts slightly, a quiet tick upward. Every other letter is left alone. One idea, stated once.</p>
+        </div>
+        <div class="lv-stage">
+          <div class="lv-big">
+            <div style="display:flex; align-items:baseline; gap: 2px; font-family: var(--f-body); font-weight: 500; font-size: 108px; line-height: 0.9; letter-spacing: -0.055em; color: var(--ink);">
+              <span>altr</span>
+              <span style="display:inline-block; width:12px; height:12px; background: var(--ochre); border-radius: 50%; margin-left: 4px; margin-bottom: 8px;"></span>
+            </div>
+          </div>
+          <div class="lv-row">
+            <div class="lv-cell">
+              <div class="wm-geo-sm" style="font-weight:500; letter-spacing:-0.05em;">altr<span style="display:inline-block; width:5px; height:5px; background: var(--ochre); border-radius: 50%; margin-left: 2px; vertical-align: 2px;"></span></div>
+              <div class="cap">Small · 28px</div>
+            </div>
+            <div class="lv-cell">
+              <div style="font-family: var(--f-body); font-weight: 500; font-size: 13px; letter-spacing: -0.04em;">altr<span style="display:inline-block; width:3px; height:3px; background: var(--ochre); border-radius: 50%; margin-left: 1px; vertical-align: 2px;"></span></div>
+              <div class="cap">Favicon · 13px</div>
+            </div>
+            <div class="lv-cell">
+              <div style="font-family: var(--f-mono); font-size: 10px; color: var(--walnut); letter-spacing: 0.1em; text-align:center; text-transform: uppercase; line-height: 1.6;">Dot can<br/>stand alone</div>
+              <div class="cap">Mark · ochre dot</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- (C) WORDMARK + GLYPH (Threshold / Room) -->
+      <div class="logo-variant" style="border-color: var(--ink);">
+        <div class="lv-meta">
+          <span class="tag" style="background: var(--ochre); color: #FFF8EC;">C · WORDMARK + GLYPH · PICK</span>
+          <h4>Threshold — a room with the door open</h4>
+          <p>A tall arched doorway drawn with two strokes. Reads as a room (the studio loft), a threshold (something altered/transformed), and a capital 'A' at once. Three meanings, one mark. It holds at favicon size because it's only a silhouette.</p>
+        </div>
+        <div class="lv-stage">
+          <div class="lv-big" style="gap: 28px;">
+            <!-- glyph -->
+            <svg width="96" height="108" viewBox="0 0 96 108" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="square" style="color: var(--ink);">
+              <!-- arch + sides -->
+              <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+              <!-- horizontal 'floor' inside -->
+              <path d="M30 108 L30 78 L66 78 L66 108"/>
+            </svg>
+            <div style="font-family: var(--f-display); font-weight: 400; font-size: 112px; line-height: 0.9; letter-spacing: -0.035em; color: var(--ink);">Altr</div>
+          </div>
+          <div class="lv-row">
+            <div class="lv-cell">
+              <div style="display:flex; align-items:center; gap: 10px;">
+                <svg width="28" height="32" viewBox="0 0 96 108" fill="none" stroke="currentColor" stroke-width="10" style="color: var(--ink);">
+                  <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                  <path d="M30 108 L30 78 L66 78 L66 108"/>
+                </svg>
+                <div class="wm-serif-sm">Altr</div>
+              </div>
+              <div class="cap">Lockup · 32px</div>
+            </div>
+            <div class="lv-cell">
+              <svg width="16" height="18" viewBox="0 0 96 108" fill="none" stroke="currentColor" stroke-width="12" style="color: var(--ink);">
+                <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                <path d="M30 108 L30 78 L66 78 L66 108"/>
+              </svg>
+              <div class="cap">Favicon · 16px</div>
+            </div>
+            <div class="lv-cell" style="padding: 0; overflow: hidden;">
+              <div class="dock" style="width:100%; height:100%; border-radius: 0; padding: 20px;">
+                <div class="icon-big icn-bg-paper">
+                  <svg width="72" height="80" viewBox="0 0 96 108" fill="none" stroke="currentColor" stroke-width="8" style="color: var(--ink);">
+                    <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                    <path d="M30 108 L30 78 L66 78 L66 108"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="cap" style="padding: 8px;">App icon · 128px</div>
+            </div>
+          </div>
+          <!-- dock row -->
+          <div class="dock">
+            <div class="icon-small icn-bg-paper">
+              <svg width="18" height="20" viewBox="0 0 96 108" fill="none" stroke="currentColor" stroke-width="10" style="color: var(--ink);">
+                <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                <path d="M30 108 L30 78 L66 78 L66 108"/>
+              </svg>
+            </div>
+            <div style="font-family: var(--f-mono); font-size: 10px; color: var(--walnut); letter-spacing: 0.14em; text-transform: uppercase;">32px · still legible on a dock</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- (D) TYPOGRAPHIC — the leaning A -->
+      <div class="logo-variant" style="border-color: var(--ink);">
+        <div class="lv-meta">
+          <span class="tag" style="background: var(--ochre); color: #FFF8EC;">D · TYPOGRAPHIC · PICK</span>
+          <h4>The leaning A — one idea, all type</h4>
+          <p>The 'A' loses its crossbar and tilts its right leg slightly inward, so the apex sits off-center. Subtle enough to be a signature, not a stunt. Suggests 'altered.' The rest of the word is left perfectly still.</p>
+        </div>
+        <div class="lv-stage">
+          <div class="lv-big">
+            <div style="display:flex; align-items:baseline; gap: 0; font-family: var(--f-display); font-size: 132px; line-height: 0.9; letter-spacing: -0.03em; color: var(--ink);">
+              <!-- custom A glyph -->
+              <svg width="110" height="120" viewBox="0 0 110 120" style="margin-right: -4px;">
+                <!-- left leg (plumb) -->
+                <path d="M8 112 L46 6" stroke="currentColor" stroke-width="9" stroke-linecap="butt" fill="none"/>
+                <!-- right leg — leaning slightly inward -->
+                <path d="M102 112 L58 6" stroke="currentColor" stroke-width="9" stroke-linecap="butt" fill="none"/>
+                <!-- no crossbar -->
+              </svg>
+              <span>ltr</span>
+            </div>
+          </div>
+          <div class="lv-row">
+            <div class="lv-cell">
+              <div style="display:flex; align-items:baseline; gap: 0; font-family: var(--f-display); font-size: 36px; line-height: 0.9; letter-spacing: -0.025em;">
+                <svg width="30" height="34" viewBox="0 0 110 120" style="margin-right: -1px;">
+                  <path d="M8 112 L46 6" stroke="currentColor" stroke-width="11" fill="none"/>
+                  <path d="M102 112 L58 6" stroke="currentColor" stroke-width="11" fill="none"/>
+                </svg>
+                <span>ltr</span>
+              </div>
+              <div class="cap">Small · 36px</div>
+            </div>
+            <div class="lv-cell">
+              <div style="display:flex; align-items:baseline; gap: 0; font-family: var(--f-display); font-size: 16px; line-height: 0.9;">
+                <svg width="14" height="16" viewBox="0 0 110 120">
+                  <path d="M8 112 L46 6" stroke="currentColor" stroke-width="14" fill="none"/>
+                  <path d="M102 112 L58 6" stroke="currentColor" stroke-width="14" fill="none"/>
+                </svg>
+                <span>ltr</span>
+              </div>
+              <div class="cap">Favicon · 16px</div>
+            </div>
+            <div class="lv-cell" style="padding: 0; overflow: hidden;">
+              <div class="dock" style="width:100%; height:100%; border-radius: 0; padding: 20px;">
+                <div class="icon-big" style="background: var(--ink);">
+                  <svg width="72" height="80" viewBox="0 0 110 120">
+                    <path d="M8 112 L46 6" stroke="#F6F1E7" stroke-width="9" fill="none"/>
+                    <path d="M102 112 L58 6" stroke="#F6F1E7" stroke-width="9" fill="none"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="cap" style="padding: 8px;">App icon · 128px</div>
+            </div>
+          </div>
+          <div class="dock">
+            <div class="icon-small" style="background: var(--ink);">
+              <svg width="18" height="20" viewBox="0 0 110 120">
+                <path d="M8 112 L46 6" stroke="#F6F1E7" stroke-width="11" fill="none"/>
+                <path d="M102 112 L58 6" stroke="#F6F1E7" stroke-width="11" fill="none"/>
+              </svg>
+            </div>
+            <div style="font-family: var(--f-mono); font-size: 10px; color: var(--walnut); letter-spacing: 0.14em; text-transform: uppercase;">32px · the missing crossbar still reads</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- (E) WILDCARD -->
+      <div class="logo-variant">
+        <div class="lv-meta">
+          <span class="tag">E · WILDCARD</span>
+          <h4>The margin mark</h4>
+          <p>Altr is set in serif, lowercase, perfectly plain — but preceded by a small hand-drawn ochre bracket, as if a human editor marked the word in the margin of a manuscript. The brand mark is the <em>annotation</em>, not the word: the idea that Altr is what happens when a person alters a plan. It refuses to behave like a tech logo at all.</p>
+        </div>
+        <div class="lv-stage">
+          <div class="lv-big">
+            <div style="display:flex; align-items:center; gap: 22px;">
+              <svg width="40" height="120" viewBox="0 0 40 120">
+                <!-- hand-drawn ochre bracket, slightly wobbly -->
+                <path d="M30 10 C 18 14, 12 28, 14 60 C 16 92, 20 104, 32 110"
+                      stroke="#B9823C" stroke-width="5" fill="none" stroke-linecap="round"/>
+              </svg>
+              <div style="font-family: var(--f-display); font-style: italic; font-size: 108px; line-height: 0.9; letter-spacing: -0.03em; color: var(--ink);">altr</div>
+            </div>
+          </div>
+          <div class="lv-row">
+            <div class="lv-cell">
+              <div style="display:flex; align-items:center; gap: 8px;">
+                <svg width="12" height="34" viewBox="0 0 40 120">
+                  <path d="M30 10 C 18 14, 12 28, 14 60 C 16 92, 20 104, 32 110" stroke="#B9823C" stroke-width="7" fill="none" stroke-linecap="round"/>
+                </svg>
+                <div style="font-family: var(--f-display); font-style: italic; font-size: 32px; letter-spacing: -0.025em;">altr</div>
+              </div>
+              <div class="cap">Small · 32px</div>
+            </div>
+            <div class="lv-cell">
+              <div style="display:flex; align-items:center; gap: 4px;">
+                <svg width="6" height="16" viewBox="0 0 40 120">
+                  <path d="M30 10 C 18 14, 12 28, 14 60 C 16 92, 20 104, 32 110" stroke="#B9823C" stroke-width="14" fill="none" stroke-linecap="round"/>
+                </svg>
+                <div style="font-family: var(--f-display); font-style: italic; font-size: 14px;">altr</div>
+              </div>
+              <div class="cap">Favicon · 14px</div>
+            </div>
+            <div class="lv-cell" style="padding: 0; overflow: hidden;">
+              <div class="dock" style="width:100%; height:100%; border-radius: 0; padding: 20px;">
+                <div class="icon-big icn-bg-paper">
+                  <svg width="36" height="96" viewBox="0 0 40 120">
+                    <path d="M30 10 C 18 14, 12 28, 14 60 C 16 92, 20 104, 32 110" stroke="#B9823C" stroke-width="6" fill="none" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="cap" style="padding: 8px;">App icon · bracket alone</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 7. APP ICON SET ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="no">07 — Icon set</div>
+      <div>
+        <h2>App icon set</h2>
+        <p>The two strongest directions — <strong style="color:var(--ink); font-weight:500;">Threshold</strong> and <strong style="color:var(--ink); font-weight:500;">Leaning A</strong> — rendered across the full macOS pipeline. Both feel inevitable at 32px, which is the real test.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <!-- THRESHOLD ICON SET -->
+      <div class="logo-variant" style="display:block; padding: 32px;">
+        <div class="lv-meta" style="margin-bottom: 24px;">
+          <span class="tag" style="background: var(--ochre); color: #FFF8EC;">DIRECTION C — THRESHOLD</span>
+          <h4>Linen ground, ink line — warm by default</h4>
+        </div>
+        <div class="dock" style="gap: 28px; justify-content: center; padding: 40px 20px;">
+          <!-- 1024 represented at 128 max — scale down for layout; label shows intended size -->
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width:128px;height:128px;border-radius:28px;overflow:hidden;box-shadow:0 8px 24px -10px rgba(30,26,19,0.28), 0 2px 6px -2px rgba(30,26,19,0.12);display:flex;align-items:center;justify-content:center;background: var(--paper);">
+              <svg width="76" height="84" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="8" stroke-linecap="square">
+                <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                <path d="M30 108 L30 78 L66 78 L66 108"/>
+              </svg>
+            </div>
+            <div class="cap">1024 / 512</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width:96px;height:96px;border-radius:22px;overflow:hidden;box-shadow:0 6px 18px -8px rgba(30,26,19,0.25);display:flex;align-items:center;justify-content:center;background: var(--paper);">
+              <svg width="58" height="64" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="9" stroke-linecap="square">
+                <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                <path d="M30 108 L30 78 L66 78 L66 108"/>
+              </svg>
+            </div>
+            <div class="cap">256</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width:64px;height:64px;border-radius:14px;overflow:hidden;box-shadow:0 4px 12px -6px rgba(30,26,19,0.22);display:flex;align-items:center;justify-content:center;background: var(--paper);">
+              <svg width="38" height="42" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="10" stroke-linecap="square">
+                <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                <path d="M30 108 L30 78 L66 78 L66 108"/>
+              </svg>
+            </div>
+            <div class="cap">128</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width:48px;height:48px;border-radius:11px;overflow:hidden;box-shadow:0 3px 8px -4px rgba(30,26,19,0.2);display:flex;align-items:center;justify-content:center;background: var(--paper);">
+              <svg width="28" height="32" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="11" stroke-linecap="square">
+                <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                <path d="M30 108 L30 78 L66 78 L66 108"/>
+              </svg>
+            </div>
+            <div class="cap">64</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width:32px;height:32px;border-radius:7px;overflow:hidden;box-shadow:0 2px 5px -2px rgba(30,26,19,0.18);display:flex;align-items:center;justify-content:center;background: var(--paper);">
+              <svg width="18" height="20" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="12" stroke-linecap="square">
+                <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                <path d="M30 108 L30 78 L66 78 L66 108"/>
+              </svg>
+            </div>
+            <div class="cap">32</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEANING A ICON SET -->
+      <div class="logo-variant" style="display:block; padding: 32px;">
+        <div class="lv-meta" style="margin-bottom: 24px;">
+          <span class="tag" style="background: var(--ochre); color: #FFF8EC;">DIRECTION D — LEANING A</span>
+          <h4>Ink ground, linen mark — quiet, confident, unmistakable</h4>
+        </div>
+        <div class="dock" style="gap: 28px; justify-content: center; padding: 40px 20px;">
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width:128px;height:128px;border-radius:28px;overflow:hidden;box-shadow:0 8px 24px -10px rgba(30,26,19,0.28), 0 2px 6px -2px rgba(30,26,19,0.12);display:flex;align-items:center;justify-content:center;background: #1E1A13;">
+              <svg width="72" height="80" viewBox="0 0 110 120">
+                <path d="M8 112 L46 6" stroke="#F6F1E7" stroke-width="9" fill="none"/>
+                <path d="M102 112 L58 6" stroke="#F6F1E7" stroke-width="9" fill="none"/>
+              </svg>
+            </div>
+            <div class="cap">1024 / 512</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width:96px;height:96px;border-radius:22px;overflow:hidden;box-shadow:0 6px 18px -8px rgba(30,26,19,0.25);display:flex;align-items:center;justify-content:center;background: #1E1A13;">
+              <svg width="54" height="60" viewBox="0 0 110 120">
+                <path d="M8 112 L46 6" stroke="#F6F1E7" stroke-width="10" fill="none"/>
+                <path d="M102 112 L58 6" stroke="#F6F1E7" stroke-width="10" fill="none"/>
+              </svg>
+            </div>
+            <div class="cap">256</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width:64px;height:64px;border-radius:14px;overflow:hidden;box-shadow:0 4px 12px -6px rgba(30,26,19,0.22);display:flex;align-items:center;justify-content:center;background: #1E1A13;">
+              <svg width="36" height="40" viewBox="0 0 110 120">
+                <path d="M8 112 L46 6" stroke="#F6F1E7" stroke-width="11" fill="none"/>
+                <path d="M102 112 L58 6" stroke="#F6F1E7" stroke-width="11" fill="none"/>
+              </svg>
+            </div>
+            <div class="cap">128</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width:48px;height:48px;border-radius:11px;overflow:hidden;box-shadow:0 3px 8px -4px rgba(30,26,19,0.2);display:flex;align-items:center;justify-content:center;background: #1E1A13;">
+              <svg width="28" height="32" viewBox="0 0 110 120">
+                <path d="M8 112 L46 6" stroke="#F6F1E7" stroke-width="12" fill="none"/>
+                <path d="M102 112 L58 6" stroke="#F6F1E7" stroke-width="12" fill="none"/>
+              </svg>
+            </div>
+            <div class="cap">64</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width:32px;height:32px;border-radius:7px;overflow:hidden;box-shadow:0 2px 5px -2px rgba(30,26,19,0.18);display:flex;align-items:center;justify-content:center;background: #1E1A13;">
+              <svg width="18" height="20" viewBox="0 0 110 120">
+                <path d="M8 112 L46 6" stroke="#F6F1E7" stroke-width="14" fill="none"/>
+                <path d="M102 112 L58 6" stroke="#F6F1E7" stroke-width="14" fill="none"/>
+              </svg>
+            </div>
+            <div class="cap">32</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="s-small" style="margin-top: 28px; color: var(--walnut); max-width: 62ch;">
+        Both directions are corner-radius-aware (22% of side, matching macOS Sonoma+). Neither relies on color to carry the idea — so they survive monochrome, dark menu bars, and the 32px test.
+      </p>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>Altr · Design system · v0.1</div>
+    <div>20 Apr 2026 · altr.run</div>
+  </footer>
+
+</div>
+</body>
+</html>

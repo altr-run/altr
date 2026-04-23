@@ -1,9 +1,20 @@
+'use client'
+
+import { useState } from 'react'
 import s from './home.module.css'
 import Reveal from './reveal'
+import HeroShader from './hero-shader'
 
 export default function Hero() {
+	const [isHovered, setIsHovered] = useState(false)
+
 	return (
-		<section className={s.hero}>
+		<section
+			className={s.hero}
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
+		>
+			<HeroShader isHovered={isHovered} />
 			<div className={s.heroWrap}>
 				<span className={s.heroSticker}>§ v0.1 · new chapter</span>
 				<span className={s.heroNote}>
@@ -27,15 +38,15 @@ export default function Hero() {
 				</h1>
 				<p className={s.heroSub}>
 					Altr is the workspace where <em>your team</em> and{' '}
-					<span className={s.mono} style={{ color: 'var(--acc)' }}>
+					<span className={`${s.mono} ${s.heroMonoAcc}`}>
 						@spec
 					</span>
 					,{' '}
-					<span className={s.mono} style={{ color: 'var(--ink)' }}>
+					<span className={`${s.mono} ${s.heroMonoInk}`}>
 						@eng
 					</span>
 					, and{' '}
-					<span className={s.mono} style={{ color: 'var(--ink)' }}>
+					<span className={`${s.mono} ${s.heroMonoInk}`}>
 						@review
 					</span>{' '}
 					work in the same threads, on the same specs, toward the same
