@@ -1,4 +1,9 @@
+'use client'
+
+import * as Accordion from '@radix-ui/react-accordion'
+import { AnimatePresence, motion } from 'motion/react'
 import { PortableText, stegaClean } from 'next-sanity'
+import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import type { AccordionList } from '@/sanity/types'
 import CTAList from '@/ui/cta-list'
@@ -15,6 +20,13 @@ export default function ({
 	...props
 }: AccordionList & { _key: string }) {
 	const layout = stegaClean(l)
+
+	// Build default open values from Sanity `open` field
+	const defaultOpen = accordions
+		?.filter((a) => a.open)
+		.map((a) => a._key) ?? []
+
+	const [openValues, setOpenValues] = useState<string[]>(defaultOpen)
 
 	return (
 		<section
@@ -43,27 +55,101 @@ export default function ({
 			)}
 
 			<div className="mx-auto w-full max-w-3xl">
-				{accordions?.map(({ _key, summary, content, open }) => (
-					<details
-						className="accordion border-stroke not-last:border-b"
-						name={exclusive ? _module_key : undefined}
-						open={open}
-						{...(enableSchema && {
-							itemScope: true,
-							itemProp: 'mainEntity',
-							itemType: 'https://schema.org/Question',
-						})}
-						key={_key}
+				{exclusive ? (
+					// Single — only one open at a time
+					<Accordion.Root
+						type="single"
+						collapsible
+						value={openValues[0] ?? ''}
+						onValueChange={(v) => setOpenValues(v ? [v] : [])}
 					>
-						<summary
-							className="py-[.5lh] font-bold"
-							{...(enableSchema && { itemProp: 'name' })}
-						>
-							{summary}
-						</summary>
+						{accordions?.map(({ _key, summary, content }) => (
+							<AccordionItem
+								key={_key}
+								value={_key}
+								summary={summary}
+								content={content}
+								isOpen={openValues[0] === _key}
+								enableSchema={enableSchema}
+							/>
+						))}
+					</Accordion.Root>
+				) : (
+					// Multiple — any number can be open
+					<Accordion.Root
+						type="multiple"
+						value={openValues}
+						onValueChange={setOpenValues}
+					>
+						{accordions?.map(({ _key, summary, content }) => (
+							<AccordionItem
+								key={_key}
+								value={_key}
+								summary={summary}
+								content={content}
+								isOpen={openValues.includes(_key)}
+								enableSchema={enableSchema}
+							/>
+						))}
+					</Accordion.Root>
+				)}
+			</div>
+		</section>
+	)
+}
 
-						<div
-							className="not-supports-[interpolate-size:allow-keywords]:anim-fade-to-b pb-lh"
+function AccordionItem({
+	value,
+	summary,
+	content,
+	isOpen,
+	enableSchema,
+}: {
+	value: string
+	summary?: string
+	content?: NonNullable<AccordionList['accordions']>[number]['content']
+	isOpen: boolean
+	enableSchema: boolean
+}) {
+	return (
+		<Accordion.Item
+			value={value}
+			className="border-b border-(--border-stroke, var(--line))"
+			{...(enableSchema && {
+				itemScope: true,
+				itemProp: 'mainEntity',
+				itemType: 'https://schema.org/Question',
+			})}
+		>
+			<Accordion.Header>
+				<Accordion.Trigger asChild>
+					<button
+						className="flex w-full items-center justify-between gap-4 py-[.5lh] text-left font-bold cursor-pointer bg-transparent border-0"
+						{...(enableSchema && { itemProp: 'name' })}
+					>
+						<span>{summary}</span>
+						<motion.span
+							animate={{ rotate: isOpen ? 45 : 0 }}
+							transition={{ duration: 0.22 }}
+							className="w-6 h-6 rounded-full border border-(--line) grid place-items-center font-mono text-sm text-ink-2 flex-shrink-0 transition-colors"
+							style={isOpen ? { background: 'var(--ink)', color: 'var(--bg)', borderColor: 'var(--ink)' } : {}}
+						>
+							+
+						</motion.span>
+					</button>
+				</Accordion.Trigger>
+			</Accordion.Header>
+
+			<Accordion.Content forceMount asChild>
+				<AnimatePresence initial={false}>
+					{isOpen && (
+						<motion.div
+							key="content"
+							initial={{ height: 0, opacity: 0 }}
+							animate={{ height: 'auto', opacity: 1 }}
+							exit={{ height: 0, opacity: 0 }}
+							transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+							style={{ overflow: 'hidden' }}
 							{...(enableSchema && {
 								itemScope: true,
 								itemProp: 'acceptedAnswer',
@@ -71,15 +157,15 @@ export default function ({
 							})}
 						>
 							<div
-								className="prose"
+								className="prose pb-[.75lh]"
 								{...(enableSchema && { itemProp: 'text' })}
 							>
 								<PortableText value={content ?? []} />
 							</div>
-						</div>
-					</details>
-				))}
-			</div>
-		</section>
+						</motion.div>
+					)}
+				</AnimatePresence>
+			</Accordion.Content>
+		</Accordion.Item>
 	)
 }
