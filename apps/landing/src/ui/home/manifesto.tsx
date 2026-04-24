@@ -14,10 +14,10 @@ export default function Manifesto() {
 							justifyContent: 'center',
 						}}
 					>
-						§ why teams switch
+						§ the shift
 					</span>
 					<h2 className={s.manifestoH2}>
-						Context disappears <em>between the tools.</em>
+						Context dies <em>between the tools.</em>
 						<br />
 						That&apos;s where the work gets lost.
 					</h2>

@@ -67,10 +67,10 @@ export default function Metrics() {
 						className={s.over}
 						style={{ display: 'inline-block', marginBottom: 16 }}
 					>
-						§ proof
+						§ early signal
 					</span>
 					<h2 className={s.h2}>
-						Signals from teams already
+						Numbers from teams already
 						<br />
 						<em>running the loop.</em>
 					</h2>

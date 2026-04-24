@@ -5,14 +5,15 @@ const QUOTES = [
 	{
 		text: (
 			<>
-				&ldquo;<em>@spec asks better questions than I do.</em> The
-				thread already had the context, so the spec came out reviewable
-				in minutes, not after three meetings.&rdquo;
+				&ldquo;<em>@spec asks better questions than I do.</em> The thread
+				already had the context, so the spec came out reviewable in
+				minutes — not after three meetings.&rdquo;
 			</>
 		),
 		initials: 'EJ',
 		name: 'Elena Joshi',
 		role: 'CTO, Mesa',
+		featured: true,
 		variant: 'default' as const,
 	},
 	{
@@ -26,19 +27,21 @@ const QUOTES = [
 		initials: 'RP',
 		name: 'Ravi Patel',
 		role: 'Head of Eng, Holt & Co',
+		featured: false,
 		variant: 'dark' as const,
 	},
 	{
 		text: (
 			<>
 				&ldquo;I&apos;ve been burned by AI tools before. Altr is the first
-				one that feels like a real operating surface for the team, not a
-				sidecar. <em>The agents show up with context.</em>&rdquo;
+				that feels like a real operating surface — not a sidecar.{' '}
+				<em>The agents show up with context.</em>&rdquo;
 			</>
 		),
 		initials: 'MC',
 		name: 'Maya Chen',
 		role: 'Founder, Parabola',
+		featured: false,
 		variant: 'default' as const,
 	},
 ]
@@ -56,25 +59,25 @@ export default function Testimonials() {
 								marginBottom: 16,
 							}}
 						>
-							§ customer proof
+							§ from the teams
 						</span>
 						<h2 className={s.h2}>
-							What changes when the
+							What shifts when the loop
 							<br />
-							<em>whole loop lives together.</em>
+							<em>stays in one room.</em>
 						</h2>
 					</div>
 					<p className={s.lede}>
-						Across beta teams, the story is consistent: less coordination
-						drag, stronger specs, and better review context.
+						Less coordination drag. Stronger specs. Better review context.
+						The pattern is consistent across every beta team.
 					</p>
 				</Reveal>
 				<div className={s.testimonialsGrid}>
 					{QUOTES.map((q, i) => (
 						<Reveal
 							key={i}
-							delay={i * 100}
-							className={`${s.testiCell} ${i === 1 ? s.testiCellAlt : ''}`}
+							delay={i === 0 ? 0 : i * 100}
+							className={`${s.testiCell} ${q.featured ? s.testiCellFeatured : q.variant === 'dark' ? s.testiCellAlt : ''}`}
 						>
 							<div className={s.testiQuote}>{q.text}</div>
 							<div className={s.testiAttr}>
@@ -84,12 +87,8 @@ export default function Testimonials() {
 									{q.initials}
 								</div>
 								<div>
-									<div className={s.testiName}>
-										{q.name}
-									</div>
-									<div className={s.testiRole}>
-										{q.role}
-									</div>
+									<div className={s.testiName}>{q.name}</div>
+									<div className={s.testiRole}>{q.role}</div>
 								</div>
 							</div>
 						</Reveal>

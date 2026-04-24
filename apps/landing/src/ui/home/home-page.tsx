@@ -4,6 +4,7 @@ import Hero from './hero'
 import HeroShader from './hero-shader'
 import Logos from './logos'
 import Triptych from './triptych'
+import Flow from './flow'
 import Playground from './playground'
 import How from './how'
 import Trust from './trust'
@@ -27,6 +28,7 @@ export default function HomePage() {
 				<div data-nav-theme="light">
 					<Logos />
 					<Triptych />
+					<Flow />
 					<Playground />
 					<How />
 					<Trust />

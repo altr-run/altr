@@ -15,7 +15,7 @@ export default function HeroShader({ isHovered }: { isHovered: boolean }) {
 			<Suspense fallback={<div className={s.heroShaderFallback} />}>
 				<Dithering
 					colorBack="#00000000"
-					colorFront="#5B6AEE"
+					colorFront="#B7D96A"
 					shape="warp"
 					type="4x4"
 					size={1.45}
