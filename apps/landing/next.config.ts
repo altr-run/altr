@@ -12,7 +12,11 @@ const nextConfig: NextConfig = {
 
 	images: {
 		localPatterns: [{ pathname: '/api/og' }],
-		remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
+		remotePatterns: [
+			{ protocol: 'https', hostname: 'cdn.sanity.io' },
+			// Brandfetch Logo CDN — used for integration icons and customer logos
+			{ protocol: 'https', hostname: 'cdn.brandfetch.io' },
+		],
 	},
 
 	async redirects() {

@@ -66,7 +66,7 @@ export default function Metrics() {
 						className="over inline-block"
 						style={{ marginBottom: 16 }}
 					>
-						§ pilot signal
+						pilot signal
 					</span>
 					<h2
 						className="font-serif font-normal leading-none tracking-[-0.03em] text-wrap-balance m-0"

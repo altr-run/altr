@@ -204,8 +204,8 @@ function CompareMenu() {
 
 export default function SiteNav() {
 	return (
-		<nav className="sticky top-[14px] z-80 px-5 bg-transparent">
-			<div className="nav-pill">
+		<nav className="fixed top-[14px] left-0 right-0 z-80 px-5 bg-transparent pointer-events-none">
+			<div className="nav-pill pointer-events-auto">
 				{/* Left: logo */}
 				<div className="justify-self-start flex items-center gap-[14px]">
 					<a

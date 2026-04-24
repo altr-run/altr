@@ -5,7 +5,9 @@ import { ROUTES } from '@/lib/env'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
-import IntegrationPage from '@/ui/integrations/integration-page'
+import { INTEGRATIONS } from '@/content'
+import type { IntegrationPage } from '@/ui/integrations/integration-page'
+import IntegrationPageComponent from '@/ui/integrations/integration-page'
 
 type Props = {
 	params: Promise<{ slug: string }>
@@ -16,20 +18,21 @@ export default async function ({ params }: Props) {
 	const page = await getPage(slug)
 	if (!page) notFound()
 
-	return <IntegrationPage page={page} />
+	return <IntegrationPageComponent page={page} />
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { slug } = await params
 	const page = await getPage(slug)
-	const { title, description, image, noIndex } = page?.metadata ?? {}
+	const meta = (page as IntegrationPageSanity | null)?.metadata ?? null
+	const { title, description, image, noIndex } = meta ?? {}
 
 	return {
-		title,
-		description,
+		title: title ?? `Altr + ${page?.tool ?? slug}`,
+		description: description ?? page?.subhead ?? undefined,
 		openGraph: {
-			title: title ?? undefined,
-			description: description ?? undefined,
+			title: title ?? `Altr + ${page?.tool ?? slug}`,
+			description: description ?? page?.subhead ?? undefined,
 			url: `${process.env.NEXT_PUBLIC_BASE_URL}/${ROUTES.integrations}/${slug}`,
 			images: [
 				image
@@ -42,21 +45,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-	return await client.fetch<{ slug: string }[]>(
+	const sanitySlugs = await client.fetch<{ slug: string }[]>(
 		groq`*[_type == 'integration' && defined(metadata.slug.current)]{
 			'slug': metadata.slug.current
 		}`,
 	)
+	const contentSlugs = Object.keys(INTEGRATIONS).map((slug) => ({ slug }))
+	const allSlugs = [
+		...sanitySlugs,
+		...contentSlugs.filter(
+			(cs) => !sanitySlugs.some((ss) => ss.slug === cs.slug),
+		),
+	]
+	return allSlugs
 }
 
-async function getPage(slug: string) {
-	return await sanityFetchLive<INTEGRATION_PAGE_RESULT>({
-		query: INTEGRATION_PAGE_QUERY,
-		params: { slug },
-	})
-}
-
-type INTEGRATION_PAGE_RESULT = {
+// Sanity raw shape — relatedUseCases are nested objects
+type IntegrationPageSanity = {
 	tool: string
 	category: string | null
 	logo: unknown
@@ -74,7 +79,28 @@ type INTEGRATION_PAGE_RESULT = {
 		image: unknown
 		noIndex: boolean | null
 	} | null
-} | null
+}
+
+// Normalize Sanity result into the flat IntegrationPage shape the UI expects
+function normalizeSanity(raw: IntegrationPageSanity): IntegrationPage {
+	return {
+		...raw,
+		relatedUseCases:
+			raw.relatedUseCases
+				?.map((uc) => uc.metadata?.slug?.current)
+				.filter((s): s is string => Boolean(s)) ?? null,
+		metadata: raw.metadata,
+	}
+}
+
+async function getPage(slug: string): Promise<IntegrationPage | null> {
+	const fromSanity = await sanityFetchLive<IntegrationPageSanity | null>({
+		query: INTEGRATION_PAGE_QUERY,
+		params: { slug },
+	})
+	if (fromSanity) return normalizeSanity(fromSanity)
+	return INTEGRATIONS[slug] ?? null
+}
 
 const INTEGRATION_PAGE_QUERY = groq`*[_type == 'integration' && metadata.slug.current == $slug][0]{
 	tool,

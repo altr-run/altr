@@ -5,6 +5,7 @@ import { ROUTES } from '@/lib/env'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
+import { COMPARE_PAGES } from '@/content'
 import ComparePage from '@/ui/compare/compare-page'
 
 type Props = {
@@ -22,14 +23,15 @@ export default async function ({ params }: Props) {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { slug } = await params
 	const page = await getPage(slug)
-	const { title, description, image, noIndex } = page?.metadata ?? {}
+	const meta = (page as COMPARE_PAGE_RESULT_SANITY | null)?.metadata ?? null
+	const { title, description, image, noIndex } = meta ?? {}
 
 	return {
-		title,
-		description,
+		title: title ?? `Altr vs ${page?.competitor ?? slug}`,
+		description: description ?? page?.subhead ?? undefined,
 		openGraph: {
-			title: title ?? undefined,
-			description: description ?? undefined,
+			title: title ?? `Altr vs ${page?.competitor ?? slug}`,
+			description: description ?? page?.subhead ?? undefined,
 			url: `${process.env.NEXT_PUBLIC_BASE_URL}/${ROUTES.compare}/${slug}`,
 			images: [
 				image
@@ -42,21 +44,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-	return await client.fetch<{ slug: string }[]>(
+	// Merge Sanity slugs with content map slugs
+	const sanitySlugs = await client.fetch<{ slug: string }[]>(
 		groq`*[_type == 'compare.page' && defined(metadata.slug.current)]{
 			'slug': metadata.slug.current
 		}`,
 	)
+	const contentSlugs = Object.keys(COMPARE_PAGES).map((slug) => ({ slug }))
+	const allSlugs = [
+		...sanitySlugs,
+		...contentSlugs.filter(
+			(cs) => !sanitySlugs.some((ss) => ss.slug === cs.slug),
+		),
+	]
+	return allSlugs
 }
 
-async function getPage(slug: string) {
-	return await sanityFetchLive<COMPARE_PAGE_RESULT>({
-		query: COMPARE_PAGE_QUERY,
-		params: { slug },
-	})
-}
-
-type COMPARE_PAGE_RESULT = {
+type COMPARE_PAGE_RESULT_SANITY = {
 	competitor: string
 	headline: string | null
 	subhead: string | null
@@ -76,7 +80,16 @@ type COMPARE_PAGE_RESULT = {
 		image: unknown
 		noIndex: boolean | null
 	} | null
-} | null
+}
+
+async function getPage(slug: string) {
+	const fromSanity = await sanityFetchLive<COMPARE_PAGE_RESULT_SANITY | null>({
+		query: COMPARE_PAGE_QUERY,
+		params: { slug },
+	})
+	if (fromSanity) return fromSanity
+	return COMPARE_PAGES[slug] ?? null
+}
 
 const COMPARE_PAGE_QUERY = groq`*[_type == 'compare.page' && metadata.slug.current == $slug][0]{
 	competitor,

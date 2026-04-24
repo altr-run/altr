@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import { groq } from 'next-sanity'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ROUTES } from '@/lib/env'
+import { INTEGRATIONS } from '@/content'
+import { getBrandLogoUrl } from '@/lib/brand'
 import { sanityFetchLive } from '@/sanity/lib/live'
 
 export const metadata: Metadata = {
@@ -26,31 +29,48 @@ const CATEGORY_ORDER = [
 ]
 
 const CATEGORY_LABELS: Record<string, string> = {
-	'communication': 'Communication',
+	'communication':    'Communication',
 	'project-tracking': 'Project tracking',
-	'code': 'Code & version control',
-	'docs': 'Docs & knowledge',
-	'calls': 'Calls & recordings',
-	'monitoring': 'Monitoring & alerts',
+	'code':             'Code & version control',
+	'docs':             'Docs & knowledge',
+	'calls':            'Calls & recordings',
+	'monitoring':       'Monitoring & alerts',
 }
 
 type IntegrationEntry = {
 	tool: string
+	domain: string | null
 	category: string | null
 	subhead: string | null
 	slug: string
 }
 
 export default async function IntegrationsIndex() {
-	const integrations = await sanityFetchLive<IntegrationEntry[]>({
+	const sanityIntegrations = await sanityFetchLive<IntegrationEntry[]>({
 		query: groq`*[_type == 'integration' && defined(metadata.slug.current) && metadata.noIndex != true]
 			| order(tool asc){
 				tool,
+				domain,
 				category,
 				subhead,
 				'slug': metadata.slug.current
 			}`,
 	})
+
+	// Merge content map entries not already in Sanity
+	const sanitySlugs = new Set(sanityIntegrations.map((i) => i.slug))
+	const contentEntries: IntegrationEntry[] = Object.entries(INTEGRATIONS)
+		.filter(([slug]) => !sanitySlugs.has(slug))
+		.map(([slug, int]) => ({
+			tool: int.tool,
+			domain: int.domain,
+			category: int.category,
+			subhead: int.subhead,
+			slug,
+		}))
+	const integrations = [...sanityIntegrations, ...contentEntries].sort((a, b) =>
+		a.tool.localeCompare(b.tool),
+	)
 
 	// Group by category
 	const grouped: Record<string, IntegrationEntry[]> = {}
@@ -103,9 +123,26 @@ export default async function IntegrationsIndex() {
 												href={`/${ROUTES.integrations}/${int.slug}`}
 												className="group block border border-line rounded-[var(--r-md)] p-5 bg-(--panel) no-underline transition-[border-color,box-shadow] duration-200 hover:border-acc/40 hover:shadow-[0_6px_18px_rgba(0,0,0,0.05)]"
 											>
-												<h3 className="font-serif text-xl text-ink mb-1 group-hover:text-acc transition-colors">
-													{int.tool}
-												</h3>
+												<div className="flex items-center gap-3 mb-3">
+													{int.domain && (
+														<Image
+															src={getBrandLogoUrl(int.domain, {
+																width: 32,
+																height: 32,
+																type: 'icon',
+																fallback: 'lettermark',
+															})}
+															alt={`${int.tool} logo`}
+															width={32}
+															height={32}
+															className="rounded-md border border-line bg-white p-0.5 object-contain shrink-0"
+															unoptimized
+														/>
+													)}
+													<h3 className="font-serif text-xl text-ink group-hover:text-acc transition-colors">
+														{int.tool}
+													</h3>
+												</div>
 												{int.subhead && (
 													<p className="text-ink-3 text-xs leading-relaxed line-clamp-2">
 														{int.subhead}
@@ -124,15 +161,15 @@ export default async function IntegrationsIndex() {
 			{/* CTA */}
 			<section className="border-t border-line max-w-[var(--maxw-narrow)] mx-auto px-6 py-20 text-center flex flex-col items-center gap-4">
 				<h2 className="font-serif text-3xl text-ink" style={{ textWrap: 'balance' }}>
-					Don't see your tool?
+					Don&apos;t see your tool?
 				</h2>
 				<p className="text-ink-2 text-base max-w-md">
-					Tell us what's in your stack. We're expanding integrations with each pilot cohort.
+					Tell us what&apos;s in your stack. We&apos;re expanding integrations with each pilot cohort.
 				</p>
 				<div className="flex flex-col items-center gap-2">
 					<Link
 						href="/#close"
-						className="inline-flex items-center gap-2 bg-acc text-[#FBF7F1] font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
+						className="inline-flex items-center gap-2 bg-acc text-acc-ink font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
 					>
 						Talk to the founders →
 					</Link>

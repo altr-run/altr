@@ -7,6 +7,7 @@ import comparePage from './documents/compare.page'
 import form from './documents/form'
 import globalModule from './documents/global-module'
 import integration from './documents/integration'
+import legalPage from './documents/legal.page'
 import logo from './documents/logo'
 import navigation from './documents/navigation'
 import page from './documents/page'
@@ -53,6 +54,7 @@ export const schema: SchemaPluginOptions = {
 		useCase,
 		integration,
 		changelogEntry,
+		legalPage,
 		redirect,
 
 		// references

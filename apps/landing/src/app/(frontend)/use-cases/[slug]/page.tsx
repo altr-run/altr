@@ -5,7 +5,9 @@ import { ROUTES } from '@/lib/env'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
-import UseCasePage from '@/ui/use-cases/use-case-page'
+import { USE_CASES } from '@/content'
+import type { UseCasePage } from '@/ui/use-cases/use-case-page'
+import UseCasePageComponent from '@/ui/use-cases/use-case-page'
 
 type Props = {
 	params: Promise<{ slug: string }>
@@ -16,20 +18,21 @@ export default async function ({ params }: Props) {
 	const page = await getPage(slug)
 	if (!page) notFound()
 
-	return <UseCasePage page={page} />
+	return <UseCasePageComponent page={page} />
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { slug } = await params
 	const page = await getPage(slug)
-	const { title, description, image, noIndex } = page?.metadata ?? {}
+	const meta = (page as UseCasePageSanity | null)?.metadata ?? null
+	const { title, description, image, noIndex } = meta ?? {}
 
 	return {
-		title,
-		description,
+		title: title ?? page?.title ?? undefined,
+		description: description ?? page?.subhead ?? undefined,
 		openGraph: {
-			title: title ?? undefined,
-			description: description ?? undefined,
+			title: title ?? page?.title ?? undefined,
+			description: description ?? page?.subhead ?? undefined,
 			url: `${process.env.NEXT_PUBLIC_BASE_URL}/${ROUTES.useCases}/${slug}`,
 			images: [
 				image
@@ -42,21 +45,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-	return await client.fetch<{ slug: string }[]>(
+	const sanitySlugs = await client.fetch<{ slug: string }[]>(
 		groq`*[_type == 'use-case' && defined(metadata.slug.current)]{
 			'slug': metadata.slug.current
 		}`,
 	)
+	const contentSlugs = Object.keys(USE_CASES).map((slug) => ({ slug }))
+	const allSlugs = [
+		...sanitySlugs,
+		...contentSlugs.filter(
+			(cs) => !sanitySlugs.some((ss) => ss.slug === cs.slug),
+		),
+	]
+	return allSlugs
 }
 
-async function getPage(slug: string) {
-	return await sanityFetchLive<USE_CASE_PAGE_RESULT>({
-		query: USE_CASE_PAGE_QUERY,
-		params: { slug },
-	})
-}
-
-type USE_CASE_PAGE_RESULT = {
+// Sanity raw shape — relatedUseCases are nested objects
+type UseCasePageSanity = {
 	title: string
 	headline: string | null
 	subhead: string | null
@@ -79,7 +84,28 @@ type USE_CASE_PAGE_RESULT = {
 		image: unknown
 		noIndex: boolean | null
 	} | null
-} | null
+}
+
+// Normalize Sanity result into the flat UseCasePage shape the UI expects
+function normalizeSanity(raw: UseCasePageSanity): UseCasePage {
+	return {
+		...raw,
+		relatedUseCases:
+			raw.relatedUseCases
+				?.map((uc) => uc.metadata?.slug?.current)
+				.filter((s): s is string => Boolean(s)) ?? null,
+		metadata: raw.metadata,
+	}
+}
+
+async function getPage(slug: string): Promise<UseCasePage | null> {
+	const fromSanity = await sanityFetchLive<UseCasePageSanity | null>({
+		query: USE_CASE_PAGE_QUERY,
+		params: { slug },
+	})
+	if (fromSanity) return normalizeSanity(fromSanity)
+	return USE_CASES[slug] ?? null
+}
 
 const USE_CASE_PAGE_QUERY = groq`*[_type == 'use-case' && metadata.slug.current == $slug][0]{
 	title,

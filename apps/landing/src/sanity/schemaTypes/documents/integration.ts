@@ -33,9 +33,17 @@ export default defineType({
 			group: 'content',
 		}),
 		defineField({
+			name: 'domain',
+			title: 'Brand domain',
+			type: 'string',
+			description: 'Root domain for Brandfetch logo fetch — e.g. "slack.com", "linear.app". Leave blank to use the tool\'s Sanity logo image instead.',
+			group: 'content',
+		}),
+		defineField({
 			name: 'logo',
-			title: 'Tool logo',
+			title: 'Tool logo (fallback)',
 			type: 'image',
+			description: 'Fallback logo shown when no brand domain is set.',
 			options: { hotspot: false },
 			group: 'content',
 		}),

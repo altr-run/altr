@@ -25,6 +25,9 @@ export default structureTool({
 				S.documentTypeListItem('integration').title('Integrations'),
 				S.documentTypeListItem('changelog.entry').title('Changelog'),
 
+				S.divider().title('Legal'),
+				S.documentTypeListItem('legal.page').title('Legal pages'),
+
 				S.divider().title('Navigation'),
 				S.documentTypeListItem('navigation'),
 				S.documentTypeListItem('redirect').title('Redirects'),

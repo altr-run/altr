@@ -56,7 +56,7 @@ export default function ComparePage({ page }: { page: ComparePage }) {
 				<div className="flex flex-col items-center gap-2 pt-2">
 					<Link
 						href="https://app.altr.run"
-						className="inline-flex items-center gap-2 bg-acc text-[#FBF7F1] font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
+						className="inline-flex items-center gap-2 bg-acc text-acc-ink font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
 					>
 						{ctaLabel ?? 'Get early access'}
 					</Link>
@@ -150,7 +150,7 @@ export default function ComparePage({ page }: { page: ComparePage }) {
 				<div className="flex flex-col items-center gap-2">
 					<Link
 						href="https://app.altr.run"
-						className="inline-flex items-center gap-2 bg-acc text-[#FBF7F1] font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
+						className="inline-flex items-center gap-2 bg-acc text-acc-ink font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
 					>
 						{ctaLabel ?? 'Get early access'}
 					</Link>

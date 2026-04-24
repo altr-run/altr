@@ -8,6 +8,10 @@
 @import '@radix-ui/colors/sand-dark.css';
 @import '@radix-ui/colors/sand-alpha.css';
 @import '@radix-ui/colors/sand-dark-alpha.css';
+@import '@radix-ui/colors/gray.css';
+@import '@radix-ui/colors/gray-dark.css';
+@import '@radix-ui/colors/gray-alpha.css';
+@import '@radix-ui/colors/gray-dark-alpha.css';
 @import '@radix-ui/colors/lime.css';
 @import '@radix-ui/colors/lime-dark.css';
 @import '@radix-ui/colors/lime-alpha.css';
@@ -33,28 +37,28 @@
    ───────────────────────────────────────────────────── */
 :root {
 	/* Backgrounds */
-	--bg:      var(--sand-1);
-	--bg-1:    var(--sand-2);
-	--bg-2:    var(--sand-3);
-	--surface: var(--sand-1);
+	--bg:      var(--gray-1);
+	--bg-1:    var(--gray-2);
+	--bg-2:    var(--gray-3);
+	--surface: var(--gray-1);
 
 	/* Text */
-	--ink:   var(--sand-12);
-	--ink-1: var(--sand-12);
-	--ink-2: var(--sand-11);
-	--ink-3: var(--sand-10);
-	--ink-4: var(--sand-8);
-	--ink-5: var(--sand-6);
+	--ink:   var(--gray-12);
+	--ink-1: var(--gray-12);
+	--ink-2: var(--gray-11);
+	--ink-3: var(--gray-10);
+	--ink-4: var(--gray-8);
+	--ink-5: var(--gray-6);
 
 	/* Borders */
-	--line:   var(--sand-5);
-	--line-2: var(--sand-7);
+	--line:   var(--gray-5);
+	--line-2: var(--gray-7);
 
 	/* Panel / frosted */
-	--panel:        color-mix(in oklch, var(--sand-1) 82%, transparent);
-	--panel-strong: color-mix(in oklch, var(--sand-1) 94%, transparent);
-	--panel-soft:   var(--sand-2);
-	--panel-ink:    var(--sand-12);
+	--panel:        color-mix(in oklch, var(--gray-1) 82%, transparent);
+	--panel-strong: color-mix(in oklch, var(--gray-1) 94%, transparent);
+	--panel-soft:   var(--gray-2);
+	--panel-ink:    var(--gray-12);
 	--ring-soft:    var(--black-a2);
 	--ring-strong:  var(--black-a4);
 	--glow-soft:    color-mix(in oklch, var(--lime-9) 14%, transparent);
@@ -115,7 +119,20 @@
 	--color-mint-soft:  var(--mint-soft);
 	--color-glow:       var(--glow-soft);
 
-	/* Radix raw scale — direct utilities eg. bg-sand-3, text-lime-9 */
+	/* Radix raw scale — direct utilities eg. bg-gray-3, text-lime-9 */
+	--color-gray-1:  var(--gray-1);
+	--color-gray-2:  var(--gray-2);
+	--color-gray-3:  var(--gray-3);
+	--color-gray-4:  var(--gray-4);
+	--color-gray-5:  var(--gray-5);
+	--color-gray-6:  var(--gray-6);
+	--color-gray-7:  var(--gray-7);
+	--color-gray-8:  var(--gray-8);
+	--color-gray-9:  var(--gray-9);
+	--color-gray-10: var(--gray-10);
+	--color-gray-11: var(--gray-11);
+	--color-gray-12: var(--gray-12);
+	/* keep sand scale available for any components still referencing it */
 	--color-sand-1:  var(--sand-1);
 	--color-sand-2:  var(--sand-2);
 	--color-sand-3:  var(--sand-3);
@@ -436,11 +453,7 @@
    Global page rules
    ───────────────────────────────────────────────────── */
 
-/* Home page: hide Sanity chrome, unwrap <main> */
-body:has([data-home-page]) > header:first-of-type,
-body:has([data-home-page]) > footer:last-of-type {
-	display: none;
-}
+/* Home page: unwrap <main> so sections render flush */
 body:has([data-home-page]) > main {
 	display: contents;
 }

@@ -43,7 +43,7 @@ export default function Flow() {
 		>
 			<div className="inner">
 				<Reveal className="flex items-baseline gap-6 mb-10">
-					<span className="over">§ workflow</span>
+					<span className="over">workflow</span>
 					<p
 						className="font-serif text-[19px] text-ink-2 m-0 tracking-[-0.01em]"
 						style={{ fontFamily: 'var(--f-serif)' }}
@@ -58,7 +58,7 @@ export default function Flow() {
 						style={{
 							borderColor: 'color-mix(in oklab, var(--line) 84%, transparent)',
 							background:
-								'radial-gradient(70% 120% at 0% 0%, color-mix(in oklab, var(--acc-soft) 28%, white) 0%, transparent 48%), linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,244,237,0.98) 100%)',
+								'radial-gradient(70% 120% at 0% 0%, color-mix(in oklab, var(--acc-soft) 28%, white) 0%, transparent 48%), linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,248,248,0.98) 100%)',
 							boxShadow: '0 12px 28px rgba(17,24,18,0.045)',
 						}}
 					>
@@ -93,7 +93,7 @@ export default function Flow() {
 								const isArtifact = node.type === 'artifact'
 
 								let nodeStyle: React.CSSProperties = {
-									background: 'rgba(255,253,248,0.92)',
+									background: 'rgba(255,255,255,0.92)',
 									boxShadow:
 										'0 6px 14px rgba(17,24,18,0.035), inset 0 1px 0 rgba(255,255,255,0.88)',
 									borderColor: 'var(--line)',

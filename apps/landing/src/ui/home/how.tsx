@@ -30,7 +30,7 @@ export default function How() {
 					{/* Left sticky column */}
 					<Reveal className="sticky top-[120px] flex flex-col gap-6">
 						<span className="over" style={{ display: 'inline-block' }}>
-							§ how it works
+							how it works
 						</span>
 						<h2
 							className="heading-2"

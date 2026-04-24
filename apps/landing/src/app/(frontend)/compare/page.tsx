@@ -3,6 +3,7 @@ import { groq } from 'next-sanity'
 import Link from 'next/link'
 import { ROUTES } from '@/lib/env'
 import { sanityFetchLive } from '@/sanity/lib/live'
+import { COMPARE_PAGES } from '@/content'
 
 export const metadata: Metadata = {
 	title: 'Altr vs the competition — compare',
@@ -24,7 +25,7 @@ type CompareEntry = {
 }
 
 export default async function CompareIndex() {
-	const pages = await sanityFetchLive<CompareEntry[]>({
+	const sanityPages = await sanityFetchLive<CompareEntry[]>({
 		query: groq`*[_type == 'compare.page' && defined(metadata.slug.current) && metadata.noIndex != true]
 			| order(competitor asc){
 				competitor,
@@ -33,6 +34,20 @@ export default async function CompareIndex() {
 				'slug': metadata.slug.current
 			}`,
 	})
+
+	// Merge content map entries not already in Sanity
+	const sanitySlugs = new Set(sanityPages.map((p) => p.slug))
+	const contentEntries: CompareEntry[] = Object.entries(COMPARE_PAGES)
+		.filter(([slug]) => !sanitySlugs.has(slug))
+		.map(([slug, cp]) => ({
+			competitor: cp.competitor,
+			headline: cp.headline,
+			subhead: cp.subhead,
+			slug,
+		}))
+	const pages = [...sanityPages, ...contentEntries].sort((a, b) =>
+		a.competitor.localeCompare(b.competitor),
+	)
 
 	return (
 		<main className="bg-(--bg) text-ink">
@@ -94,7 +109,7 @@ export default async function CompareIndex() {
 				<div className="flex flex-col items-center gap-2">
 					<Link
 						href="/#close"
-						className="inline-flex items-center gap-2 bg-acc text-[#FBF7F1] font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
+						className="inline-flex items-center gap-2 bg-acc text-acc-ink font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
 					>
 						Talk to the founders →
 					</Link>

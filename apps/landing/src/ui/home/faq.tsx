@@ -41,7 +41,7 @@ export default function FAQ() {
 			<div className="inner">
 				<Reveal className="grid grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] gap-16 items-end mb-12">
 					<div>
-						<span className="over inline-block mb-4">§ faq</span>
+						<span className="over inline-block mb-4">faq</span>
 						<h2 className="heading-2">
 							Questions teams ask
 							<br />

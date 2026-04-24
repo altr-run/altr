@@ -56,7 +56,7 @@ export default function UseCases() {
 							className="over inline-block"
 							style={{ marginBottom: 16 }}
 						>
-							§ use cases
+							use cases
 						</span>
 						<h2
 							className="font-serif font-normal leading-none tracking-[-0.03em] text-wrap-balance m-0"

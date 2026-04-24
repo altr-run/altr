@@ -34,7 +34,7 @@ export default function Manifesto() {
 						className="over inline-block"
 						style={{ marginBottom: 20 }}
 					>
-						§ connected stack
+						connected stack
 					</span>
 					<h2
 						className="font-serif font-normal leading-[1.05] tracking-[-0.03em] mt-5 mx-auto"

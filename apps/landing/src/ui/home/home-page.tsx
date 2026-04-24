@@ -14,7 +14,6 @@ const Metrics = dynamic(() => import('./metrics'))
 const Testimonials = dynamic(() => import('./testimonials'))
 const FAQ = dynamic(() => import('./faq'))
 const TalkTeam = dynamic(() => import('./talk-team'))
-const CTAClose = dynamic(() => import('./cta-close'))
 
 export default function HomePage() {
 	return (
@@ -24,7 +23,7 @@ export default function HomePage() {
 					className="relative overflow-hidden"
 					style={{
 						background:
-							'linear-gradient(180deg, var(--bg) 0%, #f7f4eb 62%, var(--bg) 100%)',
+							'linear-gradient(180deg, var(--bg) 0%, var(--bg-1) 62%, var(--bg) 100%)',
 					}}
 					data-nav-theme="light"
 				>
@@ -44,7 +43,6 @@ export default function HomePage() {
 					<Testimonials />
 					<FAQ />
 					<TalkTeam />
-					<CTAClose />
 				</div>
 			</div>
 		</div>

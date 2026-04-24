@@ -278,6 +278,7 @@ const DEFAULT_MIN_PIXEL_RATIO = 2
 const DEFAULT_MAX_PIXEL_COUNT = 1920 * 1080 * 4
 const BASE_SPEED = 0.2
 const HOVER_SPEED = 0.6
+const ANIMATION_START_DELAY_MS = 300
 
 function parseHexColor(hex: string): [number, number, number, number] {
 	let normalized = hex.replace(/^#/, '')
@@ -423,9 +424,12 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 		gl.uniform1f(uniformLocations.type, DITHERING_TYPE_4X4)
 
 		let rafId = 0
+		let idleId: number | null = null
+		let timeoutId = 0
 		let lastRenderTime = 0
 		let frame = 0
 		let renderScale = 1
+		let hasAnimationStarted = false
 
 		const resize = () => {
 			const rect = mount.getBoundingClientRect()
@@ -457,22 +461,56 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 			rafId = window.requestAnimationFrame(render)
 		}
 
+		const renderStaticFrame = () => {
+			lastRenderTime = performance.now()
+			gl.uniform1f(uniformLocations.time, frame * 0.001)
+			gl.clear(gl.COLOR_BUFFER_BIT)
+			gl.drawArrays(gl.TRIANGLES, 0, 6)
+		}
+
 		const resizeObserver = new ResizeObserver(() => {
 			resize()
+			if (!hasAnimationStarted) {
+				renderStaticFrame()
+			}
 		})
 
 		const handleVisibilityChange = () => {
 			speedRef.current = document.hidden ? 0 : isHovered ? HOVER_SPEED : BASE_SPEED
 		}
 
+		const startAnimation = () => {
+			if (hasAnimationStarted) return
+			hasAnimationStarted = true
+			handleVisibilityChange()
+			lastRenderTime = performance.now()
+			rafId = window.requestAnimationFrame(render)
+		}
+
+		const scheduleAnimationStart = () => {
+			timeoutId = window.setTimeout(startAnimation, ANIMATION_START_DELAY_MS)
+			if ('requestIdleCallback' in window) {
+				idleId = window.requestIdleCallback(startAnimation, {
+					timeout: ANIMATION_START_DELAY_MS,
+				})
+			}
+		}
+
 		resizeObserver.observe(mount)
 		resize()
-		handleVisibilityChange()
-		rafId = window.requestAnimationFrame(render)
+		speedRef.current = 0
+		renderStaticFrame()
+		window.requestAnimationFrame(() => {
+			scheduleAnimationStart()
+		})
 		document.addEventListener('visibilitychange', handleVisibilityChange)
 
 		return () => {
 			window.cancelAnimationFrame(rafId)
+			if (idleId !== null && 'cancelIdleCallback' in window) {
+				window.cancelIdleCallback(idleId)
+			}
+			window.clearTimeout(timeoutId)
 			document.removeEventListener('visibilitychange', handleVisibilityChange)
 			resizeObserver.disconnect()
 			gl.deleteBuffer(positionBuffer)

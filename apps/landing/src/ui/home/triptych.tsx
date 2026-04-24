@@ -21,11 +21,11 @@ function SceneChrome({ label, status }: { label: string; status: string }) {
 			<div className="flex gap-[5px]">
 				<span
 					className="w-[7px] h-[7px] rounded-full"
-					style={{ background: '#f59e0b' }}
+					style={{ background: '#ff5f57' }}
 				/>
 				<span
 					className="w-[7px] h-[7px] rounded-full"
-					style={{ background: '#d9b24c' }}
+					style={{ background: '#ffbd2e' }}
 				/>
 				<span
 					className="w-[7px] h-[7px] rounded-full bg-acc"
@@ -93,7 +93,7 @@ function IntakeVisualization() {
 					className="rounded-[18px] border p-[18px] self-start"
 					style={{
 						borderColor: 'color-mix(in oklab, var(--line) 80%, transparent)',
-						background: 'rgba(255,253,248,0.88)',
+						background: 'rgba(255,255,255,0.88)',
 						boxShadow:
 							'0 4px 12px rgba(17,24,18,0.04)',
 						backdropFilter: 'blur(2px)',
@@ -121,7 +121,7 @@ function IntakeVisualization() {
 							className="py-2 px-[10px] rounded-full border border-line font-mono text-[10px] text-ink-2"
 							style={{
 								fontFamily: 'var(--f-mono)',
-								background: 'rgba(255,253,248,0.82)',
+								background: 'rgba(255,255,255,0.82)',
 							}}
 						>
 							{chip}
@@ -161,7 +161,7 @@ function IntakeVisualization() {
 					className="rounded-[18px] border p-4 flex flex-col justify-center"
 					style={{
 						borderColor: 'color-mix(in oklab, var(--line) 80%, transparent)',
-						background: 'rgba(255,253,248,0.88)',
+						background: 'rgba(255,255,255,0.88)',
 						boxShadow: '0 4px 12px rgba(17,24,18,0.04)',
 						backdropFilter: 'blur(2px)',
 					}}
@@ -236,7 +236,7 @@ function RoleVisualization() {
 				<div
 					className="p-5 rounded-[18px] border border-line"
 					style={{
-						background: 'rgba(255,253,248,0.92)',
+						background: 'rgba(255,255,255,0.92)',
 						boxShadow: '0 4px 12px rgba(17,24,18,0.04)',
 					}}
 				>
@@ -370,7 +370,7 @@ function RoleVisualization() {
 						<div
 							key={item.b}
 							className="p-[15px_15px_13px] rounded-[14px] border border-line flex flex-col gap-1 min-h-[82px]"
-							style={{ background: 'rgba(255,253,248,0.88)' }}
+							style={{ background: 'rgba(255,255,255,0.88)' }}
 						>
 							<b className="font-sans font-semibold text-[13px] text-ink">
 								{item.b}
@@ -408,7 +408,7 @@ function ChainVisualization() {
 					{/* Thread node */}
 					<div
 						className="p-[20px_18px] rounded-[16px] border border-line flex flex-col justify-center min-h-[126px]"
-						style={{ background: 'rgba(255,253,248,0.92)', boxShadow: '0 4px 12px rgba(17,24,18,0.04)' }}
+						style={{ background: 'rgba(255,255,255,0.92)', boxShadow: '0 4px 12px rgba(17,24,18,0.04)' }}
 					>
 						<span
 							className="block mb-[10px] font-mono text-[10px] uppercase tracking-widest text-ink-3"
@@ -471,7 +471,7 @@ function ChainVisualization() {
 				<div
 					className="rounded-[18px] border border-line overflow-hidden flex flex-col justify-stretch min-h-[224px]"
 					style={{
-						background: 'rgba(255,253,248,0.96)',
+						background: 'rgba(255,255,255,0.96)',
 						boxShadow: '0 4px 12px rgba(17,24,18,0.04)',
 					}}
 				>
@@ -480,7 +480,7 @@ function ChainVisualization() {
 						className="flex gap-[6px] p-[12px_14px] border-b border-line"
 						style={{
 							background:
-								'linear-gradient(to bottom, rgba(250,247,241,1), rgba(245,240,232,1))',
+								'linear-gradient(to bottom, rgba(250,250,250,1), rgba(242,242,242,1))',
 						}}
 					>
 						<span className="w-[8px] h-[8px] rounded-full bg-ink-4/30" />
@@ -545,7 +545,7 @@ export default function Triptych() {
 						className="over"
 						style={{ display: 'inline-block', marginBottom: 20 }}
 					>
-						§ connected context
+						connected context
 					</span>
 					<h2 className="heading-2">
 						The context that

@@ -4,8 +4,8 @@ import Reveal from './reveal'
 const PILLARS = [
 	{
 		mark: '■',
-		title: 'Keep the trail on your machine first',
-		body: 'SQLite on-device is the starting point. Teams can begin locally, keep sensitive context close, and decide later what should connect outward.',
+		title: 'Your workspace lives on your Mac',
+		body: 'Specs, diffs, and context are stored in SQLite on-device. Integrations with Slack, GitHub, and Linear are handled by Altr cloud — so you get real-time events without exposing your machine.',
 	},
 	{
 		mark: '▲',
@@ -33,7 +33,7 @@ export default function Trust() {
 			<div className="max-w-[1020px] mx-auto flex flex-col gap-16">
 				<Reveal className="flex flex-col items-start gap-5">
 					<span className="over inline-block" style={{ marginBottom: 20 }}>
-						§ security &amp; control
+						security &amp; control
 					</span>
 					<h2
 						className="font-serif font-normal leading-none tracking-[-0.03em] text-wrap-balance m-0"
@@ -41,7 +41,7 @@ export default function Trust() {
 					>
 						Your specs and diffs
 						<br />
-						<em className="italic">stay local first.</em>
+						<em className="italic">stay on your machine.</em>
 					</h2>
 					<p
 						className="text-(--ink-2) leading-[1.6] mt-0 max-w-[480px]"
@@ -88,7 +88,9 @@ export default function Trust() {
 					<div className="flex items-center gap-4 font-mono text-[11px] tracking-[0.06em] text-(--ink-3) flex-wrap">
 						<span>mac-native · tauri 2 + rust</span>
 						<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4) shrink-0" />
-						<span>keys in OS keychain</span>
+						<span>llm keys in OS keychain</span>
+						<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4) shrink-0" />
+						<span>integrations via altr cloud</span>
 						<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4) shrink-0" />
 						<span>audit trail preserved</span>
 						<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4) shrink-0" />

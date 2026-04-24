@@ -7,4 +7,5 @@ export const ROUTES = {
 	useCases: 'use-cases',
 	integrations: 'integrations',
 	changelog: 'changelog',
+	legal: 'legal',
 } as const

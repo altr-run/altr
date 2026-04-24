@@ -15,7 +15,7 @@ export default function FooterHome() {
 						One execution loop for product teams and agents.
 					</p>
 					<div className="mt-5 flex items-center gap-2 flex-wrap font-mono text-[10px] tracking-wide text-ink-4">
-						<span className="border border-line rounded-full px-2.5 py-0.5">local-first</span>
+						<span className="border border-line rounded-full px-2.5 py-0.5">your workspace, your Mac</span>
 						<span className="border border-line rounded-full px-2.5 py-0.5">BYOK</span>
 						<span className="border border-line rounded-full px-2.5 py-0.5">mac-native</span>
 					</div>

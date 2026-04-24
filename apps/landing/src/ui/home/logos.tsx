@@ -1,4 +1,15 @@
-const NAMES = [
+import Image from 'next/image'
+import { getBrandLogoUrl } from '@/lib/brand'
+
+type LogoEntry = {
+	label: string
+	/** When set, a real brand logo is fetched from Brandfetch instead of showing text */
+	domain?: string
+	/** Text-only display variant when no domain — 's' = sans bold, 'u' = mono, default = serif */
+	variant?: 's' | 'u' | ''
+}
+
+const LOGOS: LogoEntry[] = [
 	{ label: 'Northline', variant: '' },
 	{ label: 'MESA', variant: 's' },
 	{ label: 'Holt & Co', variant: '' },
@@ -10,6 +21,41 @@ const NAMES = [
 	{ label: 'LATCH', variant: 's' },
 	{ label: 'depot.dev', variant: 'u' },
 ]
+
+function LogoItem({ item }: { item: LogoEntry }) {
+	if (item.domain) {
+		const src = getBrandLogoUrl(item.domain, {
+			height: 28,
+			type: 'logo',
+			theme: 'dark',
+			fallback: 'transparent',
+		})
+		return (
+			<Image
+				src={src}
+				alt={item.label}
+				height={28}
+				width={120}
+				className="object-contain opacity-60 grayscale"
+				unoptimized
+			/>
+		)
+	}
+
+	return (
+		<span
+			className={
+				item.variant === 's'
+					? 'font-sans font-semibold text-[17px] tracking-[-0.02em] text-(--ink-2) whitespace-nowrap'
+					: item.variant === 'u'
+						? 'font-mono text-[14px] text-(--ink-3) whitespace-nowrap'
+						: 'font-serif text-[22px] tracking-[-0.02em] text-(--ink-2) whitespace-nowrap'
+			}
+		>
+			{item.label}
+		</span>
+	)
+}
 
 export default function Logos() {
 	return (
@@ -52,19 +98,8 @@ export default function Logos() {
 				<div
 					className="flex items-center gap-16 w-max opacity-65 animate-[marquee_28s_linear_infinite] hover:[animation-play-state:paused]"
 				>
-					{[...NAMES, ...NAMES].map((item, i) => (
-						<span
-							key={i}
-							className={
-								item.variant === 's'
-									? 'font-sans font-semibold text-[17px] tracking-[-0.02em] text-(--ink-2) whitespace-nowrap'
-									: item.variant === 'u'
-										? 'font-mono text-[14px] text-(--ink-3) whitespace-nowrap'
-										: 'font-serif text-[22px] tracking-[-0.02em] text-(--ink-2) whitespace-nowrap'
-							}
-						>
-							{item.label}
-						</span>
+					{[...LOGOS, ...LOGOS].map((item, i) => (
+						<LogoItem key={i} item={item} />
 					))}
 				</div>
 			</div>

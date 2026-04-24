@@ -114,7 +114,7 @@ export default function Playground() {
 			<div className="inner">
 				<Reveal className="grid grid-cols-2 gap-16 items-end mb-14">
 					<div>
-						<span className="over inline-block mb-4">§ demo</span>
+						<span className="over inline-block mb-4">demo</span>
 						<h2 className="heading-2">
 							Drop in a rough request.
 							<br />
@@ -142,7 +142,7 @@ export default function Playground() {
 						<div
 							className="p-7 border-r border-line min-h-[520px]"
 							style={{
-								background: 'linear-gradient(180deg, rgba(248,245,239,0.96) 0%, rgba(243,239,232,0.96) 100%)',
+								background: 'linear-gradient(180deg, rgba(248,248,248,0.96) 0%, rgba(243,243,243,0.96) 100%)',
 							}}
 						>
 							<div className="flex justify-between items-center gap-3 mb-3.5">
@@ -163,7 +163,7 @@ export default function Playground() {
 							<div
 								className="p-[18px] rounded-[22px] border border-line"
 								style={{
-									background: 'rgba(255,253,248,0.84)',
+									background: 'rgba(255,255,255,0.84)',
 									boxShadow: '0 10px 20px rgba(17,24,18,0.035), inset 0 1px 0 rgba(255,255,255,0.82)',
 									backdropFilter: 'blur(10px)',
 								}}
@@ -220,7 +220,7 @@ export default function Playground() {
 						<div
 							className="p-7 min-h-[520px] relative"
 							style={{
-								background: 'linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,245,238,0.98) 100%)',
+								background: 'linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,248,248,0.98) 100%)',
 							}}
 						>
 							{!active && (
@@ -254,7 +254,7 @@ export default function Playground() {
 											<div
 												key={label}
 												className="p-[12px_14px] rounded-[14px] border border-line"
-												style={{ background: 'rgba(255,253,248,0.86)' }}
+												style={{ background: 'rgba(255,255,255,0.86)' }}
 											>
 												<span className="block mb-2 font-mono text-[10px] uppercase tracking-widest text-ink-4">{label}</span>
 												<b className="font-sans text-[13px] font-semibold text-ink">{value}</b>
@@ -277,7 +277,7 @@ export default function Playground() {
 											)}
 											style={{
 												borderColor: 'color-mix(in oklab, var(--line) 84%, transparent)',
-												background: 'rgba(255,253,248,0.88)',
+												background: 'rgba(255,255,255,0.88)',
 												boxShadow: '0 6px 14px rgba(17,24,18,0.03), inset 0 1px 0 rgba(255,255,255,0.84)',
 											}}
 										>
@@ -308,7 +308,7 @@ export default function Playground() {
 										)}
 										style={{
 											borderColor: 'color-mix(in oklab, var(--line) 84%, transparent)',
-											background: 'rgba(255,253,248,0.88)',
+											background: 'rgba(255,255,255,0.88)',
 											boxShadow: '0 6px 14px rgba(17,24,18,0.03), inset 0 1px 0 rgba(255,255,255,0.84)',
 										}}
 									>

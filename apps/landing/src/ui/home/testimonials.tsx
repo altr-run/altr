@@ -52,7 +52,7 @@ export default function Testimonials() {
 			<div className="inner">
 				<Reveal className="grid grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] gap-16 items-end mb-14">
 					<div>
-						<span className="over inline-block mb-4">§ from pilot teams</span>
+						<span className="over inline-block mb-4">from pilot teams</span>
 						<h2 className="heading-2">
 							What shifts when the trail
 							<br />

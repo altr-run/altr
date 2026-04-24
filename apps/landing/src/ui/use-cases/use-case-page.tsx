@@ -1,10 +1,10 @@
 import Link from 'next/link'
+import { USE_CASES } from '@/content'
 
 type Step = { step: number; label: string; body: string }
 type Testimonial = { quote: string; name: string; title: string; company: string }
-type RelatedUseCase = { title: string; metadata: { slug: { current: string } | null } | null }
 
-type UseCasePage = {
+export type UseCasePage = {
 	title: string
 	headline: string | null
 	subhead: string | null
@@ -12,7 +12,8 @@ type UseCasePage = {
 	steps: Step[] | null
 	tools: string[] | null
 	testimonial: Testimonial | null
-	relatedUseCases: RelatedUseCase[] | null
+	// Plain slugs — page routes normalize Sanity's nested shape before passing here
+	relatedUseCases: string[] | null
 	metadata: unknown
 }
 
@@ -40,7 +41,7 @@ export default function UseCasePage({ page }: { page: UseCasePage }) {
 				<div className="flex flex-col gap-2 pt-2">
 					<Link
 						href="https://app.altr.run"
-						className="inline-flex items-center gap-2 bg-acc text-[#FBF7F1] font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity self-start"
+						className="inline-flex items-center gap-2 bg-acc text-acc-ink font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity self-start"
 					>
 						Get early access
 					</Link>
@@ -116,20 +117,16 @@ export default function UseCasePage({ page }: { page: UseCasePage }) {
 				<section className="border-t border-line max-w-[var(--maxw-narrow)] mx-auto px-6 py-16">
 					<h3 className="font-mono text-xs text-ink-3 uppercase tracking-wider mb-6">Related workflows</h3>
 					<ul className="flex flex-col gap-3">
-						{relatedUseCases.map((uc, i) => {
-							const slug = uc.metadata?.slug?.current
+						{relatedUseCases.map((slug) => {
+							const uc = USE_CASES[slug]
 							return (
-								<li key={i}>
-									{slug ? (
-										<Link
-											href={`/use-cases/${slug}`}
-											className="font-serif text-lg text-ink hover:text-acc transition-colors"
-										>
-											{uc.title}
-										</Link>
-									) : (
-										<span className="font-serif text-lg text-ink-2">{uc.title}</span>
-									)}
+								<li key={slug}>
+									<Link
+										href={`/use-cases/${slug}`}
+										className="font-serif text-lg text-ink hover:text-acc transition-colors"
+									>
+										{uc?.title ?? slug}
+									</Link>
 								</li>
 							)
 						})}
@@ -145,7 +142,7 @@ export default function UseCasePage({ page }: { page: UseCasePage }) {
 				<div className="flex flex-col items-center gap-2">
 					<Link
 						href="https://app.altr.run"
-						className="inline-flex items-center gap-2 bg-acc text-[#FBF7F1] font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
+						className="inline-flex items-center gap-2 bg-acc text-acc-ink font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
 					>
 						Get early access
 					</Link>

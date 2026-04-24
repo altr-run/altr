@@ -12,7 +12,7 @@ export default function TalkTeam() {
 			<div className="inner">
 				<Reveal className="grid grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] gap-16 items-end mb-16">
 					<div>
-						<span className="over inline-block mb-4">§ rollout</span>
+						<span className="over inline-block mb-4">rollout</span>
 						<h2 className="heading-2">
 							Scope the rollout against
 							<br />
@@ -29,7 +29,7 @@ export default function TalkTeam() {
 					<div
 						className="border border-line rounded-[28px] p-7"
 						style={{
-							background: 'radial-gradient(80% 80% at 0% 0%, color-mix(in oklab, var(--acc) 8%, transparent) 0%, transparent 58%), linear-gradient(180deg, rgba(255,255,255,0.84) 0%, rgba(248,245,238,0.92) 100%)',
+							background: 'radial-gradient(80% 80% at 0% 0%, color-mix(in oklab, var(--acc) 8%, transparent) 0%, transparent 58%), linear-gradient(180deg, rgba(255,255,255,0.84) 0%, rgba(248,248,248,0.92) 100%)',
 							boxShadow: 'var(--sh-md)',
 						}}
 					>

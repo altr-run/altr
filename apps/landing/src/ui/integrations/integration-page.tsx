@@ -1,17 +1,22 @@
+import Image from 'next/image'
 import Link from 'next/link'
+import { USE_CASES } from '@/content'
+import { getBrandLogoUrl } from '@/lib/brand'
 
 type Signal = { signal: string; description: string }
-type RelatedUseCase = { title: string; metadata: { slug: { current: string } | null } | null }
 
-type IntegrationPage = {
+export type IntegrationPage = {
 	tool: string
+	/** Root domain for Brandfetch logo fetch — e.g. "slack.com". Falls back gracefully if absent. */
+	domain?: string
 	category: string | null
 	logo: unknown
 	headline: string | null
 	subhead: string | null
 	howItWorks: string | null
 	signals: Signal[] | null
-	relatedUseCases: RelatedUseCase[] | null
+	// Plain slugs — page routes normalize Sanity's nested shape before passing here
+	relatedUseCases: string[] | null
 	metadata: unknown
 }
 
@@ -25,13 +30,27 @@ const CATEGORY_LABELS: Record<string, string> = {
 }
 
 export default function IntegrationPage({ page }: { page: IntegrationPage }) {
-	const { tool, category, headline, subhead, howItWorks, signals, relatedUseCases } = page
+	const { tool, domain, category, headline, subhead, howItWorks, signals, relatedUseCases } = page
+
+	const logoUrl = domain
+		? getBrandLogoUrl(domain, { width: 64, height: 64, type: 'icon', fallback: 'lettermark' })
+		: null
 
 	return (
 		<main className="bg-(--bg) text-ink">
 			{/* Hero */}
 			<section className="max-w-[var(--maxw-narrow)] mx-auto px-6 py-24 flex flex-col gap-6">
 				<div className="flex items-center gap-3">
+					{logoUrl && (
+						<Image
+							src={logoUrl}
+							alt={`${tool} logo`}
+							width={40}
+							height={40}
+							className="rounded-lg border border-line bg-white p-1 object-contain"
+							unoptimized
+						/>
+					)}
 					{category && (
 						<span className="font-mono text-[11px] tracking-widest uppercase text-ink-3 border border-line bg-(--panel) shadow-sm rounded-full px-3 py-1.5">
 							{CATEGORY_LABELS[category] ?? category}
@@ -52,7 +71,7 @@ export default function IntegrationPage({ page }: { page: IntegrationPage }) {
 				<div className="flex flex-col gap-2 pt-2">
 					<Link
 						href="https://app.altr.run"
-						className="inline-flex items-center gap-2 bg-acc text-[#FBF7F1] font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity self-start"
+						className="inline-flex items-center gap-2 bg-acc text-acc-ink font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity self-start"
 					>
 						Get early access
 					</Link>
@@ -95,20 +114,16 @@ export default function IntegrationPage({ page }: { page: IntegrationPage }) {
 				<section className="border-t border-line max-w-[var(--maxw-narrow)] mx-auto px-6 py-16">
 					<h3 className="font-mono text-xs text-ink-3 uppercase tracking-wider mb-6">Workflows that use {tool}</h3>
 					<ul className="flex flex-col gap-3">
-						{relatedUseCases.map((uc, i) => {
-							const slug = uc.metadata?.slug?.current
+						{relatedUseCases.map((slug) => {
+							const uc = USE_CASES[slug]
 							return (
-								<li key={i}>
-									{slug ? (
-										<Link
-											href={`/use-cases/${slug}`}
-											className="font-serif text-lg text-ink hover:text-acc transition-colors"
-										>
-											{uc.title}
-										</Link>
-									) : (
-										<span className="font-serif text-lg text-ink-2">{uc.title}</span>
-									)}
+								<li key={slug}>
+									<Link
+										href={`/use-cases/${slug}`}
+										className="font-serif text-lg text-ink hover:text-acc transition-colors"
+									>
+										{uc?.title ?? slug}
+									</Link>
 								</li>
 							)
 						})}
@@ -124,7 +139,7 @@ export default function IntegrationPage({ page }: { page: IntegrationPage }) {
 				<div className="flex flex-col items-center gap-2">
 					<Link
 						href="https://app.altr.run"
-						className="inline-flex items-center gap-2 bg-acc text-[#FBF7F1] font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
+						className="inline-flex items-center gap-2 bg-acc text-acc-ink font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
 					>
 						Get early access
 					</Link>

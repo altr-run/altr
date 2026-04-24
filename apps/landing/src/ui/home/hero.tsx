@@ -31,17 +31,17 @@ export default function Hero() {
 			style={{ minHeight: '156svh' }}
 		>
 			{/* hero text wrap */}
-			<div className="max-w-[1020px] w-full mx-auto text-center flex flex-col items-center justify-center gap-6 relative z-[1] flex-1 pt-[126px] pb-12">
+			<div className="max-w-[1020px] w-full mx-auto text-center flex flex-col items-center gap-6 relative z-[1] flex-1 pt-[260px] pb-12">
 				<p
 					className="font-mono text-[11px] tracking-widest uppercase text-ink-3 border border-line bg-(--panel) shadow-sm rounded-full px-3 py-1.5"
 				>
-					for teams &amp; agents · threads → specs → prs · local-first
+					slack thread → spec → PR → merged · no context lost in transit
 				</p>
 
 				<h1
 					className="font-serif text-center"
 					style={{
-						fontSize: 'clamp(40px, 6vw, 88px)',
+						fontSize: 'clamp(32px, 4.4vw, 68px)',
 						lineHeight: 1.08,
 						textWrap: 'balance',
 					}}
@@ -100,25 +100,6 @@ export default function Hero() {
 					</a>
 				</div>
 
-				<div className="inline-flex gap-[10px] items-center font-mono text-[10.5px] text-ink-2 tracking-wide">
-					<span>2.7× faster request-to-spec</span>
-					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
-					<span>41% less context rebuilding</span>
-					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
-					<span>founder-led onboarding</span>
-				</div>
-
-				<div className="inline-flex gap-[10px] items-center font-mono text-[11px] text-ink-3 uppercase tracking-widest">
-					<span>intake</span>
-					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
-					<span>plan</span>
-					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
-					<span>build</span>
-					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
-					<span>review</span>
-					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
-					<span>ship</span>
-				</div>
 			</div>
 
 			{/* product shot */}
@@ -138,15 +119,15 @@ export default function Hero() {
 						className="rounded-xl border border-line overflow-hidden"
 						style={
 							{
-								background: '#fffefb',
+								background: 'var(--gray-1)',
 								boxShadow:
 									'0 2px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.07), 0 32px 64px rgba(0,0,0,0.09), 0 0 0 1px var(--line)',
-								'--pc-bg': '#fffefb',
-								'--pc-bar': '#f6f5ef',
-								'--pc-ink': '#1e1a16',
-								'--pc-ink-2': '#5c544b',
-								'--pc-ink-3': '#8a8176',
-								'--pc-ink-4': '#b3afa8',
+								'--pc-bg': 'var(--gray-1)',
+								'--pc-bar': 'var(--gray-2)',
+								'--pc-ink': 'var(--gray-12)',
+								'--pc-ink-2': 'var(--gray-11)',
+								'--pc-ink-3': 'var(--gray-9)',
+								'--pc-ink-4': 'var(--gray-7)',
 							} as React.CSSProperties
 						}
 					>
@@ -155,7 +136,7 @@ export default function Hero() {
 							className="grid items-center border-b border-line px-[18px] py-[14px]"
 							style={{
 								gridTemplateColumns: 'auto 1fr auto',
-								background: 'linear-gradient(180deg, #f9f8f2 0%, var(--pc-bar) 100%)',
+								background: 'linear-gradient(180deg, var(--gray-2) 0%, var(--pc-bar) 100%)',
 							}}
 						>
 							<div className="flex items-center gap-[6px]">
@@ -298,7 +279,7 @@ export default function Hero() {
 								className="flex flex-col border-l border-line"
 								style={{
 									background:
-										'linear-gradient(180deg, var(--bg-2, #f5efe6) 0%, var(--bg-1, #faf8f3) 100%)',
+										'linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%)',
 								}}
 							>
 								<div className="p-3 border-b border-line font-mono text-[11px] text-ink-3 flex justify-between items-center">
@@ -336,7 +317,7 @@ export default function Hero() {
 									<div
 										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
 										style={{
-											borderColor: 'rgba(230,228,218,0.8)',
+											borderColor: 'rgba(215,215,215,0.8)',
 											background: 'rgba(255,255,255,0.68)',
 										}}
 									>
@@ -359,7 +340,7 @@ export default function Hero() {
 									<div
 										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
 										style={{
-											borderColor: 'rgba(230,228,218,0.8)',
+											borderColor: 'rgba(215,215,215,0.8)',
 											background: 'rgba(255,255,255,0.68)',
 										}}
 									>
@@ -381,7 +362,7 @@ export default function Hero() {
 									<div
 										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
 										style={{
-											borderColor: 'rgba(230,228,218,0.8)',
+											borderColor: 'rgba(215,215,215,0.8)',
 											background: 'rgba(255,255,255,0.68)',
 										}}
 									>
@@ -408,7 +389,7 @@ export default function Hero() {
 									<div
 										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
 										style={{
-											borderColor: 'rgba(230,228,218,0.8)',
+											borderColor: 'rgba(215,215,215,0.8)',
 											background: 'rgba(255,255,255,0.68)',
 										}}
 									>

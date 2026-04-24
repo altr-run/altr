@@ -3,6 +3,7 @@ import { groq } from 'next-sanity'
 import Link from 'next/link'
 import { ROUTES } from '@/lib/env'
 import { sanityFetchLive } from '@/sanity/lib/live'
+import { USE_CASES } from '@/content'
 
 export const metadata: Metadata = {
 	title: 'Use cases — Altr',
@@ -24,7 +25,7 @@ type UseCaseEntry = {
 }
 
 export default async function UseCasesIndex() {
-	const cases = await sanityFetchLive<UseCaseEntry[]>({
+	const sanityCases = await sanityFetchLive<UseCaseEntry[]>({
 		query: groq`*[_type == 'use-case' && defined(metadata.slug.current) && metadata.noIndex != true]
 			| order(title asc){
 				title,
@@ -33,6 +34,20 @@ export default async function UseCasesIndex() {
 				'slug': metadata.slug.current
 			}`,
 	})
+
+	// Merge content map entries not already in Sanity
+	const sanitySlugs = new Set(sanityCases.map((c) => c.slug))
+	const contentEntries: UseCaseEntry[] = Object.entries(USE_CASES)
+		.filter(([slug]) => !sanitySlugs.has(slug))
+		.map(([slug, uc]) => ({
+			title: uc.title,
+			subhead: uc.subhead,
+			tools: uc.tools,
+			slug,
+		}))
+	const cases = [...sanityCases, ...contentEntries].sort((a, b) =>
+		a.title.localeCompare(b.title),
+	)
 
 	return (
 		<main className="bg-(--bg) text-ink">
@@ -103,7 +118,7 @@ export default async function UseCasesIndex() {
 				<div className="flex flex-col items-center gap-2">
 					<Link
 						href="/#close"
-						className="inline-flex items-center gap-2 bg-acc text-[#FBF7F1] font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
+						className="inline-flex items-center gap-2 bg-acc text-acc-ink font-mono text-sm tracking-wide px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
 					>
 						Talk to the founders →
 					</Link>
