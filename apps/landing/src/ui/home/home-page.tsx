@@ -1,10 +1,8 @@
 import dynamic from 'next/dynamic'
-import Nav from './nav'
 import Hero from './hero'
 import HeroShader from './hero-shader'
 import Logos from './logos'
 import Flow from './flow'
-import FooterHome from './footer-home'
 
 const Triptych = dynamic(() => import('./triptych'))
 const Manifesto = dynamic(() => import('./manifesto'))
@@ -31,7 +29,6 @@ export default function HomePage() {
 					data-nav-theme="light"
 				>
 					<HeroShader isHovered={false} />
-					<Nav />
 					<Hero />
 				</div>
 				<div data-nav-theme="light">
@@ -48,7 +45,6 @@ export default function HomePage() {
 					<FAQ />
 					<TalkTeam />
 					<CTAClose />
-					<FooterHome />
 				</div>
 			</div>
 		</div>
