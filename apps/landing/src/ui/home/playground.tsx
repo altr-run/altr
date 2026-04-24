@@ -138,15 +138,20 @@ export default function Playground() {
 				<Reveal>
 					<div className={s.pgStage}>
 						<div className={s.pgLeft}>
-							<div className={s.pgLabel}>
-								<b>Your spec</b>
-								<span>@spec is listening</span>
+							<div className={s.pgPaneBar}>
+								<div className={s.pgLabel}>
+									<b>Your spec</b>
+									<span>@spec is listening</span>
+								</div>
+								<div className={s.pgPill}>rough prompt</div>
 							</div>
-							<textarea
-								ref={inputRef}
-								className={s.pgTextarea}
-								placeholder="Let users invite teammates by email. Magic-link style — no passwords. Should take less than 90 seconds end-to-end."
-							/>
+							<div className={s.pgComposer}>
+								<textarea
+									ref={inputRef}
+									className={s.pgTextarea}
+									placeholder="Let users invite teammates by email. Magic-link style — no passwords. Should take less than 90 seconds end-to-end."
+								/>
+							</div>
 							<div className={s.pgExamples}>
 								<span className={s.pgExLabel}>Try one of these →</span>
 								<button className={s.pgExBtn} onClick={() => loadExample('invite')}>
@@ -159,10 +164,17 @@ export default function Playground() {
 									stripe billing
 								</button>
 							</div>
-							<div className={s.pgAction}>
-								<button className={`${s.btn} ${s.btnAcc}`} onClick={run}>
-									Run it →
-								</button>
+							<div className={s.pgComposerFoot}>
+								<div className={s.pgComposerMeta}>
+									<span>acceptance</span>
+									<span>plan</span>
+									<span>draft diff</span>
+								</div>
+								<div className={s.pgAction}>
+									<button className={`${s.btn} ${s.btnAcc}`} onClick={run}>
+										Run it →
+									</button>
+								</div>
 							</div>
 						</div>
 						<div className={s.pgRight}>
@@ -182,6 +194,20 @@ export default function Playground() {
 										</div>
 										<div className={s.pgPrMeta}>
 											~{active.est} · {active.cost}
+										</div>
+									</div>
+									<div className={s.pgStatRow}>
+										<div className={s.pgStat}>
+											<span>owner</span>
+											<b>@eng</b>
+										</div>
+										<div className={s.pgStat}>
+											<span>risk</span>
+											<b>moderate</b>
+										</div>
+										<div className={s.pgStat}>
+											<span>scope</span>
+											<b>1 endpoint</b>
 										</div>
 									</div>
 									<div

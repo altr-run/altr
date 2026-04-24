@@ -137,6 +137,20 @@ export default function Hero() {
 						</div>
 						<div className={s.pcBody}>
 							<div className={s.pcDoc}>
+								<div className={s.pcDocRail}>
+									<div className={s.pcRailCard}>
+										<span>status</span>
+										<b>drafting</b>
+									</div>
+									<div className={s.pcRailCard}>
+										<span>context</span>
+										<b>thread attached</b>
+									</div>
+									<div className={s.pcRailCard}>
+										<span>handoff</span>
+										<b>@eng next</b>
+									</div>
+								</div>
 								<span className={s.over}>
 									§ spec · draft · edited 2 min ago
 								</span>
@@ -183,6 +197,16 @@ export default function Hero() {
 										<span className={s.liveDot} />
 										live
 									</span>
+								</div>
+								<div className={s.pcQueue}>
+									<div className={s.pcQueueItem}>
+										<span>active</span>
+										<b>@spec drafting AC</b>
+									</div>
+									<div className={s.pcQueueItem}>
+										<span>next</span>
+										<b>@eng opens worktree</b>
+									</div>
 								</div>
 								<div className={s.pcMsgs}>
 									<div className={s.pcMsg}>

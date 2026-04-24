@@ -6,67 +6,89 @@ import Reveal from './reveal'
 
 function IntakeVisualization() {
 	return (
-		<div className={`${s.tripIll} ${s.illScene}`} aria-hidden="true">
+		<div className={`${s.tripIll} ${s.intakeScene}`} aria-hidden="true">
 			<div className={s.sceneGrid} />
 			<div className={s.sceneGlow} />
-			<motion.div
-				className={`${s.streamCard} ${s.streamSource}`}
-				animate={{ y: [0, -4, 0], rotate: [-2, -1, -2] }}
-				transition={{ duration: 5.4, repeat: Infinity, ease: 'easeInOut' }}
-			>
-				<span className={s.streamLabel}>incoming</span>
-				<strong>customer call</strong>
-				<p>pricing confusion around seat handoff and review ownership</p>
-			</motion.div>
-			<motion.div
-				className={s.streamBeam}
-				animate={{ opacity: [0.35, 0.75, 0.35], scaleX: [0.96, 1, 0.96] }}
-				transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
-			/>
-			<motion.div
-				className={s.streamPulse}
-				animate={{ x: ['0%', '100%'] }}
-				transition={{ duration: 3.2, repeat: Infinity, ease: 'linear' }}
-			/>
-			<motion.div
-				className={`${s.streamCard} ${s.streamHub}`}
-				animate={{ boxShadow: ['0 0 0 rgba(141, 182, 84, 0)', '0 18px 40px rgba(141, 182, 84, 0.16)', '0 0 0 rgba(141, 182, 84, 0)'] }}
-				transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
-			>
-				<div className={s.hubDots}>
-					<span />
-					<span />
-					<span />
+			<div className={s.intakeStack}>
+				<motion.div
+					className={`${s.intakeCard} ${s.intakeCardSource}`}
+					animate={{ y: [0, -2, 0], rotate: [-0.8, -0.4, -0.8] }}
+					transition={{ duration: 6.2, repeat: Infinity, ease: 'easeInOut' }}
+				>
+					<span className={s.intakeMeta}>incoming signal</span>
+					<strong>customer call</strong>
+					<p>handoff confusion between spec, eng, and review ownership</p>
+				</motion.div>
+				<div className={s.intakeColumn}>
+					<motion.span
+						className={s.intakeChip}
+						animate={{ x: [0, 3, 0] }}
+						transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut' }}
+					>
+						transcript
+					</motion.span>
+					<motion.span
+						className={s.intakeChip}
+						animate={{ x: [0, 3, 0] }}
+						transition={{
+							duration: 4.6,
+							repeat: Infinity,
+							ease: 'easeInOut',
+							delay: 0.45,
+						}}
+					>
+						note
+					</motion.span>
+					<motion.span
+						className={s.intakeChip}
+						animate={{ x: [0, 3, 0] }}
+						transition={{
+							duration: 4.6,
+							repeat: Infinity,
+							ease: 'easeInOut',
+							delay: 0.9,
+						}}
+					>
+						research
+					</motion.span>
 				</div>
-				<strong>room thread</strong>
-				<ul className={s.hubList}>
-					<li>signal attached</li>
-					<li>owners named</li>
-					<li>context retained</li>
-				</ul>
-			</motion.div>
-			<div className={s.streamTags}>
-				<motion.span
-					className={s.streamTag}
-					animate={{ y: [0, -6, 0] }}
-					transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut', delay: 0.1 }}
+				<div className={s.intakeSpine}>
+					<motion.div
+						className={s.intakePulse}
+						animate={{ top: ['8%', '84%'] }}
+						transition={{ duration: 4.8, repeat: Infinity, ease: 'linear' }}
+					/>
+				</div>
+				<motion.div
+					className={`${s.intakeCard} ${s.intakeCardThread}`}
+					animate={{
+						boxShadow: [
+							'0 10px 24px rgba(17, 24, 18, 0.05)',
+							'0 14px 28px rgba(141, 182, 84, 0.08)',
+							'0 10px 24px rgba(17, 24, 18, 0.05)',
+						],
+					}}
+					transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}
 				>
-					transcript
-				</motion.span>
-				<motion.span
-					className={s.streamTag}
-					animate={{ y: [0, -6, 0] }}
-					transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-				>
-					note
-				</motion.span>
-				<motion.span
-					className={s.streamTag}
-					animate={{ y: [0, -6, 0] }}
-					transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-				>
-					research
-				</motion.span>
+					<div className={s.intakeThreadHead}>
+						<span>room thread</span>
+						<b>live</b>
+					</div>
+					<div className={s.intakeThreadList}>
+						<div>
+							<strong>signal attached</strong>
+							<span>source preserved</span>
+						</div>
+						<div>
+							<strong>owners named</strong>
+							<span>spec, eng, review</span>
+						</div>
+						<div>
+							<strong>context retained</strong>
+							<span>travels with the work</span>
+						</div>
+					</div>
+				</motion.div>
 			</div>
 		</div>
 	)
@@ -76,74 +98,101 @@ function RoleVisualization() {
 	return (
 		<div className={`${s.tripIll} ${s.roleScene}`} aria-hidden="true">
 			<div className={s.sceneGrid} />
-			<div className={s.roleRail}>
-				<div className={s.roleHeader}>orchestration lanes</div>
-				<div className={s.roleLane}>
-					<span className={`${s.roleChip} ${s.roleChipSpec}`}>@spec</span>
-					<div className={s.roleTrack}>
-						<motion.div
-							className={`${s.roleBlock} ${s.roleBlockSpec}`}
-							animate={{ x: [0, 10, 0] }}
-							transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
-						>
-							draft brief
-						</motion.div>
+			<div className={s.roleShell}>
+				<motion.div
+					className={s.roleSignal}
+					animate={{ x: [0, 8, 0], opacity: [0.86, 1, 0.86] }}
+					transition={{ duration: 5.6, repeat: Infinity, ease: 'easeInOut' }}
+				>
+					incoming change
+				</motion.div>
+				<div className={s.roleBoard}>
+					<div className={s.roleHeader}>orchestration lanes</div>
+					<div className={s.roleLanes}>
+						<div className={s.roleLane}>
+							<span className={`${s.roleChip} ${s.roleChipSpec}`}>@spec</span>
+							<div className={s.roleTrack}>
+								<motion.div
+									className={`${s.roleBlock} ${s.roleBlockSpec}`}
+									animate={{ x: [0, 10, 0] }}
+									transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
+								>
+									draft brief
+								</motion.div>
+							</div>
+						</div>
+						<div className={s.roleLane}>
+							<span className={s.roleChip}>@eng</span>
+							<div className={s.roleTrack}>
+								<motion.div
+									className={s.roleBlock}
+									animate={{ x: [0, 12, 0] }}
+									transition={{
+										duration: 5.8,
+										repeat: Infinity,
+										ease: 'easeInOut',
+										delay: 0.35,
+									}}
+								>
+									implement
+								</motion.div>
+							</div>
+						</div>
+						<div className={s.roleLane}>
+							<span className={s.roleChip}>@review</span>
+							<div className={s.roleTrack}>
+								<motion.div
+									className={s.roleBlock}
+									animate={{ x: [0, 8, 0] }}
+									transition={{
+										duration: 5.4,
+										repeat: Infinity,
+										ease: 'easeInOut',
+										delay: 0.7,
+									}}
+								>
+									check risk
+								</motion.div>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div className={s.roleLane}>
-					<span className={s.roleChip}>@eng</span>
-					<div className={s.roleTrack}>
-						<motion.div
-							className={s.roleBlock}
-							animate={{ x: [0, 14, 0] }}
-							transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
-						>
-							implement
-						</motion.div>
-					</div>
+				<div className={s.roleStatusStack}>
+					<motion.div
+						className={s.roleStatus}
+						animate={{ y: [0, -2, 0] }}
+						transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
+					>
+						<b>spec</b>
+						<span>owns acceptance</span>
+					</motion.div>
+					<motion.div
+						className={s.roleStatus}
+						animate={{ y: [0, -2, 0] }}
+						transition={{
+							duration: 4.8,
+							repeat: Infinity,
+							ease: 'easeInOut',
+							delay: 0.5,
+						}}
+					>
+						<b>eng</b>
+						<span>holds delivery</span>
+					</motion.div>
+					<motion.div
+						className={s.roleStatus}
+						animate={{ y: [0, -2, 0] }}
+						transition={{
+							duration: 4.8,
+							repeat: Infinity,
+							ease: 'easeInOut',
+							delay: 1,
+						}}
+					>
+						<b>review</b>
+						<span>blocks regressions</span>
+					</motion.div>
 				</div>
-				<div className={s.roleLane}>
-					<span className={s.roleChip}>@review</span>
-					<div className={s.roleTrack}>
-						<motion.div
-							className={s.roleBlock}
-							animate={{ x: [0, 8, 0] }}
-							transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
-						>
-							check risk
-						</motion.div>
-					</div>
-				</div>
-			</div>
-			<motion.div
-				className={s.roleSignal}
-				animate={{ x: ['0%', '76%'], opacity: [0, 1, 1, 0] }}
-				transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut' }}
-			>
-				incoming change
-			</motion.div>
-			<div className={s.roleStatusStack}>
-				<motion.div
-					className={s.roleStatus}
-					animate={{ y: [0, -4, 0] }}
-					transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
-				>
-					spec owns acceptance
-				</motion.div>
-				<motion.div
-					className={s.roleStatus}
-					animate={{ y: [0, -4, 0] }}
-					transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-				>
-					eng holds delivery
-				</motion.div>
-				<motion.div
-					className={s.roleStatus}
-					animate={{ y: [0, -4, 0] }}
-					transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut', delay: 0.9 }}
-				>
-					review blocks regressions
-				</motion.div>
 			</div>
 		</div>
 	)
@@ -153,41 +202,41 @@ function ChainVisualization() {
 	return (
 		<div className={`${s.tripIll} ${s.chainScene}`} aria-hidden="true">
 			<div className={s.sceneGrid} />
-			<div className={s.chainFlow}>
-				<motion.div
-					className={s.chainNode}
-					animate={{ y: [0, -5, 0] }}
-					transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
-				>
-					<span>thread</span>
-					<strong>incident context</strong>
-				</motion.div>
-				<div className={s.chainConnector}>
+			<div className={s.chainShell}>
+				<div className={s.chainLine}>
 					<motion.div
-						className={s.chainPulse}
-						animate={{ x: ['-8%', '92%'] }}
-						transition={{ duration: 2.8, repeat: Infinity, ease: 'linear' }}
-					/>
-				</div>
-				<motion.div
-					className={`${s.chainNode} ${s.chainNodeAccent}`}
-					animate={{ y: [0, -5, 0] }}
-					transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 0.35 }}
-				>
-					<span>spec</span>
-					<strong>acceptance locked</strong>
-				</motion.div>
-				<div className={s.chainConnector}>
+						className={s.chainNode}
+						animate={{ y: [0, -2, 0] }}
+						transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
+					>
+						<span>thread</span>
+						<strong>incident context</strong>
+					</motion.div>
+					<div className={s.chainConnector}>
+						<motion.div
+							className={s.chainPulse}
+							animate={{ left: ['4%', '86%'] }}
+							transition={{ duration: 4.2, repeat: Infinity, ease: 'linear' }}
+						/>
+					</div>
 					<motion.div
-						className={s.chainPulse}
-						animate={{ x: ['-8%', '92%'] }}
-						transition={{ duration: 2.8, repeat: Infinity, ease: 'linear', delay: 0.9 }}
-					/>
+						className={`${s.chainNode} ${s.chainNodeAccent}`}
+						animate={{ y: [0, -2, 0] }}
+						transition={{
+							duration: 5.2,
+							repeat: Infinity,
+							ease: 'easeInOut',
+							delay: 0.45,
+						}}
+					>
+						<span>spec</span>
+						<strong>acceptance locked</strong>
+					</motion.div>
 				</div>
 				<motion.div
 					className={s.chainDock}
-					animate={{ y: [0, -4, 0] }}
-					transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }}
+					animate={{ y: [0, -2, 0] }}
+					transition={{ duration: 5.4, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }}
 				>
 					<div className={s.chainDockBar}>
 						<span />
@@ -203,6 +252,7 @@ function ChainVisualization() {
 							<span>thread</span>
 							<span>spec</span>
 							<span>tests</span>
+							<span>review</span>
 						</div>
 					</div>
 				</motion.div>
