@@ -1,5 +1,3 @@
-import s from './home.module.css'
-
 const ITEMS = [
 	['14:22', 'Northline', 'merged', 'pr-142 · magic-link-auth'],
 	['14:19', 'Mesa', 'published', 'changelog — v0.8.1'],
@@ -16,10 +14,13 @@ function TickerItems() {
 	return (
 		<>
 			{ITEMS.map(([t, n, v, w], i) => (
-				<div className={s.tickerItem} key={i}>
-					<span className="t">{t}</span>
-					<span className="n">{n}</span>
-					{v} <em>{w}</em>
+				<div
+					key={i}
+					className="font-mono text-[12px] text-ink-2 tracking-[0.01em] inline-flex gap-2.5 items-center whitespace-nowrap"
+				>
+					<span className="text-ink-4">{t}</span>
+					<span className="text-ink font-semibold font-sans text-[13px]">{n}</span>
+					{v} <em className="italic text-ink-1 font-serif text-[14px]">{w}</em>
 				</div>
 			))}
 		</>
@@ -28,20 +29,27 @@ function TickerItems() {
 
 export default function Ticker() {
 	return (
-		<section className={s.ticker}>
-			<div className={s.tickerIn}>
-				<div className={s.tickerLabel}>
-					<span className={s.liveDot} />
+		<section className="border-b border-line bg-(--bg) overflow-hidden py-3.5">
+			<div className="max-w-(--maxw) mx-auto px-8 grid grid-cols-[auto_1fr_auto] gap-7 items-center">
+				<div className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] uppercase text-acc">
+					<span
+						className="w-1.5 h-1.5 rounded-full bg-acc animate-[pulse-dot_1.6s_ease-in-out_infinite]"
+						style={{ boxShadow: '0 0 0 3px color-mix(in oklab, var(--acc) 20%, transparent)' }}
+					/>
 					shipped this hour
 				</div>
-				<div className={s.tickerTrack}>
-					<div className={s.tickerList}>
+				<div
+					className="overflow-hidden"
+					style={{ maskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)' }}
+				>
+					<div className="flex gap-14 animate-[tick_60s_linear_infinite] w-max">
 						<TickerItems />
 						<TickerItems />
 					</div>
 				</div>
-				<div className={s.tickerStat}>
-					<b>2,417</b>PRs this week
+				<div className="font-mono text-[11px] text-ink-3 tracking-[0.02em] flex flex-col text-right leading-[1.2]">
+					<b className="font-sans text-ink text-[15px] tracking-[-0.02em]">2,417</b>
+					PRs this week
 				</div>
 			</div>
 		</section>

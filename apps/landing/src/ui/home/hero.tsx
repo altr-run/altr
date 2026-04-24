@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import { useEffect, useState } from 'react'
-import s from './home.module.css'
 import Reveal from './reveal'
 
 const ROTATING_WORDS = ['clarity', 'ownership', 'control', 'context'] as const
@@ -27,21 +26,35 @@ export default function Hero() {
 	const word = ROTATING_WORDS[wordIndex]
 
 	return (
-		<section className={s.hero}>
-			<div className={s.heroWrap}>
-				<p className={s.heroTagline}>
+		<section
+			className="px-8 pb-0 flex flex-col relative overflow-hidden bg-transparent text-ink border-b border-[color-mix(in_oklab,var(--line)_78%,transparent)]"
+			style={{ minHeight: '156svh' }}
+		>
+			{/* hero text wrap */}
+			<div className="max-w-[1020px] w-full mx-auto text-center flex flex-col items-center justify-center gap-6 relative z-[1] flex-1 pt-[126px] pb-12">
+				<p
+					className="font-mono text-[11px] tracking-widest uppercase text-ink-3 border border-line bg-(--panel) shadow-sm rounded-full px-3 py-1.5"
+				>
 					for teams &amp; agents · threads → specs → prs · local-first
 				</p>
-				<h1 className={`${s.heroH} ${s.display}`}>
-					<span className={s.line}>Build without the archaeology.</span>
-					<span className={s.line}>Close the execution loop.</span>
-					<span className={s.line}>
+
+				<h1
+					className="font-serif text-center"
+					style={{
+						fontSize: 'clamp(40px, 6vw, 88px)',
+						lineHeight: 1.08,
+						textWrap: 'balance',
+					}}
+				>
+					<span className="block">Build without the archaeology.</span>
+					<span className="block">Close the execution loop.</span>
+					<span className="block">
 						Ship with{' '}
-						<span className={s.accWordWrap}>
+						<span className="inline-block relative">
 							<AnimatePresence mode="wait" initial={false}>
 								<motion.span
 									key={word}
-									className={`${s.acc} ${s.accShimmer}`}
+									className="text-acc inline-block"
 									style={{
 										display: 'inline-block',
 										clipPath: 'inset(0 100% 0 0)',
@@ -71,188 +84,342 @@ export default function Hero() {
 						</span>
 					</span>
 				</h1>
-				<p className={s.heroSub}>
-					Rough requests become specs. Specs become branches. Branches become
-					reviewed PRs. The original rationale survives every step — so your
-					team ships on intent, not archaeology.
+
+				<p className="font-sans text-[18px] leading-[1.62] text-ink-2 max-w-[56ch] mx-auto">
+					Every artifact carries its source. Slack thread to spec to PR to
+					merged code — one continuous trail of intent. No rebuilding the brief
+					at handoff. Your agents work inside your stack.
 				</p>
-				<div className={s.heroCtas}>
-					<a href="#close" className={`${s.btn} ${s.btnPrimary} ${s.btnLg}`}>
+
+				<div className="flex gap-[10px] flex-wrap justify-center">
+					<a href="#close" className="btn btn-primary btn-lg">
 						Get early access →
 					</a>
-					<a href="#playground" className={`${s.btn} ${s.btnGhost} ${s.btnLg}`}>
+					<a href="#playground" className="btn btn-ghost btn-lg">
 						See it in action
 					</a>
 				</div>
-				<div className={s.heroTrust}>
+
+				<div className="inline-flex gap-[10px] items-center font-mono text-[10.5px] text-ink-2 tracking-wide">
 					<span>2.7× faster request-to-spec</span>
-					<span className={s.heroMetaSep} />
+					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
 					<span>41% less context rebuilding</span>
-					<span className={s.heroMetaSep} />
+					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
 					<span>founder-led onboarding</span>
 				</div>
-				<div className={s.heroMeta}>
+
+				<div className="inline-flex gap-[10px] items-center font-mono text-[11px] text-ink-3 uppercase tracking-widest">
 					<span>intake</span>
-					<span className={s.heroMetaSep} />
+					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
 					<span>plan</span>
-					<span className={s.heroMetaSep} />
+					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
 					<span>build</span>
-					<span className={s.heroMetaSep} />
+					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
 					<span>review</span>
-					<span className={s.heroMetaSep} />
+					<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4)" />
 					<span>ship</span>
 				</div>
 			</div>
 
+			{/* product shot */}
 			<motion.div
-				className={s.heroShotWrap}
+				className="max-w-[1240px] mx-auto px-6 pb-28 relative z-[1]"
 				style={{
 					scale: shotScale,
 					rotateX: shotRotateX,
 					y: shotY,
 					transformPerspective: 1200,
+					transformOrigin: 'center bottom',
 				}}
 			>
 				<Reveal>
-					<div className={s.heroShot} id="product">
-						<div className={s.pcBar}>
-							<div className={s.pcDots}>
-								<span />
-								<span />
-								<span />
+					<div
+						id="product"
+						className="rounded-xl border border-line overflow-hidden"
+						style={
+							{
+								background: '#fffefb',
+								boxShadow:
+									'0 2px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.07), 0 32px 64px rgba(0,0,0,0.09), 0 0 0 1px var(--line)',
+								'--pc-bg': '#fffefb',
+								'--pc-bar': '#f6f5ef',
+								'--pc-ink': '#1e1a16',
+								'--pc-ink-2': '#5c544b',
+								'--pc-ink-3': '#8a8176',
+								'--pc-ink-4': '#b3afa8',
+							} as React.CSSProperties
+						}
+					>
+						{/* title bar */}
+						<div
+							className="grid items-center border-b border-line px-[18px] py-[14px]"
+							style={{
+								gridTemplateColumns: 'auto 1fr auto',
+								background: 'linear-gradient(180deg, #f9f8f2 0%, var(--pc-bar) 100%)',
+							}}
+						>
+							<div className="flex items-center gap-[6px]">
+								<span className="w-[12px] h-[12px] rounded-full bg-[#ff5f57]" />
+								<span className="w-[12px] h-[12px] rounded-full bg-[#ffbd2e]" />
+								<span className="w-[12px] h-[12px] rounded-full bg-[#28c840]" />
 							</div>
-							<div className={s.pcTabs}>
-								<span className={s.pcTab}>inbox</span>
-								<span className={`${s.pcTab} ${s.pcTabOn}`}>
+							<div className="flex items-center gap-1 justify-center overflow-hidden">
+								<span className="font-mono text-[11px] px-[10px] py-[6px] rounded-lg text-ink-3">
+									inbox
+								</span>
+								<span
+									className="font-mono text-[11px] px-[10px] py-[6px] rounded-lg border border-line shadow-sm text-ink"
+									style={{ background: 'rgba(255,255,255,0.9)' }}
+								>
 									specs / magic-link-auth.md
 								</span>
-								<span className={s.pcTab}>eng / PR #142</span>
-								<span className={s.pcTab}>#launch-magic-link</span>
-
-							</div>
-							<div className={s.pcKbd}>⌘K</div>
-						</div>
-						<div className={s.pcBody}>
-							<div className={s.pcDoc}>
-								<div className={s.pcDocRail}>
-									<div className={s.pcRailCard}>
-										<span>status</span>
-										<b>drafting</b>
-									</div>
-									<div className={s.pcRailCard}>
-										<span>context</span>
-										<b>thread attached</b>
-									</div>
-									<div className={s.pcRailCard}>
-										<span>handoff</span>
-										<b>build next</b>
-									</div>
-								</div>
-								<span className={s.over}>
-									§ spec · draft · edited 2 min ago
+								<span className="font-mono text-[11px] px-[10px] py-[6px] rounded-lg text-ink-3">
+									eng / PR #142
 								</span>
-								<h3 className={s.pcDocTitle}>Magic-link onboarding</h3>
-								<div className={s.pcDocSub}>
-									owner: <span className={s.mention}>@mukul</span> · co-authored
-									with <span className={s.mention}>Altr</span>
+								<span className="font-mono text-[11px] px-[10px] py-[6px] rounded-lg text-ink-3">
+									#launch-magic-link
+								</span>
+							</div>
+							<div className="font-mono text-[10.5px] px-2 py-1 border border-line rounded-md text-ink-3">
+								⌘K
+							</div>
+						</div>
+
+						{/* body: doc + sidebar */}
+						<div
+							className="grid"
+							style={{ gridTemplateColumns: '1fr 360px', minHeight: '700px' }}
+						>
+							{/* doc pane */}
+							<div
+								className="px-10 py-[34px] border-r border-line text-left"
+								style={{
+									background:
+										'linear-gradient(160deg, color-mix(in oklab, var(--acc) 4%, var(--pc-bg)) 0%, var(--pc-bg) 60%)',
+								}}
+							>
+								{/* rail cards */}
+								<div
+									className="grid gap-[10px] mb-7"
+									style={{ gridTemplateColumns: '1fr 1fr 1fr' }}
+								>
+									{[
+										{ label: 'status', value: 'drafting' },
+										{ label: 'context', value: 'thread attached' },
+										{ label: 'handoff', value: 'build next' },
+									].map(({ label, value }) => (
+										<div
+											key={label}
+											className="p-3 rounded-[14px] border border-line shadow-sm flex flex-col gap-1"
+											style={{ background: 'rgba(255,255,255,0.86)' }}
+										>
+											<span className="font-mono text-[10px] uppercase text-ink-3">
+												{label}
+											</span>
+											<b className="font-sans text-[12.5px] font-600 text-ink">
+												{value}
+											</b>
+										</div>
+									))}
 								</div>
 
-								<h4 className={s.pcDocH}>The problem</h4>
-								<p className={s.pcDocP}>
+								<span className="over">§ spec · draft · edited 2 min ago</span>
+
+								<h3
+									className="font-serif font-normal tracking-tight text-ink mt-2 mb-1"
+									style={{ fontSize: '32px' }}
+								>
+									Magic-link onboarding
+								</h3>
+								<div className="font-mono text-[11.5px] text-ink-3 mb-[30px]">
+									owner:{' '}
+									<span className="font-mono text-[13px] text-acc font-medium">
+										@mukul
+									</span>{' '}
+									· co-authored with{' '}
+									<span className="font-mono text-[13px] text-acc font-medium">
+										Altr
+									</span>
+								</div>
+
+								<h4 className="font-sans font-semibold text-[13px] tracking-wide text-ink uppercase mt-7 mb-2.5">
+									The problem
+								</h4>
+								<p className="text-[14.5px] leading-[1.72] text-ink-2 mb-3">
 									Teams sign up, hit the password step, and 34% bounce before
 									their first workspace. We lose them before we learn anything.
 									We want an invite flow that feels like <em>opening a door</em>
 									, not filling out a form.
 								</p>
 
-								<h4 className={s.pcDocH}>Acceptance criteria</h4>
-								<ul className={s.pcDocUl}>
-									<li>Any teammate can be invited by email alone</li>
-									<li>
-										Invites deliver within{' '}
-										<span className={s.hl}>10 seconds</span> of send
-									</li>
-									<li>Expired invites (7 days) surface a resend CTA</li>
-									<li>Rate-limit: 5 invites / user / hour</li>
-									<li>
-										Audit log records inviter, invitee, status
-										<span className={s.caret} />
-									</li>
+								<h4 className="font-sans font-semibold text-[13px] tracking-wide text-ink uppercase mt-7 mb-2.5">
+									Acceptance criteria
+								</h4>
+								<ul className="list-none p-0 m-0 mb-3 space-y-1">
+									{[
+										<>Any teammate can be invited by email alone</>,
+										<>
+											Invites deliver within{' '}
+											<span className="bg-lime-3 text-acc px-1 rounded-sm">
+												10 seconds
+											</span>{' '}
+											of send
+										</>,
+										<>Expired invites (7 days) surface a resend CTA</>,
+										<>Rate-limit: 5 invites / user / hour</>,
+										<>
+											Audit log records inviter, invitee, status
+											<span
+												className="inline-block w-[2px] bg-acc ml-0.5 align-[-3px] animate-[blink_1.1s_steps(2)_infinite]"
+												style={{ height: '1.1em' }}
+											/>
+										</>,
+									].map((item, i) => (
+										<li
+											key={i}
+											className="text-[14px] text-ink-2 pl-4 relative before:content-['·'] before:absolute before:left-0 before:text-ink-3"
+										>
+											{item}
+										</li>
+									))}
 								</ul>
 
-								<h4 className={s.pcDocH}>Open questions</h4>
-								<p className={s.pcDocP}>
-									Altr flagged: should
-									revoked invites still count toward the rate limit?
+								<h4 className="font-sans font-semibold text-[13px] tracking-wide text-ink uppercase mt-7 mb-2.5">
+									Open questions
+								</h4>
+								<p className="text-[14.5px] leading-[1.72] text-ink-2 mb-3">
+									Altr flagged: should revoked invites still count toward the
+									rate limit?
 								</p>
 							</div>
 
-							<div className={s.pcSide}>
-								<div className={s.pcSideHead}>
+							{/* sidebar pane */}
+							<div
+								className="flex flex-col border-l border-line"
+								style={{
+									background:
+										'linear-gradient(180deg, var(--bg-2, #f5efe6) 0%, var(--bg-1, #faf8f3) 100%)',
+								}}
+							>
+								<div className="p-3 border-b border-line font-mono text-[11px] text-ink-3 flex justify-between items-center">
 									<span>#launch-magic-link</span>
-									<span className={s.live}>
-										<span className={s.liveDot} />
+									<span className="inline-flex gap-1.5 items-center text-acc">
+										<span
+											className="w-1.5 h-1.5 rounded-full bg-acc shadow-sm animate-[pulse-dot_1.6s_ease-in-out_infinite]"
+										/>
 										live
 									</span>
 								</div>
-								<div className={s.pcQueue}>
-									<div className={s.pcQueueItem}>
-										<span>active</span>
-										<b>Altr drafting AC</b>
-									</div>
-									<div className={s.pcQueueItem}>
-										<span>next</span>
-										<b>build opens worktree</b>
-									</div>
+
+								<div className="p-3 grid gap-2.5">
+									{[
+										{ label: 'active', value: 'Altr drafting AC' },
+										{ label: 'next', value: 'build opens worktree' },
+									].map(({ label, value }) => (
+										<div
+											key={label}
+											className="p-3 rounded-[14px] border border-line flex flex-col gap-1"
+											style={{ background: 'rgba(255,255,255,0.72)' }}
+										>
+											<span className="font-mono text-[10px] uppercase text-ink-4">
+												{label}
+											</span>
+											<b className="font-sans text-[13px] font-semibold text-ink">
+												{value}
+											</b>
+										</div>
+									))}
 								</div>
-								<div className={s.pcMsgs}>
-									<div className={s.pcMsg}>
-										<div className={`${s.pcMsgAvatar} ${s.pcMsgAvatarSpec}`}>
+
+								<div className="p-3 flex-1 flex flex-col gap-3 overflow-hidden">
+									{/* msg 1 */}
+									<div
+										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
+										style={{
+											borderColor: 'rgba(230,228,218,0.8)',
+											background: 'rgba(255,255,255,0.68)',
+										}}
+									>
+										<div className="w-[26px] h-[26px] rounded-full flex-shrink-0 grid place-items-center font-mono text-[10px] font-semibold bg-acc text-white">
 											§
 										</div>
 										<div>
-											<div className={s.pcMsgWho}>
-												<b>Altr</b>
+											<div className="font-mono text-[11px] text-ink-3 tracking-wide mb-0.5">
+												<b className="font-sans text-ink font-semibold text-[12.5px] mr-1.5">
+													Altr
+												</b>
 												<span>11:02</span>
 											</div>
 											Pulled 4 AC from the thread. Added rate-limit from the
 											security review. Ready for build?
 										</div>
 									</div>
-									<div className={s.pcMsg}>
-										<div className={`${s.pcMsgAvatar} ${s.pcMsgAvatarHuman}`}>
+
+									{/* msg 2 */}
+									<div
+										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
+										style={{
+											borderColor: 'rgba(230,228,218,0.8)',
+											background: 'rgba(255,255,255,0.68)',
+										}}
+									>
+										<div className="w-[26px] h-[26px] rounded-full flex-shrink-0 grid place-items-center font-mono text-[10px] font-semibold bg-mint-soft text-(--moss-2)">
 											m
 										</div>
 										<div>
-											<div className={s.pcMsgWho}>
-												<b>mukul</b>
+											<div className="font-mono text-[11px] text-ink-3 tracking-wide mb-0.5">
+												<b className="font-sans text-ink font-semibold text-[12.5px] mr-1.5">
+													mukul
+												</b>
 												<span>11:03</span>
 											</div>
 											Yes. Also: keep the resend CTA behind a 30s cooldown.
 										</div>
 									</div>
-									<div className={s.pcMsg}>
-										<div className={`${s.pcMsgAvatar} ${s.pcMsgAvatarEng}`}>
+
+									{/* msg 3 */}
+									<div
+										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
+										style={{
+											borderColor: 'rgba(230,228,218,0.8)',
+											background: 'rgba(255,255,255,0.68)',
+										}}
+									>
+										<div className="w-[26px] h-[26px] rounded-full flex-shrink-0 grid place-items-center font-mono text-[10px] font-semibold bg-[#1a1a1a] text-white">
 											E
 										</div>
 										<div>
-											<div className={s.pcMsgWho}>
-												<b>Altr</b>
+											<div className="font-mono text-[11px] text-ink-3 tracking-wide mb-0.5">
+												<b className="font-sans text-ink font-semibold text-[12.5px] mr-1.5">
+													Altr
+												</b>
 												<span>11:04</span>
 											</div>
 											Drafting PR now. Est. <b>2h 40m</b>. Touching{' '}
-											<span className={s.mono}>invites.ts</span>,{' '}
-											<span className={s.mono}>email-templates/</span>, one new
-											migration.
+											<span className="font-mono text-[13px]">invites.ts</span>,{' '}
+											<span className="font-mono text-[13px]">
+												email-templates/
+											</span>
+											, one new migration.
 										</div>
 									</div>
-									<div className={s.pcMsg}>
-										<div className={`${s.pcMsgAvatar} ${s.pcMsgAvatarSpec}`}>
+
+									{/* msg 4 */}
+									<div
+										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
+										style={{
+											borderColor: 'rgba(230,228,218,0.8)',
+											background: 'rgba(255,255,255,0.68)',
+										}}
+									>
+										<div className="w-[26px] h-[26px] rounded-full flex-shrink-0 grid place-items-center font-mono text-[10px] font-semibold bg-acc text-white">
 											§
 										</div>
 										<div>
-											<div className={s.pcMsgWho}>
-												<b>Altr</b>
+											<div className="font-mono text-[11px] text-ink-3 tracking-wide mb-0.5">
+												<b className="font-sans text-ink font-semibold text-[12.5px] mr-1.5">
+													Altr
+												</b>
 												<span>11:05</span>
 											</div>
 											I&apos;ll draft the changelog entry once PR lands. Staging

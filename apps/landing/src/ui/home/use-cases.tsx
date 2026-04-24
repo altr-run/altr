@@ -1,4 +1,3 @@
-import s from './home.module.css'
 import Reveal from './reveal'
 
 const CASES = [
@@ -29,7 +28,7 @@ const CASES = [
 	{
 		label: '05 · release follow-through',
 		title: 'Close the loop after the code lands.',
-		body: 'Draft release notes, update docs, and answer “what changed?” from the same execution trail.',
+		body: 'Draft release notes, update docs, and answer "what changed?" from the same execution trail.',
 		items: ['release notes drafted', 'docs updated from merged work', 'answers from the full trail'],
 	},
 	{
@@ -42,37 +41,78 @@ const CASES = [
 
 export default function UseCases() {
 	return (
-		<section className={s.useCases} id="use-cases">
-			<div className={s.useCasesIn}>
-				<Reveal className={s.useCasesHead}>
+		<section
+			id="use-cases"
+			className="py-[140px] px-8 border-b border-(--line) bg-(--bg-1)"
+		>
+			<div className="inner">
+				<Reveal
+					className="grid gap-16 items-end mb-14"
+					style={{ gridTemplateColumns: 'minmax(0, 1.15fr) minmax(320px, 0.85fr)' }}
+				>
 					<div>
 						<span
-							className={s.over}
-							style={{ display: 'inline-block', marginBottom: 16 }}
+							className="over inline-block"
+							style={{ marginBottom: 16 }}
 						>
 							§ use cases
 						</span>
-						<h2 className={s.h2}>
+						<h2
+							className="font-serif font-normal leading-none tracking-[-0.03em] text-wrap-balance m-0"
+							style={{ fontSize: 'clamp(44px, 5.6vw, 84px)' }}
+						>
 							Workflows teams already
 							<br />
-							<em>run every week.</em>
+							<em className="italic">run every week.</em>
 						</h2>
 					</div>
-					<p className={s.lede}>
-						Start with a workflow you already own: feature delivery, bug triage,
-						refactors, review, release, or incident follow-through. Altr is
-						meant to remove reconstruction work, not create a new ritual.
+					<p className="lede">
+						Altr removes reconstruction work — the moment teams spend copying a
+						bug report from Slack into Jira, summarizing a thread into acceptance
+						criteria, or explaining context in a review comment. Start with any
+						workflow you own. The signal comes with it.
 					</p>
 				</Reveal>
-				<div className={s.useCasesGrid}>
+
+				<div
+					className="grid gap-[1px] border-t border-l border-(--line)"
+					style={{ gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}
+				>
 					{CASES.map((item, index) => (
-						<Reveal key={item.label} delay={index * 70} className={s.useCaseCard}>
-							<div className={s.useCaseLabel}>{item.label}</div>
-							<h3 className={s.useCaseTitle}>{item.title}</h3>
-							<p className={s.useCaseBody}>{item.body}</p>
-							<ul className={s.useCaseList}>
+						<Reveal
+							key={item.label}
+							delay={index * 70}
+							className={[
+								'p-[28px_26px_30px] border-r border-b border-(--line)',
+								'border-t-[3px] border-t-transparent',
+								'flex flex-col gap-4',
+								'transition-[transform,box-shadow,border-color] duration-[280ms] ease-[cubic-bezier(0.25,1,0.5,1)]',
+								'hover:-translate-y-[3px] hover:shadow-md hover:border-t-(--acc) hover:z-[1] hover:relative',
+							].join(' ')}
+							style={{
+								background: 'color-mix(in oklab, var(--panel-strong) 88%, white 12%)',
+							}}
+						>
+							<div className="font-mono text-[10px] tracking-[0.12em] uppercase text-(--acc-2)">
+								{item.label}
+							</div>
+							<h3
+								className="font-serif font-normal text-[28px] leading-[1.08] tracking-[-0.02em] text-(--ink) m-0 max-w-[14ch]"
+							>
+								{item.title}
+							</h3>
+							<p className="text-[14px] leading-[1.62] text-(--ink-2) m-0 max-w-[34ch]">
+								{item.body}
+							</p>
+							<ul className="list-none p-0 mt-auto mb-0 grid gap-2">
 								{item.items.map((point) => (
-									<li key={point}>{point}</li>
+									<li
+										key={point}
+										className="relative pl-[14px] font-mono text-[10.5px] leading-[1.45] tracking-[0.02em] text-(--ink-3) uppercase
+											before:content-[''] before:absolute before:left-0 before:top-[6px] before:w-[5px] before:h-[5px] before:rounded-full before:bg-(--acc)"
+									>
+										{point}
+									</li>
 								))}
 							</ul>
 						</Reveal>

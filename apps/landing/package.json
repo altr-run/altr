@@ -16,6 +16,8 @@
 		"@altr/ui": "workspace:*",
 		"@paper-design/shaders-react": "^0.0.76",
 		"@portabletext/to-html": "^5.0.2",
+		"@radix-ui/colors": "^3.0.0",
+		"@radix-ui/react-accordion": "^1.2.12",
 		"@sanity/asset-utils": "^2.3.0",
 		"@sanity/assist": "^6.0.4",
 		"@sanity/cli": "^6.3.2",

@@ -1,5 +1,3 @@
-import s from './home.module.css'
-
 const NAMES = [
 	{ label: 'Northline', variant: '' },
 	{ label: 'MESA', variant: 's' },
@@ -15,10 +13,14 @@ const NAMES = [
 
 export default function Logos() {
 	return (
-		<section className={s.logos}>
-			<div className={s.tickerIn} style={{ padding: 0, marginBottom: 28 }}>
-				<div className={s.tickerLabel}>
-					<span className={s.liveDot} />
+		<section className="py-[60px] pb-16 border-b border-(--line) text-center">
+			{/* ticker header row */}
+			<div
+				className="inner grid gap-7 items-center px-8 mb-7"
+				style={{ gridTemplateColumns: 'auto 1fr auto', padding: '0 32px', marginBottom: 28 }}
+			>
+				<div className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] uppercase text-(--acc)">
+					<span className="w-1.5 h-1.5 rounded-full bg-(--acc) shadow-[0_0_0_4px_color-mix(in_oklab,var(--acc)_14%,transparent)] animate-[pulse-dot_1.6s_ease-in-out_infinite]" />
 					Pilot teams
 				</div>
 				<div
@@ -31,22 +33,34 @@ export default function Logos() {
 				>
 					Product, engineering, and design teams evaluating one connected execution loop.
 				</div>
-				<div className={s.tickerStat}>
-					<b>active pilots</b>
+				<div className="font-mono text-[11px] text-(--ink-3) tracking-[0.02em] flex flex-col text-right leading-[1.2]">
+					<b className="font-sans text-(--ink) text-[15px] tracking-[-0.02em]">active pilots</b>
 					founder-led rollout
 				</div>
 			</div>
-			<div className={s.logosScroll}>
-				<div className={s.marqueeTrack}>
+
+			{/* scrolling logo strip */}
+			<div
+				className="overflow-hidden"
+				style={{
+					maskImage:
+						'linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%)',
+					WebkitMaskImage:
+						'linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%)',
+				}}
+			>
+				<div
+					className="flex items-center gap-16 w-max opacity-65 animate-[marquee_28s_linear_infinite] hover:[animation-play-state:paused]"
+				>
 					{[...NAMES, ...NAMES].map((item, i) => (
 						<span
 							key={i}
 							className={
 								item.variant === 's'
-									? s.logoNameSans
+									? 'font-sans font-semibold text-[17px] tracking-[-0.02em] text-(--ink-2) whitespace-nowrap'
 									: item.variant === 'u'
-										? s.logoNameMono
-										: s.logoNameSerif
+										? 'font-mono text-[14px] text-(--ink-3) whitespace-nowrap'
+										: 'font-serif text-[22px] tracking-[-0.02em] text-(--ink-2) whitespace-nowrap'
 							}
 						>
 							{item.label}

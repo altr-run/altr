@@ -1,12 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import LogoMark from './logo-mark'
-import s from './home.module.css'
 
 export default function Nav() {
 	const ref = useRef<HTMLElement>(null)
-	const [tone, setTone] = useState<'dark' | 'light'>('dark')
 
 	useEffect(() => {
 		const zones = Array.from(
@@ -21,15 +19,10 @@ export default function Nav() {
 			const navRect = navEl?.getBoundingClientRect()
 			const probeY = navRect ? navRect.top + navRect.height / 2 : 56
 
-			const active =
-				zones.find((zone) => {
-					const rect = zone.getBoundingClientRect()
-					return rect.top <= probeY && rect.bottom >= probeY
-				}) ?? zones[0]
-
-			const nextTone =
-				active.dataset.navTheme === 'light' ? 'light' : 'dark'
-			setTone((current) => (current === nextTone ? current : nextTone))
+			zones.find((zone) => {
+				const rect = zone.getBoundingClientRect()
+				return rect.top <= probeY && rect.bottom >= probeY
+			}) ?? zones[0]
 		}
 
 		function onChange() {
@@ -51,32 +44,58 @@ export default function Nav() {
 	return (
 		<nav
 			ref={ref}
-			className={[s.nav, tone === 'light' ? s.navLight : s.navDark].join(
-				' ',
-			)}
+			className="sticky top-[14px] z-80 px-5 bg-transparent"
 		>
-			<div className={s.navIn}>
-				<div className={s.navLeft}>
-					<a href="#" className={s.logo}>
-						<LogoMark className={s.logoMark} />
-						<span className={s.srOnly}>Altr</span>
+			<div className="nav-pill">
+				<div className="justify-self-start flex items-center gap-[14px]">
+					<a
+						href="#"
+						className="text-inherit inline-flex items-center no-underline leading-none"
+					>
+						<LogoMark className="block w-auto h-[22px]" />
+						<span className="sr-only">Altr</span>
 					</a>
 				</div>
-				<div className={s.navLinks}>
-					<a href="#workflow">Workflow</a>
-					<a href="#agents">Agents</a>
-					<a href="#stack">Stack</a>
-					<a href="#security">Security</a>
-					<a href="#faq">FAQ</a>
-				</div>
-				<div className={s.navRight}>
-					<a href="#close" className={s.navSignin}>
-						Sign in
+				<div className="flex items-center gap-5">
+					<a
+						href="#workflow"
+						className="text-[13px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink"
+					>
+						Workflow
 					</a>
 					<a
-						href="#close"
-						className={`${s.btn} ${s.navCta}`}
+						href="#agents"
+						className="text-[13px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink"
 					>
+						Agents
+					</a>
+					<a
+						href="#stack"
+						className="text-[13px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink"
+					>
+						Stack
+					</a>
+					<a
+						href="#security"
+						className="text-[13px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink"
+					>
+						Security
+					</a>
+					<a
+						href="#faq"
+						className="text-[13px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink"
+					>
+						FAQ
+					</a>
+				</div>
+				<div className="flex items-center gap-[14px] justify-self-end">
+					<a
+						href="#close"
+						className="text-[14px] text-ink-2 no-underline"
+					>
+						Sign in
+					</a>
+					<a href="#close" className="btn btn-primary">
 						Request access →
 					</a>
 				</div>

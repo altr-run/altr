@@ -1,7 +1,8 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import s from './home.module.css'
+import { motion } from 'motion/react'
+import { clsx } from 'clsx'
 import Reveal from './reveal'
 
 type Example = {
@@ -109,136 +110,220 @@ export default function Playground() {
 	}
 
 	return (
-		<section className={s.pg} id="playground">
-			<div className={s.pgIn}>
-				<Reveal className={s.pgHead}>
+		<section className="py-[140px] px-8 border-b border-line" id="playground">
+			<div className="inner">
+				<Reveal className="grid grid-cols-2 gap-16 items-end mb-14">
 					<div>
-						<span className={s.over} style={{ display: 'inline-block', marginBottom: 16 }}>
-							§ demo
-						</span>
-						<h2 className={s.h2}>
+						<span className="over inline-block mb-4">§ demo</span>
+						<h2 className="heading-2">
 							Drop in a rough request.
 							<br />
 							Watch Altr <em>structure the work.</em>
 						</h2>
 					</div>
-					<p className={s.lede}>
+					<p className="lede">
 						Start with the kind of messy ask teams actually get. Altr
 						will turn it into acceptance criteria, an implementation plan,
 						and a draft PR. It&apos;s a mock, but the workflow is the point.
 					</p>
 				</Reveal>
 				<Reveal>
-					<div className={s.pgStage}>
-						<div className={s.pgLeft}>
-							<div className={s.pgPaneBar}>
-								<div className={s.pgLabel}>
-									<b>Your spec</b>
-									<span>Altr is listening</span>
+					<div
+						className="grid overflow-hidden"
+						style={{
+							gridTemplateColumns: 'minmax(0,0.92fr) minmax(0,1.08fr)',
+							borderRadius: '28px',
+							border: '1px solid color-mix(in oklab, var(--line) 84%, transparent)',
+							background: 'radial-gradient(80% 120% at 0% 0%, color-mix(in oklab, var(--acc) 3%, transparent) 0%, transparent 52%), var(--surface)',
+							boxShadow: '0 14px 32px rgba(17,24,18,0.05)',
+						}}
+					>
+						{/* Left pane */}
+						<div
+							className="p-7 border-r border-line min-h-[520px]"
+							style={{
+								background: 'linear-gradient(180deg, rgba(248,245,239,0.96) 0%, rgba(243,239,232,0.96) 100%)',
+							}}
+						>
+							<div className="flex justify-between items-center gap-3 mb-3.5">
+								<div className="flex justify-between items-center font-mono text-[10px] uppercase tracking-widest text-ink-4">
+									<b className="font-sans text-[13px] font-semibold text-ink tracking-tight normal-case">Your spec</b>
+									<span className="ml-2">Altr is listening</span>
 								</div>
-								<div className={s.pgPill}>rough prompt</div>
+								<div
+									className="py-[7px] px-2.5 rounded-full font-mono text-[10px] text-acc-ink"
+									style={{
+										border: '1px solid color-mix(in oklab, var(--acc) 20%, var(--line))',
+										background: 'color-mix(in oklab, var(--acc-soft) 46%, white)',
+									}}
+								>
+									rough prompt
+								</div>
 							</div>
-							<div className={s.pgComposer}>
+							<div
+								className="p-[18px] rounded-[22px] border border-line"
+								style={{
+									background: 'rgba(255,253,248,0.84)',
+									boxShadow: '0 10px 20px rgba(17,24,18,0.035), inset 0 1px 0 rgba(255,255,255,0.82)',
+									backdropFilter: 'blur(10px)',
+								}}
+							>
 								<textarea
 									ref={inputRef}
-									className={s.pgTextarea}
+									className="w-full min-h-[200px] font-sans text-[15.5px] leading-[1.55] text-ink-1 bg-transparent border-0 outline-none resize-none p-0 m-0 placeholder:text-ink-4 placeholder:italic placeholder:font-serif placeholder:text-[17px]"
+									style={{ fieldSizing: 'content' } as React.CSSProperties}
 									placeholder="Let users invite teammates by email. Magic-link style — no passwords. Should take less than 90 seconds end-to-end."
 								/>
 							</div>
-							<div className={s.pgExamples}>
-								<span className={s.pgExLabel}>Try one of these →</span>
-								<button className={s.pgExBtn} onClick={() => loadExample('invite')}>
+							<div className="flex gap-2 mt-[18px] flex-wrap">
+								<span className="w-full font-mono text-[10px] uppercase tracking-widest text-ink-4 mb-0.5">Try one of these →</span>
+								<button
+									className="font-mono text-[11px] py-[5px] px-[11px] rounded-full border border-line bg-surface text-ink-2 cursor-pointer transition hover:border-acc hover:bg-acc-soft hover:text-acc-ink"
+									onClick={() => loadExample('invite')}
+								>
 									invite teammates
 								</button>
-								<button className={s.pgExBtn} onClick={() => loadExample('search')}>
+								<button
+									className="font-mono text-[11px] py-[5px] px-[11px] rounded-full border border-line bg-surface text-ink-2 cursor-pointer transition hover:border-acc hover:bg-acc-soft hover:text-acc-ink"
+									onClick={() => loadExample('search')}
+								>
 									full-text search
 								</button>
-								<button className={s.pgExBtn} onClick={() => loadExample('billing')}>
+								<button
+									className="font-mono text-[11px] py-[5px] px-[11px] rounded-full border border-line bg-surface text-ink-2 cursor-pointer transition hover:border-acc hover:bg-acc-soft hover:text-acc-ink"
+									onClick={() => loadExample('billing')}
+								>
 									stripe billing
 								</button>
 							</div>
-							<div className={s.pgComposerFoot}>
-								<div className={s.pgComposerMeta}>
-									<span>acceptance</span>
-									<span>plan</span>
-									<span>draft diff</span>
+							<div className="flex justify-between items-center gap-4 mt-5 pt-[18px] border-t border-dashed border-line">
+								<div className="flex gap-2">
+									{['acceptance', 'plan', 'draft diff'].map((label) => (
+										<span
+											key={label}
+											className="py-[7px] px-2.5 rounded-full border border-line font-mono text-[10px] text-ink-3"
+											style={{ background: 'rgba(255,255,255,0.84)' }}
+										>
+											{label}
+										</span>
+									))}
 								</div>
-								<div className={s.pgAction}>
-									<button className={`${s.btn} ${s.btnAcc}`} onClick={run}>
+								<div>
+									<button className="btn btn-acc" onClick={run}>
 										Run it →
 									</button>
 								</div>
 							</div>
 						</div>
-						<div className={s.pgRight}>
+
+						{/* Right pane */}
+						<div
+							className="p-7 min-h-[520px] relative"
+							style={{
+								background: 'linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,245,238,0.98) 100%)',
+							}}
+						>
 							{!active && (
-								<div className={s.pgEmpty}>
-									<div className={s.pgEmptyMk}>§ waiting for input</div>
+								<div className="absolute inset-4 flex flex-col items-center justify-center text-ink-4 font-serif italic text-[18px] text-center p-10 rounded-[18px] border border-dashed border-line/70 bg-bg-1/60">
+									<div className="font-mono not-italic text-[10px] uppercase tracking-widest text-acc opacity-70 mb-3.5">§ waiting for input</div>
 									Pick an example or type a rough request.
 									<br />
-									<span style={{ fontSize: '14px', fontFamily: 'var(--f-mono)', fontStyle: 'normal', marginTop: '10px', display: 'block', color: 'var(--ink-5)' }}>plan · build · output appears here</span>
+									<span className="text-[14px] font-mono not-italic mt-[10px] block text-ink-5">plan · build · output appears here</span>
 								</div>
 							)}
 							{active && (
-								<div className={`${s.pgOutput} ${s.pgOutputOn}`}>
-									<div className={s.pgPrHead}>
-										<div className={s.pgPrTitle}>
-											<em>Execution output</em> · PR draft
+								<motion.div
+									animate={{ opacity: 1, y: 0 }}
+									initial={{ opacity: 0, y: 6 }}
+									transition={{ duration: 0.55, ease: [0.2, 0, 0.2, 1] }}
+								>
+									<div className="flex justify-between items-baseline mb-4 pb-4 border-b border-line">
+										<div className="font-sans font-semibold text-[18px] tracking-tight text-ink">
+											<em className="font-serif font-normal italic text-acc">Execution output</em> · PR draft
 										</div>
-										<div className={s.pgPrMeta}>
+										<div className="font-mono text-[10.5px] text-ink-3 tracking-widest">
 											~{active.est} · {active.cost}
 										</div>
 									</div>
-									<div className={s.pgStatRow}>
-										<div className={s.pgStat}>
-											<span>owner</span>
-											<b>Altr</b>
-										</div>
-										<div className={s.pgStat}>
-											<span>risk</span>
-											<b>moderate</b>
-										</div>
-										<div className={s.pgStat}>
-											<span>scope</span>
-											<b>1 endpoint</b>
-										</div>
+									<div className="grid grid-cols-3 gap-2.5 mb-[18px]">
+										{[
+											{ label: 'owner', value: 'Altr' },
+											{ label: 'risk', value: 'moderate' },
+											{ label: 'scope', value: '1 endpoint' },
+										].map(({ label, value }) => (
+											<div
+												key={label}
+												className="p-[12px_14px] rounded-[14px] border border-line"
+												style={{ background: 'rgba(255,253,248,0.86)' }}
+											>
+												<span className="block mb-2 font-mono text-[10px] uppercase tracking-widest text-ink-4">{label}</span>
+												<b className="font-sans text-[13px] font-semibold text-ink">{value}</b>
+											</div>
+										))}
 									</div>
-									<div
-										className={`${s.pgOutBlock} ${visibleSteps.includes(0) ? s.pgOutBlockIn : ''}`}
-									>
-										<div className={s.pgOutBlockLbl}>
-											<span className={s.pgOutBlockPt} />
-											■ acceptance criteria
+
+									{/* Output blocks */}
+									{[
+										{ label: '■ acceptance criteria', items: active.ac, idx: 0 },
+										{ label: '▲ implementation plan', items: active.plan, idx: 1 },
+									].map(({ label, items, idx }) => (
+										<div
+											key={label}
+											className={clsx(
+												'mt-[18px] p-[14px] rounded-[16px] border transition-all duration-[550ms]',
+												visibleSteps.includes(idx)
+													? 'opacity-100 translate-y-0'
+													: 'opacity-0 translate-y-2',
+											)}
+											style={{
+												borderColor: 'color-mix(in oklab, var(--line) 84%, transparent)',
+												background: 'rgba(255,253,248,0.88)',
+												boxShadow: '0 6px 14px rgba(17,24,18,0.03), inset 0 1px 0 rgba(255,255,255,0.84)',
+											}}
+										>
+											<div className="font-mono text-[10px] tracking-widest uppercase text-ink-4 mb-3 inline-flex gap-1.5 items-center">
+												<span className="w-[5px] h-[5px] bg-acc rounded-full" />
+												{label}
+											</div>
+											<ul className="list-none p-0 m-0 flex flex-col gap-2">
+												{items.map((item, i) => (
+													<li
+														key={i}
+														className="text-[13.5px] text-ink-1 leading-[1.55] pl-4 relative before:content-['→'] before:absolute before:left-0 before:text-ink-4 before:font-mono before:text-[11px] before:top-0.5"
+													>
+														{item}
+													</li>
+												))}
+											</ul>
 										</div>
-										<ul>
-											{active.ac.map((item, i) => (
-												<li key={i}>{item}</li>
-											))}
-										</ul>
-									</div>
+									))}
+
+									{/* Diff block */}
 									<div
-										className={`${s.pgOutBlock} ${visibleSteps.includes(1) ? s.pgOutBlockIn : ''}`}
+										className={clsx(
+											'mt-[18px] p-[14px] rounded-[16px] border transition-all duration-[550ms]',
+											visibleSteps.includes(2)
+												? 'opacity-100 translate-y-0'
+												: 'opacity-0 translate-y-2',
+										)}
+										style={{
+											borderColor: 'color-mix(in oklab, var(--line) 84%, transparent)',
+											background: 'rgba(255,253,248,0.88)',
+											boxShadow: '0 6px 14px rgba(17,24,18,0.03), inset 0 1px 0 rgba(255,255,255,0.84)',
+										}}
 									>
-										<div className={s.pgOutBlockLbl}>
-											<span className={s.pgOutBlockPt} />
-											▲ implementation plan
-										</div>
-										<ul>
-											{active.plan.map((item, i) => (
-												<li key={i}>{item}</li>
-											))}
-										</ul>
-									</div>
-									<div
-										className={`${s.pgOutBlock} ${visibleSteps.includes(2) ? s.pgOutBlockIn : ''}`}
-									>
-										<div className={s.pgOutBlockLbl}>
-											<span className={s.pgOutBlockPt} />
+										<div className="font-mono text-[10px] tracking-widest uppercase text-ink-4 mb-3 inline-flex gap-1.5 items-center">
+											<span className="w-[5px] h-[5px] bg-acc rounded-full" />
 											○ draft diff · preview
 										</div>
-										<pre className={s.pgCode}>{active.diff}</pre>
+										<pre
+											className="font-mono text-[12px] leading-[1.7] border border-line rounded-[14px] p-[14px_16px] text-ink-2 whitespace-pre overflow-x-auto"
+											style={{ background: 'rgba(255,255,255,0.84)' }}
+										>
+											{active.diff}
+										</pre>
 									</div>
-								</div>
+								</motion.div>
 							)}
 						</div>
 					</div>

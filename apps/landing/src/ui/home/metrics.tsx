@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import s from './home.module.css'
 import Reveal from './reveal'
 
 const STATS = [
@@ -60,38 +59,62 @@ function CountUp({
 
 export default function Metrics() {
 	return (
-		<section className={s.metrics}>
-			<div className={s.metricsIn}>
-				<Reveal className={s.metricsHead}>
+		<section className="py-[100px] px-8 border-b border-(--line) bg-(--bg-1)">
+			<div className="inner">
+				<Reveal className="text-center mb-14">
 					<span
-						className={s.over}
-						style={{ display: 'inline-block', marginBottom: 16 }}
+						className="over inline-block"
+						style={{ marginBottom: 16 }}
 					>
 						§ pilot signal
 					</span>
-					<h2 className={s.h2}>
+					<h2
+						className="font-serif font-normal leading-none tracking-[-0.03em] text-wrap-balance m-0"
+						style={{ fontSize: 'clamp(44px, 5.6vw, 84px)' }}
+					>
 						What early teams see when
 						<br />
-						<em>the whole trail stays attached.</em>
+						<em className="italic">the whole trail stays attached.</em>
 					</h2>
-					<p className={s.metricsNote}>
+					<p className="mt-5 max-w-[58ch] mx-auto font-mono text-[11px] leading-[1.6] tracking-[0.03em] uppercase text-(--ink-4)">
 						Early signal from pilot teams.
 					</p>
 				</Reveal>
-				<div className={s.metricsGrid}>
+
+				<div
+					className="grid gap-[1px] border-t border-(--line)"
+					style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}
+				>
 					{STATS.map((stat, i) => (
-						<Reveal key={i} delay={i * 80} className={s.metricCell}>
-							<div className={s.metricVal}>
+						<Reveal
+							key={i}
+							delay={i * 80}
+							className={[
+								'py-12 px-7 text-center',
+								'border-r border-(--line) last:border-r-0',
+								'transition-[background,transform,box-shadow] duration-300',
+								'hover:bg-(--surface) hover:-translate-y-1 hover:z-[1] hover:relative',
+								'hover:shadow-[0_16px_40px_rgba(0,0,0,0.07),inset_0_-3px_0_var(--acc)]',
+							].join(' ')}
+						>
+							<div
+								className="font-serif leading-none tracking-[-0.04em] text-(--ink)"
+								style={{ fontSize: 'clamp(56px, 5vw, 84px)' }}
+							>
 								<CountUp
 									to={stat.value}
 									decimals={stat.decimals}
 									duration={1400 + i * 100}
 								/>
 								{stat.suffix && (
-									<span className={s.metricSuffix}>{stat.suffix}</span>
+									<span className="text-[42px] text-(--ink-3) tracking-[-0.02em]">
+										{stat.suffix}
+									</span>
 								)}
 							</div>
-							<div className={s.metricLabel}>{stat.label}</div>
+							<div className="font-mono text-[11px] leading-[1.55] tracking-[0.08em] uppercase text-(--ink-3) mt-3.5 max-w-[24ch] mx-auto">
+								{stat.label}
+							</div>
 						</Reveal>
 					))}
 				</div>

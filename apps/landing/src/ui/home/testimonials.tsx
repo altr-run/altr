@@ -1,4 +1,4 @@
-import s from './home.module.css'
+import { clsx } from 'clsx'
 import Reveal from './reveal'
 
 const QUOTES = [
@@ -48,48 +48,61 @@ const QUOTES = [
 
 export default function Testimonials() {
 	return (
-		<section className={s.testimonials}>
-			<div className={s.testimonialsIn}>
-				<Reveal className={s.testimonialsHead}>
+		<section className="py-[140px] px-8 border-b border-line">
+			<div className="inner">
+				<Reveal className="grid grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] gap-16 items-end mb-14">
 					<div>
-						<span
-							className={s.over}
-							style={{
-								display: 'inline-block',
-								marginBottom: 16,
-							}}
-						>
-							§ from pilot teams
-						</span>
-						<h2 className={s.h2}>
+						<span className="over inline-block mb-4">§ from pilot teams</span>
+						<h2 className="heading-2">
 							What shifts when the trail
 							<br />
 							<em>stays intact.</em>
 						</h2>
 					</div>
-					<p className={s.lede}>
-						The recurring pattern is not “AI magic.” It is fewer reconstruction
+					<p className="lede">
+						The recurring pattern is not "AI magic." It is fewer reconstruction
 						meetings, stronger specs, and review that starts with the full
 						context already in place.
 					</p>
 				</Reveal>
-				<div className={s.testimonialsGrid}>
+				<div className="grid grid-cols-2 border-t border-b border-line">
 					{QUOTES.map((q, i) => (
 						<Reveal
 							key={i}
 							delay={i === 0 ? 0 : i * 100}
-							className={`${s.testiCell} ${q.featured ? s.testiCellFeatured : q.variant === 'dark' ? s.testiCellAlt : ''}`}
+							className={clsx(
+								'p-10 border-r border-line flex flex-col gap-5 transition last:border-r-0',
+								'hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08),0_0_0_1px_color-mix(in_oklab,var(--acc)_30%,var(--line))] hover:relative hover:z-[1]',
+								q.featured && 'col-span-2 flex-row gap-16 items-start px-12 py-14 border-b border-r-0 bg-bg-1',
+								!q.featured && q.variant === 'dark' && 'bg-bg-1',
+							)}
 						>
-							<div className={s.testiQuote}>{q.text}</div>
-							<div className={s.testiAttr}>
+							<div
+								className={clsx(
+									'font-serif text-[20px] leading-[1.4] text-ink-1 tracking-[-0.01em] [&_em]:italic [&_em]:text-ink',
+									q.featured && 'text-[26px] leading-[1.35] flex-1 max-w-[70ch]',
+								)}
+							>
+								{q.text}
+							</div>
+							<div
+								className={clsx(
+									'flex gap-3 items-center mt-auto',
+									q.featured && 'flex-col items-start gap-4 min-w-[180px]',
+								)}
+							>
 								<div
-									className={`${s.testiAvatar} ${q.variant === 'dark' ? s.testiAvatarDark : ''}`}
+									className={clsx(
+										'w-9 h-9 rounded-full bg-acc-soft text-acc-ink grid place-items-center font-sans font-semibold text-[13px]',
+										q.featured && 'w-12 h-12 text-[16px]',
+										q.variant === 'dark' && 'bg-ink text-bg',
+									)}
 								>
 									{q.initials}
 								</div>
 								<div>
-									<div className={s.testiName}>{q.name}</div>
-									<div className={s.testiRole}>{q.role}</div>
+									<div className="text-[13px] font-semibold text-ink">{q.name}</div>
+									<div className="font-mono text-[10.5px] text-ink-3 tracking-widest">{q.role}</div>
 								</div>
 							</div>
 						</Reveal>

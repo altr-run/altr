@@ -1,4 +1,3 @@
-import s from './home.module.css'
 import Reveal from './reveal'
 
 const STEPS = [
@@ -22,33 +21,61 @@ const STEPS = [
 
 export default function How() {
 	return (
-		<section className={s.how} id="agents">
-			<div className={s.howIn}>
-				<div className={s.howLayout}>
-					<Reveal className={s.howLeft}>
-						<span className={s.over} style={{ display: 'inline-block' }}>
+		<section
+			className="py-[160px] px-8 border-b border-line bg-bg-1"
+			id="agents"
+		>
+			<div className="inner">
+				<div className="grid grid-cols-2 gap-20 items-start">
+					{/* Left sticky column */}
+					<Reveal className="sticky top-[120px] flex flex-col gap-6">
+						<span className="over" style={{ display: 'inline-block' }}>
 							§ how it works
 						</span>
-						<h2 className={s.h2} style={{ textWrap: 'balance', marginTop: 20 }}>
+						<h2
+							className="heading-2"
+							style={{ textWrap: 'balance', marginTop: 20 }}
+						>
 							Four stages.
 							<br />
 							<em>One unbroken trail.</em>
 						</h2>
-						<p className={s.lede}>
+						<p className="lede">
 							Each stage has a clear job and a visible handoff. No
 							reconstruction work, no re-explaining the goal — the context
 							travels with the work from first request to merged diff.
 						</p>
 					</Reveal>
-					<div className={s.howSteps}>
+
+					{/* Steps */}
+					<div className="flex flex-col">
 						{STEPS.map((step, i) => (
-							<Reveal key={i} delay={i * 80} className={s.howStep}>
-								<div className={s.howStepNum}>
+							<Reveal
+								key={i}
+								delay={i * 80}
+								className={[
+									'grid grid-cols-[56px_1fr] gap-6 py-9 border-t border-line',
+									'transition-transform duration-200 cursor-default',
+									'hover:translate-x-[6px]',
+									i === STEPS.length - 1 ? 'border-b border-line' : '',
+								].join(' ')}
+							>
+								<div
+									className="font-serif text-[44px] leading-none text-acc tracking-tight opacity-[0.36] pt-1 transition-opacity duration-200 hover:opacity-100"
+									style={{ fontFamily: 'var(--f-serif)' }}
+								>
 									{String(i + 1).padStart(2, '0')}
 								</div>
-								<div className={s.howStepContent}>
-									<h3>{step.title}</h3>
-									<p>{step.desc}</p>
+								<div>
+									<h3
+										className="font-serif font-normal text-[22px] tracking-tight mt-1 mb-[10px] text-ink"
+										style={{ fontFamily: 'var(--f-serif)' }}
+									>
+										{step.title}
+									</h3>
+									<p className="text-[14.5px] text-ink-2 leading-[1.6] m-0">
+										{step.desc}
+									</p>
 								</div>
 							</Reveal>
 						))}

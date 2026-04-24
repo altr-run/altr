@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import s from './home.module.css'
+import * as Accordion from '@radix-ui/react-accordion'
+import { AnimatePresence, motion } from 'motion/react'
 import Reveal from './reveal'
 
 const ITEMS = [
@@ -15,7 +16,7 @@ const ITEMS = [
 	},
 	{
 		q: 'How is this different from ClickUp, Linear, or Notion?',
-		a: 'Those tools are great at organizing work that is already structured. Altr handles the step before that — turning a rough Slack thread, a customer call, or a half-formed request into acceptance criteria, a plan, and a reviewable PR. The original signal stays attached to every artifact. It is not a replacement for how you track work; it is the pipeline that structures it before it enters those systems.',
+		a: 'ClickUp Codegen and similar tools run inside their own workspace and go from task to PR. Altr runs on your Mac, connects your existing tools — Slack, Linear, GitHub, calls, docs — and carries the original signal through every handoff. The thread that started the work is still attached when the PR opens. You keep your stack. Human review stays the default gate. Altr is the pipeline before work reaches Linear or ClickUp, not a replacement for either.',
 	},
 	{
 		q: 'How is this different from Devin or Cursor?',
@@ -32,31 +33,26 @@ const ITEMS = [
 ]
 
 export default function FAQ() {
-	const [openIdx, setOpenIdx] = useState<number | null>(null)
+	const [openValue, setOpenValue] = useState<string>('')
 
 	return (
-		<section className={s.faq} id="faq">
-			<div className={s.faqIn}>
-				<Reveal className={s.faqHead}>
+		<section className="py-[140px] px-8 border-b border-line" id="faq">
+			<div className="inner">
+				<Reveal className="grid grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] gap-16 items-end mb-12">
 					<div>
-						<span className={s.over} style={{ display: 'inline-block', marginBottom: 16 }}>
-							§ faq
-						</span>
-						<h2 className={s.h2}>
+						<span className="over inline-block mb-4">§ faq</span>
+						<h2 className="heading-2">
 							Questions teams ask
 							<br />
 							<em>when evaluating.</em>
 						</h2>
 					</div>
-					<p className={s.lede}>
+					<p className="lede">
 						If yours isn&apos;t here, write{' '}
 						<a
 							href="mailto:hello@altr.run"
-							style={{
-								color: 'var(--ink)',
-								borderBottom: '1.5px solid var(--acc)',
-								textDecoration: 'none',
-							}}
+							className="text-ink no-underline border-b border-acc"
+							style={{ borderBottomWidth: '1.5px' }}
 						>
 							hello@altr.run
 						</a>{' '}
@@ -64,25 +60,58 @@ export default function FAQ() {
 					</p>
 				</Reveal>
 				<Reveal>
-					<div className={s.faqList}>
-						{ITEMS.map((item, i) => (
-							<div
-								key={i}
-								className={`${s.faqItem} ${openIdx === i ? s.faqItemOpen : ''}`}
-							>
-								<button
-									className={s.faqQ}
-									onClick={() => setOpenIdx(openIdx === i ? null : i)}
+					<Accordion.Root
+						type="single"
+						collapsible
+						value={openValue}
+						onValueChange={setOpenValue}
+						className="border-t border-line"
+					>
+						{ITEMS.map((item, i) => {
+							const isOpen = openValue === String(i)
+							return (
+								<Accordion.Item
+									key={i}
+									value={String(i)}
+									className="border-b border-line"
 								>
-									<span>{item.q}</span>
-									<span className={s.faqIcon}>+</span>
-								</button>
-								<div className={s.faqA}>
-									<div className={s.faqAInner}>{item.a}</div>
-								</div>
-							</div>
-						))}
-					</div>
+									<Accordion.Header>
+										<Accordion.Trigger asChild>
+											<button className="flex justify-between items-center w-full py-[22px] text-left font-serif text-[22px] font-normal tracking-[-0.015em] text-ink bg-transparent border-0 cursor-pointer gap-4">
+												<span>{item.q}</span>
+												<motion.span
+													animate={{ rotate: isOpen ? 45 : 0 }}
+													transition={{ duration: 0.25 }}
+													className="w-7 h-7 rounded-full border border-line-2 grid place-items-center font-sans font-normal text-ink-2 text-[16px] flex-shrink-0 transition-colors"
+													style={isOpen ? { background: 'var(--ink)', color: 'var(--bg)', borderColor: 'var(--ink)' } : {}}
+												>
+													+
+												</motion.span>
+											</button>
+										</Accordion.Trigger>
+									</Accordion.Header>
+									<Accordion.Content forceMount asChild>
+										<AnimatePresence initial={false}>
+											{isOpen && (
+												<motion.div
+													key="content"
+													initial={{ height: 0, opacity: 0 }}
+													animate={{ height: 'auto', opacity: 1 }}
+													exit={{ height: 0, opacity: 0 }}
+													transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
+													style={{ overflow: 'hidden' }}
+												>
+													<p className="text-[15px] text-ink-2 leading-[1.65] pb-[22px]">
+														{item.a}
+													</p>
+												</motion.div>
+											)}
+										</AnimatePresence>
+									</Accordion.Content>
+								</Accordion.Item>
+							)
+						})}
+					</Accordion.Root>
 				</Reveal>
 			</div>
 		</section>

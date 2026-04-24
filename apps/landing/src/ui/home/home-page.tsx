@@ -1,4 +1,3 @@
-import s from './home.module.css'
 import Nav from './nav'
 import Hero from './hero'
 import HeroShader from './hero-shader'
@@ -20,8 +19,15 @@ import FooterHome from './footer-home'
 export default function HomePage() {
 	return (
 		<div data-home-page="">
-			<div className={s.pageShell}>
-				<div className={s.topShell} data-nav-theme="light">
+			<div className="relative">
+				<div
+					className="relative overflow-hidden"
+					style={{
+						background:
+							'linear-gradient(180deg, var(--bg) 0%, #f7f4eb 62%, var(--bg) 100%)',
+					}}
+					data-nav-theme="light"
+				>
 					<HeroShader isHovered={false} />
 					<Nav />
 					<Hero />

@@ -1,4 +1,3 @@
-import s from './home.module.css'
 import Reveal from './reveal'
 
 const POINTS = [
@@ -9,56 +8,62 @@ const POINTS = [
 
 export default function TalkTeam() {
 	return (
-		<section className={s.contact} id="contact">
-			<div className={s.contactIn}>
-				<Reveal className={s.contactHead}>
+		<section className="py-[140px] px-8 border-b border-line" id="contact">
+			<div className="inner">
+				<Reveal className="grid grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] gap-16 items-end mb-16">
 					<div>
-						<span
-							className={s.over}
-							style={{ display: 'inline-block', marginBottom: 16 }}
-						>
-							§ rollout
-						</span>
-						<h2 className={s.h2}>
+						<span className="over inline-block mb-4">§ rollout</span>
+						<h2 className="heading-2">
 							Scope the rollout against
 							<br />
 							<em>your actual stack.</em>
 						</h2>
 					</div>
-					<p className={s.lede}>
+					<p className="lede">
 						We&apos;ll map Altr against your actual coordination stack and show
 						what changes, what stays where it is, and what a safe rollout
 						should look like for your team.
 					</p>
 				</Reveal>
 				<Reveal>
-					<div className={s.contactCard}>
-						<div className={s.contactCardMeta}>Design partner evaluation</div>
-						<div className={s.contactCardGrid}>
+					<div
+						className="border border-line rounded-[28px] p-7"
+						style={{
+							background: 'radial-gradient(80% 80% at 0% 0%, color-mix(in oklab, var(--acc) 8%, transparent) 0%, transparent 58%), linear-gradient(180deg, rgba(255,255,255,0.84) 0%, rgba(248,245,238,0.92) 100%)',
+							boxShadow: 'var(--sh-md)',
+						}}
+					>
+						<div className="font-mono text-[10px] uppercase tracking-widest text-ink-4 mb-6">
+							Design partner evaluation
+						</div>
+						<div className="grid gap-9 items-start" style={{ gridTemplateColumns: '1.1fr 0.9fr' }}>
 							<div>
-								<h3 className={s.contactTitle}>
+								<h3 className="font-serif font-normal text-[42px] tracking-tight leading-[0.98] mb-4 max-w-[12ch]">
 									For teams replacing real coordination overhead.
 								</h3>
-								<p className={s.contactText}>
+								<p className="text-[15px] text-ink-2 leading-[1.65] max-w-[42ch]">
 									Bring product, engineering, design, or security to the
-									table. We’ll show the workflow in context and outline where
+									table. We'll show the workflow in context and outline where
 									Altr fits into your current systems.
 								</p>
 							</div>
 							<div>
-								<ul className={s.contactList}>
+								<ul className="list-none p-0 m-0 mb-7 flex flex-col gap-3.5">
 									{POINTS.map((point) => (
-										<li key={point}>{point}</li>
+										<li
+											key={point}
+											className="relative pl-[18px] text-[14px] text-ink-1 leading-[1.6] before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-[6px] before:h-[6px] before:rounded-full before:bg-acc"
+											style={{ ['--tw-shadow-color' as string]: 'color-mix(in oklab, var(--acc) 12%, transparent)' }}
+										>
+											{point}
+										</li>
 									))}
 								</ul>
-								<div className={s.contactActions}>
-									<a href="#close" className={`${s.btn} ${s.btnAcc}`}>
+								<div className="flex gap-3 flex-wrap">
+									<a href="#close" className="btn btn-acc">
 										Request access →
 									</a>
-									<a
-										href="mailto:hello@altr.run"
-										className={`${s.btn} ${s.btnGhost}`}
-									>
+									<a href="mailto:hello@altr.run" className="btn btn-ghost">
 										Email the team
 									</a>
 								</div>
