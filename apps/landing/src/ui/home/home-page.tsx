@@ -4,6 +4,7 @@ import HeroShader from './hero-shader'
 import Logos from './logos'
 import Flow from './flow'
 import ContextLost from './context-lost'
+import PaxLive from './pax-live'
 
 const Triptych = dynamic(() => import('./triptych'))
 const Manifesto = dynamic(() => import('./manifesto'))
@@ -35,6 +36,7 @@ export default function HomePage() {
 					<Logos />
 					<ContextLost />
 					<Flow />
+					<PaxLive />
 					<Triptych />
 					<Manifesto />
 					<How />

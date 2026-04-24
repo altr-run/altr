@@ -31,7 +31,7 @@ export default function Hero() {
 			style={{ minHeight: '156svh' }}
 		>
 			{/* hero text wrap */}
-			<div className="max-w-[1020px] w-full mx-auto text-center flex flex-col items-center gap-6 relative z-[1] flex-1 pt-[260px] pb-12">
+			<div className="max-w-[1020px] w-full mx-auto text-center flex flex-col items-center gap-7 relative z-[1] flex-1 pt-[280px] pb-12">
 				<p
 					className="font-mono text-[11px] tracking-widest uppercase text-ink-3 border border-line bg-(--panel) shadow-sm rounded-full px-3 py-1.5"
 				>
@@ -283,18 +283,22 @@ export default function Hero() {
 								}}
 							>
 								<div className="p-3 border-b border-line font-mono text-[11px] text-ink-3 flex justify-between items-center">
-									<span>#launch-magic-link</span>
+									<div className="flex items-center gap-1.5">
+										<span className="font-mono text-[12px] text-acc font-bold leading-none">■</span>
+										<span>Altr</span>
+										<span className="text-ink-4">· spec agent</span>
+									</div>
 									<span className="inline-flex gap-1.5 items-center text-acc">
 										<span
 											className="w-1.5 h-1.5 rounded-full bg-acc shadow-sm animate-[pulse-dot_1.6s_ease-in-out_infinite]"
 										/>
-										live
+										drafting spec
 									</span>
 								</div>
 
 								<div className="p-3 grid gap-2.5">
 									{[
-										{ label: 'active', value: 'Altr drafting AC' },
+										{ label: 'stage', value: 'plan · writing AC' },
 										{ label: 'next', value: 'build opens worktree' },
 									].map(({ label, value }) => (
 										<div
