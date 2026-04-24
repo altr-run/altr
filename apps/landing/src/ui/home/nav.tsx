@@ -63,11 +63,11 @@ export default function Nav() {
 					</a>
 				</div>
 				<div className={s.navLinks}>
-					<a href="#product">Product</a>
-					<a href="#playground">Try it</a>
-					<a href="#contact">Talk to team</a>
+					<a href="#workflow">Workflow</a>
+					<a href="#agents">Agents</a>
+					<a href="#stack">Stack</a>
+					<a href="#security">Security</a>
 					<a href="#faq">FAQ</a>
-					<a href="#manifesto">Manifesto</a>
 				</div>
 				<div className={s.navRight}>
 					<a href="#close" className={s.navSignin}>

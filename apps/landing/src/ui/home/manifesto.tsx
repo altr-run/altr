@@ -1,9 +1,18 @@
 import s from './home.module.css'
 import Reveal from './reveal'
 
+const SOURCES = [
+	'Slack threads',
+	'GitHub PRs',
+	'Linear issues',
+	'Docs and specs',
+	'Customer calls',
+	'CI and monitoring',
+] as const
+
 export default function Manifesto() {
 	return (
-		<section className={s.manifesto} id="manifesto">
+		<section className={s.manifesto} id="stack">
 			<div className={s.manifestoIn}>
 				<Reveal className={s.manifestoHead}>
 					<span
@@ -14,12 +23,12 @@ export default function Manifesto() {
 							justifyContent: 'center',
 						}}
 					>
-						§ the shift
+						§ connected stack
 					</span>
 					<h2 className={s.manifestoH2}>
-						Context dies <em>between the tools.</em>
+						Pull context from the tools
 						<br />
-						That&apos;s where the work gets lost.
+						you already <em>run today.</em>
 					</h2>
 				</Reveal>
 				<Reveal>
@@ -27,33 +36,25 @@ export default function Manifesto() {
 						<div className={s.manifestoMark}>&ldquo;</div>
 						<div>
 							<p>
-								<span className={s.manifestoDrop}>T</span>
-								he product signal starts in one place, the
-								decision happens in another, and the PR lands
-								somewhere else. A request becomes a thread
-								becomes a spec becomes a branch becomes a review
-								becomes a status update. The team spends more
-								time reconnecting the loop than moving it
-								forward.
+								<span className={s.manifestoDrop}>M</span>
+								ost teams already have the signal they need. It lives in Slack,
+								GitHub, Linear, docs, calls, CI, and incident tools. Altr is not
+								trying to replace every system around the work. It is trying to
+								keep the <b>same story visible across them.</b>
 							</p>
 							<p>
-								Altr keeps the conversation, the artifact, and
-								the decision in the same room. The thread turns
-								into a spec, the spec stays attached to the diff,
-								and the review keeps the full trail intact.{' '}
-								<b>The work stays legible as it ships.</b>
+								A rough request can start in Slack, pick up an owner in Linear,
+								pull code context from GitHub, attach evidence from monitoring,
+								and still land in review with the original rationale intact.
 							</p>
 							<p>
-								The result is not another AI surface. It is a
-								product workspace where humans and agents can
-								operate with the same context, the same memory,
-								and the same standard of review from first signal
-								to merged change.
+								That means humans and agents can answer practical questions from
+								the same trail: what changed, why it changed, what is blocked,
+								what is risky, and what still needs review before merge.
 							</p>
 							<p className={s.manifestoFade}>
-								That is the shift: fewer handoffs, fewer shadow
-								docs, and a much tighter path from decision to
-								what actually ships.
+								Use the stack you already trust. Stop rewriting the brief at
+								every handoff.
 							</p>
 						</div>
 						<div
@@ -62,20 +63,14 @@ export default function Manifesto() {
 							&rdquo;
 						</div>
 					</div>
-					<div className={s.manifestoSign}>
-						<div className={s.manifestoSigBlock}>
-							<span className={s.manifestoSig}>Mukul</span>
-							<div className={s.manifestoSigMeta}>
-								<span>creating digital experiences for humans</span>
-								<a
-									href="https://mukulchugh.com"
-									target="_blank"
-									rel="noopener noreferrer"
-									className={s.manifestoSigLink}
-								>
-									mukulchugh.com →
-								</a>
-							</div>
+					<div className={s.manifestoRail}>
+						<div className={s.manifestoRailLabel}>Typical sources</div>
+						<div className={s.manifestoPills}>
+							{SOURCES.map((source) => (
+								<span key={source} className={s.manifestoPill}>
+									{source}
+								</span>
+							))}
 						</div>
 					</div>
 				</Reveal>

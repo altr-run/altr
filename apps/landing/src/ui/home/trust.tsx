@@ -4,40 +4,46 @@ import Reveal from './reveal'
 const PILLARS = [
 	{
 		mark: '■',
-		title: 'Local-first',
-		body: 'SQLite on your machine is the source of truth. Altr works fully offline. No network calls at launch, no sync required.',
+		title: 'Keep the trail on your machine first',
+		body: 'SQLite on-device is the starting point. Teams can begin locally, keep sensitive context close, and decide later what should connect outward.',
 	},
 	{
 		mark: '▲',
-		title: 'Bring your own keys',
-		body: 'Your Anthropic and OpenAI keys live in the OS keychain — never in a database, never on a server, never in logs.',
+		title: 'Choose models and providers deliberately',
+		body: 'Bring your own model providers, keep keys in the OS keychain, and decide which roles can call which models under which rules.',
 	},
 	{
 		mark: '◆',
-		title: 'No vendor lock-in',
-		body: 'Your specs, tickets, and artifacts are plain files in a local SQLite DB. Export or migrate any time. Altr never holds your work hostage.',
+		title: 'Keep decisions attributable',
+		body: 'Specs, diffs, agent actions, and approvals stay reviewable. Important work still passes through human approval instead of disappearing behind automation.',
+	},
+	{
+		mark: '●',
+		title: 'Grow into stricter environments',
+		body: 'Start with Mac-native pilots, then move into managed environments, VPCs, or on-prem setups as security and procurement requirements increase.',
 	},
 ] as const
 
 export default function Trust() {
 	return (
-		<section className={s.trust} id="trust">
+		<section className={s.trust} id="security">
 			<div className={s.trustIn}>
 				<Reveal className={s.trustHead}>
 					<span
 						className={s.over}
 						style={{ display: 'inline-block', marginBottom: 20 }}
 					>
-						§ security &amp; privacy
+						§ security &amp; control
 					</span>
 					<h2 className={s.h2}>
-						Built for trust.
+						Keep your workflow,
 						<br />
-						<em>Not built on it.</em>
+						models, and trail <em>under your control.</em>
 					</h2>
 					<p className={s.trustSub}>
-						Most AI tools ask you to trust their cloud. Altr is
-						designed so you never have to.
+						Control is part of the product surface, not a compliance add-on.
+						Teams decide what agents can touch, where data can go, and how the
+						trail stays reviewable from first request to shipped change.
 					</p>
 				</Reveal>
 				<div className={s.trustGrid}>
@@ -51,13 +57,13 @@ export default function Trust() {
 				</div>
 				<Reveal>
 					<div className={s.trustMeta}>
-						<span>mac-native · Tauri 2 + Rust</span>
+						<span>mac-native · tauri 2 + rust</span>
 						<span className={s.trustMetaSep} />
 						<span>keys in OS keychain</span>
 						<span className={s.trustMetaSep} />
-						<span>SQLite on disk</span>
+						<span>audit trail preserved</span>
 						<span className={s.trustMetaSep} />
-						<span>works offline</span>
+						<span>deployment path: local → vpc → on-prem</span>
 					</div>
 				</Reveal>
 			</div>

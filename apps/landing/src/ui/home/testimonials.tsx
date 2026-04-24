@@ -5,9 +5,9 @@ const QUOTES = [
 	{
 		text: (
 			<>
-				&ldquo;<em>@spec asks better questions than I do.</em> The thread
-				already had the context, so the spec came out reviewable in
-				minutes — not after three meetings.&rdquo;
+				&ldquo;<em>We stopped rewriting the brief at every handoff.</em> The
+				request, the acceptance criteria, and the PR now read like one
+				continuous story, which changed the quality of review immediately.&rdquo;
 			</>
 		),
 		initials: 'EJ',
@@ -20,8 +20,8 @@ const QUOTES = [
 		text: (
 			<>
 				&ldquo;We stopped losing the reasoning between Slack, Linear, and
-				GitHub. <em>The spec is the standup now.</em> The PR arrives with
-				the full trail attached.&rdquo;
+				GitHub. <em>The PR finally arrives with the trail attached</em>,
+				which means review starts from intent instead of archaeology.&rdquo;
 			</>
 		),
 		initials: 'RP',
@@ -33,9 +33,9 @@ const QUOTES = [
 	{
 		text: (
 			<>
-				&ldquo;I&apos;ve been burned by AI tools before. Altr is the first
-				that feels like a real operating surface — not a sidecar.{' '}
-				<em>The agents show up with context.</em>&rdquo;
+				&ldquo;Most AI tooling gave us output. Altr gives us a workflow.{' '}
+				<em>The agents show up with context, role, and a visible handoff</em>
+				, which makes the whole thing governable.&rdquo;
 			</>
 		),
 		initials: 'MC',
@@ -59,17 +59,18 @@ export default function Testimonials() {
 								marginBottom: 16,
 							}}
 						>
-							§ from the teams
+							§ from pilot teams
 						</span>
 						<h2 className={s.h2}>
-							What shifts when the loop
+							What shifts when the trail
 							<br />
-							<em>stays in one room.</em>
+							<em>stays intact.</em>
 						</h2>
 					</div>
 					<p className={s.lede}>
-						Less coordination drag. Stronger specs. Better review context.
-						The pattern is consistent across every beta team.
+						The recurring pattern is not “AI magic.” It is fewer reconstruction
+						meetings, stronger specs, and review that starts with the full
+						context already in place.
 					</p>
 				</Reveal>
 				<div className={s.testimonialsGrid}>

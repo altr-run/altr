@@ -3,50 +3,51 @@ import Reveal from './reveal'
 
 const STEPS = [
 	{
-		title: 'Human review stays central',
+		title: '@intake turns raw signals into working input',
 		desc: (
 			<>
-				Agents draft, propose, and queue — but humans own the call.
-				Comment, request changes, approve, merge. The decision stays yours.
+				Pulls in threads, calls, notes, and alerts so the room starts with
+				the original signal instead of a second-hand summary.
 			</>
 		),
 	},
 	{
-		title: 'Every action has a trail',
-		desc: 'Specs, diffs, and agent decisions stay attributable and reviewable. The rationale survives the sprint, not just the outcome.',
+		title: '@spec drafts acceptance and open questions',
+		desc: 'Transforms messy requests into reviewable specs, preserves unresolved decisions, and prepares the work for engineering instead of just summarizing it.',
 	},
 	{
-		title: 'Bring your own keys',
+		title: '@eng plans and executes the change',
 		desc: (
 			<>
-				Run on your model providers with your API keys, or use managed
-				credits when that is faster. The control plane stays yours.
+				Opens the worktree, proposes implementation steps, and drafts code
+				changes with the original criteria still attached.
 			</>
 		),
 	},
 	{
-		title: 'Deploy where you need it',
-		desc: 'Start local-first on Mac, then expand to dedicated environments, VPCs, or on-prem setups as security requirements grow.',
+		title: '@review checks the work against intent',
+		desc: 'Looks for regressions, missing acceptance criteria, and risky assumptions so review happens against the original goal, not just the diff.',
 	},
 ]
 
 export default function How() {
 	return (
-		<section className={s.how}>
+		<section className={s.how} id="agents">
 			<div className={s.howIn}>
 				<div className={s.howLayout}>
 					<Reveal className={s.howLeft}>
 						<span className={s.over} style={{ display: 'inline-block' }}>
-							§ trust and control
+							§ role agents
 						</span>
 						<h2 className={s.h2} style={{ textWrap: 'balance', marginTop: 20 }}>
-							Enterprise discipline.
+							Named agents for each
 							<br />
-							<em>Built into the loop.</em>
+							<em>stage of the loop.</em>
 						</h2>
 						<p className={s.lede}>
-							Altr gives teams control over every decision an agent makes —
-							not just oversight of the output.
+							Instead of one generic assistant, each role has a named
+							responsibility, a distinct queue, and a visible handoff to the
+							next stage. You always know who owns what.
 						</p>
 					</Reveal>
 					<div className={s.howSteps}>

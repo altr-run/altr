@@ -6,24 +6,24 @@ import Reveal from './reveal'
 
 const ITEMS = [
 	{
-		q: <>Where do my <em>files live?</em></>,
-		a: 'On your Mac, encrypted at rest. Agents call models over your API keys; nothing becomes training data. Full details in the security whitepaper.',
+		q: 'What does Altr connect to?',
+		a: 'The core direction is Slack, GitHub, Linear, docs, calls, CI, and monitoring signals. The point is to pull those sources into one execution trail without forcing your team to abandon the systems they already use.',
 	},
 	{
-		q: <>Which models power the <em>teammates?</em></>,
-		a: '@spec runs on Claude Sonnet. @eng wraps Claude Code. BYO keys, or use ours with $20 of credits per seat per month on Studio.',
+		q: 'How do the role agents differ?',
+		a: 'Altr uses named responsibilities instead of one generic assistant. @intake captures the signal, @spec structures the work, @eng executes, and @review checks risk and drift before merge.',
 	},
 	{
-		q: <>How is this different from <em>Devin?</em></>,
-		a: "Devin is an autonomous cloud engineer. Altr is a workspace where humans and several agents collaborate on your machine, with humans in the driver's seat. Different problem, different shape.",
+		q: 'How is this different from Devin or Cursor?',
+		a: 'Those tools are centered on coding agents. Altr is centered on the full execution loop: intake, planning, implementation, review, and follow-through, with the artifact trail preserved end to end.',
 	},
 	{
-		q: <>Do you have <em>SOC 2?</em></>,
-		a: 'Type II audit in progress. Type I and DPA available today for Studio and Scale customers.',
+		q: 'Who controls models, keys, and agent behavior?',
+		a: 'Teams choose providers, keep keys in the OS keychain, and set rollout rules for who can create or run agents. Human review remains the default approval point for important work.',
 	},
 	{
-		q: <>Can I <em>self-host?</em></>,
-		a: 'Scale customers can run Altr on a dedicated instance, on-prem, or in a VPC of their choice. Talk to sales for specifics.',
+		q: 'Can we run Altr in a more controlled environment?',
+		a: 'Yes. The path is Mac-native first, then managed environments, VPCs, or on-prem for teams with stricter security, compliance, or procurement requirements.',
 	},
 ]
 
@@ -39,9 +39,9 @@ export default function FAQ() {
 							§ faq
 						</span>
 						<h2 className={s.h2}>
-							Questions serious teams ask
+							Questions teams ask
 							<br />
-							<em>before they switch.</em>
+							<em>before they roll it out.</em>
 						</h2>
 					</div>
 					<p className={s.lede}>
@@ -74,8 +74,8 @@ export default function FAQ() {
 									<span className={s.faqIcon}>+</span>
 								</button>
 								<div className={s.faqA}>
-							<div className={s.faqAInner}>{item.a}</div>
-						</div>
+									<div className={s.faqAInner}>{item.a}</div>
+								</div>
 							</div>
 						))}
 					</div>

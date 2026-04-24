@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import s from './home.module.css'
 import Reveal from './reveal'
 
-const ROTATING_WORDS = ['shipping', 'velocity', 'alignment', 'outcomes'] as const
+const ROTATING_WORDS = ['clarity', 'ownership', 'control', 'context'] as const
 
 export default function Hero() {
 	const [wordIndex, setWordIndex] = useState(0)
@@ -29,13 +29,14 @@ export default function Hero() {
 	return (
 		<section className={s.hero}>
 			<div className={s.heroWrap}>
+				<p className={s.heroTagline}>
+					for teams &amp; agents · threads → specs → prs · local-first
+				</p>
 				<h1 className={`${s.heroH} ${s.display}`}>
-					<span className={s.line}>Fewer handoffs.</span>
+					<span className={s.line}>Stop dropping the thread.</span>
+					<span className={s.line}>Close the execution loop.</span>
 					<span className={s.line}>
-						More <span className={s.underlineHand}>context</span>.
-					</span>
-					<span className={s.line}>
-						Better{' '}
+						Ship with{' '}
 						<span className={s.accWordWrap}>
 							<AnimatePresence mode="wait" initial={false}>
 								<motion.span
@@ -43,15 +44,10 @@ export default function Hero() {
 									className={`${s.acc} ${s.accShimmer}`}
 									style={{
 										display: 'inline-block',
-										// spark starts fully off-screen right
-										backgroundPosition: '180% 0',
 										clipPath: 'inset(0 100% 0 0)',
 									}}
 									animate={{
-										// left-to-right clip reveal
 										clipPath: 'inset(0 0% 0 0)',
-										// spark sweeps once through the text, ends off-screen left
-										backgroundPosition: '-80% 0',
 									}}
 									exit={{
 										opacity: 0,
@@ -67,11 +63,6 @@ export default function Hero() {
 											duration: 1.1,
 											ease: [0.16, 1, 0.3, 1],
 										},
-										backgroundPosition: {
-											duration: 2.2,
-											delay: 0.7,
-											ease: 'linear',
-										},
 									}}
 								>
 									{word}.
@@ -80,16 +71,13 @@ export default function Hero() {
 						</span>
 					</span>
 				</h1>
-				<p className={s.heroTagline}>
-					AI workspace · spec → ticket → PR · mac-native
-				</p>
 				<p className={s.heroSub}>
-					Altr gives comms, requests, research, product signals, specs, and PRs
-					a single home, so <em>your team</em> and{' '}
+					Altr captures product signals, drafts specs, opens the branch, and
+					carries review context all the way to the merged diff.{' '}
 					<span className={`${s.mono} ${s.heroMonoAcc}`}>@spec</span>,{' '}
 					<span className={`${s.mono} ${s.heroMonoInk}`}>@eng</span>, and{' '}
-					<span className={`${s.mono} ${s.heroMonoInk}`}>@review</span> can move
-					as one, with context intact from first signal to shipped change.
+					<span className={`${s.mono} ${s.heroMonoInk}`}>@review</span> work in
+					the same room, on the same trail, from first request to shipped change.
 				</p>
 				<div className={s.heroCtas}>
 					<a href="#close" className={`${s.btn} ${s.btnPrimary} ${s.btnLg}`}>
@@ -100,11 +88,15 @@ export default function Hero() {
 					</a>
 				</div>
 				<div className={s.heroMeta}>
-					<span>mac-native</span>
+					<span>intake</span>
 					<span className={s.heroMetaSep} />
-					<span>local-first</span>
+					<span>plan</span>
 					<span className={s.heroMetaSep} />
-					<span>bring your own keys</span>
+					<span>build</span>
+					<span className={s.heroMetaSep} />
+					<span>review</span>
+					<span className={s.heroMetaSep} />
+					<span>ship</span>
 				</div>
 			</div>
 

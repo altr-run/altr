@@ -6,14 +6,13 @@ export default function CTAClose() {
 	return (
 		<section className={s.close} id="close">
 			<h2 className={s.closeH2}>
-				Bring your next
+				Stop rebuilding
 				<br />
-				product loop into <span className={s.acc}>one room.</span>
+				the story at every <span className={s.acc}>handoff.</span>
 			</h2>
 			<p className={s.lede} style={{ margin: '0 auto 32px' }}>
-				If your team is tired of rebuilding context between every handoff,
-				we&apos;ll walk you through Altr with your own workflow, your own
-				stack, and your own standards.
+				We&apos;ll walk through Altr using your actual workflow, your stack,
+				and your review standards — and show you where the loop closes.
 			</p>
 			<form
 				className={s.closeForm}

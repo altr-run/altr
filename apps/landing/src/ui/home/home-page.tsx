@@ -6,6 +6,7 @@ import Logos from './logos'
 import Triptych from './triptych'
 import Flow from './flow'
 import Playground from './playground'
+import UseCases from './use-cases'
 import How from './how'
 import Trust from './trust'
 import Metrics from './metrics'
@@ -20,20 +21,21 @@ export default function HomePage() {
 	return (
 		<div data-home-page="">
 			<div className={s.pageShell}>
-				<div className={s.topShell} data-nav-theme="dark">
+				<div className={s.topShell} data-nav-theme="light">
 					<HeroShader isHovered={false} />
 					<Nav />
 					<Hero />
 				</div>
 				<div data-nav-theme="light">
 					<Logos />
-					<Triptych />
 					<Flow />
-					<Playground />
+					<Triptych />
+					<Manifesto />
 					<How />
+					<UseCases />
+					<Playground />
 					<Trust />
 					<Metrics />
-					<Manifesto />
 					<Testimonials />
 					<TalkTeam />
 					<FAQ />

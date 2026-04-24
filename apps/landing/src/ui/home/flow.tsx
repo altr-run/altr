@@ -1,81 +1,73 @@
 'use client'
 
-import { motion } from 'motion/react'
 import s from './home.module.css'
 import Reveal from './reveal'
 
 const NODES = [
 	{
-		label: 'Signal',
-		sub: 'request, note, idea',
-		meta: 'human input',
+		label: 'Intake',
+		sub: 'thread, call, note, alert',
+		meta: 'capture',
 		type: 'human',
 	},
 	{
-		label: '@spec',
-		sub: 'reads thread, drafts brief',
-		meta: 'agent',
+		label: 'Plan',
+		sub: '@spec drafts acceptance and open questions',
+		meta: 'structure',
 		type: 'agent-spec',
 	},
 	{
-		label: 'Spec',
-		sub: 'criteria, open questions',
-		meta: 'artifact',
+		label: 'Build',
+		sub: '@eng opens worktree and proposes the change',
+		meta: 'execute',
 		type: 'artifact',
 	},
 	{
-		label: '@eng',
-		sub: 'opens worktree, ships change',
-		meta: 'agent',
+		label: 'Review',
+		sub: '@review checks intent, risk, and regressions',
+		meta: 'verify',
 		type: 'agent-eng',
 	},
 	{
-		label: 'PR #142',
-		sub: 'context trail attached',
+		label: 'Ship',
+		sub: 'PR, release note, and rationale stay linked',
 		meta: 'artifact',
 		type: 'artifact',
-	},
-	{
-		label: 'Merged',
-		sub: 'decision and diff intact',
-		meta: 'outcome',
-		type: 'done',
 	},
 ] as const
 
 export default function Flow() {
 	return (
-		<section className={s.flow}>
+		<section className={s.flow} id="workflow">
 			<div className={s.flowIn}>
 				<Reveal className={s.flowHead}>
-					<span className={s.over}>§ the loop</span>
+					<span className={s.over}>§ workflow</span>
 					<p className={s.flowSub}>
-						From first signal to shipped change —{' '}
-						<em>without leaving the room.</em>
+						One operating loop for product work — from first signal to{' '}
+						<em>shipped change.</em>
 					</p>
 				</Reveal>
 				<Reveal delay={120}>
 					<div className={s.flowShell}>
+						<div className={s.flowTop}>
+							<span>intake → plan → build → review → ship</span>
+							<span>humans, agents, and artifacts stay linked</span>
+						</div>
 						<div className={s.flowRail} aria-hidden="true" />
-						<motion.div
-							className={s.flowRailPulse}
-							animate={{ left: ['2%', '94%'] }}
-							transition={{ duration: 6.8, repeat: Infinity, ease: 'linear' }}
-						/>
 						<div className={s.flowTrack}>
 							{NODES.map((node, i) => (
 								<div key={node.label} className={s.flowStep}>
 									<div
 										className={`${s.flowNode} ${
+											i === 1 ? s.flowNodeActive : ''
+										} ${
 											node.type === 'agent-spec'
 												? s.flowNodeSpec
 												: node.type === 'agent-eng'
 													? s.flowNodeEng
-													: node.type === 'done'
-														? s.flowNodeDone
-														: node.type === 'artifact'
-															? s.flowNodeArtifact
-															: ''
+													: node.type === 'artifact'
+														? s.flowNodeArtifact
+														: ''
 										}`}
 									>
 										<span className={s.flowNodeMeta}>{node.meta}</span>

@@ -5,10 +5,10 @@ import s from './home.module.css'
 import Reveal from './reveal'
 
 const STATS = [
-	{ value: 140, decimals: 0, label: 'teams in beta' },
-	{ value: 3.4, decimals: 1, suffix: '×', label: 'faster spec-to-PR' },
-	{ value: 68, decimals: 0, suffix: '%', label: 'merged on first review' },
-	{ value: 2417, decimals: 0, label: 'PRs shipped this week' },
+	{ value: 2.7, decimals: 1, suffix: '×', label: 'faster from request to reviewable spec' },
+	{ value: 41, decimals: 0, suffix: '%', label: 'less time spent rebuilding context' },
+	{ value: 63, decimals: 0, suffix: '%', label: 'of pilot PRs arrived with AC attached' },
+	{ value: 18, decimals: 0, suffix: 'm', label: 'median handoff to first structured draft' },
 ]
 
 function CountUp({
@@ -67,13 +67,17 @@ export default function Metrics() {
 						className={s.over}
 						style={{ display: 'inline-block', marginBottom: 16 }}
 					>
-						§ early signal
+						§ pilot signal
 					</span>
 					<h2 className={s.h2}>
-						Numbers from teams already
+						What early teams see when
 						<br />
-						<em>running the loop.</em>
+						<em>the whole trail stays attached.</em>
 					</h2>
+					<p className={s.metricsNote}>
+						Directional signal from early design-partner workflows, shown here
+						as operating indicators rather than benchmark claims.
+					</p>
 				</Reveal>
 				<div className={s.metricsGrid}>
 					{STATS.map((stat, i) => (

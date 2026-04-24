@@ -2,9 +2,9 @@ import s from './home.module.css'
 import Reveal from './reveal'
 
 const POINTS = [
-	'Pricing shaped around team size, deployment model, and support requirements',
-	'Founder-led evaluation for teams replacing a real coordination stack',
-	'Security, procurement, and rollout handled with your engineering and IT leads',
+	'Workflow mapping for intake, planning, build, review, and release',
+	'Integration scoping for Slack, GitHub, Linear, docs, and monitoring',
+	'Security, procurement, and rollout handled with engineering and IT leads',
 ]
 
 export default function TalkTeam() {
@@ -17,33 +17,32 @@ export default function TalkTeam() {
 							className={s.over}
 							style={{ display: 'inline-block', marginBottom: 16 }}
 						>
-							§ commercials
+							§ rollout
 						</span>
 						<h2 className={s.h2}>
-							Talk to the team.
+							Scope the rollout against
 							<br />
-							<em>We’ll scope it properly.</em>
+							<em>your actual stack.</em>
 						</h2>
 					</div>
 					<p className={s.lede}>
-						Altr is sold with the shape of the team in mind, not a
-						generic pricing calculator. We’ll walk through workflow,
-						deployment, model policy, and what success should look like in
-						your environment.
+						We&apos;ll map Altr against your actual coordination stack and show
+						what changes, what stays where it is, and what a safe rollout
+						should look like for your team.
 					</p>
 				</Reveal>
 				<Reveal>
 					<div className={s.contactCard}>
-						<div className={s.contactCardMeta}>Private beta consultations</div>
+						<div className={s.contactCardMeta}>Design partner evaluation</div>
 						<div className={s.contactCardGrid}>
 							<div>
 								<h3 className={s.contactTitle}>
-									For teams evaluating Altr seriously.
+									For teams replacing real coordination overhead.
 								</h3>
 								<p className={s.contactText}>
-									Bring product, design, engineering, or security to the
-									table. We’ll show the system in context and map a rollout
-									that matches how your team already works.
+									Bring product, engineering, design, or security to the
+									table. We’ll show the workflow in context and outline where
+									Altr fits into your current systems.
 								</p>
 							</div>
 							<div>

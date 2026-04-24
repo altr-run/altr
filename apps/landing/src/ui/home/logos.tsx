@@ -19,7 +19,7 @@ export default function Logos() {
 			<div className={s.tickerIn} style={{ padding: 0, marginBottom: 28 }}>
 				<div className={s.tickerLabel}>
 					<span className={s.liveDot} />
-					Teams shipping in Altr
+					Pilot teams
 				</div>
 				<div
 					style={{
@@ -29,11 +29,11 @@ export default function Logos() {
 						letterSpacing: '-0.01em',
 					}}
 				>
-					Product, design, engineering, and agent work in one loop.
+					Product, engineering, and design teams evaluating one connected execution loop.
 				</div>
 				<div className={s.tickerStat}>
-					<b>140 teams</b>
-					active in private beta
+					<b>active pilots</b>
+					founder-led rollout
 				</div>
 			</div>
 			<div className={s.logosScroll}>

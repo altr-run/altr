@@ -4,72 +4,53 @@ import { motion } from 'motion/react'
 import s from './home.module.css'
 import Reveal from './reveal'
 
+const PREVIEW_EASE = [0.2, 0, 0.2, 1] as const
+
+function SceneChrome({
+	label,
+	status,
+}: {
+	label: string
+	status: string
+}) {
+	return (
+		<div className={s.sceneBar} aria-hidden="true">
+			<div className={s.sceneDots}>
+				<span />
+				<span />
+				<span />
+			</div>
+			<span className={s.sceneLabel}>{label}</span>
+			<span className={s.sceneState}>{status}</span>
+		</div>
+	)
+}
+
 function IntakeVisualization() {
 	return (
 		<div className={`${s.tripIll} ${s.intakeScene}`} aria-hidden="true">
+			<SceneChrome label="Room Intake" status="context retained" />
 			<div className={s.sceneGrid} />
 			<div className={s.sceneGlow} />
 			<div className={s.intakeStack}>
-				<motion.div
-					className={`${s.intakeCard} ${s.intakeCardSource}`}
-					animate={{ y: [0, -2, 0], rotate: [-0.8, -0.4, -0.8] }}
-					transition={{ duration: 6.2, repeat: Infinity, ease: 'easeInOut' }}
-				>
+				<div className={`${s.intakeCard} ${s.intakeCardSource}`}>
 					<span className={s.intakeMeta}>incoming signal</span>
 					<strong>customer call</strong>
 					<p>handoff confusion between spec, eng, and review ownership</p>
-				</motion.div>
+				</div>
 				<div className={s.intakeColumn}>
-					<motion.span
-						className={s.intakeChip}
-						animate={{ x: [0, 3, 0] }}
-						transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut' }}
-					>
-						transcript
-					</motion.span>
-					<motion.span
-						className={s.intakeChip}
-						animate={{ x: [0, 3, 0] }}
-						transition={{
-							duration: 4.6,
-							repeat: Infinity,
-							ease: 'easeInOut',
-							delay: 0.45,
-						}}
-					>
-						note
-					</motion.span>
-					<motion.span
-						className={s.intakeChip}
-						animate={{ x: [0, 3, 0] }}
-						transition={{
-							duration: 4.6,
-							repeat: Infinity,
-							ease: 'easeInOut',
-							delay: 0.9,
-						}}
-					>
-						research
-					</motion.span>
+					<span className={s.intakeChip}>transcript</span>
+					<span className={s.intakeChip}>note</span>
+					<span className={s.intakeChip}>research</span>
 				</div>
 				<div className={s.intakeSpine}>
 					<motion.div
 						className={s.intakePulse}
-						animate={{ top: ['8%', '84%'] }}
-						transition={{ duration: 4.8, repeat: Infinity, ease: 'linear' }}
+						animate={{ top: ['10%', '82%'] }}
+						transition={{ duration: 6.2, repeat: Infinity, ease: PREVIEW_EASE }}
 					/>
 				</div>
-				<motion.div
-					className={`${s.intakeCard} ${s.intakeCardThread}`}
-					animate={{
-						boxShadow: [
-							'0 10px 24px rgba(17, 24, 18, 0.05)',
-							'0 14px 28px rgba(141, 182, 84, 0.08)',
-							'0 10px 24px rgba(17, 24, 18, 0.05)',
-						],
-					}}
-					transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}
-				>
+				<div className={`${s.intakeCard} ${s.intakeCardThread}`}>
 					<div className={s.intakeThreadHead}>
 						<span>room thread</span>
 						<b>live</b>
@@ -88,7 +69,7 @@ function IntakeVisualization() {
 							<span>travels with the work</span>
 						</div>
 					</div>
-				</motion.div>
+				</div>
 			</div>
 		</div>
 	)
@@ -97,15 +78,12 @@ function IntakeVisualization() {
 function RoleVisualization() {
 	return (
 		<div className={`${s.tripIll} ${s.roleScene}`} aria-hidden="true">
+			<SceneChrome label="Agent Lanes" status="named responsibility" />
 			<div className={s.sceneGrid} />
 			<div className={s.roleShell}>
-				<motion.div
-					className={s.roleSignal}
-					animate={{ x: [0, 8, 0], opacity: [0.86, 1, 0.86] }}
-					transition={{ duration: 5.6, repeat: Infinity, ease: 'easeInOut' }}
-				>
+				<div className={s.roleSignal}>
 					incoming change
-				</motion.div>
+				</div>
 				<div className={s.roleBoard}>
 					<div className={s.roleHeader}>orchestration lanes</div>
 					<div className={s.roleLanes}>
@@ -114,8 +92,8 @@ function RoleVisualization() {
 							<div className={s.roleTrack}>
 								<motion.div
 									className={`${s.roleBlock} ${s.roleBlockSpec}`}
-									animate={{ x: [0, 10, 0] }}
-									transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
+									animate={{ x: [0, 4, 0] }}
+									transition={{ duration: 7.2, repeat: Infinity, ease: PREVIEW_EASE }}
 								>
 									draft brief
 								</motion.div>
@@ -126,12 +104,12 @@ function RoleVisualization() {
 							<div className={s.roleTrack}>
 								<motion.div
 									className={s.roleBlock}
-									animate={{ x: [0, 12, 0] }}
+									animate={{ x: [0, 4, 0] }}
 									transition={{
-										duration: 5.8,
+										duration: 7.2,
 										repeat: Infinity,
-										ease: 'easeInOut',
-										delay: 0.35,
+										ease: PREVIEW_EASE,
+										delay: 1.8,
 									}}
 								>
 									implement
@@ -143,12 +121,12 @@ function RoleVisualization() {
 							<div className={s.roleTrack}>
 								<motion.div
 									className={s.roleBlock}
-									animate={{ x: [0, 8, 0] }}
+									animate={{ x: [0, 4, 0] }}
 									transition={{
-										duration: 5.4,
+										duration: 7.2,
 										repeat: Infinity,
-										ease: 'easeInOut',
-										delay: 0.7,
+										ease: PREVIEW_EASE,
+										delay: 3.6,
 									}}
 								>
 									check risk
@@ -158,40 +136,18 @@ function RoleVisualization() {
 					</div>
 				</div>
 				<div className={s.roleStatusStack}>
-					<motion.div
-						className={s.roleStatus}
-						animate={{ y: [0, -2, 0] }}
-						transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
-					>
+					<div className={s.roleStatus}>
 						<b>spec</b>
 						<span>owns acceptance</span>
-					</motion.div>
-					<motion.div
-						className={s.roleStatus}
-						animate={{ y: [0, -2, 0] }}
-						transition={{
-							duration: 4.8,
-							repeat: Infinity,
-							ease: 'easeInOut',
-							delay: 0.5,
-						}}
-					>
+					</div>
+					<div className={s.roleStatus}>
 						<b>eng</b>
 						<span>holds delivery</span>
-					</motion.div>
-					<motion.div
-						className={s.roleStatus}
-						animate={{ y: [0, -2, 0] }}
-						transition={{
-							duration: 4.8,
-							repeat: Infinity,
-							ease: 'easeInOut',
-							delay: 1,
-						}}
-					>
+					</div>
+					<div className={s.roleStatus}>
 						<b>review</b>
 						<span>blocks regressions</span>
-					</motion.div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -201,43 +157,27 @@ function RoleVisualization() {
 function ChainVisualization() {
 	return (
 		<div className={`${s.tripIll} ${s.chainScene}`} aria-hidden="true">
+			<SceneChrome label="Artifact Trail" status="thread → spec → pr" />
 			<div className={s.sceneGrid} />
 			<div className={s.chainShell}>
 				<div className={s.chainLine}>
-					<motion.div
-						className={s.chainNode}
-						animate={{ y: [0, -2, 0] }}
-						transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
-					>
+					<div className={s.chainNode}>
 						<span>thread</span>
 						<strong>incident context</strong>
-					</motion.div>
+					</div>
 					<div className={s.chainConnector}>
 						<motion.div
 							className={s.chainPulse}
-							animate={{ left: ['4%', '86%'] }}
-							transition={{ duration: 4.2, repeat: Infinity, ease: 'linear' }}
+							animate={{ left: ['8%', '82%'] }}
+							transition={{ duration: 6.8, repeat: Infinity, ease: PREVIEW_EASE }}
 						/>
 					</div>
-					<motion.div
-						className={`${s.chainNode} ${s.chainNodeAccent}`}
-						animate={{ y: [0, -2, 0] }}
-						transition={{
-							duration: 5.2,
-							repeat: Infinity,
-							ease: 'easeInOut',
-							delay: 0.45,
-						}}
-					>
+					<div className={`${s.chainNode} ${s.chainNodeAccent}`}>
 						<span>spec</span>
 						<strong>acceptance locked</strong>
-					</motion.div>
+					</div>
 				</div>
-				<motion.div
-					className={s.chainDock}
-					animate={{ y: [0, -2, 0] }}
-					transition={{ duration: 5.4, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }}
-				>
+				<div className={s.chainDock}>
 					<div className={s.chainDockBar}>
 						<span />
 						<span />
@@ -255,7 +195,7 @@ function ChainVisualization() {
 							<span>review</span>
 						</div>
 					</div>
-				</motion.div>
+				</div>
 			</div>
 		</div>
 	)
@@ -263,40 +203,40 @@ function ChainVisualization() {
 
 export default function Triptych() {
 	return (
-		<section className={s.triptych}>
+		<section className={s.triptych} id="context">
 			<div className={s.triptychIn}>
 				<Reveal className={s.triptychHead}>
 					<span className={s.over} style={{ display: 'inline-block', marginBottom: 20 }}>
-						§ platform
+						§ connected context
 					</span>
 					<h2 className={s.h2}>
-						The platform that
+						The context that
 						<br />
-						<em>stays in the room.</em>
+						<em>stays attached.</em>
 					</h2>
 					<p className={s.lede} style={{ marginTop: 24 }}>
-						Every artifact — signal, spec, ticket, PR — lives on the same
-						graph. Humans and agents read and write the same room.
+						Signal, assignment, and artifact stay linked through every stage
+						of the work — captured once, carried all the way through.
 					</p>
 				</Reveal>
 				<div className={s.triptychGrid}>
 					<Reveal delay={0} className={s.tripCell}>
-						<span className={s.tripN}>01 · communication</span>
+						<span className={s.tripN}>01 · capture</span>
 						<h3>
 							Signals become <em>working context.</em>
 						</h3>
 						<p>
-							Requests, customer notes, research, and internal discussion all
-							enter the same stream. Nothing needs to be copied into a second
-							system before the work can start.
+							Requests, notes, customer calls, and internal discussion enter the
+							same room first. Work starts from the original signal, not from a
+							summary pasted somewhere else.
 						</p>
 						<IntakeVisualization />
 					</Reveal>
 
 					<Reveal delay={80} className={s.tripCell}>
-						<span className={s.tripN}>02 · agent roles</span>
+						<span className={s.tripN}>02 · assign</span>
 						<h3>
-							Agents act with <em>named responsibility.</em>
+							Responsibility is <em>named and visible.</em>
 						</h3>
 						<p>
 							Instead of one generic assistant,{' '}
@@ -304,24 +244,24 @@ export default function Triptych() {
 								@spec
 							</span>
 							, <span className={s.mono}>@eng</span> and{' '}
-							<span className={s.mono}>@review</span> keep clear roles, memory,
-							and queues. You know who is drafting, questioning, or blocking a
-							change at any moment.
+							<span className={s.mono}>@review</span> keep separate queues and
+							clear responsibilities. You can see who is structuring, building,
+							or blocking the work at any moment.
 						</p>
 						<RoleVisualization />
 					</Reveal>
 
 					<Reveal delay={160} className={s.tripCell}>
-						<span className={s.tripN}>03 · continuous artifact</span>
+						<span className={s.tripN}>03 · carry</span>
 						<h3>
-							One context. Thread to spec
+							Thread to spec to PR.
 							<br />
-							to PR — <em>all linked.</em>
+							<em>One continuous trail.</em>
 						</h3>
 						<p>
-							The same context follows the work all the way through. No
-							retyping the brief. No drifting acceptance criteria. No lost
-							rationale when the PR lands for review.
+							The same context follows the work all the way through. Acceptance
+							criteria do not drift, review has the original rationale, and the
+							PR lands with the full trail attached.
 						</p>
 						<ChainVisualization />
 					</Reveal>

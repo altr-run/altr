@@ -11,33 +11,36 @@ export default function FooterHome() {
 						<span className={s.srOnly}>Altr</span>
 					</a>
 					<p className={s.footTag}>
-						One workspace for the loop. Humans and AI, shipping as peers.
+						One execution loop for product teams and agents.
 					</p>
 				</div>
 				<div>
 					<h5>Product</h5>
-					<a href="#product">Overview</a>
+					<a href="#workflow">Workflow</a>
+					<a href="#agents">Agents</a>
+					<a href="#stack">Stack</a>
 					<a href="#playground">Try it</a>
-					<a href="#contact">Talk to team</a>
 				</div>
 				<div>
-					<h5>Company</h5>
-					<a href="#">Manifesto</a>
-					<a href="#">Changelog</a>
-					<a href="#">Careers</a>
+					<h5>Use cases</h5>
+					<a href="#use-cases">Feature delivery</a>
+					<a href="#use-cases">Bug triage</a>
+					<a href="#use-cases">PR review</a>
+					<a href="#contact">Rollout</a>
 				</div>
 				<div>
 					<h5>Build</h5>
-					<a href="#">Docs</a>
-					<a href="#">MCP SDK</a>
-					<a href="#">API</a>
-					<a href="#">Status</a>
+					<a href="#playground">Demo</a>
+					<a href="#use-cases">Use cases</a>
+					<a href="#faq">FAQ</a>
+					<a href="#close">Access</a>
 				</div>
 				<div>
 					<h5>Trust</h5>
-					<a href="#">Security</a>
-					<a href="#">Privacy</a>
-					<a href="#">Terms</a>
+					<a href="#security">Security</a>
+					<a href="#security">Control</a>
+					<a href="#contact">Rollout</a>
+					<a href="#close">Contact</a>
 				</div>
 			</div>
 			<div className={s.footBot}>

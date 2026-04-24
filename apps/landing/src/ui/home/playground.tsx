@@ -114,25 +114,25 @@ export default function Playground() {
 				<Reveal className={s.pgHead}>
 					<div>
 						<span className={s.over} style={{ display: 'inline-block', marginBottom: 16 }}>
-							§ 02 · try it · no signup
+							§ demo
 						</span>
 						<h2 className={s.h2}>
-							Type a spec.
+							Drop in a rough request.
 							<br />
-							Watch it <em>become a PR.</em>
+							Watch Altr <em>structure the work.</em>
 						</h2>
 					</div>
 					<p className={s.lede}>
-						Drop a rough idea on the left.{' '}
+						Start with the kind of messy ask teams actually get.{' '}
 						<span className={s.mono} style={{ color: 'var(--acc)' }}>
 							@spec
 						</span>{' '}
-						will structure it;{' '}
+						will turn it into acceptance criteria;{' '}
 						<span className={s.mono} style={{ color: 'var(--ink)' }}>
 							@eng
 						</span>{' '}
-						will draft the implementation. It&apos;s a mock — but the{' '}
-						<em>moves</em> are real.
+						will turn it into an implementation plan and draft PR. It&apos;s a
+						mock, but the workflow is the point.
 					</p>
 				</Reveal>
 				<Reveal>
@@ -180,17 +180,17 @@ export default function Playground() {
 						<div className={s.pgRight}>
 							{!active && (
 								<div className={s.pgEmpty}>
-									<div className={s.pgEmptyMk}>§ Output</div>
-									&ldquo;@spec will structure your spec,
+									<div className={s.pgEmptyMk}>§ waiting for input</div>
+									Pick an example or type a rough request.
 									<br />
-									@eng will draft the PR.&rdquo;
+									<span style={{ fontSize: '14px', fontFamily: 'var(--f-mono)', fontStyle: 'normal', marginTop: '10px', display: 'block', color: 'var(--ink-5)' }}>@spec · @eng · output appears here</span>
 								</div>
 							)}
 							{active && (
 								<div className={`${s.pgOutput} ${s.pgOutputOn}`}>
 									<div className={s.pgPrHead}>
 										<div className={s.pgPrTitle}>
-											<em>PR draft</em> · auto-generated
+											<em>Execution output</em> · PR draft
 										</div>
 										<div className={s.pgPrMeta}>
 											~{active.est} · {active.cost}
@@ -215,7 +215,7 @@ export default function Playground() {
 									>
 										<div className={s.pgOutBlockLbl}>
 											<span className={s.pgOutBlockPt} />
-											@spec · acceptance criteria
+											■ @spec · acceptance criteria
 										</div>
 										<ul>
 											{active.ac.map((item, i) => (
@@ -228,7 +228,7 @@ export default function Playground() {
 									>
 										<div className={s.pgOutBlockLbl}>
 											<span className={s.pgOutBlockPt} />
-											@eng · plan
+											▲ @eng · plan
 										</div>
 										<ul>
 											{active.plan.map((item, i) => (
@@ -241,7 +241,7 @@ export default function Playground() {
 									>
 										<div className={s.pgOutBlockLbl}>
 											<span className={s.pgOutBlockPt} />
-											draft diff · preview
+											○ draft diff · preview
 										</div>
 										<pre className={s.pgCode}>{active.diff}</pre>
 									</div>
