@@ -7,7 +7,7 @@ const STATS = [
 	{ value: 2.7, decimals: 1, suffix: '×', label: 'faster from request to reviewable spec' },
 	{ value: 41, decimals: 0, suffix: '%', label: 'less time spent rebuilding context' },
 	{ value: 63, decimals: 0, suffix: '%', label: 'of pilot PRs arrived with AC attached' },
-	{ value: 18, decimals: 0, suffix: 'm', label: 'median handoff to first structured draft' },
+	{ value: 18, decimals: 0, suffix: 'm', label: 'median time from handoff to first draft' },
 ]
 
 function CountUp({
@@ -33,7 +33,7 @@ function CountUp({
 					const start = performance.now()
 					const tick = (now: number) => {
 						const t = Math.min((now - start) / duration, 1)
-						const ease = 1 - Math.pow(1 - t, 4) // easeOutQuart
+						const ease = 1 - Math.pow(1 - t, 4)
 						const current =
 							Math.round(to * ease * Math.pow(10, decimals)) /
 							Math.pow(10, decimals)
@@ -59,64 +59,77 @@ function CountUp({
 
 export default function Metrics() {
 	return (
-		<section className="py-[100px] px-8 border-b border-(--line) bg-(--bg-1)">
+		<section
+			className="py-[120px] px-8 border-b border-line overflow-hidden"
+			style={{ background: 'var(--bg-1)' }}
+		>
 			<div className="inner">
-				<Reveal className="text-center mb-14">
-					<span
-						className="over inline-block"
-						style={{ marginBottom: 16 }}
-					>
-						pilot signal
-					</span>
-					<h2
-						className="font-serif font-normal leading-none tracking-[-0.03em] text-wrap-balance m-0"
-						style={{ fontSize: 'clamp(44px, 5.6vw, 84px)' }}
-					>
-						What early teams see when
-						<br />
-						<em className="italic">the whole trail stays attached.</em>
-					</h2>
-					<p className="mt-5 max-w-[58ch] mx-auto font-mono text-[11px] leading-[1.6] tracking-[0.03em] uppercase text-(--ink-4)">
-						Early signal from pilot teams.
-					</p>
-				</Reveal>
-
 				<div
-					className="grid gap-[1px] border-t border-(--line)"
-					style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}
+					className="grid gap-[80px] items-center"
+					style={{ gridTemplateColumns: '1fr 1fr' }}
 				>
-					{STATS.map((stat, i) => (
-						<Reveal
-							key={i}
-							delay={i * 80}
-							className={[
-								'py-12 px-7 text-center',
-								'border-r border-(--line) last:border-r-0',
-								'transition-[background,transform,box-shadow] duration-300',
-								'hover:bg-(--surface) hover:-translate-y-1 hover:z-[1] hover:relative',
-								'hover:shadow-[0_16px_40px_rgba(0,0,0,0.07),inset_0_-3px_0_var(--acc)]',
-							].join(' ')}
+					{/* Left: framing statement */}
+					<Reveal className="flex flex-col gap-6">
+						<span className="over inline-block">pilot signal</span>
+						<h2
+							className="font-serif font-normal leading-[1.04] tracking-[-0.03em] text-ink m-0"
+							style={{ fontSize: 'clamp(36px, 4vw, 58px)', textWrap: 'balance' }}
 						>
+							What early teams see when the whole trail
+							<br />
+							<em className="italic text-acc">stays attached.</em>
+						</h2>
+						<p className="font-sans text-[16px] leading-[1.62] text-ink-3 m-0 max-w-[40ch]">
+							Signal from closed pilots. Teams stopped the reconstruction
+							work — context now travels from the first thread to the merged diff.
+						</p>
+						<div className="flex items-center gap-3 pt-2">
 							<div
-								className="font-serif leading-none tracking-[-0.04em] text-(--ink)"
-								style={{ fontSize: 'clamp(56px, 5vw, 84px)' }}
-							>
-								<CountUp
-									to={stat.value}
-									decimals={stat.decimals}
-									duration={1400 + i * 100}
-								/>
-								{stat.suffix && (
-									<span className="text-[42px] text-(--ink-3) tracking-[-0.02em]">
-										{stat.suffix}
-									</span>
-								)}
-							</div>
-							<div className="font-mono text-[11px] leading-[1.55] tracking-[0.08em] uppercase text-(--ink-3) mt-3.5 max-w-[24ch] mx-auto">
-								{stat.label}
-							</div>
-						</Reveal>
-					))}
+								className="w-[6px] h-[6px] rounded-full bg-acc animate-[pulse-dot_1.6s_ease-in-out_infinite]"
+							/>
+							<span className="font-mono text-[10.5px] tracking-[0.1em] uppercase text-ink-4">
+								Early access cohort · Q1 2026
+							</span>
+						</div>
+					</Reveal>
+
+					{/* Right: stat grid */}
+					<Reveal delay={120}>
+						<div
+							className="grid gap-px bg-line rounded-[20px] overflow-hidden border border-line"
+							style={{ gridTemplateColumns: '1fr 1fr' }}
+						>
+							{STATS.map((stat, i) => (
+								<div
+									key={i}
+									className="flex flex-col gap-3 p-7 group transition-colors duration-300 hover:bg-[color-mix(in_oklab,var(--acc)_3%,var(--bg))]"
+									style={{ background: 'var(--bg)' }}
+								>
+									<div
+										className="font-serif leading-none tracking-[-0.04em] text-ink"
+										style={{ fontSize: 'clamp(42px, 3.6vw, 60px)' }}
+									>
+										<CountUp
+											to={stat.value}
+											decimals={stat.decimals}
+											duration={1400 + i * 100}
+										/>
+										{stat.suffix && (
+											<span
+												className="text-acc"
+												style={{ fontSize: '0.65em' }}
+											>
+												{stat.suffix}
+											</span>
+										)}
+									</div>
+									<div className="font-mono text-[10.5px] leading-[1.5] tracking-[0.07em] uppercase text-ink-3">
+										{stat.label}
+									</div>
+								</div>
+							))}
+						</div>
+					</Reveal>
 				</div>
 			</div>
 		</section>

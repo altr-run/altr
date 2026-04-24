@@ -55,24 +55,19 @@ function ProductMenu() {
 				<div className="grid grid-cols-2 gap-6">
 					<div>
 						<div className={PANEL_HEADING}>Platform</div>
-						<a href="/#workflow" className={PANEL_LINK}>
-							Workflow
-						</a>
-						<a href="/#agents" className={PANEL_LINK}>
-							Agents
-						</a>
-						<a href="/#stack" className={PANEL_LINK}>
-							Stack
-						</a>
-						<a href="/#playground" className={PANEL_LINK}>
-							Try it
-						</a>
+						<a href="/product/workflow" className={PANEL_LINK}>Workflow</a>
+						<a href="/product/agents" className={PANEL_LINK}>Agents</a>
+						<a href="/product/stack" className={PANEL_LINK}>Stack</a>
+						<a href="/#playground" className={PANEL_LINK}>Try it</a>
 					</div>
 					<div>
 						<div className={PANEL_HEADING}>Updates</div>
-						<a href="/changelog" className={PANEL_LINK}>
-							Changelog
-						</a>
+						<a href="/changelog" className={PANEL_LINK}>Changelog</a>
+						<div className="border-t border-line mt-3 pt-3">
+							<a href="/product" className="text-[12px] text-acc font-mono no-underline hover:underline">
+								All product →
+							</a>
+						</div>
 					</div>
 				</div>
 			</MegaPanel>

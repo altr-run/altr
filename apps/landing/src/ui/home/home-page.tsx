@@ -3,6 +3,7 @@ import Hero from './hero'
 import HeroShader from './hero-shader'
 import Logos from './logos'
 import Flow from './flow'
+import ContextLost from './context-lost'
 
 const Triptych = dynamic(() => import('./triptych'))
 const Manifesto = dynamic(() => import('./manifesto'))
@@ -32,6 +33,7 @@ export default function HomePage() {
 				</div>
 				<div data-nav-theme="light">
 					<Logos />
+					<ContextLost />
 					<Flow />
 					<Triptych />
 					<Manifesto />

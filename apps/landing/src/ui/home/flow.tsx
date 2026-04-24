@@ -1,189 +1,344 @@
 'use client'
 
+import { motion } from 'motion/react'
 import Reveal from './reveal'
 
-const NODES = [
+// Notification data — a realistic snapshot of peak-chaos
+const NOTIFICATIONS = [
 	{
-		label: 'Intake',
-		sub: 'thread, call, note, alert',
-		meta: 'capture',
-		type: 'human',
+		tool: 'SL',
+		toolColor: '#4A154B',
+		toolBg: 'rgba(74,21,75,0.1)',
+		channel: '#eng-alerts',
+		who: 'priya',
+		avatar: 'P',
+		avatarBg: '#6B5EA8',
+		msg: '@here can someone look at the auth bug before standup? users are getting logged out',
+		time: '9:02 AM',
+		unread: true,
+		urgent: true,
 	},
 	{
-		label: 'Plan',
-		sub: 'acceptance criteria drafted, open questions flagged',
-		meta: 'structure',
-		type: 'agent-spec',
+		tool: 'LN',
+		toolColor: '#635BFF',
+		toolBg: 'rgba(99,91,255,0.1)',
+		channel: 'Linear',
+		who: 'System',
+		avatar: '▲',
+		avatarBg: '#635BFF',
+		msg: '[ENG-142] Magic-link invite fails silently on mobile — assigned to you',
+		time: '9:04 AM',
+		unread: true,
+		urgent: false,
 	},
 	{
-		label: 'Build',
-		sub: 'worktree opened, change proposed with criteria attached',
-		meta: 'execute',
-		type: 'artifact',
+		tool: 'GH',
+		toolColor: '#1a1a1a',
+		toolBg: 'rgba(26,26,26,0.07)',
+		channel: 'GitHub',
+		who: 'ci-runner',
+		avatar: '○',
+		avatarBg: '#1a1a1a',
+		msg: 'CI failed on main · 2 checks failed · auth/token.test.ts',
+		time: '9:06 AM',
+		unread: true,
+		urgent: true,
 	},
 	{
-		label: 'Review',
-		sub: 'intent, risk, and regressions checked before merge',
-		meta: 'verify',
-		type: 'agent-eng',
+		tool: 'SL',
+		toolColor: '#4A154B',
+		toolBg: 'rgba(74,21,75,0.1)',
+		channel: 'alex (DM)',
+		who: 'alex',
+		avatar: 'A',
+		avatarBg: '#3D6B4F',
+		msg: 'Can we get the invite feature before Thursday? Customer call at 2pm',
+		time: '9:07 AM',
+		unread: true,
+		urgent: false,
 	},
 	{
-		label: 'Ship',
-		sub: 'PR, release note, and rationale stay linked',
-		meta: 'artifact',
-		type: 'artifact',
+		tool: 'GH',
+		toolColor: '#1a1a1a',
+		toolBg: 'rgba(26,26,26,0.07)',
+		channel: 'GitHub',
+		who: 'alex',
+		avatar: 'A',
+		avatarBg: '#3D6B4F',
+		msg: 'PR #138 Review requested — touching auth/session.ts · 3 reviewers pending',
+		time: '9:09 AM',
+		unread: false,
+		urgent: false,
 	},
-] as const
+	{
+		tool: 'SL',
+		toolColor: '#4A154B',
+		toolBg: 'rgba(74,21,75,0.1)',
+		channel: '#product',
+		who: 'alex',
+		avatar: 'A',
+		avatarBg: '#3D6B4F',
+		msg: "What's the status on magic-link? Design signed off last week",
+		time: '9:11 AM',
+		unread: false,
+		urgent: false,
+	},
+	{
+		tool: 'EM',
+		toolColor: '#B45309',
+		toolBg: 'rgba(180,83,9,0.08)',
+		channel: 'Support → Eng',
+		who: 'support',
+		avatar: 'S',
+		avatarBg: '#B45309',
+		msg: '[Escalation] 3 enterprise users can\'t log in since Thursday\'s deploy',
+		time: '9:14 AM',
+		unread: true,
+		urgent: true,
+	},
+	{
+		tool: 'LN',
+		toolColor: '#635BFF',
+		toolBg: 'rgba(99,91,255,0.1)',
+		channel: 'Linear',
+		who: 'System',
+		avatar: '▲',
+		avatarBg: '#635BFF',
+		msg: '[ENG-138] Rate limit not enforcing in prod — priority: urgent',
+		time: '9:15 AM',
+		unread: true,
+		urgent: false,
+	},
+]
+
+const RESOLUTION_STEPS = [
+	{ label: 'Intake', desc: 'Every signal, one place', icon: '↓' },
+	{ label: 'Spec', desc: 'AC drafted automatically', icon: '■' },
+	{ label: 'Build', desc: 'Worktree opened, criteria attached', icon: '▲' },
+	{ label: 'Ship', desc: 'Trail linked to the PR', icon: '→' },
+]
 
 export default function Flow() {
 	return (
 		<section
-			className="py-20 px-8 border-b border-line bg-bg overflow-hidden"
+			className="py-[120px] px-8 border-b border-line bg-bg overflow-hidden"
 			id="workflow"
 		>
 			<div className="inner">
-				<Reveal className="flex items-baseline gap-6 mb-10">
-					<span className="over">workflow</span>
-					<p
-						className="font-serif text-[19px] text-ink-2 m-0 tracking-[-0.01em]"
-						style={{ fontFamily: 'var(--f-serif)' }}
-					>
-						One operating loop for product work — from first signal to{' '}
-						<em>shipped change.</em>
-					</p>
-				</Reveal>
-				<Reveal delay={120}>
-					<div
-						className="relative p-[28px_30px] rounded-[28px] border overflow-hidden"
+
+				{/* Header */}
+				<Reveal className="text-center mb-[60px]">
+					<span className="over inline-block mb-5">workflow</span>
+					<h2
+						className="font-serif font-normal tracking-[-0.03em] text-ink mx-auto"
 						style={{
-							borderColor: 'color-mix(in oklab, var(--line) 84%, transparent)',
-							background:
-								'radial-gradient(70% 120% at 0% 0%, color-mix(in oklab, var(--acc-soft) 28%, white) 0%, transparent 48%), linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,248,248,0.98) 100%)',
-							boxShadow: '0 12px 28px rgba(17,24,18,0.045)',
+							fontSize: 'clamp(34px, 4.2vw, 60px)',
+							lineHeight: 1.06,
+							maxWidth: 800,
+							textWrap: 'balance',
 						}}
 					>
-						{/* flowTop */}
+						This is how work actually enters your team.
+						<br />
+						<em className="italic text-acc">Every sprint. Every handoff.</em>
+					</h2>
+					<p className="mt-5 font-sans text-[16px] text-ink-3 mx-auto max-w-[50ch]">
+						Nine notifications. Four tools. Zero shared context. Someone&apos;s
+						about to open a doc and start from scratch.
+					</p>
+				</Reveal>
+
+				{/* Chaos panel + resolution */}
+				<Reveal delay={80}>
+					<div
+						className="rounded-[28px] border border-line overflow-hidden"
+						style={{
+							background: 'var(--bg)',
+							boxShadow: '0 16px 48px rgba(0,0,0,0.07)',
+						}}
+					>
+						{/* Panel header bar */}
 						<div
-							className="flex items-center justify-between gap-4 mb-[26px] font-mono text-[10px] tracking-[0.12em] uppercase text-ink-4"
-							style={{ fontFamily: 'var(--f-mono)' }}
+							className="flex items-center justify-between px-5 py-3 border-b border-line"
+							style={{
+								background: 'linear-gradient(180deg, var(--gray-2) 0%, var(--bg-1) 100%)',
+							}}
 						>
-							<span>intake → plan → build → review → ship</span>
-							<span>humans, agents, and artifacts stay linked</span>
+							<div className="flex items-center gap-[6px]">
+								<span className="w-[11px] h-[11px] rounded-full bg-[#ff5f57]" />
+								<span className="w-[11px] h-[11px] rounded-full bg-[#ffbd2e]" />
+								<span className="w-[11px] h-[11px] rounded-full bg-[#28c840]" />
+							</div>
+							<div className="flex items-center gap-3">
+								<span className="font-mono text-[11px] text-ink-3 tracking-wide">
+									inbox · all sources
+								</span>
+								<span
+									className="font-mono text-[10px] px-2 py-0.5 rounded-full text-white font-semibold"
+									style={{ background: '#ef4444' }}
+								>
+									9
+								</span>
+							</div>
+							<div className="flex items-center gap-4">
+								<span className="font-mono text-[10px] text-ink-4 tracking-wider uppercase">
+									3 urgent
+								</span>
+								<span className="font-mono text-[10px] text-ink-4 tracking-wider uppercase">
+									4 tools
+								</span>
+							</div>
 						</div>
 
-						{/* flowRail */}
+						{/* Notification feed */}
+						<div className="divide-y divide-line">
+							{NOTIFICATIONS.map((n, i) => (
+								<motion.div
+									key={i}
+									initial={{ opacity: 0, x: -8 }}
+									whileInView={{ opacity: 1, x: 0 }}
+									viewport={{ once: true }}
+									transition={{
+										duration: 0.35,
+										ease: [0.25, 1, 0.5, 1],
+										delay: 0.05 + i * 0.055,
+									}}
+									className="flex items-start gap-3 px-5 py-[13px] relative transition-colors duration-200 hover:bg-[color-mix(in_oklab,var(--acc)_2%,var(--bg-1))]"
+									style={{
+										background: n.unread
+											? 'color-mix(in oklab, var(--bg-1) 60%, var(--bg))'
+											: 'var(--bg)',
+									}}
+								>
+									{/* Unread dot */}
+									{n.unread && (
+										<span
+											className="absolute left-[10px] top-[50%] translate-y-[-50%] w-[5px] h-[5px] rounded-full flex-shrink-0"
+											style={{ background: n.urgent ? '#ef4444' : 'var(--acc)' }}
+										/>
+									)}
+
+									{/* Tool badge */}
+									<span
+										className="flex-shrink-0 w-[22px] h-[22px] rounded-[5px] flex items-center justify-center font-mono text-[8.5px] font-bold mt-0.5 border border-line"
+										style={{
+											background: n.toolBg,
+											color: n.toolColor,
+										}}
+									>
+										{n.tool}
+									</span>
+
+									{/* Avatar */}
+									<span
+										className="flex-shrink-0 w-[26px] h-[26px] rounded-full flex items-center justify-center font-mono text-[9px] font-semibold text-white mt-0.5"
+										style={{ background: n.avatarBg }}
+									>
+										{n.avatar}
+									</span>
+
+									{/* Content */}
+									<div className="flex-1 min-w-0">
+										<div className="flex items-baseline gap-2 mb-[3px]">
+											<span className="font-sans font-semibold text-[12.5px] text-ink">
+												{n.who}
+											</span>
+											<span className="font-mono text-[10px] text-ink-4 tracking-wide">
+												{n.channel}
+											</span>
+											{n.urgent && (
+												<span
+													className="font-mono text-[9px] px-1.5 py-px rounded-full text-white font-semibold ml-auto flex-shrink-0"
+													style={{ background: '#ef4444' }}
+												>
+													urgent
+												</span>
+											)}
+										</div>
+										<p className="font-sans text-[13px] text-ink-2 leading-[1.45] m-0 truncate">
+											{n.msg}
+										</p>
+									</div>
+
+									{/* Time */}
+									<span className="flex-shrink-0 font-mono text-[10px] text-ink-4 mt-0.5">
+										{n.time}
+									</span>
+								</motion.div>
+							))}
+
+							{/* Overflow indicator */}
+							<div
+								className="px-5 py-3 flex items-center gap-2"
+								style={{
+									background: 'linear-gradient(180deg, var(--bg) 0%, var(--bg-1) 100%)',
+								}}
+							>
+								<div className="flex gap-[3px]">
+									{['#4A154B', '#635BFF', '#1a1a1a'].map((c, i) => (
+										<span
+											key={i}
+											className="w-[14px] h-[14px] rounded-[4px] border border-line"
+											style={{ background: `${c}18` }}
+										/>
+									))}
+								</div>
+								<span className="font-mono text-[10px] text-ink-4 tracking-wider">
+									+14 more since yesterday · 0 have linked context
+								</span>
+							</div>
+						</div>
+
+						{/* Resolution band */}
 						<div
-							className="absolute left-[60px] right-[60px] top-[102px] h-px z-0"
+							className="border-t border-line px-5 py-5"
 							style={{
 								background:
-									'color-mix(in oklab, var(--acc) 28%, var(--line))',
+									'linear-gradient(180deg, color-mix(in oklab, var(--acc) 4%, var(--bg-1)) 0%, var(--bg-1) 100%)',
 							}}
-							aria-hidden="true"
-						/>
-
-						{/* flowTrack */}
-						<div
-							className="flex items-center overflow-x-auto relative z-[1] pb-1"
-							style={{ scrollSnapType: 'x mandatory', scrollbarWidth: 'none' }}
 						>
-							{NODES.map((node, i) => {
-								const isActive = i === 1
-								const isSpec = node.type === 'agent-spec'
-								const isEng = node.type === 'agent-eng'
-								const isArtifact = node.type === 'artifact'
-
-								let nodeStyle: React.CSSProperties = {
-									background: 'rgba(255,255,255,0.92)',
-									boxShadow:
-										'0 6px 14px rgba(17,24,18,0.035), inset 0 1px 0 rgba(255,255,255,0.88)',
-									borderColor: 'var(--line)',
-								}
-
-								if (isActive) {
-									nodeStyle = {
-										...nodeStyle,
-										borderColor:
-											'color-mix(in oklab, var(--acc) 32%, var(--line))',
-										boxShadow:
-											'0 10px 24px rgba(17,24,18,0.055), 0 0 0 1px color-mix(in oklab, var(--acc) 12%, transparent), inset 0 1px 0 rgba(255,255,255,0.9)',
-									}
-								}
-
-								if (isSpec) {
-									nodeStyle = {
-										...nodeStyle,
-										background:
-											'linear-gradient(135deg, var(--acc-soft) 0%, var(--bg) 60%)',
-										borderColor:
-											'color-mix(in oklab, var(--acc) 28%, var(--line))',
-									}
-								} else if (isEng) {
-									nodeStyle = {
-										...nodeStyle,
-										background:
-											'linear-gradient(135deg, rgba(26,26,26,0.04) 0%, var(--bg) 60%)',
-										borderColor: 'var(--line-2)',
-									}
-								} else if (isArtifact) {
-									nodeStyle = {
-										...nodeStyle,
-										background: 'var(--surface)',
-									}
-								}
-
-								return (
-									<div
-										key={node.label}
-										className="flex items-center gap-3 flex-shrink-0"
-										style={{ scrollSnapAlign: 'center' }}
+							<div className="flex items-center gap-2 mb-4">
+								<span
+									className="w-[5px] h-[5px] rounded-full bg-acc animate-[pulse-dot_1.6s_ease-in-out_infinite]"
+								/>
+								<span className="font-mono text-[10px] tracking-[0.12em] uppercase text-acc-ink font-semibold">
+									Altr captures and structures all of this
+								</span>
+							</div>
+							<div
+								className="grid gap-px bg-line rounded-[16px] overflow-hidden border border-line"
+								style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}
+							>
+								{RESOLUTION_STEPS.map((step, i) => (
+									<motion.div
+										key={step.label}
+										initial={{ opacity: 0, y: 6 }}
+										whileInView={{ opacity: 1, y: 0 }}
+										viewport={{ once: true }}
+										transition={{
+											duration: 0.4,
+											ease: [0.25, 1, 0.5, 1],
+											delay: 0.5 + i * 0.07,
+										}}
+										className="flex flex-col gap-1.5 p-[14px_16px]"
+										style={{ background: 'var(--bg)' }}
 									>
-										<div
-											className="flex flex-col gap-[7px] p-[18px_20px] rounded-[18px] border min-w-[176px] min-h-[118px] transition-all"
-											style={nodeStyle}
-										>
-											<span
-												className="font-mono text-[10px] uppercase tracking-widest text-ink-4"
-												style={{ fontFamily: 'var(--f-mono)' }}
-											>
-												{node.meta}
-											</span>
-											<span
-												className="font-sans font-semibold text-[15px] text-ink tracking-tight"
-												style={{ fontFamily: 'var(--f-sans)' }}
-											>
-												{node.label}
-											</span>
-											<span className="text-[12px] text-ink-3 leading-relaxed">
-												{node.sub}
-											</span>
-										</div>
-										{i < NODES.length - 1 && (
-											<div
-												className="flex items-center text-ink-4"
-												aria-hidden="true"
-											>
-												<svg
-													width="28"
-													height="12"
-													viewBox="0 0 28 12"
-													fill="none"
-												>
-													<path
-														d="M0 6h22M22 6l-5-5M22 6l-5 5"
-														stroke="currentColor"
-														strokeWidth="1.5"
-														strokeLinecap="round"
-														strokeLinejoin="round"
-													/>
-												</svg>
-											</div>
-										)}
-									</div>
-								)
-							})}
+										<span className="font-mono text-[16px] text-acc leading-none">
+											{step.icon}
+										</span>
+										<span className="font-sans font-semibold text-[13px] text-ink tracking-tight">
+											{step.label}
+										</span>
+										<span className="font-mono text-[10px] text-ink-4 tracking-wide leading-[1.4]">
+											{step.desc}
+										</span>
+									</motion.div>
+								))}
+							</div>
 						</div>
 					</div>
 				</Reveal>
+
 			</div>
 		</section>
 	)

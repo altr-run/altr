@@ -8,4 +8,5 @@ export const ROUTES = {
 	integrations: 'integrations',
 	changelog: 'changelog',
 	legal: 'legal',
+	product: 'product',
 } as const
