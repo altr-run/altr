@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Reveal from './reveal'
 
 const CASES = [
@@ -118,6 +119,18 @@ export default function UseCases() {
 						</Reveal>
 					))}
 				</div>
+
+				<Reveal className="mt-10 flex items-center justify-between border-t border-(--line) pt-7">
+					<p className="font-mono text-[11px] text-(--ink-4) tracking-widest">
+						6 workflows · more added with each pilot cohort
+					</p>
+					<Link
+						href="/use-cases"
+						className="font-mono text-[12px] text-(--acc) no-underline hover:opacity-80 transition-opacity"
+					>
+						Explore all use cases →
+					</Link>
+				</Reveal>
 			</div>
 		</section>
 	)

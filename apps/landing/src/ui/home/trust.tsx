@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Reveal from './reveal'
 
 const PILLARS = [
@@ -93,6 +94,21 @@ export default function Trust() {
 						<span className="w-[3px] h-[3px] rounded-full bg-(--ink-4) shrink-0" />
 						<span>deployment path: local → vpc → on-prem</span>
 					</div>
+				</Reveal>
+
+				<Reveal className="flex items-center justify-between border-t border-(--line) pt-7">
+					<div className="flex items-center gap-3 flex-wrap font-mono text-[11px] text-(--ink-4) tracking-widest">
+						<span>works with your existing stack:</span>
+						{['Slack', 'GitHub', 'Linear', 'Notion', 'calls', 'CI'].map((t) => (
+							<span key={t} className="border border-(--line) rounded-full px-2.5 py-0.5 text-ink-3">{t}</span>
+						))}
+					</div>
+					<Link
+						href="/integrations"
+						className="font-mono text-[12px] text-(--acc) no-underline hover:opacity-80 transition-opacity whitespace-nowrap ml-6"
+					>
+						All integrations →
+					</Link>
 				</Reveal>
 			</div>
 		</section>

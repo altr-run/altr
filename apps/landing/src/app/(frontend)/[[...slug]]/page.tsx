@@ -7,7 +7,6 @@ import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import {
-	getSite,
 	GLOBAL_MODULE_PATH_QUERY,
 	MODULES_QUERY,
 } from '@/sanity/lib/queries'
@@ -60,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		}
 	}
 
-	const [page, site] = await Promise.all([getPage(slug), getSite()])
+	const page = await getPage(slug)
 	const { title, description, image, noIndex } = page?.metadata ?? {}
 
 	return {
@@ -75,9 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			images: [
 				image
 					? urlFor(image).width(1200).url()
-					: site?.ogimage
-						? urlFor(site.ogimage).width(1200).url()
-						: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?slug=${slug?.join('/')}`,
+					: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?slug=${slug?.join('/')}`,
 			],
 		},
 		robots: {

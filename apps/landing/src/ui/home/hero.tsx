@@ -225,12 +225,12 @@ export default function Hero() {
 
 								<span className="over">§ spec · draft · edited 2 min ago</span>
 
-								<h3
+								<h2
 									className="font-serif font-normal tracking-tight text-ink mt-2 mb-1"
 									style={{ fontSize: '32px' }}
 								>
 									Magic-link onboarding
-								</h3>
+								</h2>
 								<div className="font-mono text-[11.5px] text-ink-3 mb-[30px]">
 									owner:{' '}
 									<span className="font-mono text-[13px] text-acc font-medium">
@@ -242,9 +242,9 @@ export default function Hero() {
 									</span>
 								</div>
 
-								<h4 className="font-sans font-semibold text-[13px] tracking-wide text-ink uppercase mt-7 mb-2.5">
+								<h3 className="font-sans font-semibold text-[13px] tracking-wide text-ink uppercase mt-7 mb-2.5">
 									The problem
-								</h4>
+								</h3>
 								<p className="text-[14.5px] leading-[1.72] text-ink-2 mb-3">
 									Teams sign up, hit the password step, and 34% bounce before
 									their first workspace. We lose them before we learn anything.
@@ -252,9 +252,9 @@ export default function Hero() {
 									, not filling out a form.
 								</p>
 
-								<h4 className="font-sans font-semibold text-[13px] tracking-wide text-ink uppercase mt-7 mb-2.5">
+								<h3 className="font-sans font-semibold text-[13px] tracking-wide text-ink uppercase mt-7 mb-2.5">
 									Acceptance criteria
-								</h4>
+								</h3>
 								<ul className="list-none p-0 m-0 mb-3 space-y-1">
 									{[
 										<>Any teammate can be invited by email alone</>,
@@ -284,9 +284,9 @@ export default function Hero() {
 									))}
 								</ul>
 
-								<h4 className="font-sans font-semibold text-[13px] tracking-wide text-ink uppercase mt-7 mb-2.5">
+								<h3 className="font-sans font-semibold text-[13px] tracking-wide text-ink uppercase mt-7 mb-2.5">
 									Open questions
-								</h4>
+								</h3>
 								<p className="text-[14.5px] leading-[1.72] text-ink-2 mb-3">
 									Altr flagged: should revoked invites still count toward the
 									rate limit?

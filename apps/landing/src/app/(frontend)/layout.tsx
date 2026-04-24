@@ -2,6 +2,7 @@ import localFont from 'next/font/local'
 import { Mona_Sans, Shalimar } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { preconnect } from 'react-dom'
+import { getSite } from '@/sanity/lib/queries'
 import Footer from '@/ui/footer'
 import Header from '@/ui/header'
 import VisualEditing from '@/ui/modules/visual-editing'
@@ -40,6 +41,8 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
+	const site = await getSite()
+
 	preconnect('https://cdn.sanity.io')
 
 	return (
@@ -50,9 +53,9 @@ export default async function RootLayout({
 		>
 			<NuqsAdapter>
 				<body className="bg-background text-foreground antialiased">
-					<Header />
+					<Header site={site} />
 					<main>{children}</main>
-					<Footer />
+					<Footer site={site} />
 
 					<VisualEditing />
 				</body>

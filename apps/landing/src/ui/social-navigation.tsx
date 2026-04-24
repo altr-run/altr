@@ -9,12 +9,15 @@ import {
 	FaYelp,
 	FaYoutube,
 } from 'react-icons/fa6'
-import { getSite } from '@/sanity/lib/queries'
+import type { SITE_QUERY_RESULT } from '@/sanity/types'
 import SanityLink, { type SanityLinkType } from './sanity-link'
 
-export default async function (props: React.ComponentProps<'nav'>) {
-	const site = await getSite()
-
+export default function SocialNavigation({
+	site,
+	...props
+}: React.ComponentProps<'nav'> & {
+	site: SITE_QUERY_RESULT
+}) {
 	return (
 		<nav {...props}>
 			{site?.social?.items?.map((link) => {

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import * as Accordion from '@radix-ui/react-accordion'
 import { AnimatePresence, motion } from 'motion/react'
+import Link from 'next/link'
 import Reveal from './reveal'
 
 const ITEMS = [
@@ -112,6 +113,18 @@ export default function FAQ() {
 							)
 						})}
 					</Accordion.Root>
+				</Reveal>
+
+				<Reveal className="mt-8 flex flex-col sm:flex-row gap-3 sm:items-center justify-between border-t border-line pt-7">
+					<p className="font-mono text-[11px] text-ink-4 tracking-widest">
+						evaluating alternatives?
+					</p>
+					<Link
+						href="/compare"
+						className="font-mono text-[12px] text-acc no-underline hover:opacity-80 transition-opacity"
+					>
+						See side-by-side comparisons →
+					</Link>
 				</Reveal>
 			</div>
 		</section>

@@ -19,6 +19,12 @@ export default structureTool({
 				S.documentTypeListItem('blog.post').title('Posts'),
 				S.documentTypeListItem('blog.category').title('Categories'),
 
+				S.divider().title('SEO pages'),
+				S.documentTypeListItem('compare.page').title('Compare pages'),
+				S.documentTypeListItem('use-case').title('Use cases'),
+				S.documentTypeListItem('integration').title('Integrations'),
+				S.documentTypeListItem('changelog.entry').title('Changelog'),
+
 				S.divider().title('Navigation'),
 				S.documentTypeListItem('navigation'),
 				S.documentTypeListItem('redirect').title('Redirects'),

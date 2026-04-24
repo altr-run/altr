@@ -1,20 +1,22 @@
+import dynamic from 'next/dynamic'
 import Nav from './nav'
 import Hero from './hero'
 import HeroShader from './hero-shader'
 import Logos from './logos'
-import Triptych from './triptych'
 import Flow from './flow'
-import Playground from './playground'
-import UseCases from './use-cases'
-import How from './how'
-import Trust from './trust'
-import Metrics from './metrics'
-import Manifesto from './manifesto'
-import Testimonials from './testimonials'
-import TalkTeam from './talk-team'
-import FAQ from './faq'
-import CTAClose from './cta-close'
 import FooterHome from './footer-home'
+
+const Triptych = dynamic(() => import('./triptych'))
+const Manifesto = dynamic(() => import('./manifesto'))
+const How = dynamic(() => import('./how'))
+const UseCases = dynamic(() => import('./use-cases'))
+const Playground = dynamic(() => import('./playground'))
+const Trust = dynamic(() => import('./trust'))
+const Metrics = dynamic(() => import('./metrics'))
+const Testimonials = dynamic(() => import('./testimonials'))
+const FAQ = dynamic(() => import('./faq'))
+const TalkTeam = dynamic(() => import('./talk-team'))
+const CTAClose = dynamic(() => import('./cta-close'))
 
 export default function HomePage() {
 	return (
