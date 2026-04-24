@@ -17,7 +17,7 @@ const CASES = [
 	{
 		label: '03 · migrations',
 		title: 'Break large refactors into supervised agent work.',
-		body: 'Use role agents to plan repetitive modernization work, open focused tasks, and keep human review on every branch.',
+		body: 'Break repetitive modernization work into focused tasks, run them in parallel, and keep human review on every branch before merge.',
 		items: ['parallel subtasks', 'repeatable migration plans', 'approval before merge'],
 	},
 	{

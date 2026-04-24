@@ -3,6 +3,13 @@
     "supabase": {
       "type": "http",
       "url": "https://mcp.supabase.com/mcp?project_ref=ixklnfhmnokbshgflbht&read_only=true&features=docs%2Caccount%2Cdatabase%2Cdevelopment%2Cdebugging%2Cfunctions%2Cstorage%2Cbranching"
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-97fa97e253af401d9186a15b7fcbaac9"
+      }
     }
   }
 }

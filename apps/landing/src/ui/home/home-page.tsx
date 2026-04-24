@@ -37,8 +37,8 @@ export default function HomePage() {
 					<Trust />
 					<Metrics />
 					<Testimonials />
-					<TalkTeam />
 					<FAQ />
+					<TalkTeam />
 					<CTAClose />
 					<FooterHome />
 				</div>

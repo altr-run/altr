@@ -41,9 +41,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 	if (isHomePage(slug)) {
 		return {
-			title: 'Altr — where humans and AI ship together',
+			title: 'Altr — Close the Execution Loop for Teams & AI Agents',
 			description:
-				'The workspace where your team and AI teammates work in the same threads, on the same specs, toward the same PRs. Mac-native. Local-first.',
+				'Stop dropping the thread. Altr keeps specs, tickets, and PRs connected end-to-end — with context attached at every handoff. Mac-native. Local-first.',
+			openGraph: {
+				title: 'Altr — Close the Execution Loop for Teams & AI Agents',
+				description:
+					'Stop dropping the thread. Altr keeps specs, tickets, and PRs connected end-to-end — with context attached at every handoff.',
+				type: 'website',
+				url: process.env.NEXT_PUBLIC_BASE_URL ?? 'https://altr.run',
+				images: [
+					`${process.env.NEXT_PUBLIC_BASE_URL ?? 'https://altr.run'}/api/og`,
+				],
+			},
+			alternates: {
+				canonical: process.env.NEXT_PUBLIC_BASE_URL ?? 'https://altr.run',
+			},
 		}
 	}
 

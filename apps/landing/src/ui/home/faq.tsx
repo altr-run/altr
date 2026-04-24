@@ -10,8 +10,12 @@ const ITEMS = [
 		a: 'The core direction is Slack, GitHub, Linear, docs, calls, CI, and monitoring signals. The point is to pull those sources into one execution trail without forcing your team to abandon the systems they already use.',
 	},
 	{
-		q: 'How do the role agents differ?',
-		a: 'Altr uses named responsibilities instead of one generic assistant. @intake captures the signal, @spec structures the work, @eng executes, and @review checks risk and drift before merge.',
+		q: 'How does Altr handle different stages of the workflow?',
+		a: 'Altr breaks the execution loop into four stages — capture, plan, build, and review — each with a clear job and a visible handoff. Context flows forward automatically so nothing gets rebuilt from scratch at each step.',
+	},
+	{
+		q: 'How is this different from ClickUp, Linear, or Notion?',
+		a: 'Those tools are great at organizing work that is already structured. Altr handles the step before that — turning a rough Slack thread, a customer call, or a half-formed request into acceptance criteria, a plan, and a reviewable PR. The original signal stays attached to every artifact. It is not a replacement for how you track work; it is the pipeline that structures it before it enters those systems.',
 	},
 	{
 		q: 'How is this different from Devin or Cursor?',
@@ -41,7 +45,7 @@ export default function FAQ() {
 						<h2 className={s.h2}>
 							Questions teams ask
 							<br />
-							<em>before they roll it out.</em>
+							<em>when evaluating.</em>
 						</h2>
 					</div>
 					<p className={s.lede}>

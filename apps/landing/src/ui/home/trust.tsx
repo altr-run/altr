@@ -36,14 +36,14 @@ export default function Trust() {
 						§ security &amp; control
 					</span>
 					<h2 className={s.h2}>
-						Keep your workflow,
+						Your specs and diffs
 						<br />
-						models, and trail <em>under your control.</em>
+						<em>stay local first.</em>
 					</h2>
 					<p className={s.trustSub}>
 						Control is part of the product surface, not a compliance add-on.
-						Teams decide what agents can touch, where data can go, and how the
-						trail stays reviewable from first request to shipped change.
+						Teams decide what agents can touch, which models run where, and how
+						every decision stays attributable — from first request to merged diff.
 					</p>
 				</Reveal>
 				<div className={s.trustGrid}>

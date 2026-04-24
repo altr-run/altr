@@ -43,6 +43,7 @@
 }
 .heroH .line {
 	display: block;
+	white-space: nowrap;
 }
 .heroH .underlineHand {
 	position: relative;
@@ -63,7 +64,7 @@
 	font-family: var(--f-serif);
 	font-weight: 400;
 	font-size: clamp(44px, 5.6vw, 84px);
-	line-height: 1.0;
+	line-height: 1;
 	letter-spacing: -0.03em;
 	margin: 0;
 	text-wrap: balance;
@@ -311,8 +312,12 @@
 .topShell {
 	position: relative;
 	overflow: hidden;
-	background:
-		linear-gradient(180deg, var(--bg) 0%, #f7f4eb 62%, var(--bg) 100%);
+	background: linear-gradient(
+		180deg,
+		var(--bg) 0%,
+		#f7f4eb 62%,
+		var(--bg) 100%
+	);
 }
 .topShell::before {
 	content: '';
@@ -478,7 +483,11 @@
 }
 .navCta {
 	background:
-		linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 60%),
+		linear-gradient(
+			180deg,
+			rgba(255, 255, 255, 0.08) 0%,
+			rgba(255, 255, 255, 0) 60%
+		),
 		var(--nav-cta-bg);
 	border-color: var(--nav-cta-border);
 	color: var(--nav-cta-fg);
@@ -488,7 +497,11 @@
 }
 .navCta:hover {
 	background:
-		linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%),
+		linear-gradient(
+			180deg,
+			rgba(255, 255, 255, 0.1) 0%,
+			rgba(255, 255, 255, 0) 60%
+		),
 		var(--nav-cta-hover-bg);
 	border-color: color-mix(in oklab, var(--acc) 20%, rgba(10, 10, 10, 0.12));
 	color: var(--nav-cta-hover-fg);
@@ -646,6 +659,18 @@
 	flex-wrap: wrap;
 	justify-content: center;
 }
+.heroTrust {
+	display: inline-flex;
+	gap: 10px;
+	align-items: center;
+	font-family: var(--f-mono);
+	font-size: 10.5px;
+	letter-spacing: 0.04em;
+	color: var(--hero-ink-2);
+	margin-top: 20px;
+	flex-wrap: wrap;
+	justify-content: center;
+}
 .heroMeta {
 	display: inline-flex;
 	gap: 10px;
@@ -713,8 +738,11 @@
 	gap: 16px;
 	padding: 14px 18px;
 	border-bottom: 1px solid var(--pc-line);
-	background:
-		linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(244, 241, 234, 0.96) 100%);
+	background: linear-gradient(
+		180deg,
+		rgba(255, 255, 255, 0.92) 0%,
+		rgba(244, 241, 234, 0.96) 100%
+	);
 }
 .pcDots {
 	display: flex;
@@ -726,9 +754,15 @@
 	border-radius: 50%;
 	background: #d4d4d4;
 }
-.pcDots span:nth-child(1) { background: #ff5f57; }
-.pcDots span:nth-child(2) { background: #ffbd2e; }
-.pcDots span:nth-child(3) { background: #28c840; }
+.pcDots span:nth-child(1) {
+	background: #ff5f57;
+}
+.pcDots span:nth-child(2) {
+	background: #ffbd2e;
+}
+.pcDots span:nth-child(3) {
+	background: #28c840;
+}
 .pcTabs {
 	display: flex;
 	gap: 4px;
@@ -887,8 +921,11 @@
 }
 
 .pcSide {
-	background:
-		linear-gradient(180deg, rgba(250, 248, 242, 0.98) 0%, rgba(245, 242, 235, 0.98) 100%);
+	background: linear-gradient(
+		180deg,
+		rgba(250, 248, 242, 0.98) 0%,
+		rgba(245, 242, 235, 0.98) 100%
+	);
 	display: flex;
 	flex-direction: column;
 	border-left: 1px solid var(--pc-line);
@@ -1099,8 +1136,12 @@
 
 /* ================= LOGO STRIP ================= */
 @keyframes marquee {
-	0% { transform: translateX(0); }
-	100% { transform: translateX(-50%); }
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
 }
 .logos {
 	padding: 60px 0 64px;
@@ -1178,7 +1219,7 @@
 .triptychGrid {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	gap: 0;
+	gap: 1px;
 	border-top: 1px solid var(--line);
 	border-bottom: 1px solid var(--line);
 }
@@ -1189,7 +1230,9 @@
 	flex-direction: column;
 	gap: 14px;
 	position: relative;
-	transition: background 0.25s, box-shadow 0.3s ease;
+	transition:
+		background 0.25s,
+		box-shadow 0.3s ease;
 }
 .tripCell:hover {
 	background: color-mix(in oklab, var(--panel-soft) 46%, white);
@@ -1285,7 +1328,11 @@
 			color-mix(in oklab, var(--acc-soft) 46%, white) 0%,
 			transparent 52%
 		),
-		linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 245, 238, 0.98) 100%);
+		linear-gradient(
+			180deg,
+			rgba(255, 255, 255, 0.98) 0%,
+			rgba(248, 245, 238, 0.98) 100%
+		);
 	position: relative;
 	overflow: hidden;
 	box-shadow:
@@ -1304,7 +1351,11 @@
 	align-items: center;
 	gap: 12px;
 	border-bottom: 1px solid color-mix(in oklab, var(--line) 82%, transparent);
-	background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(247, 243, 235, 0.9) 100%);
+	background: linear-gradient(
+		180deg,
+		rgba(255, 255, 255, 0.9) 0%,
+		rgba(247, 243, 235, 0.9) 100%
+	);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
 	z-index: 2;
@@ -1351,7 +1402,11 @@
 		linear-gradient(90deg, rgba(63, 63, 63, 0.04) 1px, transparent 1px);
 	background-size: 24px 24px;
 	mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1), transparent 88%);
-	-webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1), transparent 88%);
+	-webkit-mask-image: linear-gradient(
+		180deg,
+		rgba(0, 0, 0, 0.1),
+		transparent 88%
+	);
 	pointer-events: none;
 	opacity: 0.72;
 }
@@ -1440,7 +1495,12 @@
 	bottom: 34px;
 	left: 252px;
 	width: 1px;
-	background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--acc) 44%, var(--line)), transparent);
+	background: linear-gradient(
+		180deg,
+		transparent,
+		color-mix(in oklab, var(--acc) 44%, var(--line)),
+		transparent
+	);
 }
 .intakePulse {
 	position: absolute;
@@ -1561,7 +1621,11 @@
 .roleTrack {
 	height: 40px;
 	border-radius: 999px;
-	background: linear-gradient(90deg, rgba(17, 24, 18, 0.05), rgba(17, 24, 18, 0.015));
+	background: linear-gradient(
+		90deg,
+		rgba(17, 24, 18, 0.05),
+		rgba(17, 24, 18, 0.015)
+	);
 	position: relative;
 	overflow: hidden;
 }
@@ -1658,7 +1722,11 @@
 }
 .chainNodeAccent {
 	border-color: color-mix(in oklab, var(--acc) 28%, var(--line));
-	background: linear-gradient(180deg, color-mix(in oklab, var(--acc-soft) 70%, white), #ffffff);
+	background: linear-gradient(
+		180deg,
+		color-mix(in oklab, var(--acc-soft) 70%, white),
+		#ffffff
+	);
 }
 .chainConnector {
 	position: relative;
@@ -1694,7 +1762,11 @@
 	gap: 6px;
 	padding: 12px 14px;
 	border-bottom: 1px solid var(--line);
-	background: linear-gradient(180deg, rgba(245, 243, 237, 0.95), rgba(255, 255, 255, 0.95));
+	background: linear-gradient(
+		180deg,
+		rgba(245, 243, 237, 0.95),
+		rgba(255, 255, 255, 0.95)
+	);
 }
 .chainDockBar span {
 	width: 8px;
@@ -1759,10 +1831,18 @@
 	margin: 0 auto;
 }
 /* Legacy grid (unused, kept for reference) */
-.howHead { display: none; }
-.howGrid { display: none; }
-.howCell { display: none; }
-.howNum { display: none; }
+.howHead {
+	display: none;
+}
+.howGrid {
+	display: none;
+}
+.howCell {
+	display: none;
+}
+.howNum {
+	display: none;
+}
 /* New 2-col sticky layout */
 .howLayout {
 	display: grid;
@@ -1913,15 +1993,22 @@
 	padding: 28px;
 	position: relative;
 	border-right: 1px solid var(--line);
-	background:
-		linear-gradient(180deg, rgba(248, 245, 239, 0.96) 0%, rgba(243, 239, 232, 0.96) 100%);
+	background: linear-gradient(
+		180deg,
+		rgba(248, 245, 239, 0.96) 0%,
+		rgba(243, 239, 232, 0.96) 100%
+	);
 	min-height: 520px;
 }
 .pgRight {
 	padding: 28px;
 	position: relative;
 	min-height: 520px;
-	background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 245, 238, 0.98) 100%);
+	background: linear-gradient(
+		180deg,
+		rgba(255, 255, 255, 0.98) 0%,
+		rgba(248, 245, 238, 0.98) 100%
+	);
 }
 .pgPaneBar {
 	display: flex;
@@ -2342,7 +2429,7 @@
 .useCasesGrid {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 0;
+	gap: 1px;
 	border-top: 1px solid var(--line);
 	border-left: 1px solid var(--line);
 }
@@ -2350,6 +2437,7 @@
 	padding: 28px 26px 30px;
 	border-right: 1px solid var(--line);
 	border-bottom: 1px solid var(--line);
+	border-top: 3px solid transparent;
 	background: color-mix(in oklab, var(--panel-strong) 88%, white 12%);
 	display: flex;
 	flex-direction: column;
@@ -2362,7 +2450,9 @@
 .useCaseCard:hover {
 	transform: translateY(-3px);
 	box-shadow: var(--sh-md);
-	border-color: color-mix(in oklab, var(--acc) 20%, var(--line));
+	border-top-color: var(--acc);
+	border-right-color: color-mix(in oklab, var(--acc) 20%, var(--line));
+	border-bottom-color: color-mix(in oklab, var(--acc) 20%, var(--line));
 	position: relative;
 	z-index: 1;
 }
@@ -2702,7 +2792,7 @@
 .metricsGrid {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
-	gap: 0;
+	gap: 1px;
 	border-top: 1px solid var(--line);
 }
 .metricCell {
@@ -3099,6 +3189,9 @@
 	align-items: center;
 	gap: 0;
 	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	-webkit-overflow-scrolling: touch;
 	padding-bottom: 4px;
 	scrollbar-width: none;
 	position: relative;
@@ -3118,7 +3211,11 @@
 			color-mix(in oklab, var(--acc-soft) 28%, white) 0%,
 			transparent 48%
 		),
-		linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 244, 237, 0.98) 100%);
+		linear-gradient(
+			180deg,
+			rgba(255, 255, 255, 0.98) 0%,
+			rgba(248, 244, 237, 0.98) 100%
+		);
 	box-shadow: 0 12px 28px rgba(17, 24, 18, 0.045);
 	overflow: hidden;
 }
@@ -3148,6 +3245,7 @@
 	align-items: center;
 	gap: 12px;
 	flex-shrink: 0;
+	scroll-snap-align: center;
 }
 .flowNode {
 	display: flex;
@@ -3181,20 +3279,22 @@
 	border-color: color-mix(in oklab, var(--acc) 32%, var(--line));
 }
 .flowNodeSpec {
-	background:
-		linear-gradient(135deg, var(--acc-soft) 0%, var(--bg) 60%);
+	background: linear-gradient(135deg, var(--acc-soft) 0%, var(--bg) 60%);
 	border-color: color-mix(in oklab, var(--acc) 28%, var(--line));
 }
 .flowNodeEng {
-	background:
-		linear-gradient(135deg, rgba(26, 26, 26, 0.04) 0%, var(--bg) 60%);
+	background: linear-gradient(135deg, rgba(26, 26, 26, 0.04) 0%, var(--bg) 60%);
 	border-color: var(--line-2);
 }
 .flowNodeArtifact {
 	background: var(--surface);
 }
 .flowNodeDone {
-	background: linear-gradient(135deg, rgba(95, 123, 90, 0.08) 0%, var(--bg) 60%);
+	background: linear-gradient(
+		135deg,
+		rgba(95, 123, 90, 0.08) 0%,
+		var(--bg) 60%
+	);
 	border-color: color-mix(in oklab, var(--moss) 28%, var(--line));
 }
 .flowNodeMeta {

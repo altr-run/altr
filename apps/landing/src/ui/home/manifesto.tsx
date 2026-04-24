@@ -26,9 +26,9 @@ export default function Manifesto() {
 						§ connected stack
 					</span>
 					<h2 className={s.manifestoH2}>
-						Pull context from the tools
+						Your signal is already there.
 						<br />
-						you already <em>run today.</em>
+						<em>Stop rewriting it.</em>
 					</h2>
 				</Reveal>
 				<Reveal>

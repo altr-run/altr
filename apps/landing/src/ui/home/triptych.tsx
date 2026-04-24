@@ -88,7 +88,7 @@ function RoleVisualization() {
 					<div className={s.roleHeader}>orchestration lanes</div>
 					<div className={s.roleLanes}>
 						<div className={s.roleLane}>
-							<span className={`${s.roleChip} ${s.roleChipSpec}`}>@spec</span>
+							<span className={`${s.roleChip} ${s.roleChipSpec}`}>plan</span>
 							<div className={s.roleTrack}>
 								<motion.div
 									className={`${s.roleBlock} ${s.roleBlockSpec}`}
@@ -100,7 +100,7 @@ function RoleVisualization() {
 							</div>
 						</div>
 						<div className={s.roleLane}>
-							<span className={s.roleChip}>@eng</span>
+							<span className={s.roleChip}>build</span>
 							<div className={s.roleTrack}>
 								<motion.div
 									className={s.roleBlock}
@@ -117,7 +117,7 @@ function RoleVisualization() {
 							</div>
 						</div>
 						<div className={s.roleLane}>
-							<span className={s.roleChip}>@review</span>
+							<span className={s.roleChip}>review</span>
 							<div className={s.roleTrack}>
 								<motion.div
 									className={s.roleBlock}
@@ -236,17 +236,12 @@ export default function Triptych() {
 					<Reveal delay={80} className={s.tripCell}>
 						<span className={s.tripN}>02 · assign</span>
 						<h3>
-							Responsibility is <em>named and visible.</em>
+							Each stage is <em>distinct and visible.</em>
 						</h3>
 						<p>
-							Instead of one generic assistant,{' '}
-							<span className={s.mono} style={{ color: 'var(--acc)' }}>
-								@spec
-							</span>
-							, <span className={s.mono}>@eng</span> and{' '}
-							<span className={s.mono}>@review</span> keep separate queues and
-							clear responsibilities. You can see who is structuring, building,
-							or blocking the work at any moment.
+							Planning, building, and reviewing run in separate lanes with
+							clear handoffs. You can see what is in progress, what is blocked,
+							and what moves next — at any moment, without asking.
 						</p>
 						<RoleVisualization />
 					</Reveal>

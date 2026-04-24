@@ -123,16 +123,9 @@ export default function Playground() {
 						</h2>
 					</div>
 					<p className={s.lede}>
-						Start with the kind of messy ask teams actually get.{' '}
-						<span className={s.mono} style={{ color: 'var(--acc)' }}>
-							@spec
-						</span>{' '}
-						will turn it into acceptance criteria;{' '}
-						<span className={s.mono} style={{ color: 'var(--ink)' }}>
-							@eng
-						</span>{' '}
-						will turn it into an implementation plan and draft PR. It&apos;s a
-						mock, but the workflow is the point.
+						Start with the kind of messy ask teams actually get. Altr
+						will turn it into acceptance criteria, an implementation plan,
+						and a draft PR. It&apos;s a mock, but the workflow is the point.
 					</p>
 				</Reveal>
 				<Reveal>
@@ -141,7 +134,7 @@ export default function Playground() {
 							<div className={s.pgPaneBar}>
 								<div className={s.pgLabel}>
 									<b>Your spec</b>
-									<span>@spec is listening</span>
+									<span>Altr is listening</span>
 								</div>
 								<div className={s.pgPill}>rough prompt</div>
 							</div>
@@ -183,7 +176,7 @@ export default function Playground() {
 									<div className={s.pgEmptyMk}>§ waiting for input</div>
 									Pick an example or type a rough request.
 									<br />
-									<span style={{ fontSize: '14px', fontFamily: 'var(--f-mono)', fontStyle: 'normal', marginTop: '10px', display: 'block', color: 'var(--ink-5)' }}>@spec · @eng · output appears here</span>
+									<span style={{ fontSize: '14px', fontFamily: 'var(--f-mono)', fontStyle: 'normal', marginTop: '10px', display: 'block', color: 'var(--ink-5)' }}>plan · build · output appears here</span>
 								</div>
 							)}
 							{active && (
@@ -199,7 +192,7 @@ export default function Playground() {
 									<div className={s.pgStatRow}>
 										<div className={s.pgStat}>
 											<span>owner</span>
-											<b>@eng</b>
+											<b>Altr</b>
 										</div>
 										<div className={s.pgStat}>
 											<span>risk</span>
@@ -215,7 +208,7 @@ export default function Playground() {
 									>
 										<div className={s.pgOutBlockLbl}>
 											<span className={s.pgOutBlockPt} />
-											■ @spec · acceptance criteria
+											■ acceptance criteria
 										</div>
 										<ul>
 											{active.ac.map((item, i) => (
@@ -228,7 +221,7 @@ export default function Playground() {
 									>
 										<div className={s.pgOutBlockLbl}>
 											<span className={s.pgOutBlockPt} />
-											▲ @eng · plan
+											▲ implementation plan
 										</div>
 										<ul>
 											{active.plan.map((item, i) => (

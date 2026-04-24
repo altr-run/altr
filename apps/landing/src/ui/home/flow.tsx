@@ -12,19 +12,19 @@ const NODES = [
 	},
 	{
 		label: 'Plan',
-		sub: '@spec drafts acceptance and open questions',
+		sub: 'acceptance criteria drafted, open questions flagged',
 		meta: 'structure',
 		type: 'agent-spec',
 	},
 	{
 		label: 'Build',
-		sub: '@eng opens worktree and proposes the change',
+		sub: 'worktree opened, change proposed with criteria attached',
 		meta: 'execute',
 		type: 'artifact',
 	},
 	{
 		label: 'Review',
-		sub: '@review checks intent, risk, and regressions',
+		sub: 'intent, risk, and regressions checked before merge',
 		meta: 'verify',
 		type: 'agent-eng',
 	},

@@ -75,8 +75,7 @@ export default function Metrics() {
 						<em>the whole trail stays attached.</em>
 					</h2>
 					<p className={s.metricsNote}>
-						Directional signal from early design-partner workflows, shown here
-						as operating indicators rather than benchmark claims.
+						Early signal from pilot teams.
 					</p>
 				</Reveal>
 				<div className={s.metricsGrid}>

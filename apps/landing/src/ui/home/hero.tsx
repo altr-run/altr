@@ -33,7 +33,7 @@ export default function Hero() {
 					for teams &amp; agents · threads → specs → prs · local-first
 				</p>
 				<h1 className={`${s.heroH} ${s.display}`}>
-					<span className={s.line}>Stop dropping the thread.</span>
+					<span className={s.line}>Build without the archaeology.</span>
 					<span className={s.line}>Close the execution loop.</span>
 					<span className={s.line}>
 						Ship with{' '}
@@ -72,20 +72,24 @@ export default function Hero() {
 					</span>
 				</h1>
 				<p className={s.heroSub}>
-					Altr captures product signals, drafts specs, opens the branch, and
-					carries review context all the way to the merged diff.{' '}
-					<span className={`${s.mono} ${s.heroMonoAcc}`}>@spec</span>,{' '}
-					<span className={`${s.mono} ${s.heroMonoInk}`}>@eng</span>, and{' '}
-					<span className={`${s.mono} ${s.heroMonoInk}`}>@review</span> work in
-					the same room, on the same trail, from first request to shipped change.
+					Rough requests become specs. Specs become branches. Branches become
+					reviewed PRs. The original rationale survives every step — so your
+					team ships on intent, not archaeology.
 				</p>
 				<div className={s.heroCtas}>
 					<a href="#close" className={`${s.btn} ${s.btnPrimary} ${s.btnLg}`}>
-						Request beta access →
+						Get early access →
 					</a>
 					<a href="#playground" className={`${s.btn} ${s.btnGhost} ${s.btnLg}`}>
-						Try the demo
+						See it in action
 					</a>
+				</div>
+				<div className={s.heroTrust}>
+					<span>2.7× faster request-to-spec</span>
+					<span className={s.heroMetaSep} />
+					<span>41% less context rebuilding</span>
+					<span className={s.heroMetaSep} />
+					<span>founder-led onboarding</span>
 				</div>
 				<div className={s.heroMeta}>
 					<span>intake</span>
@@ -124,6 +128,7 @@ export default function Hero() {
 								</span>
 								<span className={s.pcTab}>eng / PR #142</span>
 								<span className={s.pcTab}>#launch-magic-link</span>
+
 							</div>
 							<div className={s.pcKbd}>⌘K</div>
 						</div>
@@ -140,7 +145,7 @@ export default function Hero() {
 									</div>
 									<div className={s.pcRailCard}>
 										<span>handoff</span>
-										<b>@eng next</b>
+										<b>build next</b>
 									</div>
 								</div>
 								<span className={s.over}>
@@ -149,7 +154,7 @@ export default function Hero() {
 								<h3 className={s.pcDocTitle}>Magic-link onboarding</h3>
 								<div className={s.pcDocSub}>
 									owner: <span className={s.mention}>@mukul</span> · co-authored
-									with <span className={s.mention}>@spec</span>
+									with <span className={s.mention}>Altr</span>
 								</div>
 
 								<h4 className={s.pcDocH}>The problem</h4>
@@ -177,7 +182,7 @@ export default function Hero() {
 
 								<h4 className={s.pcDocH}>Open questions</h4>
 								<p className={s.pcDocP}>
-									<span className={s.mention}>@spec</span> flagged: should
+									Altr flagged: should
 									revoked invites still count toward the rate limit?
 								</p>
 							</div>
@@ -193,11 +198,11 @@ export default function Hero() {
 								<div className={s.pcQueue}>
 									<div className={s.pcQueueItem}>
 										<span>active</span>
-										<b>@spec drafting AC</b>
+										<b>Altr drafting AC</b>
 									</div>
 									<div className={s.pcQueueItem}>
 										<span>next</span>
-										<b>@eng opens worktree</b>
+										<b>build opens worktree</b>
 									</div>
 								</div>
 								<div className={s.pcMsgs}>
@@ -207,11 +212,11 @@ export default function Hero() {
 										</div>
 										<div>
 											<div className={s.pcMsgWho}>
-												<b>@spec</b>
+												<b>Altr</b>
 												<span>11:02</span>
 											</div>
 											Pulled 4 AC from the thread. Added rate-limit from the
-											security review. Ready for <b>@eng</b>?
+											security review. Ready for build?
 										</div>
 									</div>
 									<div className={s.pcMsg}>
@@ -232,7 +237,7 @@ export default function Hero() {
 										</div>
 										<div>
 											<div className={s.pcMsgWho}>
-												<b>@eng</b>
+												<b>Altr</b>
 												<span>11:04</span>
 											</div>
 											Drafting PR now. Est. <b>2h 40m</b>. Touching{' '}
@@ -247,7 +252,7 @@ export default function Hero() {
 										</div>
 										<div>
 											<div className={s.pcMsgWho}>
-												<b>@spec</b>
+												<b>Altr</b>
 												<span>11:05</span>
 											</div>
 											I&apos;ll draft the changelog entry once PR lands. Staging
