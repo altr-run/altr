@@ -5,6 +5,7 @@ import Logos from './logos'
 import Flow from './flow'
 import ContextLost from './context-lost'
 import PaxLive from './pax-live'
+import CTACallout from './cta-callout'
 
 const HandoffCalculator = dynamic(() => import('./handoff-calculator'))
 const Triptych = dynamic(() => import('./triptych'))
@@ -34,23 +35,24 @@ export default function HomePage() {
 					<Hero />
 				</div>
 				<div data-nav-theme="light">
-					<Logos />
 					<ContextLost />
-					<section className="px-8 py-24">
-						<div className="mx-auto" style={{ maxWidth: 'var(--maxw-narrow)' }}>
-							<p className="font-mono text-[11px] uppercase tracking-widest text-acc mb-10 text-center">Calculated Efficiency</p>
-							<HandoffCalculator />
-						</div>
-					</section>
 					<Flow />
 					<PaxLive />
+					<CTACallout />
 					<Triptych />
+					<Logos />
 					<Manifesto />
 					<How />
 					<UseCases />
 					<Playground />
 					<Trust />
 					<Metrics />
+					<section className="px-8 py-24 border-b border-line" style={{ background: 'var(--bg-1)' }}>
+						<div className="mx-auto" style={{ maxWidth: 'var(--maxw-narrow)' }}>
+							<p className="font-mono text-[11px] uppercase tracking-widest text-acc mb-10 text-center">Calculate your savings</p>
+							<HandoffCalculator />
+						</div>
+					</section>
 					<Testimonials />
 					<FAQ />
 					<TalkTeam />

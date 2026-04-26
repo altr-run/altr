@@ -61,13 +61,20 @@
 	--panel-ink:    var(--gray-12);
 	--ring-soft:    var(--black-a2);
 	--ring-strong:  var(--black-a4);
-	--glow-soft:    color-mix(in oklch, var(--lime-9) 14%, transparent);
+	--glow-soft:    color-mix(in oklch, var(--acc-vibrant) 14%, transparent);
 
-	/* Accent — Lime */
-	--acc:      var(--lime-8);   /* #8db654 — matches original */
-	--acc-2:    var(--lime-11);
-	--acc-soft: var(--lime-3);
-	--acc-ink:  var(--lime-12);
+	/* Accent — Digital Electric Lime Palette (Reference #89F336) */
+	--acc:          #4A8F00;   /* Compliant Action Lime (Clean, no mud) */
+	--acc-vibrant:  #9DFF52;   /* Electric Glow (for shaders/glows) */
+	--acc-2:        #3D7000;   /* Deeper hover state */
+	--acc-soft:     color-mix(in oklab, var(--acc-vibrant) 18%, var(--bg));
+	--acc-ink:      #0a0a0a;   /* Dark ink on vibrant backgrounds */
+
+	/* Radix Overrides */
+	--lime-9:  #89F336;        /* Raw reference lime */
+	--lime-10: var(--acc);
+	--lime-11: var(--acc-2);
+	--lime-3:  var(--acc-soft);
 
 	/* Amber */
 	--amber:      var(--amber-9);
@@ -337,65 +344,91 @@
 
 	.btn-primary {
 		background:
-			linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 60%),
-			var(--ink);
-		color: var(--bg);
-		border-color: rgba(10,10,10,0.08);
+			linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 100%),
+			color-mix(in oklab, var(--acc) 84%, var(--acc-vibrant) 16%);
+		color: #fff;
+		border-color: color-mix(in oklab, var(--acc-vibrant) 42%, rgba(255,255,255,0.18));
+		backdrop-filter: blur(14px) saturate(1.5);
+		-webkit-backdrop-filter: blur(14px) saturate(1.5);
 		box-shadow:
-			0 14px 28px var(--black-a3),
-			inset 0 1px 0 rgba(255,255,255,0.1);
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 22%, transparent),
+			0 12px 28px color-mix(in oklab, var(--acc) 38%, transparent),
+			0 2px 8px color-mix(in oklab, var(--acc-vibrant) 18%, transparent),
+			inset 0 1px 0 rgba(255,255,255,0.30),
+			inset 0 -1px 0 rgba(0,0,0,0.08);
 
 		&:hover {
 			background:
-				linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%),
-				color-mix(in oklab, var(--ink) 92%, var(--acc) 8%);
-			border-color: color-mix(in oklab, var(--acc) 20%, rgba(10,10,10,0.1));
-			color: var(--bg);
+				linear-gradient(135deg, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.06) 100%),
+				color-mix(in oklab, var(--acc) 74%, var(--acc-vibrant) 26%);
+			border-color: color-mix(in oklab, var(--acc-vibrant) 58%, rgba(255,255,255,0.22));
+			color: #fff;
 			box-shadow:
-				0 18px 34px var(--black-a4),
-				inset 0 1px 0 rgba(255,255,255,0.12);
+				0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 32%, transparent),
+				0 16px 36px color-mix(in oklab, var(--acc) 45%, transparent),
+				0 4px 14px color-mix(in oklab, var(--acc-vibrant) 26%, transparent),
+				inset 0 1px 0 rgba(255,255,255,0.34),
+				inset 0 -1px 0 rgba(0,0,0,0.06);
 		}
 	}
 
 	.btn-ghost {
-		background: color-mix(in oklab, var(--panel) 90%, white 10%);
+		/* Frosted glass — secondary counterpart to btn-primary */
+		background:
+			linear-gradient(135deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.28) 100%),
+			color-mix(in oklab, var(--acc) 3%, rgba(255,255,255,0.1));
 		color: var(--ink);
-		border-color: color-mix(in oklab, var(--line) 86%, transparent);
-		backdrop-filter: blur(20px) saturate(1.15);
-		-webkit-backdrop-filter: blur(20px) saturate(1.15);
+		border-color: color-mix(in oklab, var(--acc-vibrant) 18%, rgba(255,255,255,0.6));
+		backdrop-filter: blur(20px) saturate(1.3);
+		-webkit-backdrop-filter: blur(20px) saturate(1.3);
 		box-shadow:
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 10%, rgba(200,220,180,0.3)),
 			var(--sh-sm),
-			inset 0 1px 0 rgba(255,255,255,0.68);
+			inset 0 1px 0 rgba(255,255,255,0.85),
+			inset 0 -1px 0 rgba(0,0,0,0.04);
 
 		&:hover {
-			background: var(--panel-strong);
-			border-color: color-mix(in oklab, var(--acc) 24%, var(--line));
+			background:
+				linear-gradient(135deg, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0.36) 100%),
+				color-mix(in oklab, var(--acc) 6%, rgba(255,255,255,0.1));
+			border-color: color-mix(in oklab, var(--acc-vibrant) 32%, rgba(255,255,255,0.5));
 			color: var(--ink);
 			box-shadow:
+				0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 18%, rgba(200,220,180,0.35)),
 				var(--sh-md),
-				inset 0 1px 0 rgba(255,255,255,0.82);
+				inset 0 1px 0 rgba(255,255,255,0.9),
+				inset 0 -1px 0 rgba(0,0,0,0.03);
 		}
 	}
 
 	.btn-acc {
+		/* Vibrant lime glass — lighter lime = dark text for contrast */
 		background:
-			linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(0,0,0,0.03) 100%),
-			var(--acc);
+			linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.06) 100%),
+			color-mix(in oklab, var(--acc-vibrant) 72%, var(--acc) 28%);
 		color: var(--acc-ink);
-		border-color: color-mix(in oklab, var(--acc-2) 54%, transparent);
+		border-color: color-mix(in oklab, var(--acc-vibrant) 55%, rgba(255,255,255,0.25));
+		backdrop-filter: blur(14px) saturate(1.5);
+		-webkit-backdrop-filter: blur(14px) saturate(1.5);
 		box-shadow:
-			0 10px 22px color-mix(in oklch, var(--lime-9) 24%, transparent),
-			inset 0 1px 0 rgba(255,255,255,0.18);
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 28%, transparent),
+			0 10px 24px color-mix(in oklab, var(--acc) 32%, transparent),
+			0 2px 8px color-mix(in oklab, var(--acc-vibrant) 22%, transparent),
+			inset 0 1px 0 rgba(255,255,255,0.38),
+			inset 0 -1px 0 rgba(0,0,0,0.06);
 
 		&:hover {
 			background:
-				linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.02) 100%),
-				var(--acc-2);
-			border-color: color-mix(in oklab, var(--acc-2) 72%, transparent);
-			color: var(--lime-1);
+				linear-gradient(135deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.10) 100%),
+				var(--acc-vibrant);
+			border-color: color-mix(in oklab, var(--acc-vibrant) 75%, rgba(255,255,255,0.3));
+			color: var(--acc-ink);
 			box-shadow:
-				0 12px 28px color-mix(in oklch, var(--lime-9) 30%, transparent),
-				inset 0 1px 0 rgba(255,255,255,0.28);
+				0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 40%, transparent),
+				0 14px 30px color-mix(in oklab, var(--acc) 40%, transparent),
+				0 4px 12px color-mix(in oklab, var(--acc-vibrant) 30%, transparent),
+				inset 0 1px 0 rgba(255,255,255,0.44),
+				inset 0 -1px 0 rgba(0,0,0,0.04);
 		}
 	}
 
@@ -454,6 +487,16 @@
 	28%       { transform: scale(1); }
 	42%       { transform: scale(1.2); }
 	56%       { transform: scale(1); opacity: 0.8; }
+}
+@keyframes glow-ring {
+	0%, 100% { box-shadow: 0 0 0 0px color-mix(in oklab, var(--acc-vibrant) 0%, transparent); }
+	50%       { box-shadow: 0 0 0 5px color-mix(in oklab, var(--acc-vibrant) 28%, transparent); }
+}
+@keyframes flow-beam {
+	0%   { offset-distance: 0%;   opacity: 0; }
+	5%   { opacity: 1; }
+	90%  { opacity: 1; }
+	100% { offset-distance: 100%; opacity: 0; }
 }
 
 /* ─────────────────────────────────────────────────────
@@ -580,6 +623,119 @@ body:has([data-home-page]) > main {
 		& :is(th, td) { padding: 0.5lh 1em; }
 		& tbody tr:nth-child(odd) { @apply bg-foreground/5; }
 	}
+}
+
+/* Altr blog article prose — uses Altr design tokens */
+@utility prose-altr {
+	color: var(--ink-2);
+	font-size: 16px;
+	line-height: 1.78;
+	font-family: var(--font-sans);
+
+	& h1, & h2, & h3, & h4, & h5, & h6 {
+		font-family: var(--font-serif);
+		font-weight: 400;
+		color: var(--ink);
+		line-height: 1.2;
+		margin-top: 2.4em;
+		margin-bottom: 0.6em;
+	}
+	& h2 { font-size: clamp(20px, 2vw, 28px); }
+	& h3 { font-size: clamp(17px, 1.6vw, 22px); }
+	& h4 { font-size: 17px; font-family: var(--font-sans); font-weight: 600; }
+
+	& p { margin-bottom: 1.4em; }
+
+	& a:not([class]) {
+		color: var(--ink);
+		text-decoration: underline;
+		text-decoration-color: var(--acc);
+		text-underline-offset: 3px;
+		&:hover { color: var(--acc); }
+	}
+
+	& strong { font-weight: 600; color: var(--ink); }
+	& em { font-style: italic; }
+
+	& ul, & ol {
+		padding-left: 1.6em;
+		margin-bottom: 1.4em;
+	}
+	& ul { list-style: disc; }
+	& ol { list-style: decimal; }
+	& li { margin-bottom: 0.4em; }
+
+	& blockquote {
+		border-left: 2px solid var(--acc);
+		padding-left: 1.2em;
+		margin: 2em 0;
+		color: var(--ink-3);
+		font-style: italic;
+		font-family: var(--font-serif);
+		font-size: 1.1em;
+	}
+
+	& :not(pre) > code {
+		font-family: var(--font-mono);
+		font-size: 0.875em;
+		background: var(--bg-2);
+		border: 1px solid var(--line);
+		border-radius: 4px;
+		padding: 0.1em 0.35em;
+		color: var(--ink);
+	}
+	& pre {
+		background: var(--bg-2);
+		border: 1px solid var(--line);
+		border-radius: 8px;
+		padding: 1.2em 1.4em;
+		overflow-x: auto;
+		font-size: 0.875em;
+		margin: 1.8em 0;
+	}
+
+	& img, & figure {
+		border-radius: 10px;
+		overflow: hidden;
+		border: 1px solid var(--line);
+		margin: 2em 0;
+	}
+	& figcaption {
+		font-size: 12px;
+		font-family: var(--font-mono);
+		color: var(--ink-4);
+		text-align: center;
+		padding: 0.5em 0 0;
+	}
+
+	& hr {
+		border: none;
+		border-top: 1px solid var(--line);
+		margin: 2.5em 0;
+	}
+
+	& table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.9em;
+		margin: 2em 0;
+	}
+	& th {
+		font-family: var(--font-mono);
+		font-size: 10.5px;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--ink-4);
+		text-align: left;
+		padding: 0.6em 1em;
+		border-bottom: 1px solid var(--line);
+	}
+	& td {
+		padding: 0.65em 1em;
+		border-bottom: 1px solid var(--line);
+		color: var(--ink-2);
+	}
+	& tbody tr:hover { background: var(--bg-1); }
 }
 
 @utility accordion {

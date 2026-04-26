@@ -13,7 +13,7 @@ export default function Manifesto() {
 	return (
 		<section
 			id="stack"
-			className="relative overflow-hidden py-[180px] px-8 pb-[160px] border-b border-(--line)"
+			className="relative overflow-hidden pt-[180px] pb-[160px] px-8 border-b border-(--line)"
 			style={{
 				background:
 					'radial-gradient(50% 60% at 20% 30%, var(--acc-soft) 0%, transparent 60%), radial-gradient(40% 50% at 90% 80%, color-mix(in oklab, var(--acc) 6%, transparent) 0%, transparent 60%), var(--bg)',

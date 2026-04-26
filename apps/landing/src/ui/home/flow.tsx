@@ -1,6 +1,7 @@
 'use client'
 
-import { motion } from 'motion/react'
+import { motion, useInView } from 'motion/react'
+import { useRef } from 'react'
 import Reveal from './reveal'
 
 // Notification data — a realistic snapshot of peak-chaos
@@ -119,6 +120,9 @@ const RESOLUTION_STEPS = [
 ]
 
 export default function Flow() {
+	const feedRef = useRef<HTMLDivElement>(null)
+	const feedInView = useInView(feedRef, { once: true, margin: '-80px' })
+
 	return (
 		<section
 			className="py-[120px] px-8 border-b border-line bg-bg overflow-hidden"
@@ -191,7 +195,20 @@ export default function Flow() {
 						</div>
 
 						{/* Notification feed */}
-						<div className="divide-y divide-line">
+						<div ref={feedRef} className="divide-y divide-line relative overflow-hidden">
+							{/* Scanner beam — sweeps once when feed enters view */}
+							{feedInView && (
+								<motion.div
+									className="absolute left-0 right-0 h-[2px] pointer-events-none z-[10]"
+									style={{
+										background: 'linear-gradient(90deg, transparent 0%, color-mix(in oklab, var(--acc-vibrant) 60%, transparent) 40%, color-mix(in oklab, var(--acc-vibrant) 80%, transparent) 50%, color-mix(in oklab, var(--acc-vibrant) 60%, transparent) 60%, transparent 100%)',
+										boxShadow: '0 0 12px 2px color-mix(in oklab, var(--acc-vibrant) 30%, transparent)',
+									}}
+									initial={{ top: '0%', opacity: 0 }}
+									animate={{ top: ['0%', '105%'], opacity: [0, 1, 1, 0] }}
+									transition={{ duration: 1.6, ease: [0.4, 0, 0.6, 1], delay: 0.3 }}
+								/>
+							)}
 							{NOTIFICATIONS.map((n, i) => (
 								<motion.div
 									key={i}
@@ -203,7 +220,7 @@ export default function Flow() {
 										ease: [0.25, 1, 0.5, 1],
 										delay: 0.05 + i * 0.055,
 									}}
-									className="flex items-start gap-3 px-5 py-[13px] relative transition-colors duration-200 hover:bg-[color-mix(in_oklab,var(--acc)_2%,var(--bg-1))]"
+									className="flex items-start gap-3 px-5 py-[13px] relative transition-colors duration-200 hover:bg-[color-mix(in_oklab,var(--acc)_2%,var(--bg-1))] group/row"
 									style={{
 										background: n.unread
 											? 'color-mix(in oklab, var(--bg-1) 60%, var(--bg))'
@@ -290,18 +307,22 @@ export default function Flow() {
 						</div>
 
 						{/* Resolution band */}
-						<div
+						<motion.div
 							className="border-t border-line px-5 py-5"
 							style={{
 								background:
-									'linear-gradient(180deg, color-mix(in oklab, var(--acc) 4%, var(--bg-1)) 0%, var(--bg-1) 100%)',
+									'linear-gradient(180deg, color-mix(in oklab, var(--acc) 5%, var(--bg-1)) 0%, var(--bg-1) 100%)',
 							}}
+							initial={{ opacity: 0 }}
+							whileInView={{ opacity: 1 }}
+							viewport={{ once: true }}
+							transition={{ duration: 0.6, delay: 0.55 }}
 						>
 							<div className="flex items-center gap-2 mb-4">
 								<span
 									className="w-[5px] h-[5px] rounded-full bg-acc animate-[pulse-dot_1.6s_ease-in-out_infinite]"
 								/>
-								<span className="font-mono text-[10px] tracking-[0.12em] uppercase text-acc-ink font-semibold">
+								<span className="font-mono text-[10px] tracking-[0.12em] uppercase text-acc font-semibold">
 									Altr captures and structures all of this
 								</span>
 							</div>
@@ -309,33 +330,48 @@ export default function Flow() {
 								className="grid gap-px bg-line rounded-[16px] overflow-hidden border border-line"
 								style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}
 							>
-								{RESOLUTION_STEPS.map((step, i) => (
-									<motion.div
-										key={step.label}
-										initial={{ opacity: 0, y: 6 }}
-										whileInView={{ opacity: 1, y: 0 }}
-										viewport={{ once: true }}
-										transition={{
-											duration: 0.4,
-											ease: [0.25, 1, 0.5, 1],
-											delay: 0.5 + i * 0.07,
-										}}
-										className="flex flex-col gap-1.5 p-[14px_16px]"
-										style={{ background: 'var(--bg)' }}
-									>
-										<span className="font-mono text-[16px] text-acc leading-none">
-											{step.icon}
-										</span>
-										<span className="font-sans font-semibold text-[13px] text-ink tracking-tight">
-											{step.label}
-										</span>
-										<span className="font-mono text-[10px] text-ink-4 tracking-wide leading-[1.4]">
-											{step.desc}
-										</span>
-									</motion.div>
-								))}
+								{RESOLUTION_STEPS.map((step, i) => {
+									const isLast = i === RESOLUTION_STEPS.length - 1
+									return (
+										<motion.div
+											key={step.label}
+											initial={{ opacity: 0, y: 8 }}
+											whileInView={{ opacity: 1, y: 0 }}
+											viewport={{ once: true }}
+											transition={{
+												duration: 0.45,
+												ease: [0.25, 1, 0.5, 1],
+												delay: 0.6 + i * 0.1,
+											}}
+											className="flex flex-col gap-1.5 p-[14px_16px] relative overflow-hidden"
+											style={{
+												background: isLast
+													? 'color-mix(in oklab, var(--acc) 5%, var(--bg))'
+													: 'var(--bg)',
+											}}
+										>
+											{isLast && (
+												<div
+													className="absolute inset-0 pointer-events-none"
+													style={{
+														background: 'radial-gradient(ellipse at 50% 110%, color-mix(in oklab, var(--acc-vibrant) 12%, transparent) 0%, transparent 70%)',
+													}}
+												/>
+											)}
+											<span className={`font-mono text-[16px] leading-none ${isLast ? 'text-acc' : 'text-acc'}`}>
+												{step.icon}
+											</span>
+											<span className="font-sans font-semibold text-[13px] text-ink tracking-tight">
+												{step.label}
+											</span>
+											<span className="font-mono text-[10px] text-ink-4 tracking-wide leading-[1.4]">
+												{step.desc}
+											</span>
+										</motion.div>
+									)
+								})}
 							</div>
-						</div>
+						</motion.div>
 					</div>
 				</Reveal>
 

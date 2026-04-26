@@ -145,7 +145,7 @@ function IntakeVisualization() {
 						className="absolute left-[-5px] w-[11px] h-[11px] rounded-full bg-acc"
 						style={{
 							boxShadow:
-								'0 0 0 6px color-mix(in oklab, var(--acc) 10%, transparent)',
+								'0 0 0 5px color-mix(in oklab, var(--acc) 14%, transparent), 0 0 14px 3px color-mix(in oklab, var(--acc-vibrant) 22%, transparent)',
 						}}
 						animate={{ top: ['10%', '82%'] }}
 						transition={{
@@ -433,7 +433,7 @@ function ChainVisualization() {
 							className="absolute top-[-5px] w-[11px] h-[11px] rounded-full bg-acc"
 							style={{
 								boxShadow:
-									'0 0 0 4px color-mix(in oklab, var(--acc) 14%, transparent)',
+									'0 0 0 4px color-mix(in oklab, var(--acc) 16%, transparent), 0 0 12px 3px color-mix(in oklab, var(--acc-vibrant) 20%, transparent)',
 							}}
 							animate={{ left: ['8%', '82%'] }}
 							transition={{
@@ -534,8 +534,7 @@ function ChainVisualization() {
 export default function Triptych() {
 	return (
 		<section
-			className="py-[140px_32px_120px] px-8 border-b border-line"
-			style={{ padding: '140px 32px 120px' }}
+			className="pt-[140px] pb-[120px] px-8 border-b border-line"
 			id="context"
 		>
 			<div className="inner">

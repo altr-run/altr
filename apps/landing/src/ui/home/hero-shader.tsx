@@ -351,7 +351,7 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 	const mountRef = useRef<HTMLDivElement | null>(null)
 	const speedRef = useRef(BASE_SPEED)
 	const colorBack = useMemo(() => parseHexColor('#00000000'), [])
-	const colorFront = useMemo(() => parseHexColor('#B7D96A'), [])
+	const colorFront = useMemo(() => parseHexColor('#4A8F00'), [])
 
 	useEffect(() => {
 		const mount = mountRef.current
@@ -529,7 +529,7 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 			ref={mountRef}
 			className="pointer-events-none absolute inset-0 z-0"
 			style={{
-				opacity: 0.28,
+				opacity: 0.26,
 				mixBlendMode: 'multiply',
 				maskImage:
 					'radial-gradient(ellipse 76% 78% at 50% 34%, #000 0%, rgba(0,0,0,0.92) 48%, transparent 90%)',
@@ -540,7 +540,7 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 				className="absolute inset-0"
 				style={{
 					background:
-						'radial-gradient(ellipse 72% 68% at 50% 34%, color-mix(in srgb, var(--acc) 22%, transparent), transparent 74%)',
+						'radial-gradient(ellipse 72% 68% at 50% 34%, color-mix(in srgb, var(--acc) 18%, transparent), transparent 74%)',
 				}}
 			/>
 		</div>

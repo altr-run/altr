@@ -100,6 +100,7 @@ export default function SiteFooter() {
 						{/* Company col */}
 						<div>
 							<div className={COL_HEAD}>Company</div>
+							<a href="/blog" className={NAV_LINK}>Blog</a>
 							<a href="/security" className={NAV_LINK}>Security</a>
 							<a href="/#faq" className={NAV_LINK}>FAQ</a>
 							<a href="/changelog" className={NAV_LINK}>What&apos;s new</a>
