@@ -51,3 +51,6 @@ logs/
 *.sqlite-journal
 *.sqlite-wal
 *.sqlite-shm
+.gstack/
+
+site-local/

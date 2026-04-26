@@ -1,4 +1,5 @@
 import { groq } from 'next-sanity'
+import { cache } from 'react'
 import type { SITE_QUERY_RESULT } from '@/sanity/types'
 import { sanityFetchLive } from './live'
 
@@ -118,8 +119,8 @@ export const MODULES_QUERY = groq`
 
 /* queries */
 
-export async function getSite() {
+export const getSite = cache(async function getSite() {
 	return await sanityFetchLive<SITE_QUERY_RESULT>({
 		query: SITE_QUERY,
 	})
-}
+})

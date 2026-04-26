@@ -1,0 +1,1832 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-accent="amber" data-hero="centered">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Altr — the workspace where humans and AI ship together</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* =====================================================================
+   ALTR v7 · warm cream · amber accent · quiet confidence
+   A single-screen pitch. Panxo-style register: one idea, shown plainly.
+   ===================================================================== */
+
+/* ================= TOKENS ================= */
+:root{
+  /* Light — pure white */
+  --bg:        #FFFFFF;
+  --bg-1:      #FAFAFA;
+  --bg-2:      #F2F2F2;
+  --surface:   #FFFFFF;
+  --ink:       #0A0A0A;
+  --ink-1:     #1A1A1A;
+  --ink-2:     #3F3F3F;
+  --ink-3:     #6B6B6B;
+  --ink-4:     #9A9A9A;
+  --ink-5:     #C4C4C4;
+  --line:      #E8E8E8;
+  --line-2:    #D0D0D0;
+
+  /* Accent — amber/rust (primary) */
+  --amber:     #D9562A;
+  --amber-2:   #B8421B;
+  --amber-soft:#F6E3D0;
+  --amber-ink: #6E2E17;
+
+  /* Secondary — moss (kept from v5/v6) */
+  --moss:      #5E7B5A;
+  --moss-2:    #3F5A3C;
+  --mint:      #8FB088;
+  --mint-soft: #DFE8D7;
+
+  /* Accent binding (swappable via [data-accent]) */
+  --acc:       var(--amber);
+  --acc-2:     var(--amber-2);
+  --acc-soft:  var(--amber-soft);
+  --acc-ink:   var(--amber-ink);
+
+  /* Type */
+  --f-serif:   "Instrument Serif", "Iowan Old Style", "Apple Garamond", Georgia, serif;
+  --f-sans:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --f-mono:    "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  /* Radii / shadow */
+  --r-sm: 6px;  --r-md: 10px; --r-lg: 16px; --r-xl: 22px;
+  --sh-sm: 0 1px 2px rgba(26,22,18,.04), 0 2px 6px rgba(26,22,18,.03);
+  --sh-md: 0 2px 6px rgba(26,22,18,.05), 0 12px 28px rgba(26,22,18,.05);
+  --sh-lg: 0 4px 12px rgba(26,22,18,.06), 0 22px 60px rgba(26,22,18,.08);
+
+  --maxw: 1240px;
+  --maxw-narrow: 940px;
+}
+
+[data-theme="dark"]{
+  --bg: #15120E;
+  --bg-1: #1C1813;
+  --bg-2: #221D17;
+  --surface: #1A1611;
+  --ink: #F4ECDC;
+  --ink-1: #E6DCC8;
+  --ink-2: #B8AC95;
+  --ink-3: #8A7F6B;
+  --ink-4: #655C4C;
+  --ink-5: #4A4235;
+  --line: #2E2821;
+  --line-2: #413929;
+
+  --amber:  #E97745;
+  --amber-2:#FF9A6C;
+  --amber-soft: #3A2418;
+  --amber-ink: #F4C6A8;
+
+  --moss: #8FB088;
+  --moss-2: #B0C9A9;
+  --mint: #A8C7A0;
+  --mint-soft: #2A3626;
+}
+
+[data-accent="mint"]{ --acc: var(--moss); --acc-2: var(--moss-2); --acc-soft: var(--mint-soft); --acc-ink: var(--moss-2); }
+[data-accent="mono"]{ --acc: var(--ink); --acc-2: var(--ink-1); --acc-soft: var(--bg-1); --acc-ink: var(--ink); }
+
+/* ================= BASE ================= */
+*{ box-sizing: border-box; }
+html, body{ margin: 0; padding: 0; }
+body{
+  font-family: var(--f-sans);
+  background: var(--bg); color: var(--ink);
+  font-size: 16px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv02", "cv11";
+}
+img, svg{ display: block; max-width: 100%; }
+a{ color: inherit; text-decoration: none; }
+em{ font-style: italic; }
+.mono{ font-family: var(--f-mono); font-size: .88em; letter-spacing: -0.01em; }
+
+::selection{ background: var(--acc); color: #FFF8EE; }
+
+/* ================= TYPE ================= */
+.display{
+  font-family: var(--f-serif);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.96;
+  color: var(--ink);
+}
+.hero-h{
+  font-size: clamp(44px, 7.2vw, 104px);
+  margin: 0;
+  line-height: 1.06;
+}
+.hero-h em{ font-style: italic; }
+.hero-h .acc{ color: var(--acc); font-style: italic; }
+.h2{
+  font-family: var(--f-serif);
+  font-weight: 400;
+  font-size: clamp(44px, 5.6vw, 84px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+.h2 em{ font-style: italic; }
+.h3{
+  font-family: var(--f-serif);
+  font-weight: 400;
+  font-size: clamp(28px, 3vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.lede{
+  font-size: 19px; line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 52ch;
+  margin: 0;
+}
+.lede em{ font-family: var(--f-serif); font-style: italic; color: var(--ink); font-size: 1.06em; }
+.over{
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ================= CHIP ================= */
+.chip{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  box-shadow: var(--sh-sm);
+}
+.chip .dot{
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--acc);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--acc) 18%, transparent);
+}
+.chip b{ font-family: var(--f-sans); font-weight: 600; color: var(--ink); }
+
+/* ================= BUTTONS ================= */
+.btn{
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px;
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: 14.5px; letter-spacing: -0.005em;
+  padding: 11px 18px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer; user-select: none;
+  transition: transform .15s ease, background .15s, border .15s, color .15s;
+  white-space: nowrap;
+}
+.btn:hover{ transform: translateY(-1px); }
+.btn.primary{
+  background: var(--ink); color: var(--bg);
+  border-color: var(--ink);
+}
+.btn.primary:hover{ background: var(--acc); border-color: var(--acc); color: #FFF8EE; }
+.btn.ghost{
+  background: transparent; color: var(--ink);
+  border-color: var(--line-2);
+}
+.btn.ghost:hover{ background: var(--surface); border-color: var(--ink-3); }
+.btn.acc{
+  background: var(--acc); color: #FFF8EE; border-color: var(--acc);
+}
+.btn.acc:hover{ background: var(--acc-2); border-color: var(--acc-2); }
+.btn.lg{ padding: 13px 22px; font-size: 15px; }
+
+/* ================= NAV ================= */
+nav.top{
+  position: sticky; top: 0; z-index: 40;
+  background: color-mix(in oklab, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid color-mix(in oklab, var(--line) 50%, transparent);
+}
+.nav-in{
+  max-width: var(--maxw); margin: 0 auto;
+  padding: 14px 32px;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  gap: 24px;
+}
+.nav-left{ justify-self: start; display: flex; align-items: center; gap: 14px; }
+.nav-badge{
+  display: inline-flex; gap: 6px; align-items: center;
+  font-family: var(--f-mono); font-size: 10.5px;
+  padding: 3px 9px; border-radius: 4px;
+  color: var(--acc); background: var(--acc-soft);
+  letter-spacing: 0.04em;
+}
+.nav-badge b{ color: var(--acc); font-family: var(--f-sans); font-weight: 600; }
+.logo{
+  font-family: var(--f-serif);
+  font-weight: 400; font-style: italic;
+  font-size: 26px; letter-spacing: -0.03em;
+  color: var(--ink);
+  display: inline-flex; align-items: baseline; gap: 0;
+}
+.logo .slash{
+  font-family: var(--f-sans); font-style: normal; font-weight: 300;
+  color: var(--acc); font-size: 20px;
+  transform: translateY(-1px);
+  margin: 0 1px;
+}
+.nav-links{ display: flex; align-items: center; gap: 28px; }
+.nav-links a{
+  font-size: 14px; color: var(--ink-2);
+  transition: color .15s;
+}
+.nav-links a:hover{ color: var(--ink); }
+.nav-right{ display: flex; align-items: center; gap: 14px; }
+
+/* ================= HERO (centered, Panxo-style) ================= */
+.hero{
+  padding: 72px 32px 40px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before{
+  /* cross-rule marginalia */
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(90deg, transparent calc(50% - 420px), color-mix(in oklab, var(--line) 55%, transparent) calc(50% - 420px), color-mix(in oklab, var(--line) 55%, transparent) calc(50% - 419px), transparent calc(50% - 419px)),
+    linear-gradient(90deg, transparent calc(50% + 419px), color-mix(in oklab, var(--line) 55%, transparent) calc(50% + 419px), color-mix(in oklab, var(--line) 55%, transparent) calc(50% + 420px), transparent calc(50% + 420px));
+  pointer-events: none;
+  opacity: .0;
+}
+.hero-wrap{
+  max-width: 1020px; margin: 0 auto;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 28px;
+  position: relative;
+}
+.hero-sticker{
+  position: absolute; top: 0; left: -80px;
+  transform: rotate(-6deg);
+  font-family: var(--f-mono); font-size: 10.5px;
+  letter-spacing: 0.08em; color: var(--acc);
+  padding: 6px 10px;
+  border: 1px dashed var(--acc);
+  border-radius: 4px;
+  background: var(--acc-soft);
+  white-space: nowrap;
+}
+.hero-sticker::after{
+  content: ""; position: absolute;
+  top: 50%; right: -28px;
+  width: 28px; height: 1px;
+  background: var(--acc);
+}
+.hero-note{
+  position: absolute; top: 40px; right: -110px;
+  font-family: var(--f-serif); font-style: italic;
+  font-size: 14px; color: var(--ink-3);
+  max-width: 180px; text-align: left;
+  line-height: 1.35;
+}
+.hero-note b{ font-family: var(--f-sans); font-weight: 500; color: var(--acc); font-style: normal; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+@media (max-width: 1200px){ .hero-sticker, .hero-note{ display: none; } }
+.hero-h{
+  text-align: center;
+  text-wrap: balance;
+  position: relative;
+}
+.hero-h .line{ display: block; }
+.hero-h .line .underline-hand{
+  position: relative;
+  display: inline-block;
+}
+.hero-h .line .underline-hand::after{
+  content: ""; position: absolute;
+  left: -2px; right: -2px; bottom: -4px;
+  height: 10px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6 Q50 2 100 5 T 198 4' stroke='%23D9562A' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+  pointer-events: none;
+}
+[data-accent="mint"] .hero-h .line .underline-hand::after{
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6 Q50 2 100 5 T 198 4' stroke='%235E7B5A' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+}
+[data-accent="mono"] .hero-h .line .underline-hand::after{
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6 Q50 2 100 5 T 198 4' stroke='%231A1612' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+}
+.hero-sub{
+  font-family: var(--f-sans);
+  font-size: 19px; line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 54ch;
+  margin: 0 auto;
+}
+.hero-sub em{ font-family: var(--f-serif); font-style: italic; color: var(--ink); font-size: 1.06em; }
+.hero-ctas{ display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; }
+.hero-meta{
+  display: inline-flex; gap: 10px; align-items: center;
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: 0.06em; color: var(--ink-3);
+  margin-top: 2px;
+}
+.hero-meta .sep{ width: 3px; height: 3px; border-radius: 50%; background: var(--ink-4); }
+
+/* Hero product shot — single image / canvas below */
+.hero-shot-wrap{
+  max-width: 1180px; margin: 60px auto 0;
+  padding: 0 32px;
+  position: relative;
+}
+.hero-shot{
+  border-radius: var(--r-xl);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--sh-lg);
+  overflow: hidden;
+  position: relative;
+}
+.hero-shot::before{
+  /* subtle warm rim light */
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(60% 50% at 50% 0%, color-mix(in oklab, var(--acc) 6%, transparent) 0%, transparent 70%);
+  pointer-events: none;
+}
+/* Product canvas (used inside hero shot) */
+.pc-bar{
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 16px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-1);
+}
+.pc-bar .dots{ display: flex; gap: 6px; }
+.pc-bar .dots span{ width: 10px; height: 10px; border-radius: 50%; background: var(--ink-5); }
+.pc-tabs{ display: flex; gap: 4px; justify-self: start; }
+.pc-tab{
+  font-family: var(--f-mono); font-size: 11px;
+  padding: 5px 10px; border-radius: 6px;
+  color: var(--ink-3);
+}
+.pc-tab.on{ background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+.pc-kbd{
+  font-family: var(--f-mono); font-size: 10.5px;
+  padding: 4px 7px; border: 1px solid var(--line);
+  border-radius: 5px; color: var(--ink-3); background: var(--surface);
+}
+.pc-body{
+  display: grid; grid-template-columns: 1fr 340px;
+  min-height: 520px;
+}
+.pc-doc{
+  padding: 40px 48px;
+  border-right: 1px solid var(--line);
+  background: var(--surface);
+  position: relative;
+}
+.pc-doc .over{ margin-bottom: 14px; display: inline-block; }
+.pc-doc h3.doc-title{
+  font-family: var(--f-serif);
+  font-size: 34px; font-weight: 400;
+  letter-spacing: -0.02em; line-height: 1.05;
+  margin: 0 0 4px;
+}
+.pc-doc .doc-sub{ color: var(--ink-3); font-family: var(--f-mono); font-size: 11.5px; margin-bottom: 24px; }
+.pc-doc h4.doc-h{
+  font-family: var(--f-sans); font-weight: 600;
+  font-size: 13px; letter-spacing: 0.02em; color: var(--ink);
+  text-transform: uppercase; margin: 28px 0 10px;
+  font-feature-settings: "ss01";
+}
+.pc-doc h4.doc-h:first-of-type{ margin-top: 20px; }
+.pc-doc p.doc-p{ font-size: 14.5px; line-height: 1.7; color: var(--ink-1); margin: 0 0 10px; }
+.pc-doc ul.doc-ul{ list-style: none; padding: 0; margin: 0 0 8px; display: flex; flex-direction: column; gap: 4px; }
+.pc-doc ul.doc-ul li{ font-size: 14px; color: var(--ink-1); padding-left: 18px; position: relative; line-height: 1.6; }
+.pc-doc ul.doc-ul li::before{ content: "·"; position: absolute; left: 4px; font-size: 22px; color: var(--ink-4); top: -4px; }
+.pc-doc .mention{
+  font-family: var(--f-mono); font-size: 13px;
+  color: var(--acc); font-weight: 500;
+}
+.pc-doc .hl{
+  background: color-mix(in oklab, var(--acc) 16%, var(--bg));
+  padding: 0 3px; border-radius: 3px;
+}
+.pc-doc .caret{
+  display: inline-block; width: 2px; height: 1.1em;
+  background: var(--acc);
+  vertical-align: -3px;
+  animation: blink 1.1s steps(2) infinite;
+  margin-left: 2px;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.pc-side{
+  background: var(--bg-1);
+  display: flex; flex-direction: column;
+}
+.pc-side-head{
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--f-mono); font-size: 11px;
+  color: var(--ink-3); letter-spacing: 0.08em;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.pc-side-head .live{ display: inline-flex; gap: 6px; align-items: center; color: var(--acc); }
+.pc-side-head .live .p{ width: 6px; height: 6px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 0 3px color-mix(in oklab, var(--acc) 20%, transparent); animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .35; } }
+.pc-msgs{
+  padding: 14px 14px; flex: 1;
+  display: flex; flex-direction: column; gap: 14px;
+  overflow: hidden;
+}
+.pc-msg{
+  display: flex; gap: 10px;
+  font-size: 13px; line-height: 1.5; color: var(--ink-1);
+}
+.pc-msg .avatar{
+  width: 26px; height: 26px; border-radius: 50%;
+  flex-shrink: 0;
+  display: grid; place-items: center;
+  font-family: var(--f-mono); font-size: 10px; font-weight: 600;
+  background: var(--bg-2); color: var(--ink);
+}
+.pc-msg[data-who="spec"] .avatar{ background: var(--acc); color: #FFF8EE; }
+.pc-msg[data-who="eng"] .avatar{ background: var(--ink); color: var(--bg); }
+.pc-msg[data-who="m"] .avatar{ background: var(--mint-soft); color: var(--moss-2); }
+[data-theme="dark"] .pc-msg[data-who="m"] .avatar{ background: var(--mint-soft); color: var(--mint); }
+.pc-msg .body{ flex: 1; min-width: 0; }
+.pc-msg .who{
+  font-size: 11px; color: var(--ink-3);
+  font-family: var(--f-mono); letter-spacing: 0.02em;
+  margin-bottom: 2px;
+}
+.pc-msg .who b{ font-family: var(--f-sans); color: var(--ink); font-weight: 600; font-size: 12.5px; margin-right: 6px; }
+
+/* ================= TICKER ================= */
+.ticker{
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  overflow: hidden;
+  padding: 14px 0;
+}
+.ticker-in{
+  max-width: var(--maxw); margin: 0 auto;
+  padding: 0 32px;
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 28px; align-items: center;
+}
+.ticker-label{
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--acc);
+}
+.ticker-label .p{ width: 6px; height: 6px; border-radius: 50%; background: var(--acc); animation: pulse 1.6s ease-in-out infinite; }
+.ticker-track{
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.ticker-list{
+  display: flex; gap: 56px;
+  animation: tick 60s linear infinite;
+  width: max-content;
+}
+.ticker-list span.dot{ width: 3px; height: 3px; border-radius: 50%; background: var(--ink-4); align-self: center; }
+.ticker-item{
+  font-family: var(--f-mono); font-size: 12px;
+  color: var(--ink-2); letter-spacing: 0.01em;
+  display: inline-flex; gap: 10px; align-items: center;
+  white-space: nowrap;
+}
+.ticker-item .t{ color: var(--ink-4); }
+.ticker-item .n{ color: var(--ink); font-weight: 600; font-family: var(--f-sans); font-size: 13px; }
+.ticker-item em{ font-style: italic; color: var(--ink-1); font-family: var(--f-serif); font-size: 14px; }
+.ticker-stat{
+  font-family: var(--f-mono); font-size: 11px;
+  color: var(--ink-3); letter-spacing: 0.02em;
+  display: flex; flex-direction: column; text-align: right;
+  line-height: 1.2;
+}
+.ticker-stat b{ font-family: var(--f-sans); color: var(--ink); font-size: 15px; letter-spacing: -0.02em; }
+@keyframes tick { to { transform: translateX(-50%); } }
+
+/* ================= LOGO STRIP ================= */
+.logos{
+  padding: 60px 32px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+.logos .over{ margin-bottom: 28px; display: inline-block; }
+.logos-row{
+  display: flex; flex-wrap: wrap; gap: 48px; justify-content: center; align-items: center;
+  opacity: .7;
+}
+.logos-row span{
+  font-family: var(--f-serif);
+  font-size: 22px; letter-spacing: -0.02em;
+  color: var(--ink-2);
+}
+.logos-row span.s{ font-family: var(--f-sans); font-weight: 600; letter-spacing: -0.02em; font-size: 17px; }
+.logos-row span.u{ font-family: var(--f-mono); font-size: 14px; letter-spacing: 0; color: var(--ink-3); }
+
+/* ================= VALUE PROMISE (triptych) ================= */
+.triptych{
+  padding: 140px 32px 120px;
+  border-bottom: 1px solid var(--line);
+}
+.triptych-in{ max-width: var(--maxw); margin: 0 auto; }
+.triptych-head{
+  max-width: var(--maxw-narrow);
+  margin: 0 auto 80px;
+  text-align: center;
+}
+.triptych-head .over{ margin-bottom: 20px; display: inline-block; }
+.triptych-head .h2{ text-wrap: balance; }
+.triptych-grid{
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.trip-cell{
+  padding: 44px 32px 36px;
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: 14px;
+  position: relative;
+  transition: background .2s;
+}
+.trip-cell:hover{ background: var(--bg-1); }
+.trip-cell:last-child{ border-right: 0; }
+.trip-cell .n{
+  font-family: var(--f-mono); font-size: 10.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--acc);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.trip-cell .n::before{
+  content: ""; width: 18px; height: 1px; background: var(--acc);
+}
+.trip-cell h3{
+  font-family: var(--f-serif);
+  font-weight: 400; font-size: 30px;
+  letter-spacing: -0.02em; line-height: 1.05;
+  margin: 0;
+}
+.trip-cell h3 em{ font-style: italic; }
+.trip-cell p{
+  font-size: 15px; line-height: 1.6;
+  color: var(--ink-2); margin: 0;
+  max-width: 32ch;
+}
+.trip-cell .ill{
+  margin-top: 18px;
+  height: 140px;
+  border: 1px dashed var(--line);
+  border-radius: var(--r-md);
+  background: var(--bg-1);
+  display: grid; place-items: center;
+  font-family: var(--f-mono); font-size: 10.5px;
+  color: var(--ink-4); letter-spacing: 0.06em;
+  position: relative; overflow: hidden;
+}
+
+/* ----- Triptych illustrations ----- */
+/* 1: Spec morphs to PR */
+.ill-spec{ background: var(--surface); }
+.ill-spec .card{
+  position: absolute; background: var(--bg); border: 1px solid var(--line);
+  border-radius: 6px; padding: 8px 10px;
+  font-family: var(--f-mono); font-size: 9.5px; color: var(--ink-2);
+  letter-spacing: 0;
+  box-shadow: var(--sh-sm);
+}
+.ill-spec .c1{ top: 14px; left: 18px; }
+.ill-spec .c1 b{ color: var(--acc); font-family: var(--f-sans); font-weight: 600; font-size: 10px; }
+.ill-spec .c2{ bottom: 14px; right: 18px; border-color: var(--acc); }
+.ill-spec .c2 b{ color: var(--acc); font-family: var(--f-sans); font-weight: 600; font-size: 10px; }
+.ill-spec .arr{ position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--ink-4); font-size: 16px; }
+
+/* 2: Parallel branches */
+.ill-par{ background: var(--surface); }
+.ill-par svg{ width: 100%; height: 100%; }
+
+/* 3: Cursor conversation */
+.ill-cur{ background: var(--surface); }
+.ill-cur .b{
+  position: absolute;
+  font-family: var(--f-sans); font-size: 10.5px;
+  padding: 6px 10px; border-radius: 10px;
+  background: var(--bg); border: 1px solid var(--line);
+  color: var(--ink-1);
+}
+.ill-cur .b1{ top: 18px; left: 16px; background: var(--acc); border-color: var(--acc); color: #FFF8EE; font-family: var(--f-serif); font-style: italic; font-size: 12px; }
+.ill-cur .b2{ bottom: 18px; right: 16px; }
+.ill-cur .cursor{
+  position: absolute; top: 48%; left: 40%;
+  width: 10px; height: 14px;
+  border-left: 2px solid var(--ink); border-top: 2px solid var(--ink);
+  transform: rotate(-10deg);
+}
+
+/* ================= PULLQUOTE ================= */
+.pull{
+  padding: 120px 32px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-1);
+}
+.pull-in{
+  max-width: 1000px; margin: 0 auto;
+  text-align: center;
+}
+.pull q{
+  font-family: var(--f-serif);
+  font-size: clamp(34px, 4.2vw, 58px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-weight: 400;
+  quotes: none;
+  text-wrap: balance;
+}
+.pull q::before, .pull q::after{ content: ""; }
+.pull q em{ font-style: italic; color: var(--acc); }
+.pull .attr{
+  margin-top: 36px;
+  display: inline-flex; gap: 14px; align-items: center;
+  font-family: var(--f-mono); font-size: 12px;
+  color: var(--ink-3); letter-spacing: 0.02em;
+}
+.pull .attr .av{
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--bg-2);
+  display: grid; place-items: center;
+  font-family: var(--f-sans); font-weight: 600; font-size: 13px; color: var(--ink);
+}
+.pull .attr b{ color: var(--ink); font-family: var(--f-sans); font-weight: 600; font-size: 13px; }
+
+/* ================= PLAYGROUND ================= */
+.pg{
+  padding: 140px 32px;
+  border-bottom: 1px solid var(--line);
+}
+.pg-in{ max-width: var(--maxw); margin: 0 auto; }
+.pg-head{
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: end;
+  margin-bottom: 56px;
+}
+.pg-head .over{ display: inline-block; margin-bottom: 16px; }
+.pg-stage{
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-radius: var(--r-xl);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--sh-lg);
+  overflow: hidden;
+}
+.pg-left, .pg-right{ padding: 28px 32px; position: relative; }
+.pg-left{
+  border-right: 1px solid var(--line);
+  background: var(--bg-1);
+  min-height: 460px;
+}
+.pg-label{
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-4);
+  margin-bottom: 14px;
+}
+.pg-label b{
+  font-family: var(--f-sans); font-size: 13px; font-weight: 600;
+  color: var(--ink); letter-spacing: -0.01em; text-transform: none;
+}
+.pg-textarea{
+  width: 100%; min-height: 200px;
+  font-family: var(--f-sans); font-size: 15.5px;
+  line-height: 1.55; color: var(--ink-1);
+  background: transparent; border: 0; outline: 0;
+  resize: none; padding: 0; margin: 0;
+}
+.pg-textarea::placeholder{
+  color: var(--ink-4); font-style: italic;
+  font-family: var(--f-serif); font-size: 17px;
+}
+.pg-ex{
+  display: flex; gap: 8px; margin-top: 24px; flex-wrap: wrap;
+  padding-top: 20px; border-top: 1px dashed var(--line);
+}
+.pg-ex-label{
+  width: 100%; font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-4); margin-bottom: 2px;
+}
+.pg-ex button{
+  font-family: var(--f-mono); font-size: 11px;
+  padding: 5px 11px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface);
+  color: var(--ink-2); cursor: pointer; transition: all .15s;
+}
+.pg-ex button:hover{ border-color: var(--acc); background: var(--acc-soft); color: var(--acc-ink); }
+.pg-action{ position: absolute; bottom: 24px; right: 28px; }
+
+.pg-right{ min-height: 460px; }
+.pg-empty{
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: var(--ink-4);
+  font-family: var(--f-serif); font-style: italic;
+  font-size: 19px;
+  text-align: center; padding: 40px;
+}
+.pg-empty .mk{
+  font-family: var(--f-sans); font-style: normal;
+  font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; margin-bottom: 14px;
+  color: var(--ink-5);
+}
+.pg-output{ display: none; }
+.pg-output.on{ display: block; animation: sceneIn .5s ease; }
+@keyframes sceneIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none;} }
+.pg-pr-head{
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line);
+}
+.pg-pr-title{ font-family: var(--f-sans); font-weight: 600; font-size: 18px; letter-spacing: -0.02em; color: var(--ink); }
+.pg-pr-title em{ font-family: var(--f-serif); font-style: italic; font-weight: 400; color: var(--acc); }
+.pg-pr-meta{ font-family: var(--f-mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.02em; }
+.pg-out-block{
+  margin-top: 18px; opacity: 0; transform: translateY(8px);
+  transition: all .5s ease;
+}
+.pg-out-block.in{ opacity: 1; transform: none; }
+.pg-out-block .lbl{
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-4); margin-bottom: 8px;
+  display: inline-flex; gap: 6px; align-items: center;
+}
+.pg-out-block .lbl .pt{
+  width: 5px; height: 5px; background: var(--acc); border-radius: 50%;
+}
+.pg-out-block ul{ list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.pg-out-block ul li{
+  font-size: 13.5px; color: var(--ink-1); line-height: 1.55;
+  padding-left: 16px; position: relative;
+}
+.pg-out-block ul li::before{
+  content: "→"; position: absolute; left: 0;
+  color: var(--ink-4); font-family: var(--f-mono); font-size: 11px; top: 2px;
+}
+.pg-out-block ul li .mono{ color: var(--ink); }
+.pg-out-block .code{
+  font-family: var(--f-mono); font-size: 12px; line-height: 1.7;
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: var(--r-sm); padding: 12px 14px; color: var(--ink-2);
+}
+.pg-out-block .code .c{ color: var(--ink-4); }
+.pg-out-block .code .g{ color: var(--moss-2); }
+[data-theme="dark"] .pg-out-block .code .g{ color: var(--mint); }
+.pg-out-block .code .r{ color: var(--amber-2); }
+
+/* ================= PRICING ================= */
+.pricing{
+  padding: 140px 32px;
+  border-bottom: 1px solid var(--line);
+}
+.pricing-in{ max-width: var(--maxw); margin: 0 auto; }
+.pricing-head{
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: end;
+  margin-bottom: 64px;
+}
+.pricing-head .over{ display: inline-block; margin-bottom: 16px; }
+.price-grid{
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.price-cell{
+  padding: 44px 32px 36px;
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column;
+}
+.price-cell:last-child{ border-right: 0; }
+.price-cell.feat{ background: var(--acc-soft); }
+.price-cell .ov{
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-4); margin-bottom: 18px;
+}
+.price-cell.feat .ov{ color: var(--acc-ink); }
+.price-cell h4{
+  font-family: var(--f-serif); font-weight: 400;
+  font-size: 32px; letter-spacing: -0.02em; line-height: 1;
+  margin: 0 0 4px;
+}
+.price-cell h4 em{ font-style: italic; color: var(--acc); font-size: 20px; margin-left: 4px; }
+.price-amt{
+  font-family: var(--f-serif); font-size: 56px;
+  font-weight: 400; letter-spacing: -0.025em;
+  line-height: 1; margin: 20px 0 8px;
+  color: var(--ink);
+}
+.price-amt small{
+  font-family: var(--f-sans); font-size: 14px;
+  color: var(--ink-3); font-weight: 400; letter-spacing: 0;
+  margin-left: 6px;
+}
+.price-desc{
+  font-size: 13.5px; color: var(--ink-2); line-height: 1.55;
+  margin-bottom: 20px;
+}
+.price-cell ul{
+  list-style: none; padding: 0; margin: 0 0 28px;
+  display: flex; flex-direction: column; gap: 10px;
+  flex: 1;
+}
+.price-cell ul li{
+  font-size: 13.5px; color: var(--ink-1);
+  display: flex; gap: 10px; align-items: flex-start;
+  line-height: 1.5;
+}
+.price-cell ul li svg{ flex-shrink: 0; margin-top: 3px; }
+.price-cell .btn{ align-self: flex-start; }
+
+/* ================= FAQ ================= */
+.faq{
+  padding: 140px 32px;
+  border-bottom: 1px solid var(--line);
+}
+.faq-in{ max-width: var(--maxw); margin: 0 auto; }
+.faq-head{
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: end;
+  margin-bottom: 48px;
+}
+.faq-head .over{ display: inline-block; margin-bottom: 16px; }
+.faq-list{
+  border-top: 1px solid var(--line);
+}
+.faq-item{
+  border-bottom: 1px solid var(--line);
+}
+.faq-q{
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 22px 0;
+  font-family: var(--f-serif); font-size: 22px;
+  font-weight: 400; letter-spacing: -0.015em;
+  color: var(--ink); cursor: pointer;
+}
+.faq-q em{ font-style: italic; color: var(--acc); }
+.faq-q .ic{
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--line-2);
+  display: grid; place-items: center;
+  font-family: var(--f-sans); font-weight: 400;
+  color: var(--ink-2); font-size: 16px;
+  transition: transform .25s, background .25s, color .25s;
+}
+.faq-item.open .faq-q .ic{
+  transform: rotate(45deg);
+  background: var(--ink); color: var(--bg); border-color: var(--ink);
+}
+.faq-a{
+  max-height: 0; overflow: hidden;
+  transition: max-height .3s ease, padding .3s ease;
+  font-size: 15px; line-height: 1.6; color: var(--ink-2);
+}
+.faq-item.open .faq-a{
+  max-height: 220px;
+  padding: 0 0 22px;
+}
+
+/* ================= CLOSE ================= */
+.close{
+  padding: 160px 32px 140px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(70% 60% at 50% 0%, color-mix(in oklab, var(--acc) 10%, transparent) 0%, transparent 60%),
+    var(--bg);
+}
+.close .chip{ margin-bottom: 28px; }
+.close h2{
+  font-family: var(--f-serif); font-weight: 400;
+  font-size: clamp(48px, 7vw, 110px);
+  letter-spacing: -0.025em; line-height: 0.98;
+  margin: 0 0 28px;
+  text-wrap: balance;
+}
+.close h2 .acc{ color: var(--acc); font-style: italic; }
+.close .lede{ margin: 0 auto 32px; }
+.close-form{
+  display: inline-flex; gap: 8px; align-items: center;
+  padding: 6px 6px 6px 22px;
+  border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--line-2);
+  box-shadow: var(--sh-sm);
+  min-width: 460px; max-width: 100%;
+}
+.close-form input{
+  flex: 1; border: 0; outline: 0; background: transparent;
+  font-family: var(--f-sans); font-size: 15px;
+  color: var(--ink); padding: 10px 0;
+}
+.close-form input::placeholder{ color: var(--ink-4); }
+.close-note{
+  margin-top: 18px;
+  font-family: var(--f-mono); font-size: 11px;
+  color: var(--ink-4); letter-spacing: 0.04em;
+}
+
+/* ================= STAMP ================= */
+.stamp{
+  background: var(--ink); color: var(--bg);
+  padding: 64px 32px 56px;
+  position: relative; overflow: hidden;
+}
+.stamp-in{
+  max-width: var(--maxw); margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
+}
+.stamp-big{
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(36px, 5.2vw, 72px);
+  line-height: 0.98; letter-spacing: -0.025em;
+  color: var(--bg);
+}
+.stamp-big .hl{
+  background: var(--acc); color: #FFF8EE;
+  font-family: var(--f-sans); font-style: normal;
+  font-weight: 500; padding: 0 10px;
+  border-radius: 4px;
+}
+.stamp-console{
+  font-family: var(--f-mono); font-size: 11.5px;
+  line-height: 1.8;
+  color: color-mix(in oklab, var(--bg) 60%, transparent);
+  padding: 16px 18px;
+  border: 1px solid color-mix(in oklab, var(--bg) 15%, transparent);
+  border-radius: var(--r-md);
+  min-width: 320px;
+}
+.stamp-console .g{ color: var(--acc); }
+.stamp-console .c{ color: color-mix(in oklab, var(--bg) 40%, transparent); }
+.stamp-console .blink{
+  display: inline-block; width: 7px; height: 12px;
+  background: var(--acc); margin-left: 4px; vertical-align: -1px;
+  animation: blink 1s steps(2) infinite;
+}
+
+/* ================= FOOTER ================= */
+footer{ padding: 80px 32px 40px; background: var(--bg); }
+.foot{
+  max-width: var(--maxw); margin: 0 auto;
+  display: grid; grid-template-columns: 1.4fr repeat(4, 1fr);
+  gap: 48px;
+}
+.foot h5{
+  font-family: var(--f-mono); font-size: 10.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-4); margin: 0 0 16px; font-weight: 500;
+}
+.foot a{
+  display: block;
+  font-size: 14px; color: var(--ink-2);
+  padding: 5px 0;
+  transition: color .15s;
+}
+.foot a:hover{ color: var(--ink); }
+.foot-tag{
+  font-family: var(--f-serif); font-style: italic;
+  font-size: 16px; color: var(--ink-2);
+  margin: 14px 0 0; max-width: 28ch;
+  line-height: 1.4;
+}
+.foot-bot{
+  max-width: var(--maxw); margin: 64px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between;
+  font-family: var(--f-mono); font-size: 11px;
+  color: var(--ink-4); letter-spacing: 0.04em;
+}
+
+/* ================= REVEAL ================= */
+.reveal{ opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in, .no-js .reveal{ opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce){ .reveal{ opacity: 1; transform: none; } }
+
+/* ================= TWEAKS ================= */
+#tweaks{
+  position: fixed; right: 16px; bottom: 16px; z-index: 60;
+  width: 240px;
+  background: var(--surface); border: 1px solid var(--line-2);
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+  box-shadow: var(--sh-md);
+  display: none;
+  font-family: var(--f-sans); font-size: 12px;
+}
+#tweaks.on{ display: block; }
+#tweaks h5{
+  margin: 0 0 10px;
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-4); font-weight: 500;
+}
+#tweaks .row{
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 0;
+  border-top: 1px dashed var(--line);
+}
+#tweaks .row:first-of-type{ border-top: 0; }
+#tweaks .row span{ font-size: 12px; color: var(--ink-2); }
+#tweaks .opts{ display: inline-flex; gap: 0; }
+#tweaks .opts button{
+  font-family: var(--f-mono); font-size: 10.5px;
+  padding: 3px 8px;
+  border: 1px solid var(--line); background: transparent;
+  color: var(--ink-3); cursor: pointer;
+  border-right: 0;
+}
+#tweaks .opts button:last-child{ border-right: 1px solid var(--line); }
+#tweaks .opts button:first-child{ border-radius: 5px 0 0 5px; }
+#tweaks .opts button:last-child{ border-radius: 0 5px 5px 0; }
+#tweaks .opts button.on{ background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px){
+  .nav-links{ display: none; }
+  .hero{ padding: 48px 20px 40px; }
+  .hero-shot-wrap{ padding: 0 20px; }
+  .pc-body{ grid-template-columns: 1fr; }
+  .pc-side{ border-top: 1px solid var(--line); }
+  .pc-doc{ padding: 28px; border-right: 0; }
+  .pc-doc h3.doc-title{ font-size: 26px; }
+  .ticker-in{ grid-template-columns: 1fr; gap: 12px; padding: 0 20px; }
+  .ticker-stat{ display: none; }
+  .triptych{ padding: 80px 20px; }
+  .triptych-grid{ grid-template-columns: 1fr; }
+  .trip-cell{ border-right: 0; border-bottom: 1px solid var(--line); }
+  .trip-cell:last-child{ border-bottom: 0; }
+  .pull{ padding: 80px 20px; }
+  .pg{ padding: 80px 20px; }
+  .pg-head, .pricing-head, .faq-head{ grid-template-columns: 1fr; gap: 28px; }
+  .pg-stage{ grid-template-columns: 1fr; }
+  .pg-left{ border-right: 0; border-bottom: 1px solid var(--line); }
+  .pricing{ padding: 80px 20px; }
+  .price-grid{ grid-template-columns: 1fr; }
+  .price-cell{ border-right: 0; border-bottom: 1px solid var(--line); }
+  .price-cell:last-child{ border-bottom: 0; }
+  .faq{ padding: 80px 20px; }
+  .close{ padding: 100px 20px; }
+  .close-form{ min-width: 0; width: 100%; }
+  .foot{ grid-template-columns: 1fr 1fr; }
+  .stamp-in{ grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="top">
+  <div class="nav-in">
+    <div class="nav-left">
+      <a href="#" class="logo">a<span class="slash">\</span>tr</a>
+      <span class="nav-badge">v7 · <b>new</b></span>
+    </div>
+    <div class="nav-links">
+      <a href="#product">Product</a>
+      <a href="#playground">Try it</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-right" style="justify-self:end;">
+      <a href="#signin"><span style="font-size:14px;color:var(--ink-2);">Sign in</span></a>
+      <a href="#close" class="btn primary">Request access →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-wrap">
+    <span class="hero-sticker">§ v7 · new chapter</span>
+    <span class="hero-note"><b>editor's note</b>The workspace we wished we'd had when we started shipping with AI.</span>
+    <span class="chip"><span class="dot"></span>private beta · <b>june 2026</b></span>
+    <h1 class="hero-h display">
+      <span class="line">Humans and AI,</span>
+      <span class="line"><em>shipping</em> <span class="underline-hand">the same</span></span>
+      <span class="line">product. <span class="acc">Together.</span></span>
+    </h1>
+    <p class="hero-sub">
+      Altr is the workspace where <em>your team</em> and <span class="mono" style="color:var(--acc);">@spec</span>, <span class="mono" style="color:var(--ink);">@eng</span>, and <span class="mono" style="color:var(--ink);">@review</span> work in the same threads, on the same specs, toward the same PRs.
+    </p>
+    <div class="hero-ctas">
+      <a href="#close" class="btn primary lg">Request beta access →</a>
+      <a href="#playground" class="btn ghost lg">Try the demo</a>
+    </div>
+    <div class="hero-meta">
+      <span>1,240 teams waiting</span>
+      <span class="sep"></span>
+      <span>backed by YC &amp; Sequoia</span>
+      <span class="sep"></span>
+      <span>mac-native</span>
+    </div>
+  </div>
+
+  <!-- Single product shot (Panxo-style, under the headline) -->
+  <div class="hero-shot-wrap">
+    <div class="hero-shot" id="product">
+      <div class="pc-bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="pc-tabs">
+          <span class="pc-tab">inbox</span>
+          <span class="pc-tab on">specs / magic-link-auth.md</span>
+          <span class="pc-tab">eng / PR #142</span>
+          <span class="pc-tab">#launch-magic-link</span>
+        </div>
+        <div class="pc-kbd">⌘K</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-doc">
+          <span class="over">§ spec · draft · edited 2 min ago</span>
+          <h3 class="doc-title">Magic-link onboarding</h3>
+          <div class="doc-sub">owner: <span class="mention">@mukul</span> · co-authored with <span class="mention">@spec</span></div>
+
+          <h4 class="doc-h">The problem</h4>
+          <p class="doc-p">Teams sign up, hit the password step, and 34% bounce before their first workspace. We lose them before we learn anything. We want an invite flow that feels like <em>opening a door</em>, not filling out a form.</p>
+
+          <h4 class="doc-h">Acceptance criteria</h4>
+          <ul class="doc-ul">
+            <li>Any teammate can be invited by email alone</li>
+            <li>Invites deliver within <span class="hl">10 seconds</span> of send</li>
+            <li>Expired invites (7 days) surface a resend CTA</li>
+            <li>Rate-limit: 5 invites / user / hour</li>
+            <li>Audit log records inviter, invitee, status<span class="caret"></span></li>
+          </ul>
+
+          <h4 class="doc-h">Open questions</h4>
+          <p class="doc-p"><span class="mention">@spec</span> flagged: should revoked invites still count toward the rate limit?</p>
+        </div>
+
+        <div class="pc-side">
+          <div class="pc-side-head">
+            <span>#launch-magic-link</span>
+            <span class="live"><span class="p"></span>live</span>
+          </div>
+          <div class="pc-msgs" id="pcMsgs">
+            <div class="pc-msg" data-who="spec">
+              <div class="avatar">§</div>
+              <div class="body">
+                <div class="who"><b>@spec</b><span>11:02</span></div>
+                Pulled 4 AC from the thread. Added rate-limit from the security review. Ready for <b>@eng</b>?
+              </div>
+            </div>
+            <div class="pc-msg" data-who="m">
+              <div class="avatar">m</div>
+              <div class="body">
+                <div class="who"><b>mukul</b><span>11:03</span></div>
+                Yes. Also: keep the resend CTA behind a 30s cooldown.
+              </div>
+            </div>
+            <div class="pc-msg" data-who="eng">
+              <div class="avatar">E</div>
+              <div class="body">
+                <div class="who"><b>@eng</b><span>11:04</span></div>
+                Drafting PR now. Est. <b>2h 40m</b>. Touching <span class="mono">invites.ts</span>, <span class="mono">email-templates/</span>, one new migration.
+              </div>
+            </div>
+            <div class="pc-msg" data-who="spec">
+              <div class="avatar">§</div>
+              <div class="body">
+                <div class="who"><b>@spec</b><span>11:05</span></div>
+                I'll draft the changelog entry once PR lands. Staging link will post here.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TICKER ================= -->
+<section class="ticker">
+  <div class="ticker-in">
+    <div class="ticker-label"><span class="p"></span>shipped this hour</div>
+    <div class="ticker-track"><div class="ticker-list" id="tickerList">
+      <!-- items populated via JS to avoid duplication -->
+    </div></div>
+    <div class="ticker-stat"><b>2,417</b>PRs this week</div>
+  </div>
+</section>
+
+<!-- ================= LOGOS ================= -->
+<section class="logos">
+  <span class="over">§ trusted by teams building at</span>
+  <div class="logos-row">
+    <span>Northline</span>
+    <span class="s">MESA</span>
+    <span>Holt &amp; Co</span>
+    <span class="u">runwell.sh</span>
+    <span>Parabola</span>
+    <span class="s">BASISLY</span>
+    <span>Oak Labs</span>
+  </div>
+</section>
+
+<!-- ================= TRIPTYCH (the three moves) ================= -->
+<section class="triptych">
+  <div class="triptych-in">
+    <div class="triptych-head reveal">
+      <span class="over">§ 01 · how it works</span>
+      <h2 class="h2">Three moves that <em>change the loop.</em></h2>
+    </div>
+    <div class="triptych-grid reveal">
+      <div class="trip-cell">
+        <span class="n">01 · spec</span>
+        <h3>A spec is a <em>teammate,</em> not a doc.</h3>
+        <p>Every spec has an owner named <span class="mono" style="color:var(--acc);">@spec</span>. They attend the thread, ask the hard questions, and keep the AC honest as the work moves.</p>
+        <div class="ill ill-spec" aria-hidden="true">
+          <div class="card c1"><b>spec.md</b><br/>draft · 2 AC</div>
+          <div class="arr">→</div>
+          <div class="card c2"><b>PR #142</b><br/>ready · 4 files</div>
+        </div>
+      </div>
+      <div class="trip-cell">
+        <span class="n">02 · eng</span>
+        <h3>PRs draft themselves <em>— you review.</em></h3>
+        <p>When a spec is ready, <span class="mono" style="color:var(--ink);">@eng</span> opens the PR in parallel worktrees. You decide which ones land. Your IDE, your keys, your code.</p>
+        <div class="ill ill-par" aria-hidden="true">
+          <svg viewBox="0 0 260 140" preserveAspectRatio="none">
+            <g fill="none" stroke="var(--ink-4)" stroke-width="1.5" stroke-linecap="round">
+              <line x1="20" y1="70" x2="100" y2="70"/>
+              <path d="M100 70 Q 120 70 130 40 L 240 40"/>
+              <path d="M100 70 Q 120 70 130 70 L 240 70"/>
+              <path d="M100 70 Q 120 70 130 100 L 240 100"/>
+            </g>
+            <circle cx="20" cy="70" r="4" fill="var(--acc)"/>
+            <circle cx="240" cy="40" r="4" fill="var(--ink)"/>
+            <circle cx="240" cy="70" r="4" fill="var(--ink)"/>
+            <circle cx="240" cy="100" r="4" fill="var(--ink)"/>
+            <text x="100" y="62" font-family="JetBrains Mono" font-size="9" fill="var(--ink-3)">spec</text>
+            <text x="248" y="42" font-family="JetBrains Mono" font-size="9" fill="var(--ink-3)" text-anchor="start">PR#a</text>
+            <text x="248" y="72" font-family="JetBrains Mono" font-size="9" fill="var(--ink-3)">PR#b</text>
+            <text x="248" y="102" font-family="JetBrains Mono" font-size="9" fill="var(--ink-3)">PR#c</text>
+          </svg>
+        </div>
+      </div>
+      <div class="trip-cell">
+        <span class="n">03 · together</span>
+        <h3>The agents work <em>alongside you.</em></h3>
+        <p>No dashboards, no prompt boxes. Mention an agent in a thread, a spec, or a PR comment. They show up the way a coworker would — with context.</p>
+        <div class="ill ill-cur" aria-hidden="true">
+          <div class="b b1">ship it when it's ready</div>
+          <div class="cursor"></div>
+          <div class="b b2"><span style="font-family:var(--f-mono);color:var(--acc);">@eng</span> on it</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="how" style="padding:140px 32px;border-bottom:1px solid var(--line);">
+  <div style="max-width:var(--maxw);margin:0 auto;">
+    <div class="reveal" style="max-width:var(--maxw-narrow);margin:0 auto 72px;text-align:center;">
+      <span class="over" style="display:inline-block;margin-bottom:20px;">§ 02 · how it works</span>
+      <h2 class="h2" style="text-wrap:balance;">Five minutes from <em>idea</em><br/>to <em>draft PR.</em></h2>
+    </div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+      <div style="padding:40px 28px;border-right:1px solid var(--line);">
+        <div style="font-family:var(--f-serif);font-size:52px;line-height:1;color:var(--acc);letter-spacing:-0.03em;margin-bottom:18px;">01</div>
+        <h3 style="font-family:var(--f-serif);font-weight:400;font-size:22px;letter-spacing:-0.02em;margin:0 0 10px;">Open a thread</h3>
+        <p style="font-size:14px;color:var(--ink-2);line-height:1.55;margin:0;">Start the way you always do — a rough idea, a Slack-style thread. Mention <span class="mono" style="color:var(--acc);">@spec</span>.</p>
+      </div>
+      <div style="padding:40px 28px;border-right:1px solid var(--line);">
+        <div style="font-family:var(--f-serif);font-size:52px;line-height:1;color:var(--acc);letter-spacing:-0.03em;margin-bottom:18px;">02</div>
+        <h3 style="font-family:var(--f-serif);font-weight:400;font-size:22px;letter-spacing:-0.02em;margin:0 0 10px;">Structure the spec</h3>
+        <p style="font-size:14px;color:var(--ink-2);line-height:1.55;margin:0;">@spec turns the thread into AC, open questions, and owner callouts. You edit; they follow.</p>
+      </div>
+      <div style="padding:40px 28px;border-right:1px solid var(--line);">
+        <div style="font-family:var(--f-serif);font-size:52px;line-height:1;color:var(--acc);letter-spacing:-0.03em;margin-bottom:18px;">03</div>
+        <h3 style="font-family:var(--f-serif);font-weight:400;font-size:22px;letter-spacing:-0.02em;margin:0 0 10px;">Draft the PR</h3>
+        <p style="font-size:14px;color:var(--ink-2);line-height:1.55;margin:0;"><span class="mono" style="color:var(--ink);">@eng</span> opens a branch, plans the work, and drafts the diff — with tests.</p>
+      </div>
+      <div style="padding:40px 28px;">
+        <div style="font-family:var(--f-serif);font-size:52px;line-height:1;color:var(--acc);letter-spacing:-0.03em;margin-bottom:18px;">04</div>
+        <h3 style="font-family:var(--f-serif);font-weight:400;font-size:22px;letter-spacing:-0.02em;margin:0 0 10px;">Review &amp; ship</h3>
+        <p style="font-size:14px;color:var(--ink-2);line-height:1.55;margin:0;">You review like any teammate's PR. Comment, request changes, merge. The loop closes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= METRICS ================= -->
+<section class="metrics" style="padding:100px 32px;border-bottom:1px solid var(--line);background:var(--bg-1);">
+  <div style="max-width:var(--maxw);margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:56px;">
+      <span class="over" style="display:inline-block;margin-bottom:16px;">§ 03 · beta metrics</span>
+      <h2 class="h2">What <em>140 teams</em> have shipped so far.</h2>
+    </div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);">
+      <div style="padding:36px 28px;border-right:1px solid var(--line);text-align:center;">
+        <div style="font-family:var(--f-serif);font-size:64px;line-height:1;letter-spacing:-0.03em;color:var(--ink);">12,400</div>
+        <div style="font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:10px;">PRs drafted</div>
+      </div>
+      <div style="padding:36px 28px;border-right:1px solid var(--line);text-align:center;">
+        <div style="font-family:var(--f-serif);font-size:64px;line-height:1;letter-spacing:-0.03em;color:var(--ink);">3.4<span style="font-size:32px;color:var(--ink-3);">×</span></div>
+        <div style="font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:10px;">faster spec-to-PR</div>
+      </div>
+      <div style="padding:36px 28px;border-right:1px solid var(--line);text-align:center;">
+        <div style="font-family:var(--f-serif);font-size:64px;line-height:1;letter-spacing:-0.03em;color:var(--ink);">68<span style="font-size:32px;color:var(--ink-3);">%</span></div>
+        <div style="font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:10px;">merged on first review</div>
+      </div>
+      <div style="padding:36px 28px;text-align:center;">
+        <div style="font-family:var(--f-serif);font-size:64px;line-height:1;letter-spacing:-0.03em;color:var(--ink);">2h 41m</div>
+        <div style="font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:10px;">median draft time</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="testimonials" style="padding:140px 32px;border-bottom:1px solid var(--line);">
+  <div style="max-width:var(--maxw);margin:0 auto;">
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:56px;">
+      <div>
+        <span class="over" style="display:inline-block;margin-bottom:16px;">§ 04 · the word</span>
+        <h2 class="h2">What teams are <em>saying.</em></h2>
+      </div>
+      <p class="lede">Seven months into private beta, 140 teams across 19 time zones. Here's a sample.</p>
+    </div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+      <div style="padding:40px 32px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:20px;">
+        <div style="font-family:var(--f-serif);font-size:20px;line-height:1.4;color:var(--ink-1);letter-spacing:-0.01em;">"<em>@spec asks better questions than I do.</em> It caught an edge case in our auth flow I'd been ignoring for months."</div>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:auto;">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--acc-soft);color:var(--acc-ink);display:grid;place-items:center;font-family:var(--f-sans);font-weight:600;font-size:13px;">EJ</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--ink);">Elena Joshi</div>
+            <div style="font-family:var(--f-mono);font-size:10.5px;color:var(--ink-3);letter-spacing:0.02em;">CTO, Mesa</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:40px 32px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:20px;background:var(--bg-1);">
+        <div style="font-family:var(--f-serif);font-size:20px;line-height:1.4;color:var(--ink-1);letter-spacing:-0.01em;">"We stopped spending Monday in standup. <em>The spec is the standup now.</em> Three agents, four humans, one thread."</div>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:auto;">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-family:var(--f-sans);font-weight:600;font-size:13px;">RP</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--ink);">Ravi Patel</div>
+            <div style="font-family:var(--f-mono);font-size:10.5px;color:var(--ink-3);letter-spacing:0.02em;">Head of Eng, Holt &amp; Co</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:40px 32px;display:flex;flex-direction:column;gap:20px;">
+        <div style="font-family:var(--f-serif);font-size:20px;line-height:1.4;color:var(--ink-1);letter-spacing:-0.01em;">"I've been burned by AI tools before. Altr is the first where <em>the agent feels like a coworker,</em> not a chatbot."</div>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:auto;">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--acc-soft);color:var(--acc-ink);display:grid;place-items:center;font-family:var(--f-sans);font-weight:600;font-size:13px;">MC</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--ink);">Maya Chen</div>
+            <div style="font-family:var(--f-mono);font-size:10.5px;color:var(--ink-3);letter-spacing:0.02em;">Founder, Parabola</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PULLQUOTE ================= -->
+<section class="pull">
+  <div class="pull-in reveal">
+    <q>Altr is the first tool that made my AI teammates feel like <em>teammates</em> — not a chat window I have to babysit.</q>
+    <div class="attr">
+      <span class="av">SK</span>
+      <div>
+        <b>Sana Khoury</b> · Head of Product, Northline
+        <div style="color:var(--ink-4);">team of 14 · shipping since march 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLAYGROUND ================= -->
+<section class="pg" id="playground">
+  <div class="pg-in">
+    <div class="pg-head reveal">
+      <div>
+        <span class="over">§ 02 · try it · no signup</span>
+        <h2 class="h2">Type a spec.<br/>Watch it <em>become a PR.</em></h2>
+      </div>
+      <p class="lede">Drop a rough idea on the left. <span class="mono" style="color:var(--acc);">@spec</span> will structure it; <span class="mono" style="color:var(--ink);">@eng</span> will draft the implementation. It's a mock — but the <em>moves</em> are real.</p>
+    </div>
+    <div class="pg-stage reveal">
+      <div class="pg-left">
+        <div class="pg-label"><b>Your spec</b><span>@spec is listening</span></div>
+        <textarea id="pgInput" class="pg-textarea" placeholder="Let users invite teammates by email. Magic-link style — no passwords. Should take less than 90 seconds end-to-end."></textarea>
+        <div class="pg-ex">
+          <span class="pg-ex-label">Try one of these →</span>
+          <button data-ex="invite">invite teammates</button>
+          <button data-ex="search">full-text search</button>
+          <button data-ex="billing">stripe billing</button>
+        </div>
+        <div class="pg-action"><button id="pgRun" class="btn acc">Run it →</button></div>
+      </div>
+      <div class="pg-right">
+        <div class="pg-empty" id="pgEmpty">
+          <div class="mk">§ Output</div>
+          "@spec will structure your spec,<br/>@eng will draft the PR."
+        </div>
+        <div class="pg-output" id="pgOutput">
+          <div class="pg-pr-head">
+            <div class="pg-pr-title"><em>PR draft</em> · auto-generated</div>
+            <div class="pg-pr-meta">~<span id="pgEst">2h 40m</span> · <span id="pgCost">$0.82</span></div>
+          </div>
+          <div class="pg-out-block" data-step="1">
+            <div class="lbl"><span class="pt"></span>@spec · acceptance criteria</div>
+            <ul id="pgAC">
+              <li>A teammate receives the invite within 10 seconds of send</li>
+              <li>Expired invites (7 days) surface a resend CTA</li>
+              <li>Rate-limit 5 invites per user per hour</li>
+              <li>Audit log records inviter, invitee, status</li>
+            </ul>
+          </div>
+          <div class="pg-out-block" data-step="2">
+            <div class="lbl"><span class="pt"></span>@eng · plan</div>
+            <ul id="pgPlan">
+              <li>New route <span class="mono">POST /api/invites</span> with Zod validation</li>
+              <li>Resend webhook handler for delivery events</li>
+              <li>Add <span class="mono">invites</span> table · 5 columns · 2 indexes</li>
+              <li>Integration tests covering all 4 AC</li>
+            </ul>
+          </div>
+          <div class="pg-out-block" data-step="3">
+            <div class="lbl"><span class="pt"></span>draft diff · preview</div>
+            <div class="code" id="pgDiff"><span class="c"># src/server/invites.ts</span>
+<span class="g">+ export async function createInvite(email: string) {</span>
+<span class="g">+   const token = crypto.randomBytes(32).toString("hex");</span>
+<span class="g">+   await db.invites.insert({ email, token, expiresAt: ... });</span>
+<span class="g">+   await resend.emails.send({ to: email, ... });</span>
+<span class="g">+ }</span>
+<span class="c"># tests/invites.test.ts · +3 cases</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section class="pricing" id="pricing">
+  <div class="pricing-in">
+    <div class="pricing-head reveal">
+      <div>
+        <span class="over">§ 03 · pricing</span>
+        <h2 class="h2">Per human.<br/><em>Agents included.</em></h2>
+      </div>
+      <p class="lede">You pay for the people. The cast comes free. BYO model keys on any plan, or use ours with generous credits.</p>
+    </div>
+    <div class="price-grid reveal">
+      <div class="price-cell">
+        <div class="ov">01 · solo</div>
+        <h4>Hacker</h4>
+        <div class="price-amt">$19<small>/ mo</small></div>
+        <div class="price-desc">For solo founders and indie teams shipping in public.</div>
+        <ul>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>@spec + @eng teammates</li>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>1 workspace · unlimited specs</li>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>BYO model keys</li>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>Community support</li>
+        </ul>
+        <a href="#close" class="btn ghost">Start 14-day trial</a>
+      </div>
+      <div class="price-cell feat">
+        <div class="ov">02 · team — recommended</div>
+        <h4>Studio <em>— the one we use</em></h4>
+        <div class="price-amt">$49<small>/ seat / mo</small></div>
+        <div class="price-desc">For product teams. Unlimited agents, shared workspaces, audit log.</div>
+        <ul>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>All four teammates as they ship</li>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>Unlimited worktrees &amp; channels</li>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>Shared spec library + search</li>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>SSO, SCIM, audit log export</li>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>$20 model credits / seat / mo</li>
+        </ul>
+        <a href="#close" class="btn acc">Start 14-day trial</a>
+      </div>
+      <div class="price-cell">
+        <div class="ov">03 · enterprise</div>
+        <h4>Scale</h4>
+        <div class="price-amt" style="font-size: 36px; padding-top: 10px;">Custom</div>
+        <div class="price-desc">For orgs that need dedicated support, custom policy, or on-prem.</div>
+        <ul>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>Everything in Studio</li>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>Dedicated instance, on-prem option</li>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>Custom policy + DLP integration</li>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>DPA, HIPAA, 99.9% SLA</li>
+          <li><svg width="13" height="13" viewBox="0 0 13 13"><path d="M3 7l2 2 5-5" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>Named CSM + onboarding</li>
+        </ul>
+        <a href="#close" class="btn ghost">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq" id="faq">
+  <div class="faq-in">
+    <div class="faq-head reveal">
+      <div>
+        <span class="over">§ 04 · straight answers</span>
+        <h2 class="h2">Questions <em>we hear weekly.</em></h2>
+      </div>
+      <p class="lede">If yours isn't here, write <a href="mailto:hello@altr.run" style="color:var(--ink);border-bottom:1.5px solid var(--acc);">hello@altr.run</a> — a human reads every one.</p>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item"><div class="faq-q"><span>Is Altr <em>Mac-only?</em></span><span class="ic">+</span></div><div class="faq-a">For now, yes. Mac-native, not Electron. Windows and Linux are on the 2027 roadmap. We'd rather ship one great client than three mediocre ones.</div></div>
+      <div class="faq-item"><div class="faq-q"><span>Where do my <em>files live?</em></span><span class="ic">+</span></div><div class="faq-a">On your Mac, encrypted at rest. Agents call models over your API keys; nothing becomes training data. Full details in the security whitepaper.</div></div>
+      <div class="faq-item"><div class="faq-q"><span>Which models power the <em>teammates?</em></span><span class="ic">+</span></div><div class="faq-a">@spec runs on Claude Sonnet. @eng wraps Claude Code. BYO keys, or use ours with $20 of credits per seat per month on Studio.</div></div>
+      <div class="faq-item"><div class="faq-q"><span>How is this different from <em>Devin?</em></span><span class="ic">+</span></div><div class="faq-a">Devin is an autonomous cloud engineer. Altr is a workspace where humans and several agents collaborate on your machine, with humans in the driver's seat. Different problem, different shape.</div></div>
+      <div class="faq-item"><div class="faq-q"><span>When is <em>public launch?</em></span><span class="ic">+</span></div><div class="faq-a">Private beta June 2026, public launch Q4 2026. Request access to join the beta cohort.</div></div>
+      <div class="faq-item"><div class="faq-q"><span>Do you have <em>SOC 2?</em></span><span class="ic">+</span></div><div class="faq-a">Type II audit in progress; report expected Q3 2026. Type I and DPA available today for Studio and Scale customers.</div></div>
+      <div class="faq-item"><div class="faq-q"><span>Can I <em>self-host?</em></span><span class="ic">+</span></div><div class="faq-a">Scale customers can run Altr on a dedicated instance, on-prem, or in a VPC of their choice. Talk to sales for specifics.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CLOSE ================= -->
+<section class="close" id="close">
+  <span class="chip"><span class="dot"></span>private beta opens <b>june 2026</b></span>
+  <h2>Run your next<br/>sprint with <span class="acc">Altr.</span></h2>
+  <p class="lede">Request access and we'll send your invite on day one of the beta, before the waitlist sees it.</p>
+  <form class="close-form" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('button').innerHTML='✓ on the list';">
+    <input type="email" required placeholder="you@company.com" />
+    <button type="submit" class="btn acc">Request access →</button>
+  </form>
+  <div class="close-note">1,240 teams waiting · no spam · unsubscribe anytime</div>
+</section>
+
+<!-- ================= STAMP ================= -->
+<section class="stamp">
+  <div class="stamp-in">
+    <div class="stamp-big">This page was <em>written in Altr.</em><br/>Shipped by <span class="hl">@spec &amp; Mukul</span> · build <em>v7.2026.10</em>.</div>
+    <div class="stamp-console">
+<span class="c">// open console · say hi</span><br/>
+<span class="g">$</span> altr whoami<br/>
+&nbsp;&nbsp;<span class="c">→</span> hi, I'm @spec. you're reading my work.<br/>
+<span class="g">$</span> altr ship<br/>
+&nbsp;&nbsp;<span class="c">→</span> one sprint away<span class="blink"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="foot">
+    <div>
+      <a href="#" class="logo" style="font-size: 30px;">a<span class="slash">\</span>tr</a>
+      <p class="foot-tag">One workspace for the loop. Humans and AI, shipping as peers.</p>
+    </div>
+    <div><h5>Product</h5><a href="#product">Overview</a><a href="#playground">Try it</a><a href="#pricing">Pricing</a></div>
+    <div><h5>Company</h5><a href="#">Manifesto</a><a href="#">Changelog</a><a href="#">Careers · 3 open</a></div>
+    <div><h5>Build</h5><a href="#">Docs</a><a href="#">MCP SDK</a><a href="#">API</a><a href="#">Status</a></div>
+    <div><h5>Trust</h5><a href="#">Security</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </div>
+  <div class="foot-bot">
+    <span>© 2026 altr labs, inc. · sf &amp; blr</span>
+    <span>shipped with altr · v7.2026.10</span>
+  </div>
+</footer>
+
+<!-- ================= TWEAKS PANEL ================= -->
+<div id="tweaks">
+  <h5>§ Tweaks</h5>
+  <div class="row">
+    <span>Theme</span>
+    <div class="opts" data-key="theme">
+      <button data-val="light" class="on">light</button>
+      <button data-val="dark">dark</button>
+    </div>
+  </div>
+  <div class="row">
+    <span>Accent</span>
+    <div class="opts" data-key="accent">
+      <button data-val="amber" class="on">amber</button>
+      <button data-val="mint">mint</button>
+      <button data-val="mono">mono</button>
+    </div>
+  </div>
+  <div class="row">
+    <span>Hero</span>
+    <div class="opts" data-key="hero">
+      <button data-val="centered" class="on">centered</button>
+      <button data-val="editorial">editorial</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= TWEAKS DEFAULTS ================= */
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "theme": "light",
+  "accent": "amber",
+  "hero": "centered"
+}/*EDITMODE-END*/;
+
+(function applyInitial(){
+  document.documentElement.dataset.theme = TWEAKS.theme;
+  document.documentElement.dataset.accent = TWEAKS.accent;
+  document.documentElement.dataset.hero = TWEAKS.hero;
+})();
+
+/* ================= TICKER ================= */
+(function buildTicker(){
+  const items = [
+    ['14:22','Northline','merged','pr-142 · magic-link-auth'],
+    ['14:19','Mesa','published','changelog — v0.8.1'],
+    ['14:17','Holt & Co','spec approved','onboarding-v2'],
+    ['14:12','Runwell','opened','pr-88 · dark-mode'],
+    ['14:09','Parabola','shipped','teams billing'],
+    ['14:04','Basisly','merged','pr-301 · search index'],
+    ['13:58','Oak Labs','draft','retro — sprint 14'],
+    ['13:54','Northline','spec approved','search-index v2'],
+    ['13:49','Mesa','opened','pr-89 · webhook-retries'],
+  ];
+  const list = document.getElementById('tickerList');
+  const render = () => items.map(([t,n,v,w]) =>
+    `<div class="ticker-item"><span class="t">${t}</span><span class="n">${n}</span>${v} <em>${w}</em></div>`
+  ).join('');
+  // Duplicate for seamless loop
+  list.innerHTML = render() + render();
+})();
+
+/* ================= REVEAL ================= */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }});
+}, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+document.querySelectorAll('.reveal').forEach(el => {
+  io.observe(el);
+  // Failsafe: show after 1.2s regardless
+  setTimeout(() => el.classList.add('in'), 1200);
+});
+
+/* ================= FAQ ================= */
+document.querySelectorAll('.faq-item').forEach(i => {
+  i.querySelector('.faq-q').addEventListener('click', () => i.classList.toggle('open'));
+});
+
+/* ================= PLAYGROUND ================= */
+(function playground(){
+  const examples = {
+    invite: {
+      text: "Let users invite teammates by email. Magic-link style — no passwords. Should take less than 90 seconds end-to-end.",
+      est: "2h 40m", cost: "$0.82",
+      ac: [
+        "A teammate receives the invite within 10 seconds of send",
+        "Expired invites (7 days) surface a resend CTA",
+        "Rate-limit 5 invites per user per hour",
+        "Audit log records inviter, invitee, status"
+      ],
+      plan: [
+        'New route <span class="mono">POST /api/invites</span> with Zod validation',
+        'Resend webhook handler for delivery events',
+        'Add <span class="mono">invites</span> table · 5 columns · 2 indexes',
+        'Integration tests covering all 4 AC'
+      ],
+      diff: `<span class="c"># src/server/invites.ts</span>
+<span class="g">+ export async function createInvite(email: string) {</span>
+<span class="g">+   const token = crypto.randomBytes(32).toString("hex");</span>
+<span class="g">+   await db.invites.insert({ email, token, expiresAt: ... });</span>
+<span class="g">+   await resend.emails.send({ to: email, ... });</span>
+<span class="g">+ }</span>
+<span class="c"># tests/invites.test.ts · +3 cases</span>`
+    },
+    search: {
+      text: "Add full-text search across specs, threads, and PRs. Should feel instant — no loading spinner under 200ms.",
+      est: "3h 15m", cost: "$1.04",
+      ac: [
+        "Search indexes specs, threads, and PR descriptions",
+        "Results surface in under 200ms for the 95th percentile",
+        "Highlighted match snippets in results",
+        "Keyboard-first: ⌘K opens, ↑↓ navigates, ↵ opens"
+      ],
+      plan: [
+        'Postgres <span class="mono">tsvector</span> column + GIN index',
+        'Debounced query endpoint (120ms)',
+        'Command palette UI with snippet rendering',
+        'Backfill job for existing rows'
+      ],
+      diff: `<span class="c"># migrations/20260812_search.sql</span>
+<span class="g">+ ALTER TABLE specs ADD COLUMN search_vec tsvector;</span>
+<span class="g">+ CREATE INDEX specs_search_idx ON specs USING GIN (search_vec);</span>
+<span class="c"># src/server/search.ts</span>
+<span class="g">+ export async function search(q: string) { ... }</span>`
+    },
+    billing: {
+      text: "Add Stripe billing for Studio plan. Per-seat, with monthly and annual pricing. Must handle seat upgrades mid-cycle.",
+      est: "5h 20m", cost: "$1.91",
+      ac: [
+        "Users pick monthly or annual at checkout",
+        "Seat upgrades prorate within the current cycle",
+        "Failed payments surface a 7-day recovery banner",
+        "All receipts and invoices are downloadable"
+      ],
+      plan: [
+        'Stripe subscriptions + seat-based quantity',
+        'Webhook handler: <span class="mono">subscription.updated</span>',
+        'Org page: seats · plan · next invoice',
+        'Dunning banner with recovery CTA'
+      ],
+      diff: `<span class="c"># src/billing/stripe.ts</span>
+<span class="g">+ export async function createSub(org, seats, plan) { ... }</span>
+<span class="g">+ export async function updateSeats(org, seats) { ... }</span>
+<span class="c"># src/webhooks/stripe.ts · handles 6 events</span>`
+    }
+  };
+
+  const input = document.getElementById('pgInput');
+  const run = document.getElementById('pgRun');
+  const empty = document.getElementById('pgEmpty');
+  const output = document.getElementById('pgOutput');
+  const ac = document.getElementById('pgAC');
+  const plan = document.getElementById('pgPlan');
+  const diff = document.getElementById('pgDiff');
+  const est = document.getElementById('pgEst');
+  const cost = document.getElementById('pgCost');
+  const blocks = output.querySelectorAll('.pg-out-block');
+
+  document.querySelectorAll('.pg-ex button').forEach(b => {
+    b.addEventListener('click', () => {
+      const ex = examples[b.dataset.ex];
+      input.value = ex.text;
+      input.focus();
+    });
+  });
+
+  run.addEventListener('click', () => {
+    const txt = input.value.trim().toLowerCase();
+    let ex = examples.invite;
+    if (txt.includes('search')) ex = examples.search;
+    else if (txt.includes('bill') || txt.includes('stripe') || txt.includes('pay')) ex = examples.billing;
+
+    ac.innerHTML = ex.ac.map(l => `<li>${l}</li>`).join('');
+    plan.innerHTML = ex.plan.map(l => `<li>${l}</li>`).join('');
+    diff.innerHTML = ex.diff;
+    est.textContent = ex.est;
+    cost.textContent = ex.cost;
+
+    empty.style.display = 'none';
+    output.classList.add('on');
+    blocks.forEach(b => b.classList.remove('in'));
+    blocks.forEach((b, i) => setTimeout(() => b.classList.add('in'), 150 + i * 300));
+  });
+})();
+
+/* ================= TWEAKS PANEL ================= */
+(function tweaksPanel(){
+  const panel = document.getElementById('tweaks');
+  const apply = (key, val) => {
+    document.documentElement.dataset[key] = val;
+    document.querySelectorAll(`#tweaks .opts[data-key="${key}"] button`).forEach(b => {
+      b.classList.toggle('on', b.dataset.val === val);
+    });
+  };
+  // sync initial button state
+  ['theme','accent','hero'].forEach(k => apply(k, TWEAKS[k]));
+
+  document.querySelectorAll('#tweaks .opts button').forEach(b => {
+    b.addEventListener('click', () => {
+      const key = b.parentElement.dataset.key;
+      const val = b.dataset.val;
+      TWEAKS[key] = val;
+      apply(key, val);
+      try {
+        window.parent.postMessage({type: '__edit_mode_set_keys', edits: {[key]: val}}, '*');
+      } catch(e){}
+    });
+  });
+
+  // Toolbar integration
+  window.addEventListener('message', (e) => {
+    if (!e.data) return;
+    if (e.data.type === '__activate_edit_mode') panel.classList.add('on');
+    if (e.data.type === '__deactivate_edit_mode') panel.classList.remove('on');
+  });
+  try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e){}
+})();
+
+/* ================= CONSOLE HELLO ================= */
+(function(){
+  const s = 'color: #D9562A; font-family: Instrument Serif, serif; font-style: italic; font-size: 18px;';
+  console.log('%chi, I\u2019m @spec.', s);
+  console.log('%cyou\u2019re reading my work.', 'color:#7A6F60; font-family: JetBrains Mono; font-size: 11px;');
+})();
+</script>
+
+</body>
+</html>

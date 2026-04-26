@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { groq } from 'next-sanity'
 import { ROUTES } from '@/lib/env'
 import { sanityFetchLive } from '@/sanity/lib/live'
+import { LEGAL_PAGES } from '@/content/legal'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,6 +10,11 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 	const data = await sanityFetchLive<{
 		pages: MetadataRoute.Sitemap
 		posts: MetadataRoute.Sitemap
+		comparePages: MetadataRoute.Sitemap
+		useCases: MetadataRoute.Sitemap
+		integrations: MetadataRoute.Sitemap
+		changelog: MetadataRoute.Sitemap
+		legalPages: MetadataRoute.Sitemap
 	}>({
 		query: groq`{
 			'pages': *[
@@ -35,13 +41,69 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 				'url': $baseUrl + '/' + $blogDir + '/' + metadata.slug.current,
 				'lastModified': _updatedAt,
 				'priority': 0.4
+			},
+			'comparePages': *[
+				_type == 'compare.page'
+				&& defined(metadata.slug.current)
+				&& metadata.noIndex != true
+			]|order(competitor asc){
+				'url': $baseUrl + '/' + $compareDir + '/' + metadata.slug.current,
+				'lastModified': _updatedAt,
+				'priority': 0.7
+			},
+			'useCases': *[
+				_type == 'use-case'
+				&& defined(metadata.slug.current)
+				&& metadata.noIndex != true
+			]|order(title asc){
+				'url': $baseUrl + '/' + $useCasesDir + '/' + metadata.slug.current,
+				'lastModified': _updatedAt,
+				'priority': 0.6
+			},
+			'integrations': *[
+				_type == 'integration'
+				&& defined(metadata.slug.current)
+				&& metadata.noIndex != true
+			]|order(tool asc){
+				'url': $baseUrl + '/' + $integrationsDir + '/' + metadata.slug.current,
+				'lastModified': _updatedAt,
+				'priority': 0.5
+			},
+			'changelog': *[_type == 'changelog.entry'] | order(releaseDate desc)[0]{
+				'url': $baseUrl + '/' + $changelogDir,
+				'lastModified': _updatedAt,
+				'priority': 0.5
+			},
+			'legalPages': *[_type == 'legal.page' && noIndex != true]{
+				'url': $baseUrl + '/' + $legalDir + '/' + slug.current,
+				'lastModified': _updatedAt,
+				'priority': 0.3
 			}
 		}`,
 		params: {
 			baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
 			blogDir: ROUTES.blog,
+			compareDir: ROUTES.compare,
+			useCasesDir: ROUTES.useCases,
+			integrationsDir: ROUTES.integrations,
+			changelogDir: ROUTES.changelog,
+			legalDir: ROUTES.legal,
 		},
 	})
 
-	return Object.values(data).flat()
+	// Add static legal entries for slugs not in Sanity
+	const sanityLegalSlugs = new Set(
+		(data.legalPages ?? []).map((entry) =>
+			String(entry.url ?? '').split('/').pop() ?? '',
+		),
+	)
+	const staticLegalEntries: MetadataRoute.Sitemap = Object.keys(LEGAL_PAGES)
+		.filter((slug) => !sanityLegalSlugs.has(slug))
+		.map((slug) => ({
+			url: `${process.env.NEXT_PUBLIC_BASE_URL}/${ROUTES.legal}/${slug}`,
+			lastModified: new Date(LEGAL_PAGES[slug]!.lastUpdated),
+			priority: 0.3,
+		}))
+
+	return [...Object.values(data).flat().filter(Boolean), ...staticLegalEntries]
 }

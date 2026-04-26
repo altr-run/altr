@@ -1,6 +1,9 @@
 import { cn } from '@/lib/utils'
-import { getSite } from '@/sanity/lib/queries'
-import type { LinkList, Megamenu as MegamenuType } from '@/sanity/types'
+import type {
+	LinkList,
+	Megamenu as MegamenuType,
+	SITE_QUERY_RESULT,
+} from '@/sanity/types'
 import SanityLink, { type SanityLinkType } from '@/ui/sanity-link'
 import Dropdown from './dropdown'
 import Megamenu from './megamenu'
@@ -9,9 +12,11 @@ const topLevelClassName = cn(
 	'grid md:place-content-center md:text-center md:text-balance leading-tight py-[.5ch] md:py-ch',
 )
 
-export default async function () {
-	const site = await getSite()
-
+export default function Navigation({
+	site,
+}: {
+	site: SITE_QUERY_RESULT
+}) {
 	return (
 		<nav className="max-md:header-not-open:hidden max-md:anim-fade-to-b gap-x-lh flex items-stretch [grid-area:navigation] max-md:my-4 max-md:flex-col">
 			{site?.header?.items?.map((item) => {

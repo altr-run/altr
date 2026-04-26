@@ -1,11 +1,15 @@
-import { getSite } from '@/sanity/lib/queries'
-import type { LinkList as LinkListType } from '@/sanity/types'
+import type {
+	LinkList as LinkListType,
+	SITE_QUERY_RESULT,
+} from '@/sanity/types'
 import SanityLink, { type SanityLinkType } from '@/ui/sanity-link'
 import LinkList from './link.list'
 
-export default async function () {
-	const site = await getSite()
-
+export default function Navigation({
+	site,
+}: {
+	site: SITE_QUERY_RESULT
+}) {
 	return (
 		<nav>
 			<ul className="gap-y-lh flex items-start justify-center gap-x-[2lh] max-md:flex-col">

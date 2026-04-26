@@ -1,0 +1,2067 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Altr — The AI-native workspace for product teams</title>
+<meta name="description" content="Altr gives product teams a shared workspace where humans and AI teammates ship as peers. Specs, code, review — one surface, local-first, SOC 2." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Archivo:wght@700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* neutralized enterprise palette — true white */
+    --bg:         #FFFFFF;       /* page */
+    --bg-2:       #F7F7F7;       /* raised */
+    --bg-3:       #EFEFEF;       /* hairline bg */
+    --line:       #E5E5E5;       /* border */
+    --line-2:     #D1D1D1;       /* stronger border */
+
+    --ink:        #0A0A0A;       /* near-black display */
+    --ink-1:      #1A1A1A;       /* h2 / body bold */
+    --ink-2:      #3A3A3A;       /* body */
+    --ink-3:      #636363;       /* muted body */
+    --ink-4:      #8A8A8A;       /* label */
+    --ink-5:      #B0B0B0;       /* placeholder */
+
+    /* brand (restrained) */
+    --mint:       #B8F29A;       /* logo + primary CTA only */
+    --mint-soft:  #E8F5DB;
+    --moss:       #4F7A3A;       /* logo outline + primary text on mint */
+    --moss-2:     #3F6330;
+
+    /* functional accents */
+    --signal:     #1F6B4A;       /* status / success */
+    --warn:       #A46A2A;
+    --err:        #B53A2A;
+
+    /* elevation */
+    --sh-xs: 0 1px 2px rgba(14,15,12,0.04);
+    --sh-sm: 0 1px 2px rgba(14,15,12,0.04), 0 2px 6px rgba(14,15,12,0.04);
+    --sh-md: 0 2px 4px rgba(14,15,12,0.04), 0 8px 24px -4px rgba(14,15,12,0.08);
+    --sh-lg: 0 4px 8px rgba(14,15,12,0.04), 0 24px 48px -12px rgba(14,15,12,0.12);
+
+    --f-display: "Archivo", "Söhne", "Inter Tight", sans-serif;
+    --f-body:    "Inter Tight", ui-sans-serif, -apple-system, sans-serif;
+    --f-mono:    "JetBrains Mono", ui-monospace, monospace;
+
+    --r-xs: 4px;
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 14px;
+    --r-xl: 20px;
+    --r-2xl: 28px;
+
+    --maxw: 1200px;
+  }
+
+  *{box-sizing:border-box}
+  html{ scroll-behavior: smooth; }
+  html,body{margin:0;padding:0}
+  body{
+    font-family: var(--f-body);
+    color: var(--ink-1); background: var(--bg);
+    font-size: 15px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01","cv11","cv02";
+    overflow-x: hidden;
+  }
+  a{ color: inherit; text-decoration: none; }
+  ::selection{ background: var(--mint); color: var(--ink); }
+
+  /* ================ LOGO ================ */
+  .logo{
+    display: inline-flex; align-items: baseline;
+    font-family: var(--f-display); font-weight: 900;
+    letter-spacing: -0.055em; line-height: 1;
+    color: var(--mint);
+    -webkit-text-stroke: 1.75px var(--moss);
+    paint-order: stroke fill;
+    font-size: 28px;
+  }
+  .logo .slash{ display:inline-block; transform: translateY(-0.08em); }
+  .logo.on-dark{ color: var(--mint); -webkit-text-stroke: 0; }
+  .logo.on-dark .slash{ color: var(--bg); }
+  .logo.ink{ color: var(--ink); -webkit-text-stroke: 0; }
+  .logo.ink .slash{ color: var(--moss); }
+
+  /* ================ NAV ================ */
+  .nav{
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner{
+    max-width: var(--maxw); margin: 0 auto;
+    padding: 14px 32px;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 48px;
+    align-items: center;
+  }
+  .nav-links{
+    display: flex; gap: 4px; align-items: center;
+    font-size: 14px; color: var(--ink-2); font-weight: 500;
+  }
+  .nav-links a{
+    padding: 8px 12px; border-radius: var(--r-sm);
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background 0.15s;
+  }
+  .nav-links a:hover{ background: var(--bg-2); color: var(--ink); }
+  .nav-links .chev{ width: 10px; opacity: 0.5; }
+  .nav-right{ display:flex; align-items:center; gap: 8px; }
+  .nav-ghost{
+    font-size: 14px; font-weight: 500; color: var(--ink-2);
+    padding: 8px 12px; border-radius: var(--r-sm);
+  }
+  .nav-ghost:hover{ background: var(--bg-2); color: var(--ink); }
+
+  /* ================ BUTTONS ================ */
+  .btn{
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 40px; padding: 0 16px;
+    border-radius: 999px;
+    font-family: var(--f-body); font-weight: 600;
+    font-size: 14px; letter-spacing: -0.005em;
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+  }
+  .btn.primary{ background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .btn.primary:hover{ background: #000; box-shadow: var(--sh-sm); }
+  .btn.mint{ background: var(--mint); color: var(--ink); border-color: var(--moss); }
+  .btn.mint:hover{ background: #A6E584; box-shadow: 0 0 0 4px rgba(184,242,154,0.35); }
+  .btn.outline{ background: transparent; color: var(--ink-1); border-color: var(--line-2); }
+  .btn.outline:hover{ background: var(--bg-2); border-color: var(--ink-4); }
+  .btn.sm{ height: 32px; padding: 0 12px; font-size: 13px; }
+  .btn.lg{ height: 48px; padding: 0 22px; font-size: 15px; }
+
+  /* ================ EYEBROW / CHIP ================ */
+  .chip{
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--f-mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-3);
+    padding: 5px 10px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: var(--bg);
+  }
+  .chip .dot{
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--signal);
+  }
+  .chip.live .dot{
+    background: var(--signal);
+    box-shadow: 0 0 0 3px rgba(31,107,74,0.14);
+  }
+  .chip.mint{ background: var(--mint-soft); border-color: var(--moss); color: var(--moss-2); }
+
+  /* ================ TYPE ================ */
+  .display-xl{
+    font-family: var(--f-display); font-weight: 900;
+    font-size: clamp(56px, 7.6vw, 108px);
+    line-height: 0.92; letter-spacing: -0.04em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .display-xl .mint-fill{
+    color: var(--mint);
+    -webkit-text-stroke: 2.5px var(--moss);
+    paint-order: stroke fill;
+  }
+  .display-xl em{
+    font-style: italic;
+    -webkit-text-stroke: 2.5px var(--ink);
+    color: transparent;
+  }
+  .h2{
+    font-family: var(--f-display); font-weight: 800;
+    font-size: clamp(36px, 4.4vw, 60px);
+    line-height: 1; letter-spacing: -0.03em;
+    color: var(--ink); margin: 0;
+  }
+  .h2 em{
+    font-style: italic;
+    -webkit-text-stroke: 1.8px var(--ink);
+    color: transparent;
+  }
+  .h3{
+    font-family: var(--f-display); font-weight: 800;
+    font-size: 24px; letter-spacing: -0.02em; line-height: 1.15;
+    color: var(--ink); margin: 0;
+  }
+  .lede{
+    font-size: 19px; line-height: 1.5; color: var(--ink-3);
+    letter-spacing: -0.005em;
+    max-width: 640px; margin: 0;
+  }
+  .lede b{ color: var(--ink-1); font-weight: 600; }
+  .overline{
+    font-family: var(--f-mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--moss-2); font-weight: 500;
+  }
+  .small{ font-size: 13px; color: var(--ink-3); }
+
+  /* ================ SECTIONS ================ */
+  section{ padding: 120px 32px; position: relative; }
+  .wrap{ max-width: var(--maxw); margin: 0 auto; }
+  .sec-head{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    align-items: end;
+    margin-bottom: 64px;
+  }
+  .sec-head .right{ align-self: end; }
+  .sec-head .lede{ margin-top: 0; }
+  .sec-head .overline{ display:block; margin-bottom: 20px; }
+
+  /* ================ HERO ================ */
+  .hero{
+    padding: 72px 32px 96px;
+    position: relative; overflow: hidden;
+    min-height: 560px;
+  }
+  /* Stripe-ish mesh backdrop — subtle, light */
+  .hero::before{
+    content:""; position: absolute; inset: -20% -10% auto -10%; height: 800px;
+    background:
+      radial-gradient(ellipse 45% 55% at 18% 20%, rgba(184, 242, 154, 0.35), transparent 60%),
+      radial-gradient(ellipse 45% 45% at 78% 14%, rgba(255, 229, 116, 0.22), transparent 60%),
+      radial-gradient(ellipse 60% 60% at 50% 70%, rgba(31, 107, 74, 0.06), transparent 60%);
+    filter: blur(32px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* grid lines, very subtle */
+  .hero::after{
+    content:""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(14,15,12,0.03) 1px, transparent 1px);
+    background-size: 100px 100%;
+    background-position: 50% 0;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: linear-gradient(to bottom, black, transparent 70%);
+  }
+  .hero-inner{ position: relative; z-index: 1; max-width: var(--maxw); margin: 0 auto; }
+
+  .hero-grid{
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 56px;
+    align-items: center;
+    min-height: 520px;
+  }
+  .hero-copy .chip{ margin-bottom: 24px; }
+  .hero-copy .display-xl{ margin-bottom: 24px; max-width: 680px; }
+  .hero-copy .lede{ margin-bottom: 32px; }
+  .hero-ctas{ display:flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 28px; }
+  .hero-sub{
+    display: flex; align-items: center; gap: 16px;
+    font-size: 13px; color: var(--ink-3);
+  }
+  .hero-sub .sep{ color: var(--line-2); }
+  .hero-sub b{ color: var(--ink); font-weight: 600; }
+
+  /* hero secondary panel = product glimpse */
+  .hero-visual{
+    position: relative;
+    aspect-ratio: 4/5;
+    border-radius: var(--r-2xl);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    box-shadow: var(--sh-lg);
+    overflow: hidden;
+  }
+  .hero-visual .glass{
+    position: absolute; inset: 18px;
+    border-radius: var(--r-xl);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .hv-bar{
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 10px;
+    background: var(--bg-2);
+  }
+  .hv-bar .dots{ display: flex; gap: 5px; }
+  .hv-bar .dots span{ width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); }
+  .hv-bar .tab{
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--f-mono); font-size: 11px; color: var(--ink-2);
+    padding: 3px 10px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    margin-left: 6px;
+  }
+  .hv-bar .tab .x{ color: var(--ink-4); }
+  .hv-body{ flex: 1; position: relative; padding: 16px 18px; overflow: hidden; }
+  .hv-doc-title{
+    font-family: var(--f-display); font-weight: 800;
+    font-size: 18px; letter-spacing: -0.02em; color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .hv-doc-meta{ font-family: var(--f-mono); font-size: 11px; color: var(--ink-4); margin-bottom: 12px; }
+  .hv-line{
+    height: 8px; background: var(--bg-3); border-radius: 2px; margin-bottom: 8px;
+  }
+  .hv-line.w80{ width: 80%; }
+  .hv-line.w65{ width: 65%; }
+  .hv-line.w90{ width: 90%; }
+  .hv-line.w45{ width: 45%; }
+
+  .hv-typing{
+    margin-top: 14px; padding: 12px 14px;
+    background: var(--mint-soft);
+    border: 1px dashed var(--moss);
+    border-radius: var(--r-md);
+    position: relative;
+    font-size: 12.5px; line-height: 1.45; color: var(--ink-1);
+  }
+  .hv-typing::before{
+    content:"Pax is writing";
+    position: absolute; top: -9px; left: 12px;
+    background: var(--mint); color: var(--ink);
+    border: 1px solid var(--moss);
+    padding: 1px 8px; border-radius: 999px;
+    font-family: var(--f-mono); font-size: 9.5px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .hv-typing .cur{
+    display: inline-block; width: 6px; height: 12px;
+    background: var(--moss); vertical-align: -2px; margin-left: 2px;
+    animation: blink 1s infinite;
+  }
+  @keyframes blink{ 50%{opacity: 0;} }
+
+  .hv-cursor{
+    position: absolute; top: 118px; right: 28px;
+    display: flex; align-items: center; gap: 6px;
+    animation: cursorFloat 4s ease-in-out infinite;
+  }
+  @keyframes cursorFloat{
+    0%,100%{ transform: translate(0, 0); }
+    50%{ transform: translate(-16px, 10px); }
+  }
+  .hv-cursor .cur-icon{
+    width: 14px; height: 14px;
+    background: var(--moss); clip-path: polygon(0 0, 100% 50%, 55% 55%, 70% 100%, 55% 105%, 40% 70%, 0 65%);
+  }
+  .hv-cursor .cur-label{
+    font-family: var(--f-mono); font-size: 10px;
+    padding: 2px 6px; border-radius: var(--r-xs);
+    background: var(--moss); color: var(--mint);
+    letter-spacing: 0.04em;
+  }
+
+  /* ================ TRUST BAR ================ */
+  .trust{
+    padding: 48px 32px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  .trust-inner{
+    max-width: var(--maxw); margin: 0 auto;
+    display: grid; grid-template-columns: 220px 1fr; gap: 64px; align-items: center;
+  }
+  .trust-label{
+    font-family: var(--f-mono); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-4);
+    line-height: 1.5;
+  }
+  .trust-label b{ color: var(--ink-1); display: block; font-weight: 600; }
+  .trust-logos{
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 32px;
+    align-items: center;
+  }
+  .trust-logo{
+    font-family: var(--f-display); font-weight: 800;
+    font-size: 18px; letter-spacing: -0.03em;
+    color: var(--ink-4);
+    text-align: center;
+    opacity: 0.9;
+    transition: opacity 0.2s, color 0.2s;
+    filter: grayscale(1);
+  }
+  .trust-logo:hover{ opacity: 1; color: var(--ink-1); }
+
+  /* ================ METRICS ================ */
+  .metrics{
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .metric{
+    padding: 32px 28px;
+    border-right: 1px solid var(--line);
+    position: relative;
+  }
+  .metric:last-child{ border-right: 0; }
+  .metric .ov{
+    font-family: var(--f-mono); font-size: 10.5px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-4); font-weight: 500;
+    margin-bottom: 20px;
+  }
+  .metric .num{
+    font-family: var(--f-display); font-weight: 900;
+    font-size: 52px; line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin-bottom: 8px;
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .metric .num small{ font-size: 20px; font-weight: 700; color: var(--ink-3); letter-spacing: 0; }
+  .metric .desc{ font-size: 13.5px; color: var(--ink-3); line-height: 1.45; }
+  .metric .spark{
+    position: absolute; top: 24px; right: 24px;
+    width: 56px; height: 22px;
+  }
+
+  /* ================ FEATURE DEEP-DIVE ================ */
+  .feat{ padding: 100px 32px; }
+  .feat-row{
+    display: grid; grid-template-columns: 1fr 1.1fr;
+    gap: 80px; align-items: center;
+    margin-bottom: 120px;
+  }
+  .feat-row:last-child{ margin-bottom: 0; }
+  .feat-row.reverse{ grid-template-columns: 1.1fr 1fr; }
+  .feat-row.reverse .feat-copy{ order: 2; }
+  .feat-row.reverse .feat-visual{ order: 1; }
+  .feat-copy .overline{ display:block; margin-bottom: 16px; }
+  .feat-copy .h2{ margin-bottom: 20px; max-width: 440px; }
+  .feat-copy .lede{ margin-bottom: 24px; }
+  .feat-copy ul{
+    list-style: none; padding: 0; margin: 0 0 28px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .feat-copy li{
+    display: grid; grid-template-columns: 20px 1fr; gap: 12px;
+    font-size: 14.5px; line-height: 1.5; color: var(--ink-2);
+  }
+  .feat-copy li svg{ margin-top: 3px; flex-shrink: 0; }
+  .feat-copy li b{ color: var(--ink); font-weight: 600; }
+  .feat-link{
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 600; color: var(--ink);
+    padding-bottom: 4px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .feat-link:hover{ border-bottom-color: var(--moss); color: var(--moss-2); }
+
+  .feat-visual{
+    aspect-ratio: 5/4;
+    border-radius: var(--r-xl);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    box-shadow: var(--sh-md);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ================ PRODUCT TOUR TABS ================ */
+  .tour{
+    padding: 120px 32px 140px;
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .tour-tabs{
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .tour-tab{
+    padding: 18px 20px;
+    border-right: 1px solid var(--line);
+    cursor: pointer;
+    background: var(--bg);
+    display: flex; flex-direction: column; gap: 6px;
+    text-align: left;
+    transition: background 0.15s;
+    border-bottom: 2px solid transparent;
+    font-family: var(--f-body);
+  }
+  .tour-tab:last-child{ border-right: 0; }
+  .tour-tab:hover{ background: var(--bg-2); }
+  .tour-tab.on{ background: var(--bg-2); border-bottom-color: var(--ink); }
+  .tour-tab .t-num{
+    font-family: var(--f-mono); font-size: 10.5px;
+    letter-spacing: 0.1em; color: var(--ink-4);
+  }
+  .tour-tab.on .t-num{ color: var(--moss-2); }
+  .tour-tab .t-name{
+    font-family: var(--f-display); font-weight: 800;
+    font-size: 16px; color: var(--ink-1); letter-spacing: -0.015em;
+  }
+  .tour-tab .t-desc{
+    font-size: 12.5px; color: var(--ink-3); line-height: 1.4;
+  }
+
+  .tour-stage{
+    position: relative;
+    border-radius: var(--r-xl);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    box-shadow: var(--sh-lg);
+    overflow: hidden;
+    aspect-ratio: 16/10;
+  }
+  .tour-scene{
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease;
+    display: flex; flex-direction: column;
+  }
+  .tour-scene.on{ opacity: 1; pointer-events: auto; }
+
+  /* mac window chrome inside each scene */
+  .win-bar{
+    height: 36px; padding: 0 14px;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px;
+  }
+  .win-dots{ display:flex; gap: 6px; }
+  .win-dots span{ width: 10px; height: 10px; border-radius: 50%; }
+  .win-dots span:nth-child(1){ background: #E65E52; }
+  .win-dots span:nth-child(2){ background: #E3B542; }
+  .win-dots span:nth-child(3){ background: #54BA5A; }
+  .win-title{
+    font-family: var(--f-mono); font-size: 11px; color: var(--ink-3);
+    justify-self: center; letter-spacing: 0.02em;
+  }
+  .win-title b{ color: var(--ink-1); font-weight: 600; }
+  .win-kbd{
+    font-family: var(--f-mono); font-size: 10.5px;
+    color: var(--ink-4);
+    padding: 2px 6px; border: 1px solid var(--line);
+    border-radius: var(--r-xs); background: var(--bg);
+  }
+
+  /* 3-pane scene shared */
+  .scene-body{ flex: 1; display: grid; grid-template-columns: 180px 1fr 280px; min-height: 0; }
+  .scene-body.two{ grid-template-columns: 220px 1fr; }
+  .scene-body.one{ grid-template-columns: 1fr; }
+
+  .pane-side{
+    background: var(--bg);
+    border-right: 1px solid var(--line);
+    padding: 12px 10px;
+    font-size: 12.5px;
+    overflow: hidden;
+  }
+  .pane-sec{
+    font-family: var(--f-mono); font-size: 9.5px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-4); padding: 10px 8px 4px;
+  }
+  .pane-item{
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 8px; border-radius: var(--r-xs);
+    color: var(--ink-2);
+  }
+  .pane-item .dt{ width: 6px; height: 6px; border-radius: 50%; background: var(--line-2); }
+  .pane-item.pax .dt{ background: var(--moss); }
+  .pane-item.eng .dt{ background: var(--ink); }
+  .pane-item.dex .dt{ background: var(--warn); }
+  .pane-item.rae .dt{ background: var(--err); }
+  .pane-item.on{ background: var(--bg-2); color: var(--ink); font-weight: 500; }
+  .pane-item .b{ margin-left: auto; font-family: var(--f-mono); font-size: 10px; color: var(--ink-4); }
+
+  .pane-main{ padding: 20px 28px; overflow: auto; }
+  .pane-main h4{
+    font-family: var(--f-display); font-weight: 800;
+    font-size: 22px; letter-spacing: -0.025em; color: var(--ink);
+    margin: 0 0 6px;
+  }
+  .pane-main .meta{
+    font-family: var(--f-mono); font-size: 11px; color: var(--ink-4);
+    margin-bottom: 14px;
+  }
+  .pane-main p{ font-size: 13px; line-height: 1.6; color: var(--ink-2); margin: 0 0 10px; }
+
+  .pane-rail{
+    background: var(--bg-2);
+    border-left: 1px solid var(--line);
+    padding: 12px 14px;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .rail-head{
+    padding-bottom: 8px; margin-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--f-display); font-weight: 700;
+    font-size: 13px; color: var(--ink);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .rail-head .n{
+    font-family: var(--f-mono); font-size: 10px; color: var(--ink-4);
+  }
+  .rail-msg{ margin-bottom: 10px; }
+  .rail-who{
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+  .rail-who .a{
+    width: 16px; height: 16px; border-radius: 4px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--f-mono); font-size: 9px; font-weight: 700;
+  }
+  .rail-who .a.pax{ background: var(--mint); color: var(--ink); border: 1px solid var(--moss); }
+  .rail-who .a.eng{ background: var(--ink); color: var(--mint); }
+  .rail-who .a.you{ background: var(--bg); color: var(--ink); border: 1px solid var(--line-2); }
+  .rail-who b{ color: var(--ink); font-weight: 600; font-size: 11.5px; }
+  .rail-who .t{ color: var(--ink-4); font-family: var(--f-mono); font-size: 10px; margin-left: auto; }
+  .rail-body{ font-size: 12px; line-height: 1.5; color: var(--ink-2); }
+  .rail-card{
+    margin-top: 5px; padding: 8px 10px;
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    font-family: var(--f-mono); font-size: 10.5px;
+    color: var(--ink-2);
+  }
+  .rail-card.pr{ background: var(--mint-soft); border-color: var(--moss); }
+  .rail-card b{ color: var(--ink); }
+
+  /* inputs and micro-UI */
+  .kv{
+    display: grid; grid-template-columns: 80px 1fr; gap: 4px 14px;
+    font-family: var(--f-mono); font-size: 11px;
+    margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line);
+  }
+  .kv dt{ color: var(--ink-4); }
+  .kv dd{ color: var(--ink-1); margin: 0; }
+  .chip-sm{
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 1px 7px; border-radius: var(--r-xs);
+    font-family: var(--f-mono); font-size: 10.5px;
+    background: var(--bg-2); border: 1px solid var(--line); color: var(--ink-2);
+  }
+  .chip-sm.mint{ background: var(--mint-soft); border-color: var(--moss); color: var(--moss-2); }
+  .chip-sm.ink{ background: var(--ink); color: var(--mint); border-color: var(--ink); }
+
+  /* ================ INTEGRATIONS ================ */
+  .intg{ padding: 120px 32px; }
+  .intg-grid{
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 0;
+    border: 1px solid var(--line); border-radius: var(--r-lg);
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .intg-cell{
+    padding: 28px 22px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 10px;
+    min-height: 140px;
+    position: relative;
+  }
+  .intg-cell:nth-child(6n){ border-right: 0; }
+  .intg-cell:nth-last-child(-n+6){ border-bottom: 0; }
+  .intg-cell .ico{
+    width: 28px; height: 28px;
+    border-radius: var(--r-sm);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--f-display); font-weight: 800;
+    font-size: 13px; color: var(--ink-1);
+  }
+  .intg-cell .name{
+    font-family: var(--f-display); font-weight: 700;
+    font-size: 15px; letter-spacing: -0.015em; color: var(--ink);
+  }
+  .intg-cell .st{
+    font-family: var(--f-mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--signal);
+    margin-top: auto;
+  }
+  .intg-cell .st.soon{ color: var(--ink-4); }
+  .intg-cell .tag{
+    position: absolute; top: 20px; right: 20px;
+    font-family: var(--f-mono); font-size: 9.5px;
+    color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* ================ SECURITY ================ */
+  .sec-block{
+    padding: 120px 32px;
+    background: var(--ink); color: var(--bg);
+    position: relative; overflow: hidden;
+  }
+  .sec-block::before{
+    content:""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 40% 40% at 15% 0%, rgba(184,242,154,0.08), transparent 60%),
+      radial-gradient(ellipse 50% 30% at 85% 100%, rgba(184,242,154,0.05), transparent 60%);
+    pointer-events: none;
+  }
+  .sec-block .wrap{ position: relative; }
+  .sec-block .overline{ color: var(--mint); }
+  .sec-block .h2{ color: var(--bg); }
+  .sec-block .h2 em{ -webkit-text-stroke: 1.8px var(--mint); }
+  .sec-block .lede{ color: var(--ink-5); }
+  .sec-block .lede b{ color: var(--bg); }
+
+  .sec-grid{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    margin-top: 48px;
+  }
+  .sec-card{
+    background: var(--ink);
+    padding: 28px 26px;
+    display: flex; flex-direction: column; gap: 12px;
+    min-height: 200px;
+  }
+  .sec-card h4{
+    font-family: var(--f-display); font-weight: 800;
+    font-size: 17px; letter-spacing: -0.015em;
+    color: var(--bg); margin: 0;
+  }
+  .sec-card p{ font-size: 13.5px; color: var(--ink-5); line-height: 1.55; margin: 0; }
+  .sec-card .badge{
+    margin-top: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--f-mono); font-size: 10.5px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--mint);
+    padding: 4px 10px; border: 1px solid rgba(184,242,154,0.25);
+    border-radius: 999px;
+    align-self: flex-start;
+  }
+  .sec-icon{
+    width: 32px; height: 32px;
+    border-radius: var(--r-sm);
+    background: rgba(184,242,154,0.1);
+    border: 1px solid rgba(184,242,154,0.2);
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* compliance row */
+  .comply{
+    margin-top: 40px;
+    display: flex; gap: 32px; flex-wrap: wrap; align-items: center;
+    padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .comply-badge{
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--r-sm);
+    color: var(--bg);
+    font-family: var(--f-display); font-weight: 700;
+    font-size: 13px; letter-spacing: -0.01em;
+  }
+  .comply-badge small{ font-family: var(--f-mono); font-size: 10px; color: var(--ink-5); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; }
+
+  /* ================ TESTIMONIALS ================ */
+  .tstm{ padding: 120px 32px; }
+  .tstm-grid{
+    display: grid; grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 20px;
+  }
+  .tstm-card{
+    padding: 32px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    display: flex; flex-direction: column; gap: 20px;
+    box-shadow: var(--sh-xs);
+  }
+  .tstm-card.big{ grid-row: span 2; padding: 40px; }
+  .tstm-quote{
+    font-family: var(--f-display); font-weight: 700;
+    font-size: 20px; letter-spacing: -0.02em; line-height: 1.35;
+    color: var(--ink-1);
+    flex: 1;
+  }
+  .tstm-card.big .tstm-quote{ font-size: 30px; line-height: 1.2; font-weight: 800; }
+  .tstm-quote em{ font-style: italic; color: var(--moss-2); }
+  .tstm-by{
+    display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center;
+    padding-top: 20px; border-top: 1px solid var(--line);
+  }
+  .tstm-av{
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    font-family: var(--f-display); font-weight: 800;
+    font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-1);
+  }
+  .tstm-by .name{ font-weight: 600; font-size: 14px; color: var(--ink); }
+  .tstm-by .role{ font-size: 12.5px; color: var(--ink-3); }
+
+  /* ================ CHANGELOG ================ */
+  .chglog{
+    padding: 120px 32px;
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .chglog-grid{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .chg-card{
+    padding: 28px 32px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .chg-card .row{
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--f-mono); font-size: 11px;
+    color: var(--ink-4); letter-spacing: 0.04em;
+  }
+  .chg-card .row .v{
+    background: var(--ink); color: var(--mint);
+    padding: 2px 7px; border-radius: var(--r-xs);
+    font-weight: 600; font-size: 10.5px;
+  }
+  .chg-card .row .date{ color: var(--ink-3); }
+  .chg-card h4{
+    font-family: var(--f-display); font-weight: 800;
+    font-size: 20px; letter-spacing: -0.02em; line-height: 1.2;
+    color: var(--ink); margin: 0;
+  }
+  .chg-card p{ font-size: 13.5px; line-height: 1.5; color: var(--ink-3); margin: 0; }
+  .chg-card .tagrow{
+    display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px;
+  }
+
+  /* ================ PRICING (compact enterprise) ================ */
+  .pricing{ padding: 120px 32px; }
+  .price-grid{
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .price{
+    padding: 36px 32px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    display: flex; flex-direction: column; gap: 20px;
+    min-height: 540px;
+  }
+  .price.featured{ background: var(--ink); color: var(--bg); border-color: var(--ink); box-shadow: var(--sh-lg); position: relative; }
+  .price.featured::before{
+    content:"Recommended";
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--mint); color: var(--ink); border: 1px solid var(--moss);
+    padding: 4px 12px; border-radius: 999px;
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+  }
+  .price .ov{ font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); }
+  .price.featured .ov{ color: var(--mint); }
+  .price h4{
+    font-family: var(--f-display); font-weight: 900;
+    font-size: 28px; letter-spacing: -0.025em; color: var(--ink);
+    margin: 0;
+  }
+  .price.featured h4{ color: var(--bg); }
+  .price .amt{
+    font-family: var(--f-display); font-weight: 900;
+    font-size: 48px; letter-spacing: -0.04em; line-height: 1;
+    color: var(--ink);
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .price.featured .amt{ color: var(--mint); }
+  .price .amt small{ font-size: 14px; font-weight: 500; color: var(--ink-3); letter-spacing: 0; }
+  .price.featured .amt small{ color: var(--ink-5); }
+  .price p.desc{ font-size: 14px; color: var(--ink-3); margin: 0; line-height: 1.5; }
+  .price.featured p.desc{ color: var(--ink-5); }
+  .price ul{ list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .price li{ display: grid; grid-template-columns: 16px 1fr; gap: 10px; font-size: 13.5px; color: var(--ink-2); line-height: 1.4; }
+  .price.featured li{ color: var(--ink-5); }
+  .price li svg{ margin-top: 3px; }
+  .price.featured li svg path{ stroke: var(--mint); }
+  .price .btn{ margin-top: auto; justify-content: center; width: 100%; }
+
+  /* ================ FAQ ================ */
+  .faq{ padding: 100px 32px; background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .faq-grid{
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+  }
+  .faq-item{
+    padding: 22px 28px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+  }
+  .faq-q{
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    cursor: pointer;
+    font-family: var(--f-display); font-weight: 700;
+    font-size: 16px; letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .faq-q .ic{
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 1px solid var(--line-2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-3);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .faq-item.open .faq-q .ic{ transform: rotate(45deg); background: var(--ink); color: var(--mint); border-color: var(--ink); }
+  .faq-a{
+    font-size: 14px; line-height: 1.6; color: var(--ink-3);
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.25s ease, margin-top 0.25s ease;
+  }
+  .faq-item.open .faq-a{ max-height: 260px; margin-top: 14px; }
+  .faq-a b{ color: var(--ink-1); }
+
+  /* ================ CLOSE CTA ================ */
+  .close-sec{
+    padding: 140px 32px;
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .close-sec::before{
+    content:""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 50% at 50% 30%, rgba(184, 242, 154, 0.3), transparent 60%),
+      radial-gradient(ellipse 30% 30% at 80% 60%, rgba(255, 229, 116, 0.18), transparent 60%);
+    filter: blur(24px);
+    pointer-events: none;
+  }
+  .close-sec .wrap{ position: relative; z-index: 1; }
+  .close-sec .display-xl{ margin: 0 auto 24px; max-width: 900px; }
+  .close-sec .lede{ margin: 0 auto 32px; max-width: 560px; }
+  .close-form{
+    max-width: 440px; margin: 0 auto 20px;
+    display: flex; gap: 8px;
+    padding: 4px;
+    background: var(--bg);
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    box-shadow: var(--sh-sm);
+  }
+  .close-form input{
+    flex: 1; border: none; background: transparent; outline: none;
+    padding: 10px 14px;
+    font-family: var(--f-body); font-size: 14px; color: var(--ink);
+  }
+  .close-note{
+    font-family: var(--f-mono); font-size: 10.5px;
+    color: var(--ink-4);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* ================ FOOTER ================ */
+  footer{
+    background: var(--ink); color: var(--bg);
+    padding: 80px 32px 40px;
+  }
+  .foot-wrap{ max-width: var(--maxw); margin: 0 auto; }
+  .foot-top{
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 48px; padding-bottom: 56px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .foot-tag{ font-size: 14px; color: var(--ink-5); line-height: 1.55; margin: 16px 0 0; max-width: 320px; }
+  .foot-top h5{
+    font-family: var(--f-mono); font-size: 10.5px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--mint); margin: 0 0 14px; font-weight: 500;
+  }
+  .foot-top a{ display: block; font-size: 13.5px; color: var(--ink-5); padding: 5px 0; }
+  .foot-top a:hover{ color: var(--bg); }
+  .foot-bottom{
+    padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    font-family: var(--f-mono); font-size: 11px;
+    letter-spacing: 0.04em; color: var(--ink-5);
+    flex-wrap: wrap;
+  }
+  .foot-bottom .row{ display: flex; gap: 20px; }
+
+  /* ================ reveal on scroll ================ */
+  .reveal{ opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in{ opacity: 1; transform: none; }
+
+  /* ================ responsive ================ */
+  @media (max-width: 1100px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .hero-visual{ max-width: 560px; }
+    .sec-head{ grid-template-columns: 1fr; gap: 24px; }
+    .feat-row, .feat-row.reverse{ grid-template-columns: 1fr; gap: 40px; }
+    .feat-row.reverse .feat-copy{ order: 1; }
+    .feat-row.reverse .feat-visual{ order: 2; }
+    .metrics{ grid-template-columns: repeat(2, 1fr); }
+    .metric:nth-child(2){ border-right: 0; }
+    .metric:nth-child(-n+2){ border-bottom: 1px solid var(--line); }
+    .tour-tabs{ grid-template-columns: repeat(2, 1fr); }
+    .tour-tab:nth-child(2){ border-right: 0; }
+    .tour-tab{ border-bottom: 1px solid var(--line); }
+    .intg-grid{ grid-template-columns: repeat(3, 1fr); }
+    .intg-cell:nth-child(6n){ border-right: 1px solid var(--line); }
+    .intg-cell:nth-child(3n){ border-right: 0; }
+    .sec-grid{ grid-template-columns: 1fr; }
+    .tstm-grid, .price-grid, .faq-grid, .chglog-grid{ grid-template-columns: 1fr; }
+    .foot-top{ grid-template-columns: 1fr 1fr; }
+    .trust-inner{ grid-template-columns: 1fr; gap: 24px; }
+    .trust-logos{ grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .nav-links{ display: none; }
+    .scene-body{ grid-template-columns: 1fr; }
+    .pane-side, .pane-rail{ display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">a<span class="slash">\</span>tr</a>
+    <div class="nav-links">
+      <a href="#product">Product <svg class="chev" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+      <a href="#teammates">Teammates</a>
+      <a href="#tour">Tour</a>
+      <a href="#integrations">Integrations</a>
+      <a href="#security">Security</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#changelog">Changelog</a>
+    </div>
+    <div class="nav-right">
+      <a class="nav-ghost" href="#">Sign in</a>
+      <a class="btn primary sm" href="#close">Request access →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="chip live"><span class="dot"></span>Private beta · SOC 2 Type II in progress</span>
+        <h1 class="display-xl">The workspace your team and <span class="mint-fill">AI</span> share.</h1>
+        <p class="lede">
+          <b>Altr</b> replaces the Linear / Cursor / Slack / Figma tab-switch with one Mac-native surface where PMs, engineers, and agents co-edit specs, review PRs, and ship &mdash; on a local-first runtime with audit logs built in.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn primary lg" href="#close">Request access <span aria-hidden="true">→</span></a>
+          <a class="btn outline lg" href="#tour">Take the tour</a>
+        </div>
+        <div class="hero-sub">
+          <span><b>1,240+</b> product teams on the waitlist</span>
+          <span class="sep">·</span>
+          <span>Shipping June 2026</span>
+          <span class="sep">·</span>
+          <span>macOS · local-first</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="glass">
+          <div class="hv-bar">
+            <div class="dots"><span></span><span></span><span></span></div>
+            <span class="tab">magic-link-auth.md <span class="x">×</span></span>
+          </div>
+          <div class="hv-body">
+            <div class="hv-doc-title">Magic-link auth</div>
+            <div class="hv-doc-meta">specs/auth · last edited 2m ago · <span style="color:var(--moss-2)">● live</span></div>
+            <div class="hv-line w90"></div>
+            <div class="hv-line w80"></div>
+            <div class="hv-line w65"></div>
+            <div class="hv-line w45"></div>
+            <div class="hv-typing">
+              <b>AC:</b> link expires after 15 min · rate-limit 3/email/hour · expired link surfaces resend CTA<span class="cur"></span>
+            </div>
+            <div class="hv-cursor">
+              <div class="cur-icon"></div>
+              <div class="cur-label">Pax</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TRUST BAR ========== -->
+<div class="trust">
+  <div class="trust-inner">
+    <div class="trust-label"><b>Trusted by operators at</b>early-stage product teams, scale-ups, and research labs</div>
+    <div class="trust-logos">
+      <div class="trust-logo">Mercato</div>
+      <div class="trust-logo">Layerwise</div>
+      <div class="trust-logo">Northline</div>
+      <div class="trust-logo">Parabola</div>
+      <div class="trust-logo">Feldspar</div>
+      <div class="trust-logo">Orbital</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== METRICS ========== -->
+<section style="padding: 100px 32px;">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="overline">§ 01 · Outcomes</span>
+        <h2 class="h2">Teams ship <em>3&times; more</em><br/>with half the tab-switching.</h2>
+      </div>
+      <div class="right">
+        <p class="lede">Early beta data across 42 teams over 6 weeks. Measured against each team&rsquo;s 30-day baseline before Altr. We publish the full methodology in the docs.</p>
+      </div>
+    </div>
+
+    <div class="metrics reveal">
+      <div class="metric">
+        <div class="ov">Specs shipped / week</div>
+        <div class="num">3.2<small>×</small></div>
+        <div class="desc">Median lift vs. Linear + Notion + Slack baseline.</div>
+        <svg class="spark" viewBox="0 0 56 22" fill="none"><polyline points="0,18 10,14 20,15 30,9 40,7 50,3 56,2" stroke="#1F6B4A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="metric">
+        <div class="ov">Context switches / day</div>
+        <div class="num">&minus;64<small>%</small></div>
+        <div class="desc">Tracked via keystroke telemetry on opted-in accounts.</div>
+        <svg class="spark" viewBox="0 0 56 22" fill="none"><polyline points="0,4 10,7 20,9 30,13 40,16 50,18 56,20" stroke="#B53A2A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="metric">
+        <div class="ov">PR lead time</div>
+        <div class="num">-41<small>%</small></div>
+        <div class="desc">From spec-draft to first review request.</div>
+        <svg class="spark" viewBox="0 0 56 22" fill="none"><polyline points="0,5 10,8 20,7 30,12 40,14 50,17 56,18" stroke="#B53A2A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="metric">
+        <div class="ov">Team NPS uplift</div>
+        <div class="num">+38<small>pt</small></div>
+        <div class="desc">Internal survey, 4 weeks post-rollout.</div>
+        <svg class="spark" viewBox="0 0 56 22" fill="none"><polyline points="0,16 10,14 20,12 30,9 40,6 50,4 56,3" stroke="#1F6B4A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURE DEEP-DIVES ========== -->
+<section class="feat" id="product">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="overline">§ 02 · What you get</span>
+        <h2 class="h2">Four capabilities.<br/><em>One surface.</em></h2>
+      </div>
+      <div class="right">
+        <p class="lede">Specs, code, review, and signal &mdash; each a first-class object in Altr with its own audit trail. No plugins. No SaaS daisy-chain.</p>
+      </div>
+    </div>
+
+    <!-- F1 -->
+    <div class="feat-row reveal" id="teammates">
+      <div class="feat-copy">
+        <span class="overline">Feature 01 · Co-authored specs</span>
+        <h3 class="h2">Every spec is <em>multiplayer</em>.</h3>
+        <p class="lede">Pax drafts acceptance criteria in your voice, holds the open questions, and tracks every edit back to who made it &mdash; human or agent. No more "the doc says X, Slack says Y."</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>Inline citations</b> &mdash; every AC traces back to the transcript, Loom, or file that spawned it.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>Version history</b> with turn-by-turn attribution. Export as PDF for audit.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>Voice &amp; style learning</b> &mdash; Pax picks up your glossary, tone, and taste across specs.</span></li>
+        </ul>
+        <a class="feat-link" href="#tour">See Pax in the product tour →</a>
+      </div>
+      <div class="feat-visual">
+        <div class="win-bar">
+          <div class="win-dots"><span></span><span></span><span></span></div>
+          <div class="win-title"><b>altr</b> · specs / magic-link-auth.md</div>
+          <div class="win-kbd">⌘K</div>
+        </div>
+        <div style="padding: 24px 28px; display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-family: var(--f-display); font-weight: 800; font-size: 18px; color: var(--ink); letter-spacing: -0.02em;">Magic-link auth</div>
+          <div style="display:flex;gap:8px;align-items:center;font-family:var(--f-mono);font-size:11px;color:var(--ink-4);">
+            <span class="chip-sm">spec</span>
+            <span>Owner <b style="color:var(--ink-1)">@mukul</b></span>
+            <span>·</span>
+            <span>Reviewed by <b style="color:var(--moss-2)">Pax</b></span>
+          </div>
+          <div style="margin-top: 8px; font-size: 13px; color: var(--ink-2); line-height: 1.6;">New users enter email, receive one-time magic link, account is created on click. No password step. <span style="background: var(--mint-soft); padding: 0 4px;">Link expires in 15 minutes.</span></div>
+          <div style="padding: 12px 14px; background: var(--mint-soft); border: 1px dashed var(--moss); border-radius: var(--r-md); position: relative; margin-top: 6px; font-size: 12.5px; color: var(--ink-1); line-height: 1.5;">
+            <div style="position:absolute;top:-9px;left:12px;background:var(--mint);border:1px solid var(--moss);padding:1px 8px;border-radius:999px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);">Pax · citing user interview #47</div>
+            "Rate limit is critical &mdash; we saw this abused in a prior auth flow." &mdash; from <span style="color:var(--moss-2);font-weight:600;">interview-sarah-chen.md</span>
+          </div>
+          <div style="margin-top: 4px; display: flex; gap: 6px;">
+            <span class="chip-sm mint">● open · ready for eng</span>
+            <span class="chip-sm">est 2.5h</span>
+            <span class="chip-sm">P1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F2 -->
+    <div class="feat-row reverse reveal">
+      <div class="feat-copy">
+        <span class="overline">Feature 02 · Autopilot engineering</span>
+        <h3 class="h2">Eng ships <em>real PRs</em>, not snippets.</h3>
+        <p class="lede">Eng spawns Claude Code in an isolated git worktree, reads your repo conventions, implements the spec, runs your test suite, and opens a draft PR &mdash; so review stays in GitHub, not in a chat log.</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>Isolated worktrees</b> &mdash; every job runs sandboxed. No stomping on your branch.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>Policy gates</b> &mdash; require human approval before merging, or auto-merge on green CI.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>Budget controls</b> &mdash; token + time caps per job. Hard-stop on overrun.</span></li>
+        </ul>
+        <a class="feat-link" href="#tour">Watch Eng ship →</a>
+      </div>
+      <div class="feat-visual">
+        <div class="win-bar">
+          <div class="win-dots"><span></span><span></span><span></span></div>
+          <div class="win-title"><b>altr</b> · eng / worktree-142</div>
+          <div class="win-kbd">⌘J</div>
+        </div>
+        <div style="padding: 18px 22px; font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); line-height: 1.7;">
+          <div style="color:var(--ink-4);">$ eng run magic-link-auth --autopilot</div>
+          <div><span style="color:var(--moss-2);">✓</span> spawned worktree <b style="color:var(--ink)">feat/magic-link-auth</b></div>
+          <div><span style="color:var(--moss-2);">✓</span> read spec · brand.md · test conventions</div>
+          <div><span style="color:var(--moss-2);">✓</span> implemented 6 files · <span style="color:var(--moss-2)">+184 −12</span></div>
+          <div><span style="color:var(--moss-2);">✓</span> test suite green (124/124)</div>
+          <div><span style="color:var(--moss-2);">✓</span> opened draft <b style="color:var(--ink)">PR #142</b></div>
+          <div style="margin-top: 10px; padding: 12px; background: var(--mint-soft); border: 1px solid var(--moss); border-radius: var(--r-sm); font-family: var(--f-body); font-size: 13px; color: var(--ink-1);">
+            <b style="color:var(--moss-2);">draft PR #142</b> ·  <span style="color:var(--ink-3);font-family:var(--f-mono);font-size:11px;">feat/magic-link-auth → main</span><br/>
+            <span style="color:var(--ink-3);font-size:12.5px;">ready for your review · 2h 14m</span>
+          </div>
+          <div style="margin-top: 10px; display: flex; gap: 12px; align-items: center; font-size: 11px;">
+            <span style="color: var(--ink-4);">budget used</span>
+            <div style="flex: 1; height: 4px; background: var(--bg-3); border-radius: 2px; overflow: hidden;">
+              <div style="width: 38%; height: 100%; background: var(--moss);"></div>
+            </div>
+            <span style="color:var(--ink-2);">38% · $0.74</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F3 -->
+    <div class="feat-row reveal">
+      <div class="feat-copy">
+        <span class="overline">Feature 03 · Shared channels</span>
+        <h3 class="h2">Agents <em>in the channel</em>, not in a sidebar.</h3>
+        <p class="lede">Team chat where humans and agents appear as peers, not chatbots. Mention Pax the same way you mention a coworker. Every message is a first-class event &mdash; searchable, linkable, exportable.</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>Scoped contexts</b> &mdash; agents only see what the channel permissions let them see.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>Threaded decisions</b> &mdash; resolve a thread and Pax writes a decision log entry automatically.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>End-to-end search</b> &mdash; find any message, spec, or PR reference in one query.</span></li>
+        </ul>
+        <a class="feat-link" href="#tour">Open the channel →</a>
+      </div>
+      <div class="feat-visual">
+        <div class="win-bar">
+          <div class="win-dots"><span></span><span></span><span></span></div>
+          <div class="win-title"><b>altr</b> · #magic-link-auth</div>
+          <div class="win-kbd">⌘/</div>
+        </div>
+        <div style="padding: 18px 22px; display: flex; flex-direction: column; gap: 12px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 7px; font-size: 11.5px; margin-bottom: 3px;"><span style="width:18px;height:18px;border-radius:4px;background:#FFE574;border:1px solid var(--ink);display:inline-block;"></span><b style="color:var(--ink);">mukul</b><span style="color:var(--ink-4);font-family:var(--f-mono);font-size:10px;">14:02</span></div>
+            <div style="font-size: 13px; color: var(--ink-2); line-height: 1.55;">pax, can you finalize the AC? handing to eng today.</div>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 7px; font-size: 11.5px; margin-bottom: 3px;"><span style="width:18px;height:18px;border-radius:4px;background:var(--mint);border:1px solid var(--moss);display:inline-block;"></span><b style="color:var(--moss-2);">pax</b><span style="color:var(--ink-4);font-family:var(--f-mono);font-size:10px;">14:02</span></div>
+            <div style="font-size: 13px; color: var(--ink-2); line-height: 1.55;">Added rate-limit + expiry. Also drafting the email body &mdash; preview?</div>
+            <div style="margin-top: 4px; padding: 8px 10px; background: var(--mint-soft); border: 1px solid var(--moss); border-radius: var(--r-sm); font-family: var(--f-mono); font-size: 11px; color: var(--moss-2);">✎ edited magic-link-auth.md · +14 −3</div>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 7px; font-size: 11.5px; margin-bottom: 3px;"><span style="width:18px;height:18px;border-radius:4px;background:var(--ink);display:inline-flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 1.5 L8.5 8 L1.5 8 Z" fill="#B8F29A"/></svg></span><b style="color:var(--ink);">eng</b><span style="color:var(--ink-4);font-family:var(--f-mono);font-size:10px;">14:05</span></div>
+            <div style="font-size: 13px; color: var(--ink-2); line-height: 1.55;">On it. Spawned <code style="font-family:var(--f-mono);font-size:11.5px;background:var(--bg-3);padding:0 4px;border-radius:3px;">feat/magic-link-auth</code>. Draft PR in ~2.5h.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F4 -->
+    <div class="feat-row reverse reveal">
+      <div class="feat-copy">
+        <span class="overline">Feature 04 · Ship log</span>
+        <h3 class="h2">A <em>changelog</em> that writes itself.</h3>
+        <p class="lede">Every merged PR triggers Pax to draft a changelog entry in your customer voice &mdash; tied back to the originating spec, the PR diff, and the interview that sparked it. Ship notes on autopilot, without losing attribution.</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>Customer-facing voice</b> &mdash; translated from dev-speak automatically, approved by you.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>Link graph</b> &mdash; one click walks from changelog → PR → spec → interview that started it.</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#1F6B4A" stroke-width="1.75" stroke-linecap="round"/></svg><span><b>Publish anywhere</b> &mdash; web, email digest, RSS, Slack #ship-log &mdash; from the same source.</span></li>
+        </ul>
+        <a class="feat-link" href="#changelog">Preview the changelog →</a>
+      </div>
+      <div class="feat-visual">
+        <div class="win-bar">
+          <div class="win-dots"><span></span><span></span><span></span></div>
+          <div class="win-title"><b>altr</b> · changelog / draft</div>
+          <div class="win-kbd">⌘E</div>
+        </div>
+        <div style="padding: 22px 28px;">
+          <div style="display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px;">
+            <span style="font-family:var(--f-mono);font-size:11px;background:var(--ink);color:var(--mint);padding:2px 7px;border-radius:4px;font-weight:600;">v0.3.1</span>
+            <span style="font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-4);">Oct 12, 2026</span>
+          </div>
+          <div style="font-family: var(--f-display); font-weight: 800; font-size: 20px; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 10px;">Magic-link auth, no more passwords</div>
+          <div style="font-size: 13.5px; line-height: 1.55; color: var(--ink-2); margin-bottom: 14px;">You can now sign in with a one-time email link &mdash; no password to remember. Links expire in 15 minutes for security.</div>
+          <div style="display:flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap;">
+            <span class="chip-sm mint">auth</span>
+            <span class="chip-sm">security</span>
+            <span class="chip-sm">user-facing</span>
+          </div>
+          <div style="padding-top: 10px; border-top: 1px dashed var(--line); display: flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 11px; color: var(--ink-4);">
+            <span>linked:</span>
+            <span class="chip-sm">PR #142</span>
+            <span class="chip-sm">spec/magic-link-auth</span>
+            <span class="chip-sm">int-47</span>
+          </div>
+          <div style="margin-top: 14px; display: flex; gap: 8px;">
+            <button class="btn sm primary" style="height: 28px; padding: 0 10px; font-size: 12px;">Publish</button>
+            <button class="btn sm outline" style="height: 28px; padding: 0 10px; font-size: 12px;">Edit draft</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRODUCT TOUR (tabbed) ========== -->
+<section class="tour" id="tour">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="overline">§ 03 · Product tour</span>
+        <h2 class="h2">Five surfaces.<br/><em>One shared context.</em></h2>
+      </div>
+      <div class="right">
+        <p class="lede">Every screen is live in the beta. Click through the tabs &mdash; or let it autoplay. The same conversation, spec, and PR threads through every view.</p>
+      </div>
+    </div>
+
+    <div class="tour-tabs reveal" role="tablist">
+      <button class="tour-tab on" data-tab="0"><span class="t-num">01 / INBOX</span><span class="t-name">Triage</span><span class="t-desc">Everything that needs you, sorted.</span></button>
+      <button class="tour-tab" data-tab="1"><span class="t-num">02 / SPEC</span><span class="t-name">Co-author</span><span class="t-desc">Edit specs with Pax in real-time.</span></button>
+      <button class="tour-tab" data-tab="2"><span class="t-num">03 / ENG</span><span class="t-name">Autopilot</span><span class="t-desc">Worktrees, PRs, budget gates.</span></button>
+      <button class="tour-tab" data-tab="3"><span class="t-num">04 / CHAT</span><span class="t-name">Channels</span><span class="t-desc">Team + agents in one thread.</span></button>
+      <button class="tour-tab" data-tab="4"><span class="t-num">05 / SHIP</span><span class="t-name">Changelog</span><span class="t-desc">Auto-drafted ship notes.</span></button>
+    </div>
+
+    <div class="tour-stage reveal">
+      <!-- Scene 01 · Inbox -->
+      <div class="tour-scene on" data-scene="0">
+        <div class="win-bar">
+          <div class="win-dots"><span></span><span></span><span></span></div>
+          <div class="win-title"><b>altr</b> · inbox</div>
+          <div class="win-kbd">⌘K</div>
+        </div>
+        <div class="scene-body">
+          <aside class="pane-side">
+            <div class="pane-sec">Workspace</div>
+            <div class="pane-item on"><span class="dt" style="background:var(--ink);"></span>Inbox <span class="b">7</span></div>
+            <div class="pane-item"><span class="dt"></span>Specs</div>
+            <div class="pane-item"><span class="dt"></span>Engineering</div>
+            <div class="pane-item"><span class="dt"></span>Ship log</div>
+            <div class="pane-sec">Teammates</div>
+            <div class="pane-item pax"><span class="dt"></span>Pax <span class="b">writing</span></div>
+            <div class="pane-item eng"><span class="dt"></span>Eng <span class="b">idle</span></div>
+            <div class="pane-item dex" style="opacity:.55"><span class="dt"></span>Dex <span class="b">Q3</span></div>
+            <div class="pane-item rae" style="opacity:.55"><span class="dt"></span>Rae <span class="b">Q4</span></div>
+          </aside>
+          <main class="pane-main" style="background:var(--bg-2);">
+            <h4>Inbox</h4>
+            <div class="meta">7 items · sorted by priority · ⌥P to change</div>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px;">
+              <div style="padding: 14px 16px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-sm); display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;">
+                <span class="chip-sm mint">● review</span>
+                <div>
+                  <div style="font-weight:600;color:var(--ink);font-size:13.5px;">PR #142 ready for review · magic-link-auth</div>
+                  <div style="font-size:12px;color:var(--ink-3);">Eng · 2h ago · 124 tests green</div>
+                </div>
+                <span style="font-family:var(--f-mono);font-size:11px;color:var(--ink-4);">2m</span>
+              </div>
+              <div style="padding: 14px 16px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-sm); display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;">
+                <span class="chip-sm">? ask</span>
+                <div>
+                  <div style="font-weight:600;color:var(--ink);font-size:13.5px;">Pax: "Should resend link reset expiry, or keep original?"</div>
+                  <div style="font-size:12px;color:var(--ink-3);">On magic-link-auth spec · decision needed</div>
+                </div>
+                <span style="font-family:var(--f-mono);font-size:11px;color:var(--ink-4);">4m</span>
+              </div>
+              <div style="padding: 14px 16px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-sm); display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;">
+                <span class="chip-sm">@ mention</span>
+                <div>
+                  <div style="font-weight:600;color:var(--ink);font-size:13.5px;">@mukul in #billing-tiers · from sarah</div>
+                  <div style="font-size:12px;color:var(--ink-3);">"Do we want monthly or annual default for Founder?"</div>
+                </div>
+                <span style="font-family:var(--f-mono);font-size:11px;color:var(--ink-4);">12m</span>
+              </div>
+              <div style="padding: 14px 16px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-sm); display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;opacity:0.6;">
+                <span class="chip-sm">✓ done</span>
+                <div>
+                  <div style="color:var(--ink-2);font-size:13.5px;">Changelog v0.3.1 published</div>
+                  <div style="font-size:12px;color:var(--ink-4);">Pax · yesterday</div>
+                </div>
+                <span style="font-family:var(--f-mono);font-size:11px;color:var(--ink-4);">1d</span>
+              </div>
+            </div>
+          </main>
+          <aside class="pane-rail">
+            <div class="rail-head">Today <span class="n">MON · OCT 12</span></div>
+            <div style="font-size: 12px; color: var(--ink-3); line-height: 1.5;">3 specs moved · 1 PR shipped · 2 channels with unread.</div>
+            <div style="margin-top: 16px; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-4);">Agents</div>
+            <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
+              <div style="display:flex;justify-content:space-between;"><span style="color:var(--ink-1);">Pax</span><span style="color:var(--moss-2);font-family:var(--f-mono);font-size:10.5px;">writing · 2 docs</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="color:var(--ink-1);">Eng</span><span style="color:var(--ink-4);font-family:var(--f-mono);font-size:10.5px;">idle</span></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- Scene 02 · Spec -->
+      <div class="tour-scene" data-scene="1">
+        <div class="win-bar">
+          <div class="win-dots"><span></span><span></span><span></span></div>
+          <div class="win-title"><b>altr</b> · specs / magic-link-auth.md</div>
+          <div class="win-kbd">⌘K</div>
+        </div>
+        <div class="scene-body">
+          <aside class="pane-side">
+            <div class="pane-sec">Specs</div>
+            <div class="pane-item on"><span class="dt" style="background:var(--moss);"></span>magic-link-auth <span class="b">live</span></div>
+            <div class="pane-item"><span class="dt"></span>onboarding-v2</div>
+            <div class="pane-item"><span class="dt"></span>billing-tiers</div>
+            <div class="pane-item"><span class="dt"></span>notifications</div>
+            <div class="pane-sec">Drafts</div>
+            <div class="pane-item" style="opacity:0.6"><span class="dt"></span>pricing-copy</div>
+            <div class="pane-item" style="opacity:0.6"><span class="dt"></span>mobile-nav</div>
+          </aside>
+          <main class="pane-main">
+            <h4>Magic-link auth</h4>
+            <div class="meta">Owner <b style="color:var(--ink-1)">@mukul</b> · with <b style="color:var(--moss-2)">Pax</b> · updated 2m ago</div>
+            <p>New user enters email on signup; receives one-time magic link; clicking creates account &amp; signs in. No password step.</p>
+            <div style="padding: 12px 14px; background: var(--mint-soft); border: 1px dashed var(--moss); border-radius: var(--r-md); position: relative; margin-top: 10px; font-size: 12.5px; color: var(--ink-1); line-height: 1.5;">
+              <div style="position:absolute;top:-9px;left:12px;background:var(--mint);border:1px solid var(--moss);padding:1px 8px;border-radius:999px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);">Pax is writing</div>
+              <b>Acceptance criteria</b> &mdash; link expires after 15 min · rate-limit 3/email/hour · expired link surfaces resend CTA · Resend webhook logs events to Linear.<span style="display:inline-block;width:6px;height:11px;background:var(--moss);vertical-align:-1px;margin-left:2px;animation:blink 1s infinite;"></span>
+            </div>
+            <dl class="kv">
+              <dt>assignee</dt><dd><span class="chip-sm ink">Eng</span></dd>
+              <dt>reviewer</dt><dd><span class="chip-sm mint">Pax</span> + <b>@mukul</b></dd>
+              <dt>worktree</dt><dd>feat/magic-link-auth</dd>
+              <dt>estimate</dt><dd>2.5h · autopilot</dd>
+            </dl>
+          </main>
+          <aside class="pane-rail">
+            <div class="rail-head">#magic-link-auth <span class="n">4</span></div>
+            <div class="rail-msg">
+              <div class="rail-who"><span class="a you">M</span><b>mukul</b><span class="t">14:02</span></div>
+              <div class="rail-body">pax, finalize AC please.</div>
+            </div>
+            <div class="rail-msg">
+              <div class="rail-who"><span class="a pax">P</span><b>pax</b><span class="t">14:02</span></div>
+              <div class="rail-body">Done &mdash; rate-limit + expiry added.<div class="rail-card">✎ edited · +14 −3</div></div>
+            </div>
+            <div class="rail-msg">
+              <div class="rail-who"><span class="a eng">E</span><b>eng</b><span class="t">14:05</span></div>
+              <div class="rail-body">On it.<div class="rail-card pr"><b>draft PR #142</b> · ~2.5h</div></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- Scene 03 · Eng -->
+      <div class="tour-scene" data-scene="2">
+        <div class="win-bar">
+          <div class="win-dots"><span></span><span></span><span></span></div>
+          <div class="win-title"><b>altr</b> · eng / PR #142</div>
+          <div class="win-kbd">⌘J</div>
+        </div>
+        <div class="scene-body two">
+          <aside class="pane-side">
+            <div class="pane-sec">Worktrees</div>
+            <div class="pane-item on"><span class="dt" style="background:var(--moss);"></span>feat/magic-link-auth <span class="b">ready</span></div>
+            <div class="pane-item"><span class="dt" style="background:var(--warn);"></span>fix/resend-bug <span class="b">running</span></div>
+            <div class="pane-item"><span class="dt"></span>feat/onboarding-v2 <span class="b">queued</span></div>
+            <div class="pane-sec">Policies</div>
+            <div class="pane-item"><span class="dt"></span>require-review</div>
+            <div class="pane-item"><span class="dt"></span>budget-caps</div>
+            <div class="pane-item"><span class="dt"></span>test-gate</div>
+          </aside>
+          <main class="pane-main" style="padding: 20px 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+              <h4 style="font-size: 20px; margin: 0;">PR #142 · magic-link-auth</h4>
+              <span class="chip-sm mint">● ready for review</span>
+            </div>
+            <div class="meta" style="margin-bottom: 14px;">feat/magic-link-auth → main · opened by <b style="color:var(--moss-2)">Eng</b> · 2h 14m runtime</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+              <div style="padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-sm);">
+                <div style="font-family:var(--f-mono);font-size:10px;letter-spacing:0.08em;color:var(--ink-4);text-transform:uppercase;">diff</div>
+                <div style="font-family: var(--f-display); font-weight: 800; font-size: 22px; color: var(--ink); margin-top: 4px;"><span style="color:var(--signal);">+184</span> <span style="color:var(--err);">−12</span></div>
+                <div style="font-size:11.5px;color:var(--ink-3);margin-top:2px;">6 files · 4 new · 2 modified</div>
+              </div>
+              <div style="padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-sm);">
+                <div style="font-family:var(--f-mono);font-size:10px;letter-spacing:0.08em;color:var(--ink-4);text-transform:uppercase;">tests</div>
+                <div style="font-family: var(--f-display); font-weight: 800; font-size: 22px; color: var(--signal); margin-top: 4px;">124 / 124 ✓</div>
+                <div style="font-size:11.5px;color:var(--ink-3);margin-top:2px;">3 new tests · 0 flakes</div>
+              </div>
+            </div>
+            <div style="padding: 14px 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-sm); font-family: var(--f-mono); font-size: 11.5px; line-height: 1.8; color: var(--ink-2);">
+              <div style="color:var(--ink-4);">$ eng show --plan</div>
+              <div style="color:var(--ink-1);"><span style="color:var(--moss-2);">✓</span> <b>parse spec</b> · extracted AC, constraints, brand voice</div>
+              <div style="color:var(--ink-1);"><span style="color:var(--moss-2);">✓</span> <b>implement</b> · supabase magic-link primitive · rate-limit middleware · resend webhook</div>
+              <div style="color:var(--ink-1);"><span style="color:var(--moss-2);">✓</span> <b>test</b> · 3 new test cases covering expiry + rate-limit</div>
+              <div style="color:var(--ink-1);"><span style="color:var(--moss-2);">✓</span> <b>open PR</b> · description + acceptance-criteria checklist</div>
+            </div>
+            <div style="margin-top: 14px; display: flex; gap: 16px; align-items: center; font-size: 12px; padding: 10px 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-sm);">
+              <span style="color:var(--ink-4);font-family:var(--f-mono);font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;">budget</span>
+              <div style="flex:1;height:5px;background:var(--bg-3);border-radius:3px;overflow:hidden;"><div style="width:38%;height:100%;background:var(--moss);"></div></div>
+              <span style="color:var(--ink-2);font-family:var(--f-mono);font-size:11px;">$0.74 / $2.00</span>
+              <span class="chip-sm mint">under cap</span>
+            </div>
+            <div style="margin-top: 14px; display: flex; gap: 8px;">
+              <button class="btn sm primary" style="height:30px;padding:0 12px;font-size:12.5px;">Approve &amp; merge</button>
+              <button class="btn sm outline" style="height:30px;padding:0 12px;font-size:12.5px;">Request changes</button>
+              <button class="btn sm outline" style="height:30px;padding:0 12px;font-size:12.5px;">Open on GitHub ↗</button>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- Scene 04 · Chat -->
+      <div class="tour-scene" data-scene="3">
+        <div class="win-bar">
+          <div class="win-dots"><span></span><span></span><span></span></div>
+          <div class="win-title"><b>altr</b> · channels / #launch-magic-link</div>
+          <div class="win-kbd">⌘/</div>
+        </div>
+        <div class="scene-body">
+          <aside class="pane-side">
+            <div class="pane-sec">Channels</div>
+            <div class="pane-item on"><span class="dt" style="background:var(--moss);"></span>#launch-magic-link <span class="b">4</span></div>
+            <div class="pane-item"><span class="dt"></span>#billing-tiers</div>
+            <div class="pane-item"><span class="dt"></span>#onboarding</div>
+            <div class="pane-item"><span class="dt"></span>#ship-log</div>
+            <div class="pane-sec">Direct</div>
+            <div class="pane-item"><span class="dt"></span>sarah</div>
+            <div class="pane-item pax"><span class="dt"></span>pax</div>
+            <div class="pane-item eng"><span class="dt"></span>eng</div>
+          </aside>
+          <main class="pane-main" style="padding: 16px 24px 0; display: flex; flex-direction: column;">
+            <div style="display: flex; flex-direction: column; gap: 14px; flex: 1;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 4px;"><span style="width:20px;height:20px;border-radius:5px;background:#FFE574;border:1px solid var(--ink);"></span><b style="color:var(--ink);font-size:13px;">mukul</b><span style="color:var(--ink-4);font-family:var(--f-mono);font-size:10.5px;">14:02</span></div>
+                <div style="font-size: 13.5px; color: var(--ink-2); line-height: 1.55;">pax, finalize the AC please. eng, autopilot when pax is done.</div>
+              </div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 4px;"><span style="width:20px;height:20px;border-radius:5px;background:var(--mint);border:1px solid var(--moss);"></span><b style="color:var(--moss-2);font-size:13px;">pax</b><span style="color:var(--ink-4);font-family:var(--f-mono);font-size:10.5px;">14:02</span></div>
+                <div style="font-size: 13.5px; color: var(--ink-2); line-height: 1.55;">Added rate-limit + expiry to the AC. Also drafting the email body &mdash; want to preview?</div>
+                <div style="margin-top: 5px; padding: 8px 10px; background: var(--mint-soft); border: 1px solid var(--moss); border-radius: var(--r-sm); font-family: var(--f-mono); font-size: 11px; color: var(--moss-2); display: inline-flex; gap: 10px;">✎ edited magic-link-auth.md · <b>+14 −3</b></div>
+              </div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 4px;"><span style="width:20px;height:20px;border-radius:5px;background:#FFE574;border:1px solid var(--ink);"></span><b style="color:var(--ink);font-size:13px;">mukul</b><span style="color:var(--ink-4);font-family:var(--f-mono);font-size:10.5px;">14:03</span></div>
+                <div style="font-size: 13.5px; color: var(--ink-2); line-height: 1.55;">yes, preview. eng, proceed.</div>
+              </div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 4px;"><span style="width:20px;height:20px;border-radius:5px;background:var(--ink);display:inline-flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 2 L10 10 L2 10 Z" fill="#B8F29A"/></svg></span><b style="color:var(--ink);font-size:13px;">eng</b><span style="color:var(--ink-4);font-family:var(--f-mono);font-size:10.5px;">14:05</span></div>
+                <div style="font-size: 13.5px; color: var(--ink-2); line-height: 1.55;">On it. Spawned <code style="font-family:var(--f-mono);font-size:12px;background:var(--bg-3);padding:0 5px;border-radius:3px;">feat/magic-link-auth</code>. Reading spec + brand.md.</div>
+                <div style="margin-top: 5px; padding: 10px 12px; background: var(--mint-soft); border: 1px solid var(--moss); border-radius: var(--r-sm); display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;">
+                  <div>
+                    <div style="font-size: 12.5px; font-weight: 600; color: var(--moss-2);">draft PR #142 opened</div>
+                    <div style="font-size: 11.5px; color: var(--ink-3); font-family: var(--f-mono);">feat/magic-link-auth → main · runs in ~2.5h</div>
+                  </div>
+                  <button class="btn sm outline" style="height: 26px; padding: 0 10px; font-size: 11.5px; background: var(--bg);">View</button>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: auto; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg); display: flex; gap: 10px; align-items: center; margin-bottom: 16px;">
+              <span style="font-family: var(--f-mono); font-size: 11px; color: var(--ink-4);">⌘K</span>
+              <input placeholder="Reply, or @mention a teammate…" style="flex:1; border: none; outline: none; background: transparent; font-family: var(--f-body); font-size: 13px; color: var(--ink);">
+              <span style="font-family: var(--f-mono); font-size: 11px; color: var(--ink-4);">↵</span>
+            </div>
+          </main>
+          <aside class="pane-rail">
+            <div class="rail-head">Members <span class="n">4</span></div>
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 12.5px;">
+              <div style="display:flex;align-items:center;gap:8px;"><span style="width:20px;height:20px;border-radius:5px;background:#FFE574;border:1px solid var(--ink);"></span><b style="color:var(--ink);">mukul</b><span style="color:var(--ink-3);margin-left:auto;font-family:var(--f-mono);font-size:10.5px;">owner</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="width:20px;height:20px;border-radius:5px;background:var(--bg-2);border:1px solid var(--line-2);"></span><b style="color:var(--ink);">sarah</b><span style="color:var(--ink-3);margin-left:auto;font-family:var(--f-mono);font-size:10.5px;">member</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="width:20px;height:20px;border-radius:5px;background:var(--mint);border:1px solid var(--moss);"></span><b style="color:var(--moss-2);">pax</b><span style="color:var(--ink-3);margin-left:auto;font-family:var(--f-mono);font-size:10.5px;">agent</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="width:20px;height:20px;border-radius:5px;background:var(--ink);"></span><b style="color:var(--ink);">eng</b><span style="color:var(--ink-3);margin-left:auto;font-family:var(--f-mono);font-size:10.5px;">agent</span></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- Scene 05 · Ship -->
+      <div class="tour-scene" data-scene="4">
+        <div class="win-bar">
+          <div class="win-dots"><span></span><span></span><span></span></div>
+          <div class="win-title"><b>altr</b> · ship log / v0.3.1</div>
+          <div class="win-kbd">⌘E</div>
+        </div>
+        <div class="scene-body two">
+          <aside class="pane-side">
+            <div class="pane-sec">Ship log</div>
+            <div class="pane-item on"><span class="dt" style="background:var(--moss);"></span>v0.3.1 <span class="b">draft</span></div>
+            <div class="pane-item"><span class="dt"></span>v0.3.0</div>
+            <div class="pane-item"><span class="dt"></span>v0.2.4</div>
+            <div class="pane-item"><span class="dt"></span>v0.2.3</div>
+            <div class="pane-sec">Publish to</div>
+            <div class="pane-item"><span class="dt" style="background:var(--moss);"></span>Web · altr.run/changelog</div>
+            <div class="pane-item"><span class="dt" style="background:var(--moss);"></span>Email digest</div>
+            <div class="pane-item"><span class="dt"></span>#ship-log (Slack)</div>
+          </aside>
+          <main class="pane-main">
+            <div style="display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px;">
+              <span style="font-family:var(--f-mono);font-size:11.5px;background:var(--ink);color:var(--mint);padding:3px 9px;border-radius:5px;font-weight:600;">v0.3.1</span>
+              <span style="font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-4);">Oct 12, 2026 · draft</span>
+            </div>
+            <h4 style="font-size: 26px; margin-top: 6px;">Magic-link auth, no more passwords</h4>
+            <div class="meta">Drafted by <b style="color:var(--moss-2)">Pax</b> · from PR #142 · ready to publish</div>
+            <p style="margin-top: 12px;">You can now sign in with a one-time email link. No password to remember. For security, links expire after 15 minutes &mdash; if that happens, hit "send new link" and we'll get you a fresh one.</p>
+            <p>Works across web, desktop, and mobile. Existing users aren't affected.</p>
+            <div style="margin-top: 14px; padding: 14px 16px; background: var(--bg-2); border-left: 3px solid var(--moss); border-radius: 0 var(--r-sm) var(--r-sm) 0;">
+              <div style="font-family:var(--f-mono);font-size:10px;letter-spacing:0.08em;color:var(--moss-2);text-transform:uppercase;margin-bottom:6px;">Attribution graph</div>
+              <div style="display: flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 11.5px; flex-wrap: wrap;">
+                <span class="chip-sm">📄 spec/magic-link-auth</span>
+                <span style="color:var(--ink-4);">→</span>
+                <span class="chip-sm mint">✎ PR #142</span>
+                <span style="color:var(--ink-4);">→</span>
+                <span class="chip-sm">🎤 interview-47</span>
+              </div>
+            </div>
+            <div style="margin-top: 18px; display: flex; gap: 8px;">
+              <button class="btn sm primary" style="height: 32px; padding: 0 14px; font-size: 13px;">Publish v0.3.1</button>
+              <button class="btn sm outline" style="height: 32px; padding: 0 14px; font-size: 13px;">Edit draft</button>
+              <button class="btn sm outline" style="height: 32px; padding: 0 14px; font-size: 13px;">Preview email</button>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== INTEGRATIONS ========== -->
+<section class="intg" id="integrations">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="overline">§ 04 · Integrations</span>
+        <h2 class="h2">Works with the<br/>stack you <em>already have.</em></h2>
+      </div>
+      <div class="right">
+        <p class="lede">Native MCP support means Altr speaks to your tools without glue code. Git and your CI stay the source of truth &mdash; Altr just gives you one surface to drive them from.</p>
+      </div>
+    </div>
+
+    <div class="intg-grid reveal">
+      <div class="intg-cell"><div class="ico">GH</div><div class="name">GitHub</div><div class="st">● live</div><div class="tag">PRs · Issues</div></div>
+      <div class="intg-cell"><div class="ico">LN</div><div class="name">Linear</div><div class="st">● live</div><div class="tag">Tickets · Cycles</div></div>
+      <div class="intg-cell"><div class="ico">SL</div><div class="name">Slack</div><div class="st">● live</div><div class="tag">Channels</div></div>
+      <div class="intg-cell"><div class="ico">FG</div><div class="name">Figma</div><div class="st">● live</div><div class="tag">Frames · Comments</div></div>
+      <div class="intg-cell"><div class="ico">NT</div><div class="name">Notion</div><div class="st">● live</div><div class="tag">Pages · Databases</div></div>
+      <div class="intg-cell"><div class="ico">MC</div><div class="name">MCP servers</div><div class="st">● live</div><div class="tag">Any · any</div></div>
+
+      <div class="intg-cell"><div class="ico">SE</div><div class="name">Sentry</div><div class="st">● live</div><div class="tag">Errors · Perf</div></div>
+      <div class="intg-cell"><div class="ico">VC</div><div class="name">Vercel</div><div class="st">● live</div><div class="tag">Deploys · Previews</div></div>
+      <div class="intg-cell"><div class="ico">PH</div><div class="name">PostHog</div><div class="st">● live</div><div class="tag">Analytics</div></div>
+      <div class="intg-cell"><div class="ico">SU</div><div class="name">Supabase</div><div class="st">● live</div><div class="tag">DB · Auth</div></div>
+      <div class="intg-cell"><div class="ico">ST</div><div class="name">Stripe</div><div class="st soon">○ Q3</div><div class="tag">Billing</div></div>
+      <div class="intg-cell"><div class="ico">+</div><div class="name">Custom MCP</div><div class="st soon">SDK</div><div class="tag">Build your own</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECURITY ========== -->
+<section class="sec-block" id="security">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="overline">§ 05 · Security</span>
+        <h2 class="h2">Your files.<br/><em>Your machine.</em> Your rules.</h2>
+      </div>
+      <div class="right">
+        <p class="lede">Altr is <b>local-first</b> by design. Specs, transcripts, and repos live on your Mac, encrypted. Agents call out to models over your keys &mdash; nothing enters anyone's training data.</p>
+      </div>
+    </div>
+
+    <div class="sec-grid reveal">
+      <div class="sec-card">
+        <div class="sec-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="6" width="10" height="8" rx="1" stroke="#B8F29A" stroke-width="1.5"/><path d="M5 6V4a3 3 0 0 1 6 0v2" stroke="#B8F29A" stroke-width="1.5"/></svg></div>
+        <h4>Local-first storage</h4>
+        <p>Specs, conversations, and worktrees persist on-device in an encrypted store. You hold the keys &mdash; literally, in your keychain.</p>
+        <span class="badge">AES-256 at rest</span>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l6 3v4c0 4-3 6.5-6 7-3-.5-6-3-6-7V4l6-3z" stroke="#B8F29A" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 8l2 2 4-4" stroke="#B8F29A" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <h4>Zero-training guarantee</h4>
+        <p>Agents use your own Anthropic / OpenAI keys with training opt-out enforced. Your content cannot enter any model's training set.</p>
+        <span class="badge">BYO keys · no-training</span>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 2v12" stroke="#B8F29A" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="8" r="6" stroke="#B8F29A" stroke-width="1.5"/></svg></div>
+        <h4>Full audit trail</h4>
+        <p>Every agent action &mdash; read, write, merge, send &mdash; is logged with attribution, exportable as JSON, SIEM, or signed PDF.</p>
+        <span class="badge">Immutable · exportable</span>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" stroke="#B8F29A" stroke-width="1.5"/><path d="M2 6h12" stroke="#B8F29A" stroke-width="1.5"/></svg></div>
+        <h4>Policy controls</h4>
+        <p>Set per-agent budgets, require human approval for merges, restrict tool access by channel. Enforced in-process, not at the UI.</p>
+        <span class="badge">Budget · approval · scope</span>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#B8F29A" stroke-width="1.5"/><path d="M6 8l1.5 1.5L11 6" stroke="#B8F29A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h4>SSO &amp; SCIM</h4>
+        <p>Okta, Google Workspace, Azure AD. SCIM provisioning for team plans. Short-lived device tokens &mdash; no shared passwords.</p>
+        <span class="badge">SAML · SCIM 2.0</span>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L2 5v5c0 3 2.5 4.5 6 5 3.5-.5 6-2 6-5V5l-6-3z" stroke="#B8F29A" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+        <h4>SOC 2 &amp; privacy</h4>
+        <p>Type II in progress, report expected Q3 2026. GDPR-compliant data handling. DPA on request for Studio customers.</p>
+        <span class="badge">Type II · Q3 2026</span>
+      </div>
+    </div>
+
+    <div class="comply">
+      <div class="comply-badge">SOC 2 <small>Type II · Q3 26</small></div>
+      <div class="comply-badge">GDPR <small>EU-compliant</small></div>
+      <div class="comply-badge">HIPAA <small>on request</small></div>
+      <div class="comply-badge">ISO 27001 <small>2027 roadmap</small></div>
+      <a class="feat-link" href="#" style="color: var(--mint); border-bottom-color: var(--mint);">Read the security whitepaper →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TESTIMONIALS ========== -->
+<section class="tstm">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="overline">§ 06 · Customers</span>
+        <h2 class="h2">Operators ship<br/><em>faster,</em> calmer.</h2>
+      </div>
+      <div class="right">
+        <p class="lede">Quoted from the 42 teams in private beta. We pulled these verbatim &mdash; with permission &mdash; from our weekly retrospectives.</p>
+      </div>
+    </div>
+
+    <div class="tstm-grid reveal">
+      <div class="tstm-card big">
+        <div class="tstm-quote">"We shipped more in a month on Altr than we did the whole prior quarter. Pax holds the <em>"why"</em> so I can hold the <em>"how."</em> It's the first tool that actually made our team of four feel like a team of ten."</div>
+        <div class="tstm-by">
+          <div class="tstm-av">AR</div>
+          <div>
+            <div class="name">Anjali Rao</div>
+            <div class="role">CEO · Northline · YC S24</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tstm-card">
+        <div class="tstm-quote">"The worktree model is the first agent I trust near my repo. Policy gates mean I can autopilot without losing sleep."</div>
+        <div class="tstm-by">
+          <div class="tstm-av">JM</div>
+          <div>
+            <div class="name">Jordan Matsui</div>
+            <div class="role">Staff Eng · Layerwise</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tstm-card">
+        <div class="tstm-quote">"Changelog used to eat a day every sprint. Pax drafts it, we edit &mdash; 20 min, shipped."</div>
+        <div class="tstm-by">
+          <div class="tstm-av">SC</div>
+          <div>
+            <div class="name">Sarah Chen</div>
+            <div class="role">Head of Product · Mercato</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tstm-card">
+        <div class="tstm-quote">"Replaced Linear, half of Notion, and a lot of Slack pings. The audit log sold our security team in ten minutes."</div>
+        <div class="tstm-by">
+          <div class="tstm-av">DK</div>
+          <div>
+            <div class="name">Dieter Kaur</div>
+            <div class="role">VP Eng · Feldspar</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tstm-card">
+        <div class="tstm-quote">"My PMs write better specs because Pax asks the questions I don't have time to. Quality went up before speed did."</div>
+        <div class="tstm-by">
+          <div class="tstm-av">RB</div>
+          <div>
+            <div class="name">Ren Bandara</div>
+            <div class="role">CPO · Parabola</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CHANGELOG ========== -->
+<section class="chglog" id="changelog">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="overline">§ 07 · Shipped</span>
+        <h2 class="h2">We ship Altr<br/><em>with Altr.</em></h2>
+      </div>
+      <div class="right">
+        <p class="lede">Weekly releases since v0.1. Every entry below was drafted by Pax, reviewed by a human, attached to a real PR. <a href="#" style="color:var(--ink);border-bottom:1.5px solid var(--ink);">View full changelog →</a></p>
+      </div>
+    </div>
+
+    <div class="chglog-grid reveal">
+      <div class="chg-card">
+        <div class="row"><span class="v">v0.3.1</span><span class="date">Oct 12, 2026</span></div>
+        <h4>Magic-link auth, no more passwords</h4>
+        <p>Sign in with a one-time email link. Expires in 15 min for security; resend surfaces instantly.</p>
+        <div class="tagrow"><span class="chip-sm mint">auth</span><span class="chip-sm">security</span></div>
+      </div>
+      <div class="chg-card">
+        <div class="row"><span class="v">v0.3.0</span><span class="date">Oct 5, 2026</span></div>
+        <h4>Worktree budget caps + policy gates</h4>
+        <p>Cap Eng's token &amp; time spend per worktree. Require human approval before merge.</p>
+        <div class="tagrow"><span class="chip-sm mint">engineering</span><span class="chip-sm">admin</span></div>
+      </div>
+      <div class="chg-card">
+        <div class="row"><span class="v">v0.2.4</span><span class="date">Sep 28, 2026</span></div>
+        <h4>Decision-log for resolved threads</h4>
+        <p>Mark a thread resolved &mdash; Pax writes a decision-log entry with who said what and why.</p>
+        <div class="tagrow"><span class="chip-sm mint">chat</span><span class="chip-sm">specs</span></div>
+      </div>
+      <div class="chg-card">
+        <div class="row"><span class="v">v0.2.3</span><span class="date">Sep 21, 2026</span></div>
+        <h4>MCP server support</h4>
+        <p>Connect any MCP server in Settings → Integrations. Agents get the new tools instantly.</p>
+        <div class="tagrow"><span class="chip-sm mint">integrations</span><span class="chip-sm">infra</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRICING ========== -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="overline">§ 08 · Pricing</span>
+        <h2 class="h2">Per human.<br/><em>Agents included.</em></h2>
+      </div>
+      <div class="right">
+        <p class="lede">Agents aren't seats. You pay for the humans; the cast comes free. Bring your own model keys on any plan, or use ours with generous included credits.</p>
+      </div>
+    </div>
+
+    <div class="price-grid reveal">
+      <div class="price">
+        <span class="ov">01 · Solo</span>
+        <h4>Hacker</h4>
+        <div class="amt">$19<small>/ month</small></div>
+        <p class="desc">For solo founders and indie teams shipping in public.</p>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>Pax + Eng teammates</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>1 workspace · unlimited specs</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>BYO model keys</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>Community support</li>
+        </ul>
+        <a class="btn outline" href="#close">Start 14-day trial</a>
+      </div>
+
+      <div class="price featured">
+        <span class="ov">02 · Team</span>
+        <h4>Studio</h4>
+        <div class="amt">$49<small>/ seat / mo</small></div>
+        <p class="desc">For product teams. Unlimited agents, shared workspaces, audit log.</p>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>All four teammates as they ship</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>Unlimited worktrees &amp; channels</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>Shared spec library + search</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>SSO, SCIM, audit log export</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>$20 model credits per seat / mo</li>
+        </ul>
+        <a class="btn mint" href="#close">Start 14-day trial</a>
+      </div>
+
+      <div class="price">
+        <span class="ov">03 · Enterprise</span>
+        <h4>Scale</h4>
+        <div class="amt" style="font-size: 30px; letter-spacing: -0.03em; padding-top: 12px;">Custom</div>
+        <p class="desc">For orgs that need dedicated support, custom policy, or on-prem.</p>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>Everything in Studio</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>Dedicated instance, on-prem option</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>Custom policy + DLP integration</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>DPA, HIPAA, 99.9% SLA</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l2.5 2.5L11 4" stroke="#4F7A3A" stroke-width="1.75" stroke-linecap="round"/></svg>Named CSM + onboarding</li>
+        </ul>
+        <a class="btn outline" href="#close">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="overline">§ 09 · Questions</span>
+        <h2 class="h2">Straight<br/><em>answers.</em></h2>
+      </div>
+      <div class="right">
+        <p class="lede">If yours isn't here, email <a href="mailto:hello@altr.run" style="color:var(--ink);border-bottom:1.5px solid var(--ink);">hello@altr.run</a> &mdash; a human reads every one.</p>
+      </div>
+    </div>
+
+    <div class="faq-grid reveal">
+      <div class="faq-item"><div class="faq-q">Is Altr Mac-only? <span class="ic">+</span></div><div class="faq-a">For now, yes. Mac-native, not Electron. Windows and Linux are on the 2027 roadmap. We'd rather ship one great client than three mediocre ones.</div></div>
+      <div class="faq-item"><div class="faq-q">Where do my files live? <span class="ic">+</span></div><div class="faq-a">On your Mac, encrypted at rest. Agents call models over your API keys; nothing becomes training data. Full details in the <b>security whitepaper</b>.</div></div>
+      <div class="faq-item"><div class="faq-q">Which models power the teammates? <span class="ic">+</span></div><div class="faq-a">Pax runs on Claude Sonnet. Eng wraps Claude Code. You can BYO Anthropic/OpenAI keys, or use ours with $20 of credits per seat per month on Studio.</div></div>
+      <div class="faq-item"><div class="faq-q">Why not a plugin for Linear or Cursor? <span class="ic">+</span></div><div class="faq-a">Because the unit of work is the <b>loop</b>, not the ticket or the file. Plugins leave you tab-switching. Altr puts spec, chat, and code in one window with shared context &mdash; which is structurally something a plugin can't do.</div></div>
+      <div class="faq-item"><div class="faq-q">How is this different from Devin? <span class="ic">+</span></div><div class="faq-a">Devin is an autonomous cloud engineer. Altr is a workspace where humans and several agents collaborate on your machine, with humans in the driver's seat. Different problem, different shape.</div></div>
+      <div class="faq-item"><div class="faq-q">When is public launch? <span class="ic">+</span></div><div class="faq-a">Private beta June 2026, public launch Q4 2026. Request access today to join the beta cohort.</div></div>
+      <div class="faq-item"><div class="faq-q">Do you have SOC 2? <span class="ic">+</span></div><div class="faq-a">Type II audit in progress; report expected Q3 2026. Type I and DPA available today for Studio and Scale customers.</div></div>
+      <div class="faq-item"><div class="faq-q">Can I self-host? <span class="ic">+</span></div><div class="faq-a">Scale (Enterprise) customers can run Altr on a dedicated instance, on-prem, or in a VPC of their choice. Talk to sales for specifics.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CLOSING CTA ========== -->
+<section class="close-sec" id="close">
+  <div class="wrap">
+    <span class="chip live"><span class="dot"></span>Private beta opens June 2026</span>
+    <h2 class="display-xl" style="margin-top: 20px;">Run your next<br/>sprint <span class="mint-fill">with Altr.</span></h2>
+    <p class="lede">Request access and we'll send your invite on day one of the beta, before the waitlist sees it.</p>
+    <form class="close-form" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('button').innerHTML='✓ on the list';">
+      <input type="email" required placeholder="you@company.com" />
+      <button type="submit" class="btn primary">Request access →</button>
+    </form>
+    <div class="close-note">1,240 teams waiting · we'll never spam · unsubscribe anytime</div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="foot-wrap">
+    <div class="foot-top">
+      <div>
+        <a href="#" class="logo on-dark" style="font-size: 36px;">a<span class="slash">\</span>tr</a>
+        <p class="foot-tag">The workspace where humans and AI teammates ship as peers. Mac-native, local-first, built for product teams.</p>
+        <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <div class="comply-badge" style="padding: 6px 10px; font-size: 11px; border-color: rgba(255,255,255,0.12);">SOC 2 <small>Type II · 2026</small></div>
+          <div class="comply-badge" style="padding: 6px 10px; font-size: 11px; border-color: rgba(255,255,255,0.12);">GDPR</div>
+        </div>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <a href="#product">Overview</a>
+        <a href="#tour">Product tour</a>
+        <a href="#teammates">Teammates</a>
+        <a href="#integrations">Integrations</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <a href="#">Manifesto</a>
+        <a href="#changelog">Changelog</a>
+        <a href="#">Careers · 3 roles</a>
+        <a href="#">Press kit</a>
+        <a href="#">Contact</a>
+      </div>
+      <div>
+        <h5>Build</h5>
+        <a href="#">Docs</a>
+        <a href="#">MCP SDK</a>
+        <a href="#">API reference</a>
+        <a href="#">Status</a>
+        <a href="#">GitHub</a>
+      </div>
+      <div>
+        <h5>Trust</h5>
+        <a href="#security">Security</a>
+        <a href="#">Whitepaper (PDF)</a>
+        <a href="#">Privacy policy</a>
+        <a href="#">Terms</a>
+        <a href="#">DPA</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Altr Labs, Inc. · San Francisco &amp; Bangalore</span>
+      <div class="row">
+        <span>Shipped with Altr</span>
+        <span>v3.2026.10</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Tour tabs
+  document.querySelectorAll('.tour-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const i = tab.dataset.tab;
+      document.querySelectorAll('.tour-tab').forEach(t => t.classList.toggle('on', t === tab));
+      document.querySelectorAll('.tour-scene').forEach(s => s.classList.toggle('on', s.dataset.scene === i));
+    });
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Auto-cycle tour tabs every 5s if the tour is in view (pause on interaction)
+  let paused = false, tourIdx = 0;
+  document.querySelectorAll('.tour-tab').forEach(t => t.addEventListener('click', () => { paused = true; }));
+  const tourEl = document.querySelector('.tour');
+  const tourIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => { tourVisible = e.isIntersecting; });
+  }, { threshold: 0.4 });
+  let tourVisible = false;
+  tourIO.observe(tourEl);
+  setInterval(() => {
+    if (paused || !tourVisible) return;
+    tourIdx = (tourIdx + 1) % 5;
+    document.querySelector(`.tour-tab[data-tab="${tourIdx}"]`).click();
+    paused = false; // allow keep rotating after programmatic click
+  }, 5200);
+</script>
+
+</body>
+</html>

@@ -7,19 +7,28 @@ import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import {
-	getSite,
 	GLOBAL_MODULE_PATH_QUERY,
 	MODULES_QUERY,
 } from '@/sanity/lib/queries'
 import type { PAGE_QUERY_RESULT } from '@/sanity/types'
+import HomePage from '@/ui/home/home-page'
 import ModulesResolver from '@/ui/modules'
 
 type Props = {
 	params: Promise<{ slug?: string[] }>
 }
 
+function isHomePage(slug?: string[]) {
+	return !slug || slug.length === 0
+}
+
 export default async function Page({ params }: Props) {
 	const { slug } = await params
+
+	if (isHomePage(slug)) {
+		return <HomePage />
+	}
+
 	const page = await getPage(slug)
 	if (!page) notFound()
 
@@ -28,7 +37,29 @@ export default async function Page({ params }: Props) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { slug } = await params
-	const [page, site] = await Promise.all([getPage(slug), getSite()])
+
+	if (isHomePage(slug)) {
+		return {
+			title: 'Altr — Close the Execution Loop for Teams & AI Agents',
+			description:
+				'Stop dropping the thread. Altr keeps specs, tickets, and PRs connected end-to-end — with context attached at every handoff. Mac-native. Local-first.',
+			openGraph: {
+				title: 'Altr — Close the Execution Loop for Teams & AI Agents',
+				description:
+					'Stop dropping the thread. Altr keeps specs, tickets, and PRs connected end-to-end — with context attached at every handoff.',
+				type: 'website',
+				url: process.env.NEXT_PUBLIC_BASE_URL ?? 'https://altr.run',
+				images: [
+					`${process.env.NEXT_PUBLIC_BASE_URL ?? 'https://altr.run'}/api/og`,
+				],
+			},
+			alternates: {
+				canonical: process.env.NEXT_PUBLIC_BASE_URL ?? 'https://altr.run',
+			},
+		}
+	}
+
+	const page = await getPage(slug)
 	const { title, description, image, noIndex } = page?.metadata ?? {}
 
 	return {
@@ -43,9 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			images: [
 				image
 					? urlFor(image).width(1200).url()
-					: site?.ogimage
-						? urlFor(site.ogimage).width(1200).url()
-						: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?slug=${slug?.join('/')}`,
+					: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?slug=${slug?.join('/')}`,
 			],
 		},
 		robots: {

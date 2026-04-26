@@ -3,6 +3,14 @@ export const dev =
 
 export const ROUTES = {
 	blog: 'blog',
-	// etc. services: 'services',
-	// etc. caseStudies: 'case-studies',
+	compare: 'compare',
+	useCases: 'use-cases',
+	integrations: 'integrations',
+	changelog: 'changelog',
+	legal: 'legal',
+	product: 'product',
+	security: 'security',
+	pricing: 'pricing',
+	download: 'download',
+	manifesto: 'manifesto',
 } as const

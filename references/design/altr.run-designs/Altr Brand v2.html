@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Altr — Brand v2 (mint)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* === Altr Brand v2 — Mint on Bone === */
+    --bone:       #F5F2EA;   /* off-white page */
+    --bone-2:     #ECE8DD;   /* raised surface */
+    --bone-3:     #DED8C7;   /* hairline */
+    --bone-4:     #C8C0A8;   /* darker edge */
+    --ink:        #1A1D16;   /* warm near-black, green-tinted */
+    --ink-2:      #32362B;
+    --ink-3:      #5B6150;
+    --moss:       #4F7A3A;   /* dark forest green — logo outline */
+    --mint:       #B8F29A;   /* the mint — primary brand */
+    --mint-2:     #9DE37C;   /* deeper mint for hover */
+    --mint-3:     #7DCB5A;   /* saturated */
+    --mint-soft:  #E2F6D4;   /* wash */
+
+    /* accents */
+    --glow:       #FFE574;   /* warm highlight */
+    --clay:       #D65A3E;   /* error/alt */
+
+    --f-body:    "Geist", ui-sans-serif, -apple-system, Helvetica, sans-serif;
+    --f-display: "Archivo", "Söhne", "Geist", ui-sans-serif, sans-serif;
+    --f-mono:    "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family: var(--f-body);
+    color: var(--ink); background: var(--bone);
+    -webkit-font-smoothing: antialiased;
+    font-size: 15px; line-height: 1.5;
+    font-feature-settings: "ss01","cv11";
+  }
+
+  .page{ max-width: 1320px; margin: 0 auto; padding: 72px 48px 120px; }
+
+  /* ---- masthead ---- */
+  .mast{
+    display: grid; grid-template-columns: 1fr auto; align-items: end;
+    padding-bottom: 24px; border-bottom: 1.5px solid var(--ink);
+    margin-bottom: 56px;
+  }
+  .mast h1{
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: 84px; line-height: 0.88; letter-spacing: -0.04em;
+    margin: 0 0 4px;
+  }
+  .mast h1 .slash{ color: var(--mint-3); -webkit-text-stroke: 2px var(--moss); }
+  .mast .tag{
+    font-size: 16px; color: var(--ink-2); max-width: 520px;
+    line-height: 1.4; margin-top: 10px;
+  }
+  .mast .meta{
+    font-family: var(--f-mono); font-size: 10.5px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-3); text-align: right; line-height: 1.8;
+  }
+  .mast .meta b{ color: var(--ink); font-weight: 600; }
+
+  /* ---- section ---- */
+  section.sec{ margin-bottom: 96px; }
+  .sec-head{
+    display: grid; grid-template-columns: 70px 1fr auto; gap: 24px;
+    align-items: baseline; padding-bottom: 18px;
+    border-bottom: 1px solid var(--bone-3); margin-bottom: 32px;
+  }
+  .sec-num{
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em;
+    color: var(--ink-3); text-transform: uppercase;
+  }
+  .sec-title{
+    font-family: var(--f-display); font-weight: 800;
+    font-size: 36px; letter-spacing: -0.025em; margin: 0;
+    line-height: 1;
+  }
+  .sec-sub{
+    font-size: 14px; color: var(--ink-3); max-width: 340px;
+    text-align: right; line-height: 1.45;
+  }
+
+  /* ---- grid helpers ---- */
+  .g-2{ display:grid; grid-template-columns: repeat(2,1fr); gap: 1.5px; background: var(--ink); border: 1.5px solid var(--ink); }
+  .g-3{ display:grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; background: var(--ink); border: 1.5px solid var(--ink); }
+  .g-4{ display:grid; grid-template-columns: repeat(4,1fr); gap: 1.5px; background: var(--ink); border: 1.5px solid var(--ink); }
+  .cell{
+    background: var(--bone); padding: 48px 40px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 240px; position: relative;
+  }
+  .cell.dark{ background: var(--ink); color: var(--bone); }
+  .cell.mint{ background: var(--mint); color: var(--ink); }
+  .cell.mint-soft{ background: var(--mint-soft); }
+  .cell.bone-2{ background: var(--bone-2); }
+  .cell .caption{
+    position: absolute; bottom: 14px; left: 18px; right: 18px;
+    font-family: var(--f-mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-3); display: flex; justify-content: space-between;
+  }
+  .cell.dark .caption{ color: var(--bone-3); opacity: 0.6; }
+  .cell.mint .caption{ color: var(--ink-2); }
+  .cell .caption b{ color: var(--ink); font-weight: 600; }
+  .cell.dark .caption b{ color: var(--bone); }
+  .cell .num{
+    position: absolute; top: 14px; left: 18px;
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em;
+    color: var(--ink-3); text-transform: uppercase;
+  }
+  .cell.dark .num{ color: var(--bone-3); opacity: 0.6; }
+
+  /* =====================================================
+     THE LOGO — SVG defs + recipes
+     ===================================================== */
+  /* Primary logo — outlined mint (the v1 look, refined) */
+  .logo-outlined{
+    display: inline-flex; align-items: baseline;
+    font-family: var(--f-display); font-weight: 900;
+    letter-spacing: -0.055em;
+    color: var(--mint);
+    -webkit-text-stroke: 2.5px var(--moss);
+    paint-order: stroke fill;
+    line-height: 1;
+  }
+  .logo-outlined .slash{ display: inline-block; transform: translateY(-0.1em); }
+  .logo-outlined.sm{ -webkit-text-stroke-width: 1.5px; }
+  .logo-outlined.lg{ -webkit-text-stroke-width: 4px; }
+
+  /* Solid fill variant — mint, no outline */
+  .logo-solid{
+    display: inline-flex; align-items: baseline;
+    font-family: var(--f-display); font-weight: 900;
+    letter-spacing: -0.055em;
+    color: var(--mint-3);
+    line-height: 1;
+  }
+  .logo-solid .slash{ display: inline-block; transform: translateY(-0.1em); color: var(--moss); }
+  .logo-solid.on-dark{ color: var(--mint); }
+  .logo-solid.on-dark .slash{ color: var(--bone); }
+
+  /* Ink variant for small / single-color */
+  .logo-ink{
+    display: inline-flex; align-items: baseline;
+    font-family: var(--f-display); font-weight: 900;
+    letter-spacing: -0.055em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .logo-ink .slash{ display:inline-block; transform: translateY(-0.1em); }
+
+  /* ---- Color system cards ---- */
+  .swatch{
+    padding: 24px 20px; min-height: 160px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative;
+  }
+  .swatch .name{
+    font-family: var(--f-display); font-size: 22px;
+    font-weight: 700; letter-spacing: -0.02em; line-height: 1;
+  }
+  .swatch .hex{
+    font-family: var(--f-mono); font-size: 11.5px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .swatch .role{
+    font-family: var(--f-mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .swatch.mint{ background: var(--mint); color: var(--ink); }
+  .swatch.mint-2{ background: var(--mint-2); color: var(--ink); }
+  .swatch.mint-3{ background: var(--mint-3); color: var(--ink); }
+  .swatch.moss{ background: var(--moss); color: var(--mint); }
+  .swatch.ink{ background: var(--ink); color: var(--mint); }
+  .swatch.bone{ background: var(--bone); color: var(--ink); border: 1px solid var(--bone-3); }
+  .swatch.bone-2{ background: var(--bone-2); color: var(--ink); }
+  .swatch.glow{ background: var(--glow); color: var(--ink); }
+  .swatch.clay{ background: var(--clay); color: var(--bone); }
+
+  /* ---- Type ---- */
+  .type-row{ padding: 28px 32px; border-bottom: 1px solid var(--bone-3); display: flex; align-items: baseline; gap: 40px; }
+  .type-row:last-child{ border-bottom: 0; }
+  .type-row .label{
+    font-family: var(--f-mono); font-size: 10.5px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-3); width: 140px; flex-shrink: 0; padding-top: 8px;
+  }
+  .type-row .sample{ flex: 1; }
+  .type-row .spec{
+    font-family: var(--f-mono); font-size: 11px;
+    color: var(--ink-3); text-align: right;
+    letter-spacing: 0.04em; padding-top: 8px;
+  }
+
+  /* ---- component strip ---- */
+  .components-row{
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px;
+    background: var(--ink); border: 1.5px solid var(--ink);
+  }
+  .comp-cell{
+    background: var(--bone); padding: 32px;
+    display: flex; flex-direction: column; gap: 20px;
+    min-height: 200px; position: relative;
+  }
+
+  /* ---- pill button ---- */
+  .btn{
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink);
+    color: var(--mint);
+    border: 2px solid var(--ink);
+    padding: 11px 20px;
+    border-radius: 999px;
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn.mint{ background: var(--mint); color: var(--ink); border-color: var(--moss); }
+  .btn.ghost{ background: transparent; color: var(--ink); border-color: var(--ink); }
+  .btn.outline-mint{ background: var(--mint); color: var(--moss); border-color: var(--moss); }
+
+  /* app icon */
+  .app-icon{
+    width: 128px; height: 128px;
+    border-radius: 28px;
+    background: var(--mint);
+    border: 3px solid var(--moss);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    box-shadow: 0 12px 32px -12px rgba(26,29,22,0.35);
+  }
+  .app-icon.ink{ background: var(--ink); border-color: var(--ink); }
+  .app-icon.solid-mint{ background: var(--mint-3); border: none; }
+
+  /* favicon */
+  .fav{
+    border: 1px solid var(--bone-3);
+    background: var(--bone);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* colophon */
+  .colophon{
+    margin-top: 80px; padding-top: 28px;
+    border-top: 1.5px solid var(--ink);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+    font-family: var(--f-mono); font-size: 10.5px;
+    letter-spacing: 0.06em; color: var(--ink-3);
+    text-transform: uppercase;
+  }
+  .colophon b{ display: block; color: var(--ink); margin-bottom: 6px; font-weight: 600; }
+
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ================ masthead ================ -->
+  <header class="mast">
+    <div>
+      <h1>altr <span class="slash">/</span> brand v2</h1>
+      <div class="tag">Mint on bone. The <b>backslash</b> is the mark. The system is bold, playful, a little punk &mdash; built for people making things with their hands on the keyboard.</div>
+    </div>
+    <div class="meta">
+      <div>Altr &middot; Brand</div>
+      <div><b>v2 · Mint</b></div>
+      <div>2026 · Round 02</div>
+    </div>
+  </header>
+
+  <!-- ================ 01. Primary Logo ================ -->
+  <section class="sec">
+    <header class="sec-head">
+      <span class="sec-num">01 / 06</span>
+      <h2 class="sec-title">Primary logo</h2>
+      <div class="sec-sub">Chunky bold sans, lowercase, with a backslash where the vowel would be &mdash; the missing letter, drawn.</div>
+    </header>
+
+    <div class="g-2">
+      <!-- Outlined, mint on bone — the hero mark -->
+      <div class="cell" style="min-height: 340px; padding: 60px;">
+        <span class="num">01 · Primary</span>
+        <div class="logo-outlined" style="font-size: 180px;">a<span class="slash">\</span>tr</div>
+        <div class="caption"><span>Outlined &middot; mint + moss on bone</span><span><b>The flagship lockup</b></span></div>
+      </div>
+
+      <!-- Solid fill, mint on bone -->
+      <div class="cell" style="min-height: 340px; padding: 60px;">
+        <span class="num">02 · Solid fill</span>
+        <div class="logo-solid" style="font-size: 180px;">a<span class="slash">\</span>tr</div>
+        <div class="caption"><span>Solid &middot; mint-3 + moss on bone</span><span><b>For small sizes &amp; product chrome</b></span></div>
+      </div>
+
+      <!-- Ink, single-color — print / single-color contexts -->
+      <div class="cell bone-2" style="min-height: 340px; padding: 60px;">
+        <span class="num">03 · Single color</span>
+        <div class="logo-ink" style="font-size: 180px;">a<span class="slash">\</span>tr</div>
+        <div class="caption"><span>Ink &middot; single color</span><span><b>Print, monochrome, embossing</b></span></div>
+      </div>
+
+      <!-- Reverse, mint on ink -->
+      <div class="cell dark" style="min-height: 340px; padding: 60px;">
+        <span class="num">04 · Reverse</span>
+        <div class="logo-solid on-dark" style="font-size: 180px;">a<span class="slash">\</span>tr</div>
+        <div class="caption"><span>On ink &middot; mint + bone slash</span><span><b>Dark surfaces</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ 02. Construction / anatomy ================ -->
+  <section class="sec">
+    <header class="sec-head">
+      <span class="sec-num">02 / 06</span>
+      <h2 class="sec-title">Anatomy &amp; rules</h2>
+      <div class="sec-sub">The backslash is <b>not a character</b>. It's a drawn stroke that replaces the <b>l</b> at ~1.4&times; cap-height. It leans <b>left</b>, always.</div>
+    </header>
+
+    <div class="g-2">
+      <!-- construction grid -->
+      <div class="cell" style="min-height: 400px; padding: 48px; background:
+        linear-gradient(var(--bone-3) 1px, transparent 1px) 0 0 / 100% 32px,
+        linear-gradient(90deg, var(--bone-3) 1px, transparent 1px) 0 0 / 32px 100%,
+        var(--bone-2);">
+        <span class="num">01 · Proportions</span>
+        <div style="position: relative;">
+          <!-- the reference logo -->
+          <div class="logo-outlined" style="font-size: 200px; position: relative;">a<span class="slash">\</span>tr</div>
+          <!-- annotations -->
+          <svg width="100%" height="100%" style="position:absolute; inset:0; pointer-events:none;" viewBox="0 0 600 250" preserveAspectRatio="none">
+            <!-- cap line / baseline markers -->
+            <line x1="0" y1="30" x2="600" y2="30" stroke="#4F7A3A" stroke-width="0.8" stroke-dasharray="4 4"/>
+            <line x1="0" y1="200" x2="600" y2="200" stroke="#4F7A3A" stroke-width="0.8" stroke-dasharray="4 4"/>
+            <text x="6" y="24" font-family="JetBrains Mono" font-size="10" fill="#4F7A3A">cap</text>
+            <text x="6" y="218" font-family="JetBrains Mono" font-size="10" fill="#4F7A3A">base</text>
+          </svg>
+        </div>
+        <div class="caption"><span>Cap + baseline · backslash extends 1.4× above cap</span><span><b>The slash is the signature</b></span></div>
+      </div>
+
+      <!-- clearspace -->
+      <div class="cell bone-2" style="min-height: 400px; padding: 48px;">
+        <span class="num">02 · Clearspace</span>
+        <div style="position: relative; padding: 40px; border: 1.5px dashed var(--moss);">
+          <div class="logo-outlined" style="font-size: 140px;">a<span class="slash">\</span>tr</div>
+          <!-- corner markers: a-height as clearspace -->
+          <div style="position:absolute; top:-6px; left:-6px; width: 12px; height: 12px; border-top: 2px solid var(--moss); border-left: 2px solid var(--moss);"></div>
+          <div style="position:absolute; top:-6px; right:-6px; width: 12px; height: 12px; border-top: 2px solid var(--moss); border-right: 2px solid var(--moss);"></div>
+          <div style="position:absolute; bottom:-6px; left:-6px; width: 12px; height: 12px; border-bottom: 2px solid var(--moss); border-left: 2px solid var(--moss);"></div>
+          <div style="position:absolute; bottom:-6px; right:-6px; width: 12px; height: 12px; border-bottom: 2px solid var(--moss); border-right: 2px solid var(--moss);"></div>
+        </div>
+        <div class="caption"><span>Padding = the height of the <code style="font-family:var(--f-mono);background:var(--bone);padding:0 4px;">a</code> counter</span><span><b>Respect the air</b></span></div>
+      </div>
+    </div>
+
+    <!-- scale showcase -->
+    <div style="margin-top: 32px; padding: 48px; background: var(--bone-2); border: 1.5px solid var(--ink); display: flex; align-items: baseline; gap: 48px; justify-content: space-between; flex-wrap: wrap;">
+      <div style="display:flex; align-items: baseline; gap: 48px;">
+        <div class="logo-outlined sm" style="font-size: 32px;">a<span class="slash">\</span>tr</div>
+        <div class="logo-outlined sm" style="font-size: 56px;">a<span class="slash">\</span>tr</div>
+        <div class="logo-outlined" style="font-size: 96px;">a<span class="slash">\</span>tr</div>
+        <div class="logo-outlined lg" style="font-size: 140px;">a<span class="slash">\</span>tr</div>
+      </div>
+      <div style="font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3);">
+        32 · 56 · 96 · 140 px · stroke scales proportionally
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ 03. Favicon & app icon ================ -->
+  <section class="sec">
+    <header class="sec-head">
+      <span class="sec-num">03 / 06</span>
+      <h2 class="sec-title">Favicon &amp; app icon</h2>
+      <div class="sec-sub">At small sizes, the full wordmark collapses to just the <b>backslash</b> — the mark that the logo was always about.</div>
+    </header>
+
+    <div class="g-4">
+      <!-- 16px -->
+      <div class="cell" style="min-height: 200px;">
+        <span class="num">16px</span>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <div class="fav" style="width: 16px; height: 16px;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 12 L11 2" stroke="#1A1D16" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-family:var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase;">ink · 16×16</div>
+        </div>
+        <div class="caption"><span>Browser tab</span><span><b>ico</b></span></div>
+      </div>
+
+      <!-- 32px -->
+      <div class="cell" style="min-height: 200px;">
+        <span class="num">32px</span>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <div class="fav" style="width: 32px; height: 32px;">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 24 L22 4" stroke="#1A1D16" stroke-width="4.5" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-family:var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase;">ink · 32×32</div>
+        </div>
+        <div class="caption"><span>Retina tab</span><span><b>ico · png</b></span></div>
+      </div>
+
+      <!-- mint favicon -->
+      <div class="cell mint" style="min-height: 200px;">
+        <span class="num">32px · mint</span>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <div style="width: 48px; height: 48px; background: var(--moss); display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+            <svg width="32" height="32" viewBox="0 0 28 28" fill="none"><path d="M6 24 L22 4" stroke="#B8F29A" stroke-width="4.5" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-family:var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink); text-transform: uppercase;">mint on moss</div>
+        </div>
+        <div class="caption"><span>Chat avatars · OG image</span><span><b>the mark</b></span></div>
+      </div>
+
+      <!-- large mint chip -->
+      <div class="cell bone-2" style="min-height: 200px;">
+        <span class="num">64px</span>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <div style="width: 72px; height: 72px; background: var(--mint); border: 2px solid var(--moss); display: flex; align-items: center; justify-content: center; border-radius: 16px;">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M10 38 L34 6" stroke="#1A1D16" stroke-width="6" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-family:var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase;">mint chip</div>
+        </div>
+        <div class="caption"><span>Product chrome</span><span><b>svg</b></span></div>
+      </div>
+    </div>
+
+    <!-- macOS app icons -->
+    <div style="margin-top: 32px; padding: 56px; background: var(--bone-2); border: 1.5px solid var(--ink); display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap;">
+      <!-- outlined/mint -->
+      <div style="display:flex; flex-direction:column; align-items:center; gap: 14px;">
+        <div class="app-icon">
+          <svg width="76" height="76" viewBox="0 0 76 76" fill="none"><path d="M16 66 L60 10" stroke="#1A1D16" stroke-width="10" stroke-linecap="round"/></svg>
+        </div>
+        <div style="font-family:var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase;">Mint · outlined</div>
+      </div>
+      <!-- solid mint fill -->
+      <div style="display:flex; flex-direction:column; align-items:center; gap: 14px;">
+        <div class="app-icon solid-mint">
+          <svg width="76" height="76" viewBox="0 0 76 76" fill="none"><path d="M16 66 L60 10" stroke="#1A1D16" stroke-width="10" stroke-linecap="round"/></svg>
+        </div>
+        <div style="font-family:var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase;">Mint · solid</div>
+      </div>
+      <!-- ink -->
+      <div style="display:flex; flex-direction:column; align-items:center; gap: 14px;">
+        <div class="app-icon ink">
+          <svg width="76" height="76" viewBox="0 0 76 76" fill="none"><path d="M16 66 L60 10" stroke="#B8F29A" stroke-width="10" stroke-linecap="round"/></svg>
+        </div>
+        <div style="font-family:var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase;">Ink · mint stroke</div>
+      </div>
+      <!-- bone bg -->
+      <div style="display:flex; flex-direction:column; align-items:center; gap: 14px;">
+        <div class="app-icon" style="background: var(--bone); border-color: var(--ink);">
+          <svg width="76" height="76" viewBox="0 0 76 76" fill="none"><path d="M16 66 L60 10" stroke="#1A1D16" stroke-width="10" stroke-linecap="round"/></svg>
+        </div>
+        <div style="font-family:var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase;">Bone · ink stroke</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ 04. Color system ================ -->
+  <section class="sec">
+    <header class="sec-head">
+      <span class="sec-num">04 / 06</span>
+      <h2 class="sec-title">Color system</h2>
+      <div class="sec-sub">Mint is the brand. Bone is the page. Ink is the type. Everything else earns its place.</div>
+    </header>
+
+    <div class="g-4" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="swatch mint"><div><div class="role">Primary · signature</div></div><div><div class="name">Mint</div><div class="hex">#B8F29A</div></div></div>
+      <div class="swatch moss"><div><div class="role">Outline · pair w/ mint</div></div><div><div class="name">Moss</div><div class="hex">#4F7A3A</div></div></div>
+      <div class="swatch ink"><div><div class="role">Type · near-black</div></div><div><div class="name">Ink</div><div class="hex">#1A1D16</div></div></div>
+      <div class="swatch bone"><div><div class="role">Page &middot; the ground</div></div><div><div class="name">Bone</div><div class="hex">#F5F2EA</div></div></div>
+
+      <div class="swatch mint-2"><div><div class="role">Hover · active mint</div></div><div><div class="name">Mint 2</div><div class="hex">#9DE37C</div></div></div>
+      <div class="swatch mint-3"><div><div class="role">Solid · saturated</div></div><div><div class="name">Mint 3</div><div class="hex">#7DCB5A</div></div></div>
+      <div class="swatch bone-2"><div><div class="role">Raised surface</div></div><div><div class="name">Bone 2</div><div class="hex">#ECE8DD</div></div></div>
+      <div class="swatch" style="background: var(--ink-3); color: var(--bone);"><div><div class="role" style="opacity:0.8">Secondary type</div></div><div><div class="name">Ink 3</div><div class="hex">#5B6150</div></div></div>
+
+      <div class="swatch glow"><div><div class="role">Highlight · scarce</div></div><div><div class="name">Glow</div><div class="hex">#FFE574</div></div></div>
+      <div class="swatch clay"><div><div class="role">Error · alt accent</div></div><div><div class="name">Clay</div><div class="hex">#D65A3E</div></div></div>
+      <div class="swatch" style="background: var(--mint-soft); color: var(--ink);"><div><div class="role">Wash · surfaces</div></div><div><div class="name">Mint Wash</div><div class="hex">#E2F6D4</div></div></div>
+      <div class="swatch" style="background: var(--bone-3); color: var(--ink);"><div><div class="role">Hairline</div></div><div><div class="name">Bone 3</div><div class="hex">#DED8C7</div></div></div>
+    </div>
+  </section>
+
+  <!-- ================ 05. Type ================ -->
+  <section class="sec">
+    <header class="sec-head">
+      <span class="sec-num">05 / 06</span>
+      <h2 class="sec-title">Type</h2>
+      <div class="sec-sub">Archivo Black for display, Geist for body, JetBrains Mono for labels &amp; code. No serifs &mdash; this system earns its voice from weight and scale.</div>
+    </header>
+
+    <div style="background: var(--bone); border: 1.5px solid var(--ink);">
+      <div class="type-row">
+        <div class="label">Display · 900</div>
+        <div class="sample" style="font-family: var(--f-display); font-weight: 900; font-size: 80px; letter-spacing: -0.04em; line-height: 0.9;">ship the thing</div>
+        <div class="spec">Archivo Black<br/>900 · -0.04em</div>
+      </div>
+      <div class="type-row">
+        <div class="label">Headline · 800</div>
+        <div class="sample" style="font-family: var(--f-display); font-weight: 800; font-size: 44px; letter-spacing: -0.03em; line-height: 1;">What will you ship today?</div>
+        <div class="spec">Archivo 800<br/>44 / -0.03em</div>
+      </div>
+      <div class="type-row">
+        <div class="label">Subhead · 700</div>
+        <div class="sample" style="font-family: var(--f-display); font-weight: 700; font-size: 24px; letter-spacing: -0.02em; line-height: 1.1;">Four agents. One room. Zero tabs.</div>
+        <div class="spec">Archivo 700<br/>24 / -0.02em</div>
+      </div>
+      <div class="type-row">
+        <div class="label">Body · 500</div>
+        <div class="sample" style="font-family: var(--f-body); font-weight: 500; font-size: 18px; letter-spacing: -0.01em; line-height: 1.5; color: var(--ink-2);">Altr is a Mac-native workspace where humans and AI teammates collaborate as peers — not users and tools.</div>
+        <div class="spec">Geist 500<br/>18 / 1.5</div>
+      </div>
+      <div class="type-row">
+        <div class="label">Body · 400</div>
+        <div class="sample" style="font-family: var(--f-body); font-weight: 400; font-size: 15px; line-height: 1.55; color: var(--ink-2);">Pax writes specs alongside you. Eng spawns Claude Code in isolated worktrees. Dex and Rae arrive later this year.</div>
+        <div class="spec">Geist 400<br/>15 / 1.55</div>
+      </div>
+      <div class="type-row">
+        <div class="label">Label · mono</div>
+        <div class="sample" style="font-family: var(--f-mono); font-weight: 500; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3);">v0.1 · private beta · june 2026</div>
+        <div class="spec">JetBrains Mono 500<br/>12 · 0.08em · uppercase</div>
+      </div>
+      <div class="type-row">
+        <div class="label">Code</div>
+        <div class="sample" style="font-family: var(--f-mono); font-weight: 400; font-size: 14px; color: var(--moss);">$ <span style="color:var(--ink)">altr run magic-link-auth --autopilot</span></div>
+        <div class="spec">JetBrains Mono 400<br/>14</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ 06. Components ================ -->
+  <section class="sec">
+    <header class="sec-head">
+      <span class="sec-num">06 / 06</span>
+      <h2 class="sec-title">Components</h2>
+      <div class="sec-sub">Pill buttons, hard edges where it matters, no soft drop shadows &mdash; the system reads as a physical stamp, not a soft SaaS.</div>
+    </header>
+
+    <div class="components-row">
+      <div class="comp-cell">
+        <div style="font-family:var(--f-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3);">Buttons</div>
+        <div style="display:flex; flex-direction: column; gap: 12px; align-items: flex-start;">
+          <button class="btn">Get early access →</button>
+          <button class="btn mint">Start free</button>
+          <button class="btn outline-mint">Join waitlist</button>
+          <button class="btn ghost">Read the docs</button>
+        </div>
+      </div>
+
+      <div class="comp-cell">
+        <div style="font-family:var(--f-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3);">Eyebrow tag</div>
+        <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
+          <span style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--moss); padding: 7px 12px; border: 1.5px solid var(--moss); border-radius: 999px; background: var(--mint-soft);">
+            <span style="width:6px; height:6px; background: var(--moss); border-radius: 50%;"></span>
+            Private beta · june 2026
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bone); padding: 7px 12px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--ink);">
+            v0.1 · shipping
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); padding: 7px 12px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--glow);">
+            200 seats · lifetime
+          </span>
+        </div>
+      </div>
+
+      <div class="comp-cell">
+        <div style="font-family:var(--f-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3);">Agent avatar</div>
+        <div style="display:flex; gap: 14px;">
+          <!-- Pax -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap: 6px;">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: var(--mint); border: 2px solid var(--moss); display:flex; align-items:center; justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 18 18"><rect x="3" y="3" width="12" height="12" fill="#1A1D16"/></svg>
+            </div>
+            <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase;">Pax</span>
+          </div>
+          <!-- Eng -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap: 6px;">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: var(--ink); display:flex; align-items:center; justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 3 L15 15 L3 15 Z" fill="#B8F29A"/></svg>
+            </div>
+            <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase;">Eng</span>
+          </div>
+          <!-- Dex -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap: 6px;">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: var(--glow); border: 2px solid var(--ink); display:flex; align-items:center; justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="6" fill="#1A1D16"/></svg>
+            </div>
+            <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase;">Dex</span>
+          </div>
+          <!-- Rae -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap: 6px;">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: var(--clay); display:flex; align-items:center; justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 2 L16 9 L9 16 L2 9 Z" fill="#F5F2EA"/></svg>
+            </div>
+            <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase;">Rae</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- hero lockup preview -->
+    <div style="margin-top: 32px; background: var(--mint); border: 1.5px solid var(--moss); padding: 80px 56px; border-radius: 0; position: relative;">
+      <div style="position: absolute; top: 20px; left: 24px; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--moss);">Hero stamp · mint on mint</div>
+      <div style="max-width: 880px; margin: 0 auto; text-align: center;">
+        <div style="font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--moss); margin-bottom: 20px;">the ai-native workspace</div>
+        <div style="font-family: var(--f-display); font-weight: 900; font-size: 92px; line-height: 0.9; letter-spacing: -0.04em; color: var(--ink);">
+          Ship like a team<br/>of <span style="-webkit-text-stroke: 3px var(--moss); color: transparent; font-style: italic;">three</span>.
+        </div>
+        <div style="font-family: var(--f-body); font-weight: 500; font-size: 18px; color: var(--ink-2); margin-top: 20px; max-width: 540px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+          One Mac app. Four AI teammates. Your files never leave your machine.
+        </div>
+        <div style="margin-top: 28px;">
+          <button class="btn" style="background: var(--ink); color: var(--mint); border-color: var(--ink); font-size: 15px; padding: 13px 22px;">Get early access →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================ colophon ================ -->
+  <footer class="colophon">
+    <div><b>System</b>Altr Brand v2 · Mint<br/>Logo · color · type · components</div>
+    <div><b>Built for</b>Landing · app icon · product chrome<br/>Merch · OG · favicon</div>
+    <div><b>Swap v1</b>Warm/serif system retired<br/>Replaced by mint/bold sans</div>
+    <div><b>Next</b>Rebuild landing page<br/>Apply to app interior</div>
+  </footer>
+
+</div>
+</body>
+</html>

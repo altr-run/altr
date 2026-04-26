@@ -2,8 +2,12 @@ import type { SchemaPluginOptions } from 'sanity'
 // documents
 import blogCategory from './documents/blog.category'
 import blogPost from './documents/blog.post'
+import changelogEntry from './documents/changelog.entry'
+import comparePage from './documents/compare.page'
 import form from './documents/form'
 import globalModule from './documents/global-module'
+import integration from './documents/integration'
+import legalPage from './documents/legal.page'
 import logo from './documents/logo'
 import navigation from './documents/navigation'
 import page from './documents/page'
@@ -11,6 +15,7 @@ import person from './documents/person'
 import quote from './documents/quote'
 import redirect from './documents/redirect'
 import site from './documents/site'
+import useCase from './documents/use-case'
 // modules
 import accordionList from './modules/accordion-list'
 import blogIndex from './modules/blog-index'
@@ -45,6 +50,11 @@ export const schema: SchemaPluginOptions = {
 		form,
 		globalModule,
 		blogPost,
+		comparePage,
+		useCase,
+		integration,
+		changelogEntry,
+		legalPage,
 		redirect,
 
 		// references

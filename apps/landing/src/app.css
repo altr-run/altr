@@ -1,35 +1,555 @@
 @import 'tailwindcss';
+
+/* ─────────────────────────────────────────────────────
+   Radix Colors  — sRGB base + display-p3 wide-gamut
+   All vars auto-upgraded to P3 in supporting browsers
+   ───────────────────────────────────────────────────── */
+@import '@radix-ui/colors/sand.css';
+@import '@radix-ui/colors/sand-dark.css';
+@import '@radix-ui/colors/sand-alpha.css';
+@import '@radix-ui/colors/sand-dark-alpha.css';
+@import '@radix-ui/colors/gray.css';
+@import '@radix-ui/colors/gray-dark.css';
+@import '@radix-ui/colors/gray-alpha.css';
+@import '@radix-ui/colors/gray-dark-alpha.css';
+@import '@radix-ui/colors/lime.css';
+@import '@radix-ui/colors/lime-dark.css';
+@import '@radix-ui/colors/lime-alpha.css';
+@import '@radix-ui/colors/lime-dark-alpha.css';
+@import '@radix-ui/colors/amber.css';
+@import '@radix-ui/colors/amber-dark.css';
+@import '@radix-ui/colors/amber-alpha.css';
+@import '@radix-ui/colors/amber-dark-alpha.css';
+@import '@radix-ui/colors/sage.css';
+@import '@radix-ui/colors/sage-dark.css';
+@import '@radix-ui/colors/sage-alpha.css';
+@import '@radix-ui/colors/sage-dark-alpha.css';
+@import '@radix-ui/colors/black-alpha.css';
+@import '@radix-ui/colors/white-alpha.css';
+
+/* Shared spacing tokens */
 @import '@altr/ui/tokens/base.css';
+/* Fonts, radii, shadows — color tokens removed, now from Radix */
 @import '@altr/ui/tokens/landing.css';
 
-@theme {
-	--font-sans: var(--f-sans);
-	--font-serif: var(--f-serif);
-	--font-mono: var(--f-mono);
+/* ─────────────────────────────────────────────────────
+   Semantic token aliases  — map Radix → project names
+   ───────────────────────────────────────────────────── */
+:root {
+	/* Backgrounds */
+	--bg:      var(--gray-1);
+	--bg-1:    var(--gray-2);
+	--bg-2:    var(--gray-3);
+	--surface: var(--gray-1);
 
+	/* Text */
+	--ink:   var(--gray-12);
+	--ink-1: var(--gray-12);
+	--ink-2: var(--gray-11);
+	--ink-3: var(--gray-10);
+	--ink-4: var(--gray-8);
+	--ink-5: var(--gray-6);
+
+	/* Borders */
+	--line:   var(--gray-5);
+	--line-2: var(--gray-7);
+
+	/* Panel / frosted */
+	--panel:        color-mix(in oklch, var(--gray-1) 82%, transparent);
+	--panel-strong: color-mix(in oklch, var(--gray-1) 94%, transparent);
+	--panel-soft:   var(--gray-2);
+	--panel-ink:    var(--gray-12);
+	--ring-soft:    var(--black-a2);
+	--ring-strong:  var(--black-a4);
+	--glow-soft:    color-mix(in oklch, var(--acc-vibrant) 14%, transparent);
+
+	/* Accent — Digital Electric Lime Palette (Reference #89F336) */
+	--acc:          #4A8F00;   /* Compliant Action Lime (Clean, no mud) */
+	--acc-vibrant:  #9DFF52;   /* Electric Glow (for shaders/glows) */
+	--acc-2:        #3D7000;   /* Deeper hover state */
+	--acc-soft:     color-mix(in oklab, var(--acc-vibrant) 18%, var(--bg));
+	--acc-ink:      #0a0a0a;   /* Dark ink on vibrant backgrounds */
+
+	/* Radix Overrides */
+	--lime-9:  #89F336;        /* Raw reference lime */
+	--lime-10: var(--acc);
+	--lime-11: var(--acc-2);
+	--lime-3:  var(--acc-soft);
+
+	/* Amber */
+	--amber:      var(--amber-9);
+	--amber-2:    var(--amber-10);
+	--amber-soft: var(--amber-3);
+	--amber-ink:  var(--amber-11);
+
+	/* Sage/Moss */
+	--moss:      var(--sage-9);
+	--moss-2:    var(--sage-10);
+	--mint:      var(--sage-8);
+	--mint-soft: var(--sage-3);
+}
+
+/* ─────────────────────────────────────────────────────
+   Tailwind @theme  — every semantic token → utility class
+   bg-bg, text-ink, text-acc, border-line, rounded-md …
+   ───────────────────────────────────────────────────── */
+@theme {
+	/* Fonts */
+	--font-sans:  var(--f-sans);
+	--font-serif: var(--f-serif);
+	--font-mono:  var(--f-mono);
+
+	/* Semantic color scale */
+	--color-bg:         var(--bg);
+	--color-bg-1:       var(--bg-1);
+	--color-bg-2:       var(--bg-2);
+	--color-surface:    var(--surface);
+	--color-ink:        var(--ink);
+	--color-ink-1:      var(--ink-1);
+	--color-ink-2:      var(--ink-2);
+	--color-ink-3:      var(--ink-3);
+	--color-ink-4:      var(--ink-4);
+	--color-ink-5:      var(--ink-5);
+	--color-line:       var(--line);
+	--color-line-2:     var(--line-2);
+	--color-panel:      var(--panel);
+	--color-panel-ink:  var(--panel-ink);
+	--color-acc:        var(--acc);
+	--color-acc-2:      var(--acc-2);
+	--color-acc-soft:   var(--acc-soft);
+	--color-acc-ink:    var(--acc-ink);
+	--color-amber:      var(--amber);
+	--color-amber-soft: var(--amber-soft);
+	--color-amber-ink:  var(--amber-ink);
+	--color-moss:       var(--moss);
+	--color-mint:       var(--mint);
+	--color-mint-soft:  var(--mint-soft);
+	--color-glow:       var(--glow-soft);
+
+	/* Radix raw scale — direct utilities eg. bg-gray-3, text-lime-9 */
+	--color-gray-1:  var(--gray-1);
+	--color-gray-2:  var(--gray-2);
+	--color-gray-3:  var(--gray-3);
+	--color-gray-4:  var(--gray-4);
+	--color-gray-5:  var(--gray-5);
+	--color-gray-6:  var(--gray-6);
+	--color-gray-7:  var(--gray-7);
+	--color-gray-8:  var(--gray-8);
+	--color-gray-9:  var(--gray-9);
+	--color-gray-10: var(--gray-10);
+	--color-gray-11: var(--gray-11);
+	--color-gray-12: var(--gray-12);
+	/* keep sand scale available for any components still referencing it */
+	--color-sand-1:  var(--sand-1);
+	--color-sand-2:  var(--sand-2);
+	--color-sand-3:  var(--sand-3);
+	--color-sand-4:  var(--sand-4);
+	--color-sand-5:  var(--sand-5);
+	--color-sand-6:  var(--sand-6);
+	--color-sand-7:  var(--sand-7);
+	--color-sand-8:  var(--sand-8);
+	--color-sand-9:  var(--sand-9);
+	--color-sand-10: var(--sand-10);
+	--color-sand-11: var(--sand-11);
+	--color-sand-12: var(--sand-12);
+	--color-lime-1:  var(--lime-1);
+	--color-lime-2:  var(--lime-2);
+	--color-lime-3:  var(--lime-3);
+	--color-lime-4:  var(--lime-4);
+	--color-lime-5:  var(--lime-5);
+	--color-lime-6:  var(--lime-6);
+	--color-lime-7:  var(--lime-7);
+	--color-lime-8:  var(--lime-8);
+	--color-lime-9:  var(--lime-9);
+	--color-lime-10: var(--lime-10);
+	--color-lime-11: var(--lime-11);
+	--color-lime-12: var(--lime-12);
+	--color-amber-1:  var(--amber-1);
+	--color-amber-2:  var(--amber-2);
+	--color-amber-3:  var(--amber-3);
+	--color-amber-9:  var(--amber-9);
+	--color-amber-10: var(--amber-10);
+	--color-amber-11: var(--amber-11);
+	--color-amber-12: var(--amber-12);
+	--color-sage-3:   var(--sage-3);
+	--color-sage-8:   var(--sage-8);
+	--color-sage-9:   var(--sage-9);
+	--color-sage-10:  var(--sage-10);
+
+	/* Legacy compat aliases */
 	--color-background: var(--bg);
 	--color-foreground: var(--ink);
-	--color-stroke: var(--line);
+	--color-stroke:     var(--line);
+	--color-primary:    var(--acc);
 
-	--color-primary: var(--acc);
+	/* Radii */
+	--radius-sm: var(--r-sm);
+	--radius-md: var(--r-md);
+	--radius-lg: var(--r-lg);
+	--radius-xl: var(--r-xl);
 
+	/* Shadows */
+	--shadow-sm: var(--sh-sm);
+	--shadow-md: var(--sh-md);
+	--shadow-lg: var(--sh-lg);
+
+	/* Custom easing */
+	--ease-spring:    cubic-bezier(0.25, 1, 0.5, 1);
+	--ease-fluid:     cubic-bezier(0.3, 0, 0, 1);
+	--ease-snappy:    cubic-bezier(0.2, 0, 0, 1);
+	--ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+
+	/* Spacing tokens */
 	--spacing-lh: 1lh;
 	--spacing-ch: 1ch;
 }
 
+/* ─────────────────────────────────────────────────────
+   Custom Tailwind variants
+   ───────────────────────────────────────────────────── */
 @custom-variant hover (&:hover);
 
 @variant header-open (body:has(#header-open:checked) &);
 @variant header-not-open (body:has(#header-open:not(:checked)) &);
-
 @variant headings (& :is(h1, h2, h3, h4, h5, h6));
+
+/* ─────────────────────────────────────────────────────
+   Structural utilities — home page layout
+   ───────────────────────────────────────────────────── */
+
+/* Section max-width containers */
+@utility inner {
+	max-width: var(--maxw);
+	margin-inline: auto;
+}
+@utility inner-narrow {
+	max-width: var(--maxw-narrow);
+	margin-inline: auto;
+}
+
+/* Overline label — § workflow, § faq etc. */
+@utility over {
+	font-family: var(--f-mono);
+	font-size: 11px;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--ink-3);
+}
+
+/* Display serif heading */
+@utility display-serif {
+	font-family: var(--f-serif);
+	font-weight: 400;
+	letter-spacing: -0.025em;
+	line-height: 0.96;
+}
+
+/* Section h2 */
+@utility heading-2 {
+	font-family: var(--f-serif);
+	font-weight: 400;
+	font-size: clamp(44px, 5.6vw, 84px);
+	line-height: 1;
+	letter-spacing: -0.03em;
+	margin: 0;
+	text-wrap: balance;
+}
+
+/* Section h3 */
+@utility heading-3 {
+	font-family: var(--f-serif);
+	font-weight: 400;
+	font-size: clamp(28px, 3vw, 38px);
+	line-height: 1.08;
+	letter-spacing: -0.02em;
+	margin: 0;
+}
+
+/* Body lede */
+@utility lede {
+	font-size: 19px;
+	line-height: 1.55;
+	color: var(--ink-2);
+	max-width: 52ch;
+	margin: 0;
+}
+
+/* Inline code / mono tag */
+@utility mono-tag {
+	font-family: var(--f-mono);
+	font-size: 0.88em;
+	letter-spacing: -0.01em;
+}
+
+/* Scene illustration card (triptych cells) */
+@utility scene-card {
+	width: 100%;
+	min-height: 282px;
+	border: 1px solid color-mix(in oklab, var(--line) 84%, transparent);
+	border-radius: 24px;
+	background:
+		radial-gradient(
+			110% 140% at 0% 0%,
+			color-mix(in oklab, var(--acc-soft) 46%, white) 0%,
+			transparent 52%
+		),
+		linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,245,238,0.98) 100%);
+	position: relative;
+	overflow: hidden;
+	box-shadow:
+		inset 0 1px 0 rgba(255,255,255,0.82),
+		0 10px 24px var(--black-a2);
+}
+
+/* ─────────────────────────────────────────────────────
+   Button system  — base + variants
+   Complex multi-state styles live here, used as plain classes
+   ───────────────────────────────────────────────────── */
+@layer components {
+	.btn {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		font-family: var(--f-sans);
+		font-weight: 560;
+		font-size: 14.5px;
+		letter-spacing: -0.012em;
+		padding: 11px 19px;
+		border-radius: 9999px;
+		border: 1px solid transparent;
+		cursor: pointer;
+		user-select: none;
+		white-space: nowrap;
+		text-decoration: none;
+		color: inherit;
+		transition:
+			transform 0.15s ease,
+			background 0.18s ease,
+			border-color 0.18s ease,
+			color 0.18s ease,
+			box-shadow 0.18s ease;
+
+		&:hover  { transform: translateY(-1px); }
+		&:active { transform: scale(0.97); transition-duration: 0.1s; }
+	}
+
+	.btn-lg {
+		padding: 13px 23px;
+		font-size: 15px;
+	}
+
+	.btn-primary {
+		background:
+			linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 100%),
+			color-mix(in oklab, var(--acc) 84%, var(--acc-vibrant) 16%);
+		color: #fff;
+		border-color: color-mix(in oklab, var(--acc-vibrant) 42%, rgba(255,255,255,0.18));
+		backdrop-filter: blur(14px) saturate(1.5);
+		-webkit-backdrop-filter: blur(14px) saturate(1.5);
+		box-shadow:
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 22%, transparent),
+			0 12px 28px color-mix(in oklab, var(--acc) 38%, transparent),
+			0 2px 8px color-mix(in oklab, var(--acc-vibrant) 18%, transparent),
+			inset 0 1px 0 rgba(255,255,255,0.30),
+			inset 0 -1px 0 rgba(0,0,0,0.08);
+
+		&:hover {
+			background:
+				linear-gradient(135deg, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.06) 100%),
+				color-mix(in oklab, var(--acc) 74%, var(--acc-vibrant) 26%);
+			border-color: color-mix(in oklab, var(--acc-vibrant) 58%, rgba(255,255,255,0.22));
+			color: #fff;
+			box-shadow:
+				0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 32%, transparent),
+				0 16px 36px color-mix(in oklab, var(--acc) 45%, transparent),
+				0 4px 14px color-mix(in oklab, var(--acc-vibrant) 26%, transparent),
+				inset 0 1px 0 rgba(255,255,255,0.34),
+				inset 0 -1px 0 rgba(0,0,0,0.06);
+		}
+	}
+
+	.btn-ghost {
+		/* Frosted glass — secondary counterpart to btn-primary */
+		background:
+			linear-gradient(135deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.28) 100%),
+			color-mix(in oklab, var(--acc) 3%, rgba(255,255,255,0.1));
+		color: var(--ink);
+		border-color: color-mix(in oklab, var(--acc-vibrant) 18%, rgba(255,255,255,0.6));
+		backdrop-filter: blur(20px) saturate(1.3);
+		-webkit-backdrop-filter: blur(20px) saturate(1.3);
+		box-shadow:
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 10%, rgba(200,220,180,0.3)),
+			var(--sh-sm),
+			inset 0 1px 0 rgba(255,255,255,0.85),
+			inset 0 -1px 0 rgba(0,0,0,0.04);
+
+		&:hover {
+			background:
+				linear-gradient(135deg, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0.36) 100%),
+				color-mix(in oklab, var(--acc) 6%, rgba(255,255,255,0.1));
+			border-color: color-mix(in oklab, var(--acc-vibrant) 32%, rgba(255,255,255,0.5));
+			color: var(--ink);
+			box-shadow:
+				0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 18%, rgba(200,220,180,0.35)),
+				var(--sh-md),
+				inset 0 1px 0 rgba(255,255,255,0.9),
+				inset 0 -1px 0 rgba(0,0,0,0.03);
+		}
+	}
+
+	.btn-acc {
+		/* Vibrant lime glass — lighter lime = dark text for contrast */
+		background:
+			linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.06) 100%),
+			color-mix(in oklab, var(--acc-vibrant) 72%, var(--acc) 28%);
+		color: var(--acc-ink);
+		border-color: color-mix(in oklab, var(--acc-vibrant) 55%, rgba(255,255,255,0.25));
+		backdrop-filter: blur(14px) saturate(1.5);
+		-webkit-backdrop-filter: blur(14px) saturate(1.5);
+		box-shadow:
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 28%, transparent),
+			0 10px 24px color-mix(in oklab, var(--acc) 32%, transparent),
+			0 2px 8px color-mix(in oklab, var(--acc-vibrant) 22%, transparent),
+			inset 0 1px 0 rgba(255,255,255,0.38),
+			inset 0 -1px 0 rgba(0,0,0,0.06);
+
+		&:hover {
+			background:
+				linear-gradient(135deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.10) 100%),
+				var(--acc-vibrant);
+			border-color: color-mix(in oklab, var(--acc-vibrant) 75%, rgba(255,255,255,0.3));
+			color: var(--acc-ink);
+			box-shadow:
+				0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 40%, transparent),
+				0 14px 30px color-mix(in oklab, var(--acc) 40%, transparent),
+				0 4px 12px color-mix(in oklab, var(--acc-vibrant) 30%, transparent),
+				inset 0 1px 0 rgba(255,255,255,0.44),
+				inset 0 -1px 0 rgba(0,0,0,0.04);
+		}
+	}
+
+	/* Badge / chip labels — uppercase mono, pill shape */
+	.badge {
+		display: inline-flex;
+		align-items: center;
+		font-family: var(--f-mono);
+		font-size: 9px;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		padding: 2px 7px;
+		border-radius: 9999px;
+		border: 1px solid var(--line);
+		background: color-mix(in oklab, var(--bg-1) 70%, white);
+		color: var(--ink-3);
+		white-space: nowrap;
+		line-height: 1.6;
+	}
+	.badge-acc {
+		background: color-mix(in oklab, var(--acc-soft) 55%, white);
+		border-color: color-mix(in oklab, var(--acc) 22%, var(--line));
+		color: var(--acc-2);
+	}
+	.badge-soon {
+		background: color-mix(in oklab, var(--bg-1) 80%, var(--line));
+		border-color: color-mix(in oklab, var(--line) 80%, transparent);
+		color: var(--ink-4);
+	}
+
+	/* Small button modifier */
+	.btn-sm {
+		padding: 5px 11px;
+		font-size: 12px;
+	}
+
+	/* Pill nav container */
+	.nav-pill {
+		max-width: min(1180px, calc(100vw - 40px));
+		margin: 0 auto;
+		padding: 14px 24px;
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		align-items: center;
+		gap: 24px;
+		border: 1px solid color-mix(in oklab, var(--line) 72%, transparent);
+		border-radius: 9999px;
+		background: color-mix(in oklab, var(--panel-strong) 88%, white 12%);
+		backdrop-filter: blur(24px) saturate(1.28) brightness(1.02);
+		-webkit-backdrop-filter: blur(24px) saturate(1.28) brightness(1.02);
+		box-shadow:
+			0 12px 30px var(--black-a2),
+			inset 0 1px 0 rgba(255,255,255,0.56);
+	}
+
+	/* Badge chip — nav beta badge */
+	.nav-badge {
+		display: inline-flex;
+		gap: 6px;
+		align-items: center;
+		font-family: var(--f-mono);
+		font-size: 9.5px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.10em;
+		padding: 3px 8px;
+		border-radius: 4px;
+		color: var(--acc-2);
+		background: color-mix(in oklab, var(--acc-soft) 55%, white);
+		border: 1px solid color-mix(in oklab, var(--acc) 20%, var(--line));
+	}
+}
+
+/* ─────────────────────────────────────────────────────
+   Keyframes used by home page components
+   ───────────────────────────────────────────────────── */
+@keyframes marquee {
+	to { transform: translateX(-50%); }
+}
+@keyframes tick {
+	to { transform: translateX(-50%); }
+}
+@keyframes blink {
+	50% { opacity: 0; }
+}
+@keyframes pulse-dot {
+	50% { opacity: 0.35; }
+}
+@keyframes heartbeat {
+	0%, 100% { transform: scale(1); opacity: 1; }
+	14%       { transform: scale(1.3); }
+	28%       { transform: scale(1); }
+	42%       { transform: scale(1.2); }
+	56%       { transform: scale(1); opacity: 0.8; }
+}
+@keyframes glow-ring {
+	0%, 100% { box-shadow: 0 0 0 0px color-mix(in oklab, var(--acc-vibrant) 0%, transparent); }
+	50%       { box-shadow: 0 0 0 5px color-mix(in oklab, var(--acc-vibrant) 28%, transparent); }
+}
+@keyframes flow-beam {
+	0%   { offset-distance: 0%;   opacity: 0; }
+	5%   { opacity: 1; }
+	90%  { opacity: 1; }
+	100% { offset-distance: 100%; opacity: 0; }
+}
+
+/* ─────────────────────────────────────────────────────
+   Global page rules
+   ───────────────────────────────────────────────────── */
+
+/* Home page: unwrap <main> so sections render flush */
+body:has([data-home-page]) > main {
+	display: contents;
+}
 
 @layer base {
 	@supports (interpolate-size: allow-keywords) {
 		:root {
 			interpolate-size: allow-keywords;
 		}
-
 		:open::details-content {
 			height: auto;
 		}
@@ -44,19 +564,12 @@
 	}
 
 	@keyframes anchored-heading {
-		0%,
-		50% {
-			background-color: color-mix(
-				in oklab,
-				var(--color-amber-400) 50%,
-				transparent
-			);
+		0%, 50% {
+			background-color: color-mix(in oklab, var(--amber-3) 80%, transparent);
 		}
 	}
 
-	* {
-		min-width: 0;
-	}
+	* { min-width: 0; }
 
 	html {
 		scroll-behavior: smooth;
@@ -70,66 +583,30 @@
 			transition-property: content-visibility, block-size;
 			transition-behavior: allow-discrete;
 		}
-
 		&:not(:open)::details-content {
 			block-size: 0;
 		}
 	}
 
-	summary,
-	label {
-		cursor: pointer;
-	}
-
-	a {
-		color: revert;
-	}
-
-	cite {
-		font-style: normal;
-	}
+	summary, label { cursor: pointer; }
+	a { color: revert; }
+	cite { font-style: normal; }
 }
 
-/* typography */
+/* ─────────────────────────────────────────────────────
+   Typography utilities (Sanity/CMS prose)
+   ───────────────────────────────────────────────────── */
+@utility h-base  { @apply font-bold; }
+@utility h0      { @apply h-base text-4xl; }
+@utility h1      { @apply h-base text-3xl; }
+@utility h2      { @apply h-base text-2xl; }
+@utility h3      { @apply h-base text-xl; }
+@utility h4      { @apply h-base text-lg; }
+@utility h5      { @apply h-base text-base; }
+@utility h6      { @apply h-base text-base; }
+@utility technical { @apply font-mono font-bold tracking-widest uppercase; }
 
-@utility h-base {
-	@apply font-bold;
-}
-
-@utility h0 {
-	@apply h-base text-4xl;
-}
-
-@utility h1 {
-	@apply h-base text-3xl;
-}
-
-@utility h2 {
-	@apply h-base text-2xl;
-}
-
-@utility h3 {
-	@apply h-base text-xl;
-}
-
-@utility h4 {
-	@apply h-base text-lg;
-}
-
-@utility h5 {
-	@apply h-base text-base;
-}
-
-@utility h6 {
-	@apply h-base text-base;
-}
-
-@utility technical {
-	@apply font-mono font-bold tracking-widest uppercase;
-}
-
-/* ctas, links */
-
+/* CTA / link utilities */
 @utility action-base {
 	cursor: pointer;
 	display: inline-flex;
@@ -139,181 +616,163 @@
 	gap: 0.5em;
 	padding: 0.25em 0.5em;
 }
-
-@utility action {
-	@apply action-base bg-foreground text-background;
-}
-
-@utility action-outline {
-	@apply action-base bg-background border-stroke text-foreground border hover:border-current;
-}
-
-@utility ghost {
-	@apply action-base bg-background text-foreground hover:bg-foreground/5;
-}
-
-@utility link {
-	@apply text-primary cursor-pointer underline hover:decoration-2;
-}
-
+@utility action         { @apply action-base bg-foreground text-background; }
+@utility action-outline { @apply action-base bg-background border-stroke text-foreground border hover:border-current; }
+@utility ghost          { @apply action-base bg-background text-foreground hover:bg-foreground/5; }
+@utility link           { @apply text-primary cursor-pointer underline hover:decoration-2; }
 @utility input {
 	padding: 0.25em 0.5em;
 	@apply bg-background border-foreground/10 focus-within:border-foreground/30 border leading-normal;
 }
 
-/* components */
+/* Section container (Sanity pages) */
+@utility section { @apply mx-auto max-w-7xl px-4 py-12 md:px-8; }
 
-@utility section {
-	@apply mx-auto max-w-7xl px-4 py-12 md:px-8;
-}
-
+/* Prose (Sanity rich text) */
 @utility prose {
 	@apply space-y-4 leading-relaxed;
-
-	& h1 {
-		@apply h1;
-	}
-
-	& h2 {
-		@apply h2;
-	}
-
-	& h3 {
-		@apply h3;
-	}
-
-	& h4 {
-		@apply h4;
-	}
-
-	& h5 {
-		@apply h5;
-	}
-
-	& h6 {
-		@apply h6;
-	}
-
+	& h1 { @apply h1; }
+	& h2 { @apply h2; }
+	& h3 { @apply h3; }
+	& h4 { @apply h4; }
+	& h5 { @apply h5; }
+	& h6 { @apply h6; }
 	& :is(ul, ol) {
 		list-style: revert;
 		padding-left: 1.5em;
-
-		& > li > ol {
-			list-style: lower-alpha;
-		}
+		& > li > ol { list-style: lower-alpha; }
 	}
-
-	& .cta-list {
-		@apply mt-6;
-	}
-
-	& a:not([class]) {
-		@apply link;
-	}
-
-	& blockquote {
-		@apply border-stroke border-l-4 pl-4;
-	}
-
+	& .cta-list { @apply mt-6; }
+	& a:not([class]) { @apply link; }
+	& blockquote { @apply border-stroke border-l-4 pl-4; }
 	& :not(pre) > code {
 		padding-inline: 0.25em;
 		font-size: 0.875em;
 		@apply bg-foreground/5 rounded-sm;
 	}
-
-	& pre {
-		overflow-x: auto;
-		font-size: 0.875em;
-	}
-
+	& pre { overflow-x: auto; font-size: 0.875em; }
 	& table {
 		min-width: 100%;
 		display: block;
 		overflow-x: auto;
 		line-height: 1.3;
-
 		@apply max-md:full-bleed;
-
-		& :is(th, td) {
-			padding: 0.5lh 1em;
-		}
-
-		& tbody tr:nth-child(odd) {
-			@apply bg-foreground/5;
-		}
+		& :is(th, td) { padding: 0.5lh 1em; }
+		& tbody tr:nth-child(odd) { @apply bg-foreground/5; }
 	}
 }
 
-@utility carousel {
-	--anchor-name: attr(data-anchor-name type(<custom-ident>), --carousel);
-	anchor-name: var(--anchor-name);
-	display: grid;
-	grid-auto-flow: column;
-	grid-auto-columns: min(var(--container-sm), 80vw);
-	overflow-x: auto;
-	scroll-behavior: smooth;
-	scroll-snap-type: x mandatory;
+/* Altr blog article prose — uses Altr design tokens */
+@utility prose-altr {
+	color: var(--ink-2);
+	font-size: 16px;
+	line-height: 1.78;
+	font-family: var(--font-sans);
 
-	& > * {
-		scroll-snap-align: center;
+	& h1, & h2, & h3, & h4, & h5, & h6 {
+		font-family: var(--font-serif);
+		font-weight: 400;
+		color: var(--ink);
+		line-height: 1.2;
+		margin-top: 2.4em;
+		margin-bottom: 0.6em;
 	}
-}
+	& h2 { font-size: clamp(20px, 2vw, 28px); }
+	& h3 { font-size: clamp(17px, 1.6vw, 22px); }
+	& h4 { font-size: 17px; font-family: var(--font-sans); font-weight: 600; }
 
-@utility carousel-scroll-buttons {
-	@supports (position-anchor: var(--anchor-name)) {
-		@apply no-scrollbar;
+	& p { margin-bottom: 1.4em; }
 
-		&::scroll-button(*) {
-			cursor: pointer;
-			position: absolute;
-			position-anchor: var(--anchor-name);
-			z-index: 1;
-			display: block;
-			aspect-ratio: 1;
-			width: 1.5lh;
-			margin-inline: -100%;
-			background-color: currentColor;
-		}
-
-		&::scroll-button(left) {
-			content: '' / 'Scroll left';
-			position-area: center start;
-			mask: url('https://ic0n.dev/io5/IoChevronBackCircleSharp') center / cover;
-		}
-
-		&::scroll-button(right) {
-			content: '' / 'Scroll right';
-			position-area: center end;
-			mask: url('https://ic0n.dev/io5/IoChevronForwardCircleSharp') center /
-				cover;
-		}
-	}
-}
-
-@utility carousel-scroll-marker {
-	--size: 12px;
-	scroll-marker-group: after;
-
-	&::scroll-marker-group {
-		position: absolute;
-		position-anchor: var(--anchor-name);
-		top: calc(anchor(bottom) + 1rem);
-		justify-self: center;
-		display: flex;
-		align-items: center;
-		gap: 0.5ch;
+	& a:not([class]) {
+		color: var(--ink);
+		text-decoration: underline;
+		text-decoration-color: var(--acc);
+		text-underline-offset: 3px;
+		&:hover { color: var(--acc); }
 	}
 
-	& > * {
-		&::scroll-marker {
-			content: '';
-			@apply bg-foreground/25 block size-1 rounded-full;
-		}
+	& strong { font-weight: 600; color: var(--ink); }
+	& em { font-style: italic; }
 
-		&::scroll-marker:target-current {
-			@apply bg-foreground w-[2ch] opacity-100;
-		}
+	& ul, & ol {
+		padding-left: 1.6em;
+		margin-bottom: 1.4em;
 	}
+	& ul { list-style: disc; }
+	& ol { list-style: decimal; }
+	& li { margin-bottom: 0.4em; }
+
+	& blockquote {
+		border-left: 2px solid var(--acc);
+		padding-left: 1.2em;
+		margin: 2em 0;
+		color: var(--ink-3);
+		font-style: italic;
+		font-family: var(--font-serif);
+		font-size: 1.1em;
+	}
+
+	& :not(pre) > code {
+		font-family: var(--font-mono);
+		font-size: 0.875em;
+		background: var(--bg-2);
+		border: 1px solid var(--line);
+		border-radius: 4px;
+		padding: 0.1em 0.35em;
+		color: var(--ink);
+	}
+	& pre {
+		background: var(--bg-2);
+		border: 1px solid var(--line);
+		border-radius: 8px;
+		padding: 1.2em 1.4em;
+		overflow-x: auto;
+		font-size: 0.875em;
+		margin: 1.8em 0;
+	}
+
+	& img, & figure {
+		border-radius: 10px;
+		overflow: hidden;
+		border: 1px solid var(--line);
+		margin: 2em 0;
+	}
+	& figcaption {
+		font-size: 12px;
+		font-family: var(--font-mono);
+		color: var(--ink-4);
+		text-align: center;
+		padding: 0.5em 0 0;
+	}
+
+	& hr {
+		border: none;
+		border-top: 1px solid var(--line);
+		margin: 2.5em 0;
+	}
+
+	& table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.9em;
+		margin: 2em 0;
+	}
+	& th {
+		font-family: var(--font-mono);
+		font-size: 10.5px;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--ink-4);
+		text-align: left;
+		padding: 0.6em 1em;
+		border-bottom: 1px solid var(--line);
+	}
+	& td {
+		padding: 0.65em 1em;
+		border-bottom: 1px solid var(--line);
+		color: var(--ink-2);
+	}
+	& tbody tr:hover { background: var(--bg-1); }
 }
 
 @utility accordion {
@@ -322,65 +781,34 @@
 		align-items: center;
 		justify-content: space-between;
 		gap: 0.5em;
-
 		&::after {
 			content: '+';
 			flex-shrink: 0;
 			font-family: var(--font-mono);
 		}
 	}
-
-	&[open] > summary::after {
-		content: '-';
-	}
+	&[open] > summary::after { content: '-'; }
 }
 
-@utility skeleton {
-	@apply bg-foreground/5 block h-lh;
-}
-
-/* utilities */
-
-@utility full-bleed {
-	width: 100vw;
-	margin-inline: calc(50% - 50vw);
-}
-
+@utility skeleton    { @apply bg-foreground/5 block h-lh; }
+@utility full-bleed  { width: 100vw; margin-inline: calc(50% - 50vw); }
 @utility no-scrollbar {
 	-webkit-overflow-scrolling: touch;
 	scrollbar-width: none;
-
-	&::-webkit-scrollbar {
-		display: none;
-	}
+	&::-webkit-scrollbar { display: none; }
 }
-
 @utility sticky-below-header {
 	position: sticky;
 	top: calc(var(--header-height) + var(--offset, 0px));
 }
 
-/* anims */
-
+/* Entry animations (Sanity pages, not home) */
 @utility anim-fade {
-	transition: var(--default-transition-duration)
-		var(--default-transition-timing-function);
+	transition: var(--default-transition-duration) var(--default-transition-timing-function);
 	transition-property: opacity, translate;
 	@apply starting:opacity-0;
 }
-
-@utility anim-fade-to-l {
-	@apply anim-fade starting:-translate-x-4;
-}
-
-@utility anim-fade-to-r {
-	@apply anim-fade starting:-translate-x-4;
-}
-
-@utility anim-fade-to-t {
-	@apply anim-fade starting:-translate-y-4;
-}
-
-@utility anim-fade-to-b {
-	@apply anim-fade starting:-translate-y-4;
-}
+@utility anim-fade-to-l { @apply anim-fade starting:-translate-x-4; }
+@utility anim-fade-to-r { @apply anim-fade starting:-translate-x-4; }
+@utility anim-fade-to-t { @apply anim-fade starting:-translate-y-4; }
+@utility anim-fade-to-b { @apply anim-fade starting:-translate-y-4; }

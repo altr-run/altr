@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Altr — Liquid Glass edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================
+   ALTR — Liquid Glass edition
+   Dark warm ink ground, ambient color orbs, frosted panels,
+   subtle specular top-edge highlights, ochre kept as accent.
+   Gradients live ONLY in the environment, never on marks.
+   ========================================================= */
+
+:root{
+  /* warm ink ground — never pure black */
+  --ground-0: #0F0D0A;   /* deepest */
+  --ground-1: #151210;   /* page */
+  --ground-2: #1C1814;   /* raised */
+  --ground-3: #241F1A;
+
+  /* warm light colors for type */
+  --linen:   #F4EEE1;
+  --linen-2: #D8CFBC;
+  --walnut:  #8B7E66;
+  --stone:   #5E5646;
+
+  /* accent — ochre carried over from v1 */
+  --ochre:      #D89A45;   /* brighter on dark */
+  --ochre-soft: #E9B56A;
+  --terracotta: #D9744E;
+  --moss:       #8FA066;
+  --honey:      #D9B154;
+  --brick:      #C26D53;
+
+  /* glass recipe — reusable */
+  --glass-bg:        rgba(30, 26, 22, 0.42);
+  --glass-bg-hi:     rgba(50, 44, 38, 0.55);
+  --glass-border:    rgba(244, 238, 225, 0.10);
+  --glass-border-hi: rgba(244, 238, 225, 0.18);
+  --glass-specular:  linear-gradient(180deg, rgba(255,247,230,0.14) 0%, rgba(255,247,230,0) 40%);
+  --glass-shadow:    0 24px 60px -24px rgba(0,0,0,0.55), 0 2px 4px rgba(0,0,0,0.2);
+
+  --radius-s: 6px;
+  --radius-m: 12px;
+  --radius-l: 20px;
+  --radius-xl: 28px;
+
+  --f-display: "Instrument Serif", Georgia, serif;
+  --f-body:    "Geist", ui-sans-serif, -apple-system, Helvetica, sans-serif;
+  --f-mono:    "JetBrains Mono", ui-monospace, monospace;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family: var(--f-body);
+  color: var(--linen);
+  background: var(--ground-1);
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+  line-height: 1.55;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ---------- ambient environment — the "behind the glass" ---------- */
+.ambient{
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(1200px 800px at 15% 10%, rgba(216, 154, 69, 0.18), transparent 60%),
+    radial-gradient(1000px 900px at 85% 30%, rgba(217, 116, 78, 0.14), transparent 55%),
+    radial-gradient(900px  800px at 50% 90%, rgba(143, 160, 102, 0.10), transparent 60%),
+    radial-gradient(700px  600px at 90% 85%, rgba(216, 154, 69, 0.10), transparent 60%),
+    var(--ground-1);
+}
+.ambient::after{
+  /* subtle film grain to kill banding */
+  content: "";
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.35'/></svg>");
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+}
+
+/* ---------- glass surface (mixin via class) ---------- */
+.glass{
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-l);
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+}
+.glass::before{
+  /* specular highlight along top edge — the lensing hint */
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--glass-specular);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.glass-hi{
+  background: var(--glass-bg-hi);
+  backdrop-filter: blur(22px) saturate(155%);
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  border-color: var(--glass-border-hi);
+}
+
+/* ---------- layout shell ---------- */
+.page{
+  position: relative; z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 40px 140px;
+}
+
+/* ---------- floating top nav (liquid glass bubble) ---------- */
+.topnav{
+  position: sticky; top: 24px; z-index: 10;
+  margin: 0 auto 64px;
+  max-width: 720px;
+  display:flex; align-items:center; justify-content: space-between;
+  padding: 10px 14px 10px 18px;
+  border-radius: 999px;
+}
+.topnav .brand{
+  font-family: var(--f-display);
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  display:flex; align-items:center; gap: 10px;
+}
+.topnav .brand svg{ display:block; }
+.topnav .tabs{
+  display:flex; gap: 4px; font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--linen-2);
+}
+.topnav .tabs a{
+  padding: 6px 12px; border-radius: 999px;
+  color: inherit; text-decoration: none;
+  transition: background 140ms;
+}
+.topnav .tabs a:hover{ background: rgba(244,238,225,0.08); color: var(--linen); }
+.topnav .tabs a.on{ background: rgba(244,238,225,0.12); color: var(--linen); }
+.topnav .chip{
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 6px 11px; border-radius: 999px;
+  background: rgba(216, 154, 69, 0.18);
+  color: var(--ochre-soft);
+  border: 1px solid rgba(216, 154, 69, 0.28);
+}
+
+/* ---------- masthead ---------- */
+.masthead{
+  padding: 72px 56px;
+  margin-bottom: 80px;
+  display:grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end;
+  border-radius: var(--radius-xl);
+}
+.masthead h1{
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 96px;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  margin: 0 0 10px;
+  color: var(--linen);
+}
+.masthead h1 em{ font-style: italic; color: var(--ochre-soft); }
+.masthead .kicker{
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--walnut); margin-bottom: 14px;
+}
+.masthead .dek{
+  font-family: var(--f-display); font-size: 22px; line-height: 1.45;
+  color: var(--linen-2); max-width: 56ch; margin-top: 20px;
+}
+.masthead .meta{
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--walnut); text-align: right; line-height: 1.9;
+}
+
+/* ---------- section chrome ---------- */
+section{ margin-top: 88px; }
+.sec-head{
+  display:grid; grid-template-columns: 160px 1fr; gap: 32px;
+  margin-bottom: 40px;
+}
+.sec-head .no{
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--walnut); padding-top: 10px;
+}
+.sec-head h2{
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 52px; line-height: 1.02; letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+.sec-head p{
+  margin: 0; font-family: var(--f-display); font-size: 18px;
+  line-height: 1.5; color: var(--linen-2); max-width: 62ch;
+}
+.sec-body{ padding-left: 192px; }
+
+/* ---------- pillars ---------- */
+.pillars{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pillar{ padding: 32px 28px; border-radius: var(--radius-l); }
+.pillar .n{
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em;
+  color: var(--ochre-soft); text-transform: uppercase; margin-bottom: 28px;
+  position: relative; z-index: 1;
+}
+.pillar p{
+  font-family: var(--f-display); font-weight: 400;
+  font-size: 26px; line-height: 1.22; letter-spacing: -0.008em;
+  margin: 0; color: var(--linen);
+  position: relative; z-index: 1;
+}
+.pillar p em{ font-style: italic; color: var(--ochre-soft); }
+
+/* ---------- color ---------- */
+.caption{
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--walnut); margin: 24px 0 12px;
+}
+.swatch-row{ display:grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+.sw{
+  aspect-ratio: 1/1.1;
+  border-radius: var(--radius-m);
+  position: relative; overflow: hidden;
+  display:flex; align-items: flex-end;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.sw::before{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 38%);
+  pointer-events: none;
+}
+.sw .lbl{
+  padding: 10px 12px;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display:flex; justify-content: space-between; width: 100%;
+  position: relative; z-index: 1;
+}
+
+.accents{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+.accent-card{ padding: 32px; border-radius: var(--radius-l); display:grid; grid-template-columns: 72px 1fr; gap: 24px; }
+.accent-orb{
+  width: 72px; height: 72px; border-radius: 50%;
+  position: relative; overflow: hidden;
+  box-shadow: 0 8px 20px -8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.accent-orb::after{
+  content:""; position:absolute; inset:0; border-radius: inherit;
+  background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.35), transparent 45%);
+}
+.accent-card h4{
+  font-family: var(--f-display); font-weight: 400; font-size: 26px;
+  letter-spacing: -0.01em; margin: 0 0 4px;
+}
+.accent-card .sub{
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em;
+  color: var(--walnut); text-transform: uppercase; margin-bottom: 12px;
+}
+.accent-card p{ margin: 0 0 12px; color: var(--linen-2); font-size: 14px; }
+.rec{
+  display:inline-block;
+  font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px;
+}
+.rec.picked{ background: var(--ochre); color: var(--ground-0); }
+.rec.alt{ border: 1px solid var(--glass-border-hi); color: var(--walnut); }
+
+.semantic{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
+.sem{
+  padding: 18px 20px; border-radius: var(--radius-m);
+  display:flex; align-items:center; gap: 14px;
+}
+.sem .dot{ width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 16px -2px currentColor; }
+.sem .t{ font-family: var(--f-display); font-size: 18px; color: var(--linen); }
+.sem .s{ font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--walnut); text-transform: uppercase; margin-top: 2px; }
+
+/* ---------- typography ---------- */
+.type-pane{ padding: 40px; border-radius: var(--radius-l); margin-bottom: 16px; }
+.type-label{
+  display:grid; grid-template-columns: 200px 1fr; gap: 32px; align-items: baseline; margin-bottom: 16px;
+}
+.type-label .meta{
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--walnut);
+  text-transform: uppercase; line-height: 1.8;
+}
+.type-label .meta strong{ color: var(--linen); font-weight: 500; }
+.type-label .chosen{ font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ochre-soft); }
+.scale-row{
+  display:grid; grid-template-columns: 200px 1fr; gap: 32px; padding: 14px 0;
+  border-top: 1px solid rgba(244,238,225,0.06);
+  align-items: baseline;
+}
+.scale-row .m{
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--walnut); text-transform: uppercase;
+}
+.s-h1{ font-family: var(--f-display); font-weight: 400; font-size: 68px; line-height: 1.02; letter-spacing: -0.02em; color: var(--linen);}
+.s-h2{ font-family: var(--f-display); font-weight: 400; font-size: 44px; line-height: 1.08; letter-spacing: -0.015em; color: var(--linen);}
+.s-h3{ font-family: var(--f-display); font-weight: 400; font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; color: var(--linen);}
+.s-lead{ font-family: var(--f-display); font-size: 20px; line-height: 1.45; color: var(--linen-2); }
+.s-body{ font-family: var(--f-body); font-size: 15px; line-height: 1.55; color: var(--linen-2); }
+.s-mono{ font-family: var(--f-mono); font-size: 13px; line-height: 1.5; color: var(--linen-2); }
+
+/* ---------- spacing ---------- */
+.sp-pane{ padding: 36px 40px; border-radius: var(--radius-l); }
+.sp-row{
+  display:grid; grid-template-columns: 200px 1fr; gap: 32px; padding: 12px 0;
+  border-top: 1px solid rgba(244,238,225,0.06);
+  align-items: center;
+}
+.sp-row:first-child{ border-top: none; }
+.sp-row .lbl{ font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--walnut); text-transform: uppercase; }
+.sp-row .bar{
+  background: linear-gradient(90deg, var(--ochre) 0%, var(--ochre-soft) 100%);
+  height: 10px; border-radius: 5px;
+  box-shadow: 0 0 20px -4px rgba(216,154,69,0.5);
+}
+.air-rule{
+  margin-top: 28px; padding: 32px 36px;
+  border-radius: var(--radius-l);
+  font-family: var(--f-display); font-style: italic;
+  font-size: 24px; line-height: 1.35; letter-spacing: -0.01em;
+  color: var(--linen);
+}
+
+/* ---------- components ---------- */
+.comp-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.comp{ padding: 28px; border-radius: var(--radius-l); }
+.comp.full{ grid-column: 1 / -1; }
+.comp h5{
+  margin: 0 0 22px; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--walnut); font-weight: 500;
+}
+
+/* sidebar */
+.side{
+  padding: 14px 10px; width: 260px; border-radius: var(--radius-m);
+  background: rgba(15, 13, 10, 0.45);
+  border: 1px solid rgba(244,238,225,0.05);
+  backdrop-filter: blur(14px);
+}
+.side-state{
+  font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.16em;
+  color: var(--walnut); text-transform: uppercase;
+  margin: 14px 10px 4px;
+}
+.side-state:first-child{ margin-top: 4px; }
+.side-item{
+  display:flex; align-items:center; gap: 10px;
+  padding: 8px 10px; border-radius: 8px;
+  font-size: 13.5px; color: var(--linen-2);
+  transition: background 120ms;
+}
+.side-item .gl{ width: 14px; height: 14px; opacity: 0.6; }
+.side-item.hover{ background: rgba(244,238,225,0.06); color: var(--linen); }
+.side-item.hover .gl{ opacity: 0.9; }
+.side-item.active{
+  background: linear-gradient(180deg, rgba(216,154,69,0.28), rgba(216,154,69,0.16));
+  color: var(--linen);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 0 24px -8px rgba(216,154,69,0.45);
+  border: 1px solid rgba(216,154,69,0.35);
+  margin: 0 -1px;
+}
+.side-item.active .gl{ opacity: 1; color: var(--ochre-soft); }
+
+/* buttons */
+.btn-row{ display:flex; gap: 12px; align-items:center; margin-bottom: 14px; flex-wrap: wrap; }
+.btn{
+  font-family: var(--f-body); font-size: 13.5px; font-weight: 500;
+  padding: 9px 18px; border-radius: 999px; border: 1px solid transparent;
+  cursor: pointer; transition: all 140ms ease;
+  letter-spacing: -0.005em;
+  position: relative; overflow: hidden;
+}
+.btn::before{
+  content:""; position:absolute; inset:0; border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 50%);
+  pointer-events: none;
+}
+.btn-primary{
+  background: var(--linen);
+  color: var(--ground-0);
+}
+.btn-primary:hover{ background: #FFF8E7; }
+.btn-secondary{
+  background: rgba(244,238,225,0.08);
+  color: var(--linen);
+  border-color: rgba(244,238,225,0.14);
+  backdrop-filter: blur(12px);
+}
+.btn-secondary:hover{ background: rgba(244,238,225,0.14); }
+.btn-ghost{
+  background: transparent; color: var(--linen-2);
+  border-color: transparent;
+}
+.btn-ghost:hover{ color: var(--linen); background: rgba(244,238,225,0.06); }
+.btn-accent{
+  background: linear-gradient(180deg, var(--ochre-soft) 0%, var(--ochre) 100%);
+  color: var(--ground-0);
+  box-shadow: 0 0 24px -6px rgba(216,154,69,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.btn-accent:hover{ filter: brightness(1.05); }
+.btn-lbl{ font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em; color: var(--walnut); text-transform: uppercase; }
+
+/* input */
+.inp-wrap{ max-width: 360px; }
+.inp-lbl{ font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--walnut); text-transform: uppercase; margin-bottom: 10px; }
+.inp{
+  width: 100%;
+  font-family: var(--f-body); font-size: 14px;
+  padding: 11px 16px;
+  background: rgba(15, 13, 10, 0.4);
+  border: 1px solid rgba(244,238,225,0.1);
+  border-radius: 10px;
+  color: var(--linen);
+  outline: none;
+  backdrop-filter: blur(10px);
+  transition: all 140ms;
+}
+.inp:focus{
+  border-color: var(--ochre);
+  box-shadow: 0 0 0 3px rgba(216,154,69,0.18), 0 0 20px -4px rgba(216,154,69,0.3);
+}
+.inp-hint{ font-family: var(--f-body); font-size: 12px; color: var(--walnut); margin-top: 10px; }
+
+/* avatars */
+.avatars{ display:flex; gap: 20px; align-items:flex-end; flex-wrap: wrap; }
+.av{ display:flex; flex-direction: column; align-items:center; gap: 10px; }
+.av .mark{
+  width: 52px; height: 52px; border-radius: 14px;
+  display:flex; align-items:center; justify-content:center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 8px 20px -8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.av .mark::after{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 40%);
+  pointer-events: none; border-radius: inherit;
+}
+.av .nm{ font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--walnut); text-align: center; }
+.av .nm strong{ color: var(--linen); font-weight: 500; display:block; margin-bottom: 2px; }
+.mark.human{ background: linear-gradient(180deg, #3E362A, #2A241D); color: var(--linen); font-family: var(--f-display); font-size: 20px; }
+.mark.ochre{ background: linear-gradient(180deg, #E9B56A, #B47828); color: #1A120A; }
+.mark.walnut{ background: linear-gradient(180deg, #6A5E47, #3E372A); color: var(--linen); }
+.mark.ink{ background: linear-gradient(180deg, #2E2922, #15110C); color: var(--linen-2); }
+.mark.moss{ background: linear-gradient(180deg, #A5B47C, #6B7A4E); color: #1A1E10; }
+
+/* thread */
+.thread{
+  padding: 28px;
+  border-radius: var(--radius-l);
+  display:grid; gap: 20px;
+}
+.msg{ display:grid; grid-template-columns: 38px 1fr; gap: 14px; align-items: start; }
+.msg .mk{
+  width: 38px; height: 38px; border-radius: 10px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 4px 14px -4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);
+  position: relative; overflow: hidden;
+}
+.msg .mk::after{ content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(255,255,255,0.15), transparent 50%); border-radius: inherit; pointer-events:none;}
+.msg .hd{ display:flex; gap: 10px; align-items: baseline; margin-bottom: 4px; }
+.msg .who{ font-weight: 500; color: var(--linen); font-size: 13.5px; }
+.msg .role{ font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--walnut); text-transform: uppercase; }
+.msg .t{ font-family: var(--f-mono); font-size: 10px; color: var(--stone); margin-left: auto; }
+.msg .txt{ font-size: 14.5px; line-height: 1.58; color: var(--linen-2); }
+.msg .txt em{ color: var(--ochre-soft); font-style: italic; }
+
+/* ---------- logos ---------- */
+.logo-variant{
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  margin-bottom: 20px;
+  display:grid; grid-template-columns: 220px 1fr; gap: 40px;
+}
+.lv-meta{
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em;
+  color: var(--walnut); text-transform: uppercase;
+}
+.lv-meta .tag{
+  display:inline-block; padding: 4px 10px; border-radius: 999px;
+  background: rgba(244,238,225,0.08); color: var(--linen);
+  border: 1px solid rgba(244,238,225,0.14);
+}
+.lv-meta .tag.pick{
+  background: linear-gradient(180deg, var(--ochre-soft), var(--ochre));
+  color: var(--ground-0); border: 0;
+  box-shadow: 0 0 20px -4px rgba(216,154,69,0.5);
+}
+.lv-meta h4{
+  font-family: var(--f-display); font-weight: 400; font-size: 24px;
+  letter-spacing: -0.01em; text-transform: none; color: var(--linen);
+  margin: 14px 0 10px; line-height: 1.2;
+}
+.lv-meta p{
+  font-family: var(--f-display); font-size: 14.5px; line-height: 1.55;
+  color: var(--linen-2); text-transform: none; letter-spacing: 0;
+  margin: 0;
+}
+.lv-stage{ display:grid; gap: 16px; }
+.lv-big{
+  border-radius: var(--radius-l);
+  min-height: 200px; padding: 40px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(15, 13, 10, 0.35);
+  border: 1px solid rgba(244,238,225,0.07);
+  position: relative; overflow: hidden;
+}
+.lv-big::before{
+  content:""; position:absolute; inset:0;
+  background: radial-gradient(circle at 30% 20%, rgba(216,154,69,0.1), transparent 55%);
+  pointer-events: none;
+}
+.lv-row{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.lv-cell{
+  padding: 20px; min-height: 110px; border-radius: var(--radius-m);
+  display:flex; flex-direction: column; align-items:center; justify-content:center; gap: 10px;
+  background: rgba(15,13,10,0.3);
+  border: 1px solid rgba(244,238,225,0.06);
+  position: relative; overflow: hidden;
+}
+.lv-cell .cap{ font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em; color: var(--walnut); text-transform: uppercase; }
+
+/* dock — the warm neutral dock background required by brief (even in dark) */
+.dock{
+  border-radius: var(--radius-l);
+  padding: 24px;
+  display:flex; align-items:center; justify-content: center; gap: 18px;
+  position: relative; overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(244,238,225,0.08) 0%, rgba(244,238,225,0.02) 100%),
+    rgba(30, 26, 22, 0.4);
+  border: 1px solid rgba(244,238,225,0.1);
+  backdrop-filter: blur(14px);
+}
+.dock::before{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 40%);
+  pointer-events: none;
+}
+.icon-shell-big{
+  width: 128px; height: 128px; border-radius: 28px;
+  box-shadow: 0 16px 40px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+  overflow: hidden; position: relative;
+  display:flex; align-items:center; justify-content:center;
+}
+.icon-shell-big::after{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 36%);
+  pointer-events: none; border-radius: inherit;
+}
+.icon-shell-sm{
+  width: 32px; height: 32px; border-radius: 7px;
+  box-shadow: 0 4px 10px -3px rgba(0,0,0,0.5), inset 0 0.5px 0 rgba(255,255,255,0.18);
+  overflow: hidden; position: relative;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* variant icon backgrounds */
+.bg-ink{ background: linear-gradient(180deg, #26201A 0%, #0E0B07 100%); }
+.bg-ochre{ background: linear-gradient(160deg, #E9B56A 0%, #B06E1F 100%); }
+.bg-glass-paper{
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255,255,255,0.35), transparent 55%),
+    linear-gradient(170deg, rgba(244,238,225,0.25), rgba(244,238,225,0.05));
+  backdrop-filter: blur(20px);
+}
+.bg-vapor{
+  background:
+    radial-gradient(circle at 70% 80%, rgba(217,116,78,0.45), transparent 55%),
+    radial-gradient(circle at 25% 20%, rgba(216,154,69,0.6), transparent 55%),
+    linear-gradient(160deg, #2A1F18, #0E0A07);
+}
+
+/* footer */
+footer{
+  margin-top: 120px; padding: 40px 48px;
+  border-radius: var(--radius-l);
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--walnut);
+  display:flex; justify-content: space-between; align-items: center;
+}
+
+/* selection */
+::selection{ background: rgba(216,154,69,0.35); color: var(--linen); }
+
+@media (max-width: 900px){
+  .page{ padding: 32px 20px 100px; }
+  .topnav{ top: 12px; margin-bottom: 40px; padding: 8px 10px 8px 14px;}
+  .topnav .tabs{ display: none; }
+  .masthead{ grid-template-columns: 1fr; padding: 40px 28px; }
+  .masthead .meta{ text-align: left; }
+  .masthead h1{ font-size: 64px; }
+  .sec-head{ grid-template-columns: 1fr; gap: 8px; }
+  .sec-body{ padding-left: 0; }
+  .pillars, .comp-grid, .accents, .semantic, .lv-row{ grid-template-columns: 1fr; }
+  .swatch-row{ grid-template-columns: repeat(3, 1fr); }
+  .logo-variant{ grid-template-columns: 1fr; padding: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ambient backdrop -->
+<div class="ambient"></div>
+
+<div class="page">
+
+  <!-- floating liquid-glass top nav -->
+  <nav class="topnav glass glass-hi">
+    <div class="brand">
+      <!-- Threshold mark glyph, in ochre on dark -->
+      <svg width="20" height="22" viewBox="0 0 96 108" fill="none" stroke="currentColor" stroke-width="10" style="color: var(--ochre-soft);">
+        <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+        <path d="M30 108 L30 78 L66 78 L66 108"/>
+      </svg>
+      Altr
+    </div>
+    <div class="tabs">
+      <a class="on">Brand</a>
+      <a>Color</a>
+      <a>Type</a>
+      <a>Components</a>
+      <a>Logo</a>
+    </div>
+    <div class="chip">v0.2 · Glass</div>
+  </nav>
+
+  <!-- masthead -->
+  <header class="masthead glass">
+    <div>
+      <div class="kicker">One-pager · Brand & product system · v0.2 · Liquid Glass edition</div>
+      <h1>Altr<em>.</em></h1>
+      <div class="dek">A company OS for product teams — humans and named AI teammates, working in a room made of light and warm ink. The glass remembers the warmth.</div>
+    </div>
+    <div class="meta">
+      altr.run<br/>
+      20 Apr 2026<br/>
+      Internal · Living doc
+    </div>
+  </header>
+
+  <!-- 1. PILLARS -->
+  <section>
+    <div class="sec-head">
+      <div class="no">01 — Pillars</div>
+      <div>
+        <h2>Brand pillars</h2>
+        <p>Three statements. The glass version inherits the same soul — the material is different, not the beliefs.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="pillars">
+        <div class="pillar glass">
+          <div class="n">I</div>
+          <p>Altr is <em>a room</em>, not a robot — a place you and your AI teammates sit down to do real work.</p>
+        </div>
+        <div class="pillar glass">
+          <div class="n">II</div>
+          <p>Altr is <em>craft at new scale</em> — the care of a small studio, the reach of a full team.</p>
+        </div>
+        <div class="pillar glass">
+          <div class="n">III</div>
+          <p>Altr is <em>quiet on purpose</em> — confidence without noise, intelligence without theatre.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. COLOR -->
+  <section>
+    <div class="sec-head">
+      <div class="no">02 — Color</div>
+      <div>
+        <h2>Color & material</h2>
+        <p>Dark warm ink ground — never pure black. Ambient color lives <em>behind</em> the glass; panels stay restrained. The accent is preserved: ochre, slightly brightened for dark.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="caption">Ground & surface — warm ink to linen</div>
+      <div class="swatch-row">
+        <div class="sw" style="background:#0F0D0A;color:#F4EEE1"><div class="lbl"><span>Ground 0</span><span>0F0D0A</span></div></div>
+        <div class="sw" style="background:#151210;color:#F4EEE1"><div class="lbl"><span>Ground 1</span><span>151210</span></div></div>
+        <div class="sw" style="background:#241F1A;color:#F4EEE1"><div class="lbl"><span>Raised</span><span>241F1A</span></div></div>
+        <div class="sw" style="background:#5E5646;color:#F4EEE1"><div class="lbl"><span>Stone</span><span>5E5646</span></div></div>
+        <div class="sw" style="background:#D8CFBC;color:#1A120A"><div class="lbl"><span>Linen·2</span><span>D8CFBC</span></div></div>
+        <div class="sw" style="background:#F4EEE1;color:#1A120A"><div class="lbl"><span>Linen</span><span>F4EEE1</span></div></div>
+      </div>
+
+      <div class="caption">Accent — brightened for dark, same spirit</div>
+      <div class="accents">
+        <div class="accent-card glass">
+          <div class="accent-orb" style="background: linear-gradient(160deg, #E9B56A 0%, #B06E1F 100%);"></div>
+          <div>
+            <div class="sub">Accent A — Recommended</div>
+            <h4>Amber Ochre</h4>
+            <p>Carries the warmth of the v1 palette but glows cleanly on the dark ground. Used for active states, focus, and a single spot of life per screen.</p>
+            <span class="rec picked">Primary · #D89A45</span>
+          </div>
+        </div>
+        <div class="accent-card glass">
+          <div class="accent-orb" style="background: linear-gradient(160deg, #E08A68 0%, #A23E24 100%);"></div>
+          <div>
+            <div class="sub">Accent B — Alternate</div>
+            <h4>Ember Terracotta</h4>
+            <p>More expressive, better when we want the interface to feel slightly hotter. Use one or the other — never both on the same surface.</p>
+            <span class="rec alt">Alt · #D9744E</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="caption">Semantic — retuned for the dark warm room</div>
+      <div class="semantic">
+        <div class="sem glass"><div class="dot" style="background:#8FA066; color:#8FA066;"></div><div><div class="t">Moss</div><div class="s">Success · #8FA066</div></div></div>
+        <div class="sem glass"><div class="dot" style="background:#D9B154; color:#D9B154;"></div><div><div class="t">Honey</div><div class="s">Warning · #D9B154</div></div></div>
+        <div class="sem glass"><div class="dot" style="background:#C26D53; color:#C26D53;"></div><div><div class="t">Brick</div><div class="s">Error · #C26D53</div></div></div>
+      </div>
+
+      <p style="margin-top:28px; font-family: var(--f-mono); font-size: 11px; color: var(--walnut); letter-spacing: 0.06em;">
+        GLASS RECIPE · bg: rgba(30,26,22,0.42) · backdrop-filter: blur(18px) saturate(140%) · border: 1px rgba(244,238,225,0.10) · specular: top 14% white fade · shadow: 0 24px 60px -24px #000 · Blur stays modest (18px) to keep text readable.
+      </p>
+    </div>
+  </section>
+
+  <!-- 3. TYPOGRAPHY -->
+  <section>
+    <div class="sec-head">
+      <div class="no">03 — Type</div>
+      <div>
+        <h2>Typography</h2>
+        <p>Same pairings as the warm edition — the type does not trend. Display serif sits beautifully on glass; body sans reads cleanly through blur at 14–16px.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="type-pane glass">
+        <div class="type-label">
+          <div class="meta"><strong>Display / Headings</strong><br/>Instrument Serif<br/>Alt: GT Sectra, Tiempos</div>
+          <div class="chosen">✦ Recommended — Instrument Serif</div>
+        </div>
+        <div class="scale-row"><div class="m">H1 · 68 / 69</div><div class="specimen s-h1">Build the room.</div></div>
+        <div class="scale-row"><div class="m">H2 · 44 / 48</div><div class="specimen s-h2">A studio loft for product teams.</div></div>
+        <div class="scale-row"><div class="m">H3 · 28 / 34</div><div class="specimen s-h3">Pax moved the spec to review.</div></div>
+        <div class="scale-row"><div class="m">Lead · 20 / 29</div><div class="specimen s-lead">Humans and AI teammates working alongside each other, on the same artifacts, in real time — quietly, through glass and warm light.</div></div>
+      </div>
+
+      <div class="type-pane glass">
+        <div class="type-label">
+          <div class="meta"><strong>Body / UI</strong><br/>Geist<br/>Alt: Söhne, Graphik</div>
+          <div class="chosen">✦ Recommended — Geist</div>
+        </div>
+        <div class="scale-row"><div class="m">Body · 15 / 23</div><div class="specimen s-body">The best product teams aren't bigger — they're closer. Altr is a single place for PMs, designers, engineers, and researchers to sit shoulder to shoulder with their AI teammates, on the same specs, in the same threads, at the same time.</div></div>
+        <div class="scale-row"><div class="m">Mono · 13 / 20</div><div class="specimen s-mono">const session = altr.open({ room: "onboarding-v3", with: [pax, dex] });</div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. SPACING -->
+  <section>
+    <div class="sec-head">
+      <div class="no">04 — Space</div>
+      <div>
+        <h2>Spacing & layout</h2>
+        <p>Same 4px grid — glass benefits from more air, not less. Panels are concentric (inner radius tracks outer), matching Liquid Glass rounded-form logic.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="sp-pane glass">
+        <div class="sp-row"><div class="lbl">04 · xs</div><div class="bar" style="width:4px"></div></div>
+        <div class="sp-row"><div class="lbl">08 · sm</div><div class="bar" style="width:8px"></div></div>
+        <div class="sp-row"><div class="lbl">12 · md</div><div class="bar" style="width:12px"></div></div>
+        <div class="sp-row"><div class="lbl">16 · base</div><div class="bar" style="width:16px"></div></div>
+        <div class="sp-row"><div class="lbl">24 · lg</div><div class="bar" style="width:24px"></div></div>
+        <div class="sp-row"><div class="lbl">32 · xl</div><div class="bar" style="width:32px"></div></div>
+        <div class="sp-row"><div class="lbl">48 · 2xl</div><div class="bar" style="width:48px"></div></div>
+        <div class="sp-row"><div class="lbl">64 · 3xl</div><div class="bar" style="width:64px"></div></div>
+      </div>
+      <div class="air-rule glass">
+        If you can add more air, add more air. Glass needs room to breathe — stacked panels muddy light and kill the effect.
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. COMPONENTS -->
+  <section>
+    <div class="sec-head">
+      <div class="no">05 — Components</div>
+      <div>
+        <h2>Components</h2>
+        <p>Pill-shaped buttons, floating panels, concentric radii, and a top-edge specular highlight on every control. The accent carries focus and activation — restraint is the rule.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="comp-grid">
+
+        <!-- sidebar -->
+        <div class="comp glass">
+          <h5>Sidebar · 3 states</h5>
+          <div class="side">
+            <div class="side-state">Normal</div>
+            <div class="side-item">
+              <svg class="gl" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="2.5" width="11" height="11" rx="2"/></svg>
+              Rooms
+            </div>
+            <div class="side-state">Hover</div>
+            <div class="side-item hover">
+              <svg class="gl" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5"/></svg>
+              Threads
+            </div>
+            <div class="side-state">Active</div>
+            <div class="side-item active">
+              <svg class="gl" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13V5l5-3 5 3v8"/><path d="M6 13V9h4v4"/></svg>
+              Specs
+            </div>
+          </div>
+        </div>
+
+        <!-- buttons -->
+        <div class="comp glass">
+          <h5>Buttons · four weights</h5>
+          <div class="btn-row"><button class="btn btn-primary">Open room</button><span class="btn-lbl">Primary</span></div>
+          <div class="btn-row"><button class="btn btn-secondary">Invite teammate</button><span class="btn-lbl">Secondary · glass</span></div>
+          <div class="btn-row"><button class="btn btn-ghost">Cancel</button><span class="btn-lbl">Ghost</span></div>
+          <div class="btn-row"><button class="btn btn-accent">Ship it</button><span class="btn-lbl">Accent · use sparingly</span></div>
+        </div>
+
+        <!-- input -->
+        <div class="comp glass">
+          <h5>Input field</h5>
+          <div class="inp-wrap">
+            <div class="inp-lbl">Room name</div>
+            <input class="inp" value="onboarding · v3" />
+            <div class="inp-hint">Focus ring is ochre with a soft glow — the only place light appears from inside the interface.</div>
+          </div>
+        </div>
+
+        <!-- avatars -->
+        <div class="comp glass">
+          <h5>Teammates · human + four AI agents</h5>
+          <div class="avatars">
+            <div class="av"><div class="mark human">EL</div><div class="nm"><strong>Elena</strong>Human · PM</div></div>
+            <div class="av"><div class="mark ochre">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M5 7h14"/><path d="M5 12h10"/><path d="M5 17h6"/></svg>
+            </div><div class="nm"><strong>Pax</strong>AI · PM</div></div>
+            <div class="av"><div class="mark walnut">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="4" y="5" width="16" height="14" rx="1.5"/><path d="M4 9h16"/></svg>
+            </div><div class="nm"><strong>Dex</strong>AI · Design</div></div>
+            <div class="av"><div class="mark ink">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M9 8l-4 4 4 4"/><path d="M15 8l4 4-4 4"/></svg>
+            </div><div class="nm"><strong>Eng</strong>AI · Engineer</div></div>
+            <div class="av"><div class="mark moss">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M12 5a7 7 0 017 7"/><path d="M12 9a3 3 0 013 3"/><circle cx="12" cy="12" r="0.8" fill="currentColor" stroke="none"/></svg>
+            </div><div class="nm"><strong>Rae</strong>AI · Research</div></div>
+          </div>
+          <p style="margin-top:20px; font-size: 13px; color: var(--walnut);">Tinted glass tiles, not gradients-for-gradients'-sake. Each mark still reads at 24px.</p>
+        </div>
+
+        <!-- thread -->
+        <div class="comp glass full">
+          <h5>Thread · human and AI, side by side</h5>
+          <div class="thread glass">
+            <div class="msg">
+              <div class="mk human">EL</div>
+              <div class="body">
+                <div class="hd"><span class="who">Elena</span><span class="role">PM · Human</span><span class="t">10:42</span></div>
+                <div class="txt">Can we cut the second onboarding step? It's adding friction without clearly moving activation.</div>
+              </div>
+            </div>
+            <div class="msg">
+              <div class="mk ochre">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M5 7h14"/><path d="M5 12h10"/><path d="M5 17h6"/></svg>
+              </div>
+              <div class="body">
+                <div class="hd"><span class="who">Pax</span><span class="role">PM · AI teammate</span><span class="t">10:42</span></div>
+                <div class="txt">Agreed. Activation in the A-group is <em>+4.1%</em> when step 2 is skipped (n = 812, last 14 days). I've drafted the removal in <em>onboarding · v3</em> — want me to open it with Dex?</div>
+              </div>
+            </div>
+            <div class="msg">
+              <div class="mk human">EL</div>
+              <div class="body">
+                <div class="hd"><span class="who">Elena</span><span class="role">PM · Human</span><span class="t">10:43</span></div>
+                <div class="txt">Yes — loop Dex in. Let's keep the welcome screen for now.</div>
+              </div>
+            </div>
+          </div>
+          <p style="margin-top:16px; font-size: 13px; color: var(--walnut);">Same bubble material. Same typography. Only the speaker changes. The point of Altr, rendered through glass.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. LOGO -->
+  <section>
+    <div class="sec-head">
+      <div class="no">06 — Logo</div>
+      <div>
+        <h2>Wordmark exploration</h2>
+        <p>The marks themselves do not wear glass — that would betray the brief and the logo. What changes is the <em>icon fill</em>: we have a new Liquid-Glass-style app-icon treatment for the Threshold direction that plays with Apple's new icon system.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <!-- (C) Threshold — with glass icon treatments -->
+      <div class="logo-variant glass">
+        <div class="lv-meta">
+          <span class="tag pick">C · PICK · GLASS ICON</span>
+          <h4>Threshold — a room, with and without glass</h4>
+          <p>The mark is unchanged. The app-icon shell now offers three finishes: warm frosted (tinted glass), solid ink (classic), and vapor (ambient color). Each is a legitimate Liquid-Glass appearance.</p>
+        </div>
+        <div class="lv-stage">
+          <div class="lv-big">
+            <div style="display:flex; align-items:center; gap: 28px;">
+              <svg width="96" height="108" viewBox="0 0 96 108" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="square" style="color: var(--linen);">
+                <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                <path d="M30 108 L30 78 L66 78 L66 108"/>
+              </svg>
+              <div style="font-family: var(--f-display); font-weight: 400; font-size: 112px; line-height: 0.9; letter-spacing: -0.035em; color: var(--linen);">Altr</div>
+            </div>
+          </div>
+          <div class="lv-row">
+            <div class="lv-cell">
+              <div class="icon-shell-big bg-glass-paper" style="width:96px;height:96px;border-radius:22px;">
+                <svg width="56" height="62" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="9" stroke-linecap="square">
+                  <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                  <path d="M30 108 L30 78 L66 78 L66 108"/>
+                </svg>
+              </div>
+              <div class="cap">Frosted · linen glass</div>
+            </div>
+            <div class="lv-cell">
+              <div class="icon-shell-big bg-ink" style="width:96px;height:96px;border-radius:22px;">
+                <svg width="56" height="62" viewBox="0 0 96 108" fill="none" stroke="#E9B56A" stroke-width="9" stroke-linecap="square">
+                  <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                  <path d="M30 108 L30 78 L66 78 L66 108"/>
+                </svg>
+              </div>
+              <div class="cap">Solid · ink + ochre</div>
+            </div>
+            <div class="lv-cell">
+              <div class="icon-shell-big bg-vapor" style="width:96px;height:96px;border-radius:22px;">
+                <svg width="56" height="62" viewBox="0 0 96 108" fill="none" stroke="#F4EEE1" stroke-width="9" stroke-linecap="square">
+                  <path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/>
+                  <path d="M30 108 L30 78 L66 78 L66 108"/>
+                </svg>
+              </div>
+              <div class="cap">Vapor · ambient</div>
+            </div>
+          </div>
+          <!-- dock row showing all three at 32px -->
+          <div class="dock">
+            <div class="icon-shell-sm bg-glass-paper">
+              <svg width="18" height="20" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="12"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div>
+            <div class="icon-shell-sm bg-ink">
+              <svg width="18" height="20" viewBox="0 0 96 108" fill="none" stroke="#E9B56A" stroke-width="12"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div>
+            <div class="icon-shell-sm bg-vapor">
+              <svg width="18" height="20" viewBox="0 0 96 108" fill="none" stroke="#F4EEE1" stroke-width="12"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div>
+            <div style="font-family: var(--f-mono); font-size: 10px; color: var(--walnut); letter-spacing: 0.14em; text-transform: uppercase; margin-left: 12px;">All three · 32px · dock-legible</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- (D) Leaning A -->
+      <div class="logo-variant glass">
+        <div class="lv-meta">
+          <span class="tag pick">D · PICK · TYPOGRAPHIC</span>
+          <h4>The leaning A</h4>
+          <p>Crossbar removed; right leg leans in. Works especially well on a glass icon — the empty apex reads as a piece of cut-out light.</p>
+        </div>
+        <div class="lv-stage">
+          <div class="lv-big">
+            <div style="display:flex; align-items:baseline; gap: 0; font-family: var(--f-display); font-size: 132px; line-height: 0.9; letter-spacing: -0.03em; color: var(--linen);">
+              <svg width="110" height="120" viewBox="0 0 110 120" style="margin-right: -4px;">
+                <path d="M8 112 L46 6" stroke="currentColor" stroke-width="9" fill="none"/>
+                <path d="M102 112 L58 6" stroke="currentColor" stroke-width="9" fill="none"/>
+              </svg>
+              <span>ltr</span>
+            </div>
+          </div>
+          <div class="lv-row">
+            <div class="lv-cell">
+              <div class="icon-shell-big bg-ink" style="width:96px;height:96px;border-radius:22px;">
+                <svg width="58" height="64" viewBox="0 0 110 120">
+                  <path d="M8 112 L46 6" stroke="#F4EEE1" stroke-width="10" fill="none"/>
+                  <path d="M102 112 L58 6" stroke="#F4EEE1" stroke-width="10" fill="none"/>
+                </svg>
+              </div>
+              <div class="cap">Solid · ink</div>
+            </div>
+            <div class="lv-cell">
+              <div class="icon-shell-big bg-glass-paper" style="width:96px;height:96px;border-radius:22px;">
+                <svg width="58" height="64" viewBox="0 0 110 120">
+                  <path d="M8 112 L46 6" stroke="#1E1A13" stroke-width="10" fill="none"/>
+                  <path d="M102 112 L58 6" stroke="#1E1A13" stroke-width="10" fill="none"/>
+                </svg>
+              </div>
+              <div class="cap">Frosted · linen glass</div>
+            </div>
+            <div class="lv-cell">
+              <div class="icon-shell-big bg-vapor" style="width:96px;height:96px;border-radius:22px;">
+                <svg width="58" height="64" viewBox="0 0 110 120">
+                  <path d="M8 112 L46 6" stroke="#F4EEE1" stroke-width="10" fill="none"/>
+                  <path d="M102 112 L58 6" stroke="#F4EEE1" stroke-width="10" fill="none"/>
+                </svg>
+              </div>
+              <div class="cap">Vapor · ambient</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7. APP ICON SET -->
+  <section>
+    <div class="sec-head">
+      <div class="no">07 — Icon set</div>
+      <div>
+        <h2>App icon set</h2>
+        <p>The Threshold direction, rendered across the full macOS pipeline. Three appearance modes — Frosted, Solid, Vapor — mirroring the multi-appearance pattern Apple introduced with Liquid Glass.</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <!-- Frosted row -->
+      <div class="logo-variant glass" style="display:block; padding: 32px;">
+        <div class="lv-meta" style="margin-bottom: 20px;"><span class="tag pick">APPEARANCE · FROSTED</span></div>
+        <div class="dock" style="justify-content: center; gap: 28px; padding: 32px 20px;">
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-glass-paper" style="width:128px;height:128px;border-radius:28px;">
+              <svg width="76" height="84" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="8"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">1024/512</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-glass-paper" style="width:96px;height:96px;border-radius:22px;">
+              <svg width="58" height="64" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="9"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">256</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-glass-paper" style="width:64px;height:64px;border-radius:14px;">
+              <svg width="38" height="42" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="10"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">128</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-glass-paper" style="width:48px;height:48px;border-radius:11px;">
+              <svg width="28" height="32" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="11"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">64</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-sm bg-glass-paper">
+              <svg width="18" height="20" viewBox="0 0 96 108" fill="none" stroke="#1E1A13" stroke-width="12"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">32</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Solid row -->
+      <div class="logo-variant glass" style="display:block; padding: 32px;">
+        <div class="lv-meta" style="margin-bottom: 20px;"><span class="tag pick">APPEARANCE · SOLID</span></div>
+        <div class="dock" style="justify-content: center; gap: 28px; padding: 32px 20px;">
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-ink" style="width:128px;height:128px;border-radius:28px;">
+              <svg width="76" height="84" viewBox="0 0 96 108" fill="none" stroke="#E9B56A" stroke-width="8"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">1024/512</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-ink" style="width:96px;height:96px;border-radius:22px;">
+              <svg width="58" height="64" viewBox="0 0 96 108" fill="none" stroke="#E9B56A" stroke-width="9"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">256</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-ink" style="width:64px;height:64px;border-radius:14px;">
+              <svg width="38" height="42" viewBox="0 0 96 108" fill="none" stroke="#E9B56A" stroke-width="10"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">128</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-ink" style="width:48px;height:48px;border-radius:11px;">
+              <svg width="28" height="32" viewBox="0 0 96 108" fill="none" stroke="#E9B56A" stroke-width="11"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">64</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-sm bg-ink">
+              <svg width="18" height="20" viewBox="0 0 96 108" fill="none" stroke="#E9B56A" stroke-width="12"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">32</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vapor row -->
+      <div class="logo-variant glass" style="display:block; padding: 32px;">
+        <div class="lv-meta" style="margin-bottom: 20px;"><span class="tag pick">APPEARANCE · VAPOR · AMBIENT</span></div>
+        <div class="dock" style="justify-content: center; gap: 28px; padding: 32px 20px;">
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-vapor" style="width:128px;height:128px;border-radius:28px;">
+              <svg width="76" height="84" viewBox="0 0 96 108" fill="none" stroke="#F4EEE1" stroke-width="8"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">1024/512</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-vapor" style="width:96px;height:96px;border-radius:22px;">
+              <svg width="58" height="64" viewBox="0 0 96 108" fill="none" stroke="#F4EEE1" stroke-width="9"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">256</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-vapor" style="width:64px;height:64px;border-radius:14px;">
+              <svg width="38" height="42" viewBox="0 0 96 108" fill="none" stroke="#F4EEE1" stroke-width="10"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">128</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-big bg-vapor" style="width:48px;height:48px;border-radius:11px;">
+              <svg width="28" height="32" viewBox="0 0 96 108" fill="none" stroke="#F4EEE1" stroke-width="11"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">64</div>
+          </div>
+          <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div class="icon-shell-sm bg-vapor">
+              <svg width="18" height="20" viewBox="0 0 96 108" fill="none" stroke="#F4EEE1" stroke-width="12"><path d="M10 108 L10 48 A38 38 0 0 1 86 48 L86 108"/><path d="M30 108 L30 78 L66 78 L66 108"/></svg>
+            </div><div class="cap">32</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top: 28px; font-size: 13px; color: var(--walnut); max-width: 62ch;">
+        All three appearances share one silhouette — so the app is always identifiable on the dock regardless of which finish the user picks or the system suggests.
+      </p>
+
+    </div>
+  </section>
+
+  <footer class="glass">
+    <div>Altr · Design system · v0.2 · Liquid Glass edition</div>
+    <div>20 Apr 2026 · altr.run</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
