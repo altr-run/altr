@@ -4,6 +4,8 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { preconnect } from 'react-dom'
 import SiteNav from '@/ui/site/site-nav'
 import SiteFooter from '@/ui/site/site-footer'
+import FooterCTA from '@/ui/site/footer-cta'
+import FooterReveal from '@/ui/site/footer-reveal'
 import VisualEditing from '@/ui/modules/visual-editing'
 import '@/app.css'
 
@@ -52,7 +54,10 @@ export default async function RootLayout({
 				<body className="bg-background text-foreground antialiased">
 					<SiteNav />
 					<main>{children}</main>
-					<SiteFooter />
+					<FooterCTA />
+					<FooterReveal>
+						<SiteFooter />
+					</FooterReveal>
 
 					<VisualEditing />
 				</body>

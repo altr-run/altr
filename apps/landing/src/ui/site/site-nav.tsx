@@ -219,6 +219,12 @@ export default function SiteNav() {
 					<IntegrationsMenu />
 					<CompareMenu />
 					<a
+						href="/security"
+						className="text-[13px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink"
+					>
+						Security
+					</a>
+					<a
 						href="/#faq"
 						className="text-[13px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink"
 					>

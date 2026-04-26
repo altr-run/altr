@@ -1,6 +1,5 @@
 import { COMPARE_PAGES, INTEGRATIONS, LEGAL_PAGES, USE_CASES } from '@/content'
 import LogoMark from '@/ui/home/logo-mark'
-import EmailForm from './email-form'
 
 const COL_HEAD =
 	'font-mono text-[10.5px] uppercase tracking-widest text-ink-4 mb-[18px] font-medium'
@@ -19,33 +18,6 @@ export default function SiteFooter() {
 
 	return (
 		<footer className="bg-bg">
-			{/* CTA band */}
-			<div
-				className="border-line border-b px-8 py-[160px] pb-[140px] text-center"
-				style={{
-					background:
-						'radial-gradient(70% 60% at 50% 0%, color-mix(in oklab, var(--acc) 10%, transparent) 0%, transparent 60%), var(--bg)',
-				}}
-				id="close"
-			>
-				<h2
-					className="mb-7 font-serif leading-[0.98] font-normal tracking-[-0.025em] text-balance"
-					style={{ fontSize: 'clamp(48px, 6.5vw, 92px)' }}
-				>
-					Stop rebuilding
-					<br />
-					the story at every <span className="text-acc italic">handoff.</span>
-				</h2>
-				<p className="lede mx-auto mb-8">
-					We&apos;ll walk through Altr using your actual workflow, your stack,
-					and your review standards — and show you where the loop closes.
-				</p>
-				<EmailForm />
-				<div className="text-ink-4 mt-[18px] font-mono text-[11px] tracking-widest">
-					founder-led onboarding · no spam · unsubscribe anytime
-				</div>
-			</div>
-
 			{/* Row 1 — brand + meta */}
 			<div className="border-b border-line">
 				<div className="mx-auto px-8 pt-8 pb-8" style={{ maxWidth: 'var(--maxw)' }}>
@@ -128,6 +100,7 @@ export default function SiteFooter() {
 						{/* Company col */}
 						<div>
 							<div className={COL_HEAD}>Company</div>
+							<a href="/security" className={NAV_LINK}>Security</a>
 							<a href="/#faq" className={NAV_LINK}>FAQ</a>
 							<a href="/changelog" className={NAV_LINK}>What&apos;s new</a>
 							<a href="/#close" className={NAV_LINK}>Early access</a>
@@ -144,15 +117,54 @@ export default function SiteFooter() {
 				</div>
 			</div>
 
+			{/* Compliance strip */}
+			<div className="border-b border-line">
+				<div className="mx-auto px-8 py-4" style={{ maxWidth: 'var(--maxw)' }}>
+					<div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+						{[
+							'Local-First Architecture',
+							'BYOK Data Sovereignty',
+							'Apple Silicon Native',
+							'No Data Resale',
+							'SOC2 In-Progress',
+						].map((pill) => (
+							<div
+								key={pill}
+								className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-ink-3"
+							>
+								<span className="text-acc text-[8px]">●</span>
+								{pill}
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+
 			{/* Bottom bar */}
 			<div className="px-8 py-5">
 			<div className="mx-auto flex items-center justify-between" style={{ maxWidth: 'var(--maxw)' }}>
 				<span className="font-mono text-[11px] text-ink-4 tracking-wider">
 					© 2026 altr labs, inc.
 				</span>
-				<span className="font-mono text-[11px] text-ink-4 tracking-wider">
-					shipped with altr · v0.1.2026
-				</span>
+
+				{/* "Shipped with Altr" heartbeat badge — adapted from the cinematic footer pattern */}
+				<div
+					className="flex items-center gap-2 border border-line rounded-full px-4 py-1.5"
+					style={{ background: 'var(--bg-1)' }}
+				>
+					<span className="font-mono text-[10px] uppercase tracking-widest text-ink-4">
+						shipped with
+					</span>
+					<span
+						className="font-mono text-[12px] font-bold text-acc inline-block"
+						style={{ animation: 'heartbeat 2.4s cubic-bezier(0.25, 1, 0.5, 1) infinite' }}
+					>
+						■
+					</span>
+					<span className="font-mono text-[11px] font-bold text-ink tracking-tight">
+						Altr
+					</span>
+				</div>
 			</div>
 			</div>
 		</footer>

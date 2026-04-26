@@ -448,6 +448,13 @@
 @keyframes pulse-dot {
 	50% { opacity: 0.35; }
 }
+@keyframes heartbeat {
+	0%, 100% { transform: scale(1); opacity: 1; }
+	14%       { transform: scale(1.3); }
+	28%       { transform: scale(1); }
+	42%       { transform: scale(1.2); }
+	56%       { transform: scale(1); opacity: 0.8; }
+}
 
 /* ─────────────────────────────────────────────────────
    Global page rules

@@ -6,6 +6,7 @@ import Flow from './flow'
 import ContextLost from './context-lost'
 import PaxLive from './pax-live'
 
+const HandoffCalculator = dynamic(() => import('./handoff-calculator'))
 const Triptych = dynamic(() => import('./triptych'))
 const Manifesto = dynamic(() => import('./manifesto'))
 const How = dynamic(() => import('./how'))
@@ -35,6 +36,12 @@ export default function HomePage() {
 				<div data-nav-theme="light">
 					<Logos />
 					<ContextLost />
+					<section className="px-8 py-24">
+						<div className="mx-auto" style={{ maxWidth: 'var(--maxw-narrow)' }}>
+							<p className="font-mono text-[11px] uppercase tracking-widest text-acc mb-10 text-center">Calculated Efficiency</p>
+							<HandoffCalculator />
+						</div>
+					</section>
 					<Flow />
 					<PaxLive />
 					<Triptych />

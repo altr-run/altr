@@ -9,4 +9,8 @@ export const ROUTES = {
 	changelog: 'changelog',
 	legal: 'legal',
 	product: 'product',
+	security: 'security',
+	pricing: 'pricing',
+	download: 'download',
+	manifesto: 'manifesto',
 } as const
