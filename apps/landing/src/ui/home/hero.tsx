@@ -1,7 +1,7 @@
 'use client'
 
-import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
-import { useEffect, useState } from 'react'
+import { AnimatePresence, motion, useInView, useScroll, useTransform } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
 import Reveal from './reveal'
 
 const ROTATING_WORDS = ['clarity', 'ownership', 'control', 'context'] as const
@@ -23,6 +23,9 @@ export default function Hero() {
 	const shotRotateX = useTransform(scrollY, [0, 520], [10, 0])
 	const shotY       = useTransform(scrollY, [0, 520], [-40, 0])
 
+	const sidebarRef = useRef<HTMLDivElement>(null)
+	const sidebarInView = useInView(sidebarRef, { once: true, margin: '-40px' })
+
 	const word = ROTATING_WORDS[wordIndex]
 
 	return (
@@ -32,11 +35,14 @@ export default function Hero() {
 		>
 			{/* hero text wrap */}
 			<div className="max-w-[1020px] w-full mx-auto text-center flex flex-col items-center gap-7 relative z-[1] flex-1 pt-[280px] pb-12">
-				<p
-					className="font-mono text-[11px] tracking-widest uppercase text-ink-3 border border-line bg-(--panel) shadow-sm rounded-full px-3 py-1.5"
-				>
-					slack thread → spec → PR → merged · no context lost in transit
-				</p>
+				{/* announcement pill */}
+				<div className="inline-flex items-center gap-2.5 border border-line rounded-full px-3 py-1.5 shadow-sm" style={{ background: 'color-mix(in oklab, var(--panel) 92%, white)' }}>
+					<span className="w-1.5 h-1.5 rounded-full bg-acc flex-shrink-0 animate-[pulse-dot_1.6s_ease-in-out_infinite]" />
+					<span className="badge badge-acc">Early Access</span>
+					<span className="font-mono text-[11px] tracking-widest uppercase text-ink-3">
+						One unbroken trail · thread to merged PR
+					</span>
+				</div>
 
 				<h1
 					className="font-serif text-center"
@@ -86,18 +92,32 @@ export default function Hero() {
 				</h1>
 
 				<p className="font-sans text-[18px] leading-[1.62] text-ink-2 max-w-[56ch] mx-auto">
-					Every artifact carries its source. Slack thread to spec to PR to
-					merged code — one continuous trail of intent. No rebuilding the brief
-					at handoff. Your agents work inside your stack.
+					Every artifact carries its source. From the initial signal to the
+					merged PR — one unbroken trail of intent. No rebuilding the brief at
+					handoff. Your agents work inside your actual stack.
 				</p>
 
 				<div className="flex gap-[10px] flex-wrap justify-center">
-					<a href="#close" className="btn btn-primary btn-lg">
+					<a href="#close" className="btn btn-acc btn-lg">
 						Get early access →
 					</a>
 					<a href="#playground" className="btn btn-ghost btn-lg">
 						See it in action
 					</a>
+				</div>
+
+				{/* outcome stat strip */}
+				<div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-2">
+					{[
+						{ stat: '6h', label: 'saved per engineer per week' },
+						{ stat: '18m', label: 'thread to first reviewable spec' },
+						{ stat: '100%', label: 'human approval at every gate' },
+					].map(({ stat, label }) => (
+						<div key={stat} className="flex items-baseline gap-1.5">
+							<span className="font-mono text-[15px] font-semibold text-acc">{stat}</span>
+							<span className="font-mono text-[10.5px] text-ink-4 tracking-widest uppercase">{label}</span>
+						</div>
+					))}
 				</div>
 
 			</div>
@@ -194,7 +214,7 @@ export default function Hero() {
 											className="p-3 rounded-[14px] border border-line shadow-sm flex flex-col gap-1"
 											style={{ background: 'rgba(255,255,255,0.86)' }}
 										>
-											<span className="font-mono text-[10px] uppercase text-ink-3">
+											<span className="font-mono text-[10px] uppercase tracking-widest text-ink-3">
 												{label}
 											</span>
 											<b className="font-sans text-[12.5px] font-600 text-ink">
@@ -306,7 +326,7 @@ export default function Hero() {
 											className="p-3 rounded-[14px] border border-line flex flex-col gap-1"
 											style={{ background: 'rgba(255,255,255,0.72)' }}
 										>
-											<span className="font-mono text-[10px] uppercase text-ink-4">
+											<span className="font-mono text-[10px] uppercase tracking-widest text-ink-4">
 												{label}
 											</span>
 											<b className="font-sans text-[13px] font-semibold text-ink">
@@ -316,14 +336,17 @@ export default function Hero() {
 									))}
 								</div>
 
-								<div className="p-3 flex-1 flex flex-col gap-3 overflow-hidden">
+								<div ref={sidebarRef} className="p-3 flex-1 flex flex-col gap-3 overflow-hidden">
 									{/* msg 1 */}
-									<div
+									<motion.div
 										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
 										style={{
 											borderColor: 'rgba(215,215,215,0.8)',
 											background: 'rgba(255,255,255,0.68)',
 										}}
+										initial={{ opacity: 0, x: 10 }}
+										animate={sidebarInView ? { opacity: 1, x: 0 } : {}}
+										transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1], delay: 0.0 }}
 									>
 										<div className="w-[26px] h-[26px] rounded-full flex-shrink-0 grid place-items-center font-mono text-[10px] font-semibold bg-acc text-white">
 											§
@@ -338,15 +361,18 @@ export default function Hero() {
 											Pulled 4 AC from the thread. Added rate-limit from the
 											security review. Ready for build?
 										</div>
-									</div>
+									</motion.div>
 
 									{/* msg 2 */}
-									<div
+									<motion.div
 										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
 										style={{
 											borderColor: 'rgba(215,215,215,0.8)',
 											background: 'rgba(255,255,255,0.68)',
 										}}
+										initial={{ opacity: 0, x: 10 }}
+										animate={sidebarInView ? { opacity: 1, x: 0 } : {}}
+										transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1], delay: 0.18 }}
 									>
 										<div className="w-[26px] h-[26px] rounded-full flex-shrink-0 grid place-items-center font-mono text-[10px] font-semibold bg-mint-soft text-(--moss-2)">
 											m
@@ -360,15 +386,18 @@ export default function Hero() {
 											</div>
 											Yes. Also: keep the resend CTA behind a 30s cooldown.
 										</div>
-									</div>
+									</motion.div>
 
 									{/* msg 3 */}
-									<div
+									<motion.div
 										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
 										style={{
 											borderColor: 'rgba(215,215,215,0.8)',
 											background: 'rgba(255,255,255,0.68)',
 										}}
+										initial={{ opacity: 0, x: 10 }}
+										animate={sidebarInView ? { opacity: 1, x: 0 } : {}}
+										transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1], delay: 0.36 }}
 									>
 										<div className="w-[26px] h-[26px] rounded-full flex-shrink-0 grid place-items-center font-mono text-[10px] font-semibold bg-[#1a1a1a] text-white">
 											E
@@ -387,15 +416,18 @@ export default function Hero() {
 											</span>
 											, one new migration.
 										</div>
-									</div>
+									</motion.div>
 
 									{/* msg 4 */}
-									<div
+									<motion.div
 										className="flex gap-2.5 p-3 rounded-[14px] border text-[13px] leading-[1.5] text-ink-2"
 										style={{
 											borderColor: 'rgba(215,215,215,0.8)',
 											background: 'rgba(255,255,255,0.68)',
 										}}
+										initial={{ opacity: 0, x: 10 }}
+										animate={sidebarInView ? { opacity: 1, x: 0 } : {}}
+										transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1], delay: 0.54 }}
 									>
 										<div className="w-[26px] h-[26px] rounded-full flex-shrink-0 grid place-items-center font-mono text-[10px] font-semibold bg-acc text-white">
 											§
@@ -410,7 +442,34 @@ export default function Hero() {
 											I&apos;ll draft the changelog entry once PR lands. Staging
 											link will post here.
 										</div>
-									</div>
+									</motion.div>
+
+									{/* Typing indicator — appears after last message */}
+									<motion.div
+										className="flex gap-2.5 px-3 py-1 items-center"
+										initial={{ opacity: 0 }}
+										animate={sidebarInView ? { opacity: 1 } : {}}
+										transition={{ duration: 0.35, delay: 0.9 }}
+									>
+										<div className="w-[26px] h-[26px] rounded-full flex-shrink-0 grid place-items-center font-mono text-[10px] font-semibold bg-acc text-white">
+											§
+										</div>
+										<div className="flex items-center gap-[5px]">
+											{[0, 1, 2].map((i) => (
+												<motion.span
+													key={i}
+													className="w-[5px] h-[5px] rounded-full bg-ink-3"
+													animate={{ opacity: [0.25, 1, 0.25], y: [0, -3, 0] }}
+													transition={{
+														duration: 1.1,
+														repeat: Infinity,
+														delay: i * 0.18,
+														ease: 'easeInOut',
+													}}
+												/>
+											))}
+										</div>
+									</motion.div>
 								</div>
 							</div>
 						</div>

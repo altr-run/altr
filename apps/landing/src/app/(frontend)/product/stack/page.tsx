@@ -150,7 +150,7 @@ export default function StackPage() {
 							← Agents
 						</Link>
 					</div>
-					<a href="/#close" className="btn btn-primary">Request access →</a>
+					<a href="/#close" className="btn btn-acc">Request access →</a>
 				</div>
 			</section>
 		</main>

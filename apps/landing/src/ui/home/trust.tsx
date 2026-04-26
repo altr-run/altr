@@ -102,7 +102,7 @@ export default function Trust() {
 					<div className="flex items-center gap-3 flex-wrap font-mono text-[11px] text-(--ink-4) tracking-widest">
 						<span>works with your existing stack:</span>
 						{['Slack', 'GitHub', 'Linear', 'Notion', 'calls', 'CI'].map((t) => (
-							<span key={t} className="border border-(--line) rounded-full px-2.5 py-0.5 text-ink-3">{t}</span>
+							<span key={t} className="badge">{t}</span>
 						))}
 					</div>
 					<Link

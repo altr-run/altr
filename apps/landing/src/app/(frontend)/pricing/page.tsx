@@ -102,7 +102,7 @@ export default function PricingPage() {
 										))}
 									</div>
 
-									<a href="/#close" className="btn btn-primary btn-lg w-full mt-auto">
+									<a href="/#close" className="btn btn-acc btn-lg w-full mt-auto">
 										{plan.cta} →
 									</a>
 								</div>

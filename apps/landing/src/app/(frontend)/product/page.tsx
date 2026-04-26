@@ -139,7 +139,7 @@ export default function ProductHub() {
 					<p className="font-sans text-[16px] text-ink-2 mb-8 max-w-[44ch] mx-auto leading-relaxed">
 						Founder-led onboarding using your stack, your Slack channels, and your review standards.
 					</p>
-					<a href="/#close" className="btn btn-primary btn-lg">
+					<a href="/#close" className="btn btn-acc btn-lg">
 						Request early access →
 					</a>
 				</div>

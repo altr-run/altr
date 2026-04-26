@@ -117,7 +117,7 @@ export default function WorkflowPage() {
 					<p className="font-sans text-[18px] leading-[1.62] text-ink-2 max-w-[54ch] mb-10">
 						From the Slack thread that sparked the idea to the merged PR — every artifact carries its source. No reconstruction work. No re-explaining the goal at handoff.
 					</p>
-					<a href="/#close" className="btn btn-primary btn-lg">
+					<a href="/#close" className="btn btn-acc btn-lg">
 						Request access →
 					</a>
 				</div>
@@ -262,7 +262,7 @@ export default function WorkflowPage() {
 					<p className="font-sans text-[16px] text-ink-2 max-w-[42ch] leading-[1.65]">
 						We'll walk through Altr with your actual stack and show you where context stops bleeding out.
 					</p>
-					<a href="/#close" className="btn btn-primary btn-lg">
+					<a href="/#close" className="btn btn-acc btn-lg">
 						Request access →
 					</a>
 				</div>

@@ -52,7 +52,7 @@ export default function Nav() {
 					>
 						Sign in
 					</a>
-					<a href="#close" className="btn btn-primary">
+					<a href="#close" className="btn btn-acc">
 						Request access →
 					</a>
 				</div>

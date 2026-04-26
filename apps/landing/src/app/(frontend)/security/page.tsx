@@ -267,7 +267,7 @@ export default function SecurityPage() {
 					<p className="font-sans text-[16px] text-ink-2 max-w-[42ch] leading-[1.65]">
 						We do founder-led onboarding. Ask us anything about how Altr handles your data — before you sign up.
 					</p>
-					<a href="/#close" className="btn btn-primary btn-lg">
+					<a href="/#close" className="btn btn-acc btn-lg">
 						Talk to the founders →
 					</a>
 					<Link href="/product/workflow" className="font-mono text-[12px] text-ink-3 hover:text-acc transition-colors no-underline">

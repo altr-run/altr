@@ -83,7 +83,7 @@ export default function HandoffCalculator() {
 				<p className="font-sans text-[15px] text-ink-2 text-center max-w-[50ch]">
 					Altr eliminates this tax by carrying the original signal through every handoff automatically.
 				</p>
-				<a href="#close" className="btn btn-primary btn-lg">
+				<a href="#close" className="btn btn-acc btn-lg">
 					Stop dropping the thread →
 				</a>
 			</div>

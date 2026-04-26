@@ -40,7 +40,7 @@ export default function DownloadPage() {
 						</div>
 
 						<div className="flex flex-col gap-4 w-full max-w-[320px]">
-							<button disabled className="btn btn-primary btn-lg opacity-50 cursor-not-allowed">
+							<button disabled className="btn btn-acc btn-lg opacity-50 cursor-not-allowed">
 								Download v0.1.2026 (.dmg)
 							</button>
 							<p className="font-sans text-[13px] text-ink-3">

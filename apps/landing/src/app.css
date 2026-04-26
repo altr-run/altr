@@ -432,6 +432,40 @@
 		}
 	}
 
+	/* Badge / chip labels — uppercase mono, pill shape */
+	.badge {
+		display: inline-flex;
+		align-items: center;
+		font-family: var(--f-mono);
+		font-size: 9px;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		padding: 2px 7px;
+		border-radius: 9999px;
+		border: 1px solid var(--line);
+		background: color-mix(in oklab, var(--bg-1) 70%, white);
+		color: var(--ink-3);
+		white-space: nowrap;
+		line-height: 1.6;
+	}
+	.badge-acc {
+		background: color-mix(in oklab, var(--acc-soft) 55%, white);
+		border-color: color-mix(in oklab, var(--acc) 22%, var(--line));
+		color: var(--acc-2);
+	}
+	.badge-soon {
+		background: color-mix(in oklab, var(--bg-1) 80%, var(--line));
+		border-color: color-mix(in oklab, var(--line) 80%, transparent);
+		color: var(--ink-4);
+	}
+
+	/* Small button modifier */
+	.btn-sm {
+		padding: 5px 11px;
+		font-size: 12px;
+	}
+
 	/* Pill nav container */
 	.nav-pill {
 		max-width: min(1180px, calc(100vw - 40px));
@@ -457,12 +491,15 @@
 		gap: 6px;
 		align-items: center;
 		font-family: var(--f-mono);
-		font-size: 10.5px;
-		padding: 3px 9px;
+		font-size: 9.5px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.10em;
+		padding: 3px 8px;
 		border-radius: 4px;
 		color: var(--acc-2);
-		background: var(--acc-soft);
-		letter-spacing: 0.04em;
+		background: color-mix(in oklab, var(--acc-soft) 55%, white);
+		border: 1px solid color-mix(in oklab, var(--acc) 20%, var(--line));
 	}
 }
 

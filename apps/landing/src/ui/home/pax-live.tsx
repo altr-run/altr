@@ -209,11 +209,10 @@ export default function AltrLive() {
 							<button
 								key={s.id}
 								onClick={() => handleTabChange(i)}
-								className="font-mono text-[11px] tracking-wide rounded-full px-4 py-1.5 transition-all duration-200 cursor-pointer"
-								style={
+								className={
 									activeTab === i
-										? { background: 'var(--acc)', color: 'var(--acc-ink)', fontWeight: 600 }
-										: { color: 'var(--ink-3)', background: 'transparent' }
+										? 'btn btn-acc btn-sm'
+										: 'font-mono text-[11px] tracking-[0.06em] uppercase rounded-full px-4 py-1.5 transition-all duration-200 cursor-pointer text-ink-3 hover:text-ink'
 								}
 							>
 								{s.label}
@@ -395,15 +394,15 @@ export default function AltrLive() {
 											<span className="font-mono text-[10px] text-ink-4 tracking-wide">{scenario.footerMeta}</span>
 										</div>
 										<div className="flex items-center gap-2 flex-shrink-0">
-											<button className="font-mono text-[11px] text-ink-3 border border-line rounded-full px-3 py-1.5 bg-bg hover:bg-bg-1 transition-colors cursor-default">
+											<button className="btn btn-ghost btn-sm cursor-default">
 												Edit
 											</button>
 											<motion.button
-												className="font-mono text-[11px] text-acc-ink bg-acc rounded-full px-3 py-1.5 cursor-default"
+												className="btn btn-acc btn-sm cursor-default"
 												animate={{
 													boxShadow: [
 														'0 0 0 0px color-mix(in oklab, var(--acc-vibrant) 0%, transparent)',
-														'0 0 0 5px color-mix(in oklab, var(--acc-vibrant) 30%, transparent)',
+														'0 0 0 6px color-mix(in oklab, var(--acc-vibrant) 32%, transparent)',
 														'0 0 0 0px color-mix(in oklab, var(--acc-vibrant) 0%, transparent)',
 													],
 												}}

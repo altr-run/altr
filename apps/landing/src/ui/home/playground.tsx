@@ -177,33 +177,20 @@ export default function Playground() {
 							</div>
 							<div className="flex gap-2 mt-[18px] flex-wrap">
 								<span className="w-full font-mono text-[10px] uppercase tracking-widest text-ink-4 mb-0.5">Try one of these →</span>
-								<button
-									className="font-mono text-[11px] py-[5px] px-[11px] rounded-full border border-line bg-surface text-ink-2 cursor-pointer transition hover:border-acc hover:bg-acc-soft hover:text-acc-ink"
-									onClick={() => loadExample('invite')}
-								>
+								<button className="btn btn-ghost btn-sm" onClick={() => loadExample('invite')}>
 									invite teammates
 								</button>
-								<button
-									className="font-mono text-[11px] py-[5px] px-[11px] rounded-full border border-line bg-surface text-ink-2 cursor-pointer transition hover:border-acc hover:bg-acc-soft hover:text-acc-ink"
-									onClick={() => loadExample('search')}
-								>
+								<button className="btn btn-ghost btn-sm" onClick={() => loadExample('search')}>
 									full-text search
 								</button>
-								<button
-									className="font-mono text-[11px] py-[5px] px-[11px] rounded-full border border-line bg-surface text-ink-2 cursor-pointer transition hover:border-acc hover:bg-acc-soft hover:text-acc-ink"
-									onClick={() => loadExample('billing')}
-								>
+								<button className="btn btn-ghost btn-sm" onClick={() => loadExample('billing')}>
 									stripe billing
 								</button>
 							</div>
 							<div className="flex justify-between items-center gap-4 mt-5 pt-[18px] border-t border-dashed border-line">
 								<div className="flex gap-2">
 									{['acceptance', 'plan', 'draft diff'].map((label) => (
-										<span
-											key={label}
-											className="py-[7px] px-2.5 rounded-full border border-line font-mono text-[10px] text-ink-3"
-											style={{ background: 'rgba(255,255,255,0.84)' }}
-										>
+										<span key={label} className="badge">
 											{label}
 										</span>
 									))}

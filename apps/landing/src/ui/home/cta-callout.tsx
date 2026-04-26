@@ -24,11 +24,11 @@ export default function CTACallout() {
 
 				{/* right CTA */}
 				<div className="flex flex-col items-center sm:items-end gap-3 flex-shrink-0">
-					<a href="#close" className="btn btn-primary btn-lg">
+					<a href="#close" className="btn btn-acc btn-lg">
 						Get early access →
 					</a>
-					<span className="font-mono text-[11px] text-ink-4 tracking-wide">
-						Mac-native · BYOK · free to start
+					<span className="font-mono text-[10px] text-ink-4 tracking-widest uppercase">
+						Mac-native · BYOK · Free to start
 					</span>
 				</div>
 			</div>

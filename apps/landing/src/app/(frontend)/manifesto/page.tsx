@@ -79,7 +79,7 @@ export default function ManifestoPage() {
 
 					<div className="mt-20 p-10 bg-bg-1 border border-line rounded-[24px] text-center flex flex-col items-center gap-6">
 						<p className="font-serif text-[24px] text-ink">Ready to ship with leverage?</p>
-						<a href="/#close" className="btn btn-primary btn-lg">Request access →</a>
+						<a href="/#close" className="btn btn-acc btn-lg">Request access →</a>
 					</div>
 				</div>
 			</article>
