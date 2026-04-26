@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "cd ../.. && npx turbo run build --filter=landing",
+  "buildCommand": "cd ../.. && npx turbo run build --filter=@altr/landing",
   "installCommand": "cd ../.. && bun install",
   "outputDirectory": ".next",
   "framework": "nextjs"
