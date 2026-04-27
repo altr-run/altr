@@ -1,4 +1,3 @@
-import type { Get } from '@sanity/codegen'
 import { createDataAttribute, stegaClean } from 'next-sanity'
 import type {
 	BLOG_POST_QUERY_RESULT,
@@ -23,7 +22,7 @@ import SearchModule from './search'
 import StatList from './stat-list'
 import StepList from './step-list'
 
-const MODULES_MAP = {
+const MODULES_MAP: Record<string, React.ComponentType<any>> = {
 	'accordion-list': AccordionList,
 	'blog-index': BlogIndex,
 	'blog-post-content': BlogPostContent,
@@ -41,18 +40,19 @@ const MODULES_MAP = {
 	'search-module': SearchModule,
 	'stat-list': StatList,
 	'step-list': StepList,
-} as const
+}
 
-export default function ({
+export default function ModulesResolver({
 	page,
 	post,
 }: {
 	page?: PAGE_QUERY_RESULT
 	post?: BLOG_POST_QUERY_RESULT
 }) {
-	const modules = [page, post].flatMap((item) => item?.modules ?? [])
+	// Safely extract modules depending on which result is provided
+	const modules = page?._type === 'page' ? page.modules : post?._type === 'blog.post' ? (post as any).modules : []
 
-	const moduleSpecificProps = (module: ModuleProps) => {
+	const getModuleSpecificProps = (module: any) => {
 		switch (module._type) {
 			case 'blog-post-content':
 				return { post }
@@ -65,12 +65,10 @@ export default function ({
 
 	return (
 		<>
-			{modules?.map((module) => {
-				if (!module) return null
+			{modules?.map((module: any) => {
+				if (!module || !module._type) return null
 
-				const Module = MODULES_MAP[
-					module._type as keyof typeof MODULES_MAP
-				] as React.ComponentType
+				const Module = MODULES_MAP[module._type]
 
 				if (!Module) return null
 
@@ -78,20 +76,20 @@ export default function ({
 					? {
 							id: page._id,
 							type: page._type,
-							path: `page[_key == "${module._key}"]`,
+							path: `modules[_key == "${module._key}"]`,
 						}
 					: post
 						? {
 								id: post._id,
 								type: post._type,
-								path: `post[_key == "${module._key}"]`,
+								path: `modules[_key == "${module._key}"]`,
 							}
 						: {}
 
 				return (
 					<Module
 						{...module}
-						{...moduleSpecificProps(module)}
+						{...getModuleSpecificProps(module)}
 						data-sanity={createDataAttribute(attributes)}
 						key={module._key}
 					/>
@@ -101,11 +99,13 @@ export default function ({
 	)
 }
 
-export type ModuleProps = Partial<
-	Get<PAGE_QUERY_RESULT | BLOG_POST_QUERY_RESULT, 'modules', 0>
-> & { attributes?: ModuleAttributes }
+export type ModuleProps = { 
+	_key?: string
+	_type?: string
+	attributes?: ModuleAttributes 
+}
 
-export function moduleAttributes({ _key, _type, attributes }: ModuleProps) {
+export function moduleAttributes({ _key, _type, attributes }: any) {
 	return {
 		id: stegaClean(attributes?.uid) || `module-${_key}`,
 		'data-module': _type,
