@@ -6,7 +6,6 @@ import { sanityFetchLive } from '@/sanity/lib/live'
 import { getSite } from '@/sanity/lib/queries'
 import type { OG_QUERY_RESULT } from '@/sanity/types'
 
-const { hostname } = new URL(process.env.NEXT_PUBLIC_BASE_URL!)
 const blogDir = `${ROUTES.blog}/`
 
 const OG_QUERY = groq`*[_type == $type && metadata.slug.current == $slug][0]{
@@ -17,6 +16,8 @@ export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url)
 	const slug = searchParams.get('slug') ?? 'index'
 	const invert = ['1', 'true'].includes(searchParams.get('invert')!)
+
+	const { hostname } = new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'https://altr.run')
 
 	const type = slug.startsWith(blogDir) ? 'blog.post' : 'page'
 

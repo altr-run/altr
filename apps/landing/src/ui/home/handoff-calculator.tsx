@@ -58,7 +58,7 @@ export default function HandoffCalculator() {
 
 				{/* Results */}
 				<div className="flex flex-col justify-center items-center text-center gap-2 p-8 bg-bg-1 rounded-[24px] border border-line relative overflow-hidden">
-					<div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--acc) 1px, transparent 1px)', size: '20px 20px' }} />
+					<div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--acc) 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
 					
 					<p className="font-mono text-[11px] uppercase tracking-widest text-ink-4 relative z-10">Monthly reconstruction tax</p>
 					
