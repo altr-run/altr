@@ -109,7 +109,7 @@ function VisualRebuilding() {
 				animate={inView ? { opacity: 1, x: 0 } : {}}
 				transition={{ duration: 0.4, ease: EASE }}
 			>
-				<span className="w-[6px] h-[6px] rounded-full flex-shrink-0" style={{ background: '#ffbd2e' }} />
+				<span className="w-[6px] h-[6px] rounded-full flex-shrink-0" style={{ background: 'var(--macos-minimize)' }} />
 				slack thread
 			</motion.div>
 

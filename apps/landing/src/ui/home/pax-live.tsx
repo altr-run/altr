@@ -244,9 +244,9 @@ export default function AltrLive() {
 									style={{ background: 'linear-gradient(180deg, var(--gray-2) 0%, var(--bg-1) 100%)' }}
 								>
 									<div className="flex items-center gap-[6px]">
-										<span className="w-[10px] h-[10px] rounded-full bg-[#ff5f57]" />
-										<span className="w-[10px] h-[10px] rounded-full bg-[#ffbd2e]" />
-										<span className="w-[10px] h-[10px] rounded-full bg-[#28c840]" />
+										<span className="w-[10px] h-[10px] rounded-full bg-[var(--macos-close)]" />
+										<span className="w-[10px] h-[10px] rounded-full bg-[var(--macos-minimize)]" />
+										<span className="w-[10px] h-[10px] rounded-full bg-[var(--macos-maximize)]" />
 									</div>
 									<span className="font-mono text-[11px] text-ink-3">{scenario.channel}</span>
 									<span className="font-mono text-[10px] text-ink-4">{scenario.msgCount}</span>
