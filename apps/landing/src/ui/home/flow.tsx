@@ -371,6 +371,53 @@ export default function Flow() {
 									)
 								})}
 							</div>
+
+							{/* Before / After time comparison — tryclean.ai-inspired */}
+							<div className="mt-4 grid grid-cols-2 gap-px rounded-[12px] overflow-hidden border border-line" style={{ background: 'var(--line)' }}>
+								{/* Before */}
+								<div className="px-4 py-3" style={{ background: 'var(--bg)' }}>
+									<div className="font-mono text-[9px] uppercase tracking-widest text-ink-4 mb-2">
+										without altr
+									</div>
+									<div className="flex items-center gap-2.5 mb-1">
+										<div className="flex-1 h-[5px] rounded-full overflow-hidden" style={{ background: 'var(--line)' }}>
+											<motion.div
+												className="h-full rounded-full"
+												style={{ background: 'rgba(180,83,9,0.5)' }}
+												initial={{ width: '0%' }}
+												whileInView={{ width: '100%' }}
+												viewport={{ once: true }}
+												transition={{ duration: 0.9, ease: [0.25, 1, 0.5, 1], delay: 0.8 }}
+											/>
+										</div>
+										<span className="font-mono text-[13px] font-semibold text-ink-3 tabular-nums">~6h</span>
+									</div>
+									<div className="font-mono text-[9.5px] text-ink-4 leading-snug">
+										context rebuilt per handoff
+									</div>
+								</div>
+								{/* After */}
+								<div className="px-4 py-3" style={{ background: 'color-mix(in oklab, var(--acc) 4%, var(--bg))' }}>
+									<div className="font-mono text-[9px] uppercase tracking-widest text-acc mb-2">
+										with altr
+									</div>
+									<div className="flex items-center gap-2.5 mb-1">
+										<div className="flex-1 h-[5px] rounded-full overflow-hidden" style={{ background: 'var(--line)' }}>
+											<motion.div
+												className="h-full rounded-full bg-acc"
+												initial={{ width: '0%' }}
+												whileInView={{ width: '5%' }}
+												viewport={{ once: true }}
+												transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1], delay: 1.0 }}
+											/>
+										</div>
+										<span className="font-mono text-[13px] font-semibold text-acc tabular-nums">18m</span>
+									</div>
+									<div className="font-mono text-[9.5px] text-ink-4 leading-snug">
+										context travels with the work
+									</div>
+								</div>
+							</div>
 						</motion.div>
 					</div>
 				</Reveal>

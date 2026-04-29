@@ -143,13 +143,13 @@ export default function Logos() {
 					</div>
 
 					<motion.p
-						className="font-sans text-[15px] text-ink-3 max-w-[50ch] leading-relaxed"
+						className="font-sans text-[15px] text-ink-3 max-w-[50ch] leading-relaxed text-center"
 						initial={{ opacity: 0 }}
 						whileInView={{ opacity: 1 }}
 						viewport={{ once: true }}
 						transition={{ duration: 0.6, delay: 0.3 }}
 					>
-						Altr carries context across handoffs without requiring a workspace migration. No new docs, no new trackers. Just one execution loop.
+						Signal, assignment, and artifact stay linked through every stage of the work — captured once, carried all the way through.
 					</motion.p>
 				</div>
 			</div>
