@@ -355,16 +355,11 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 	const mountRef = useRef<HTMLDivElement | null>(null)
 	const speedRef = useRef(BASE_SPEED)
 	const colorBack = useMemo(() => parseHexColor('#00000000'), [])
-	// Read accent from CSS variable at mount — stays in sync with the design token
-	const colorFront = useMemo(() => {
-		const hex =
-			typeof window !== 'undefined'
-				? getComputedStyle(document.documentElement)
-						.getPropertyValue('--lime-9')
-						.trim()
-				: ''
-		return parseHexColor(hex || '#89F336')
-	}, [])
+	// Radix lime-9 (sRGB) = #bdee63 — medium-light lime that works with multiply blend.
+	// We hardcode the sRGB value to avoid: (a) the P3 format issue where browsers
+	// return color(display-p3 ...) from getComputedStyle instead of a hex string,
+	// and (b) the old override #89F336 which was too bright and invisible with multiply.
+	const colorFront = useMemo(() => parseHexColor('#bdee63'), [])
 
 	useEffect(() => {
 		const mount = mountRef.current
@@ -550,7 +545,7 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 			ref={mountRef}
 			className="pointer-events-none absolute inset-0 z-0"
 			style={{
-				opacity: 0.26,
+				opacity: 0.34,
 				mixBlendMode: 'multiply',
 				maskImage:
 					'radial-gradient(ellipse 76% 78% at 50% 34%, #000 0%, rgba(0,0,0,0.92) 48%, transparent 90%)',
@@ -561,7 +556,7 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 				className="absolute inset-0"
 				style={{
 					background:
-						'radial-gradient(ellipse 72% 68% at 50% 34%, color-mix(in srgb, var(--acc) 18%, transparent), transparent 74%)',
+						'radial-gradient(ellipse 72% 68% at 50% 34%, color-mix(in srgb, var(--acc) 32%, transparent), transparent 74%)',
 				}}
 			/>
 		</div>
