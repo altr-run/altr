@@ -1,3 +1,7 @@
+'use client'
+
+import { motion, useInView } from 'motion/react'
+import { useRef } from 'react'
 import Reveal from './reveal'
 
 const STEPS = [
@@ -20,6 +24,9 @@ const STEPS = [
 ]
 
 export default function How() {
+	const stepsRef = useRef<HTMLDivElement>(null)
+	const stepsInView = useInView(stepsRef, { once: true, margin: '-80px' })
+
 	return (
 		<section
 			className="py-[160px] px-8 border-b border-line bg-bg-1"
@@ -47,24 +54,48 @@ export default function How() {
 						</p>
 					</Reveal>
 
-					{/* Steps */}
-					<div className="flex flex-col">
+					{/* Steps with connecting vertical line */}
+					<div ref={stepsRef} className="flex flex-col relative">
+						{/* Vertical connecting line — travels from top to bottom */}
+						<div
+							className="absolute left-[27px] top-[36px] bottom-[36px] w-px pointer-events-none overflow-hidden"
+							style={{ background: 'var(--line)' }}
+						>
+							<motion.div
+								className="absolute top-0 left-0 right-0 rounded-full"
+								style={{ background: 'linear-gradient(180deg, var(--acc-vibrant) 0%, color-mix(in oklab, var(--acc) 60%, transparent) 100%)' }}
+								initial={{ height: '0%' }}
+								animate={stepsInView ? { height: '100%' } : {}}
+								transition={{ duration: 1.8, ease: [0.25, 1, 0.5, 1], delay: 0.3 }}
+							/>
+						</div>
+
 						{STEPS.map((step, i) => (
 							<Reveal
 								key={i}
 								delay={i * 80}
 								className={[
 									'grid grid-cols-[56px_1fr] gap-6 py-9 border-t border-line',
-									'transition-transform duration-200 cursor-default',
+									'transition-transform duration-200 cursor-default group',
 									'hover:translate-x-[6px]',
 									i === STEPS.length - 1 ? 'border-b border-line' : '',
 								].join(' ')}
 							>
-								<div
-									className="font-serif text-[44px] leading-none text-acc tracking-tight opacity-[0.36] pt-1 transition-opacity duration-200 hover:opacity-100"
-									style={{ fontFamily: 'var(--f-serif)' }}
-								>
-									{String(i + 1).padStart(2, '0')}
+								{/* Step number — circle dot on the connecting line */}
+								<div className="relative flex flex-col items-center">
+									<motion.div
+										className="w-[30px] h-[30px] rounded-full border-2 border-line flex items-center justify-center mt-1 z-[1] transition-colors duration-300 group-hover:border-acc"
+										style={{ background: 'var(--bg-1)' }}
+										initial={{ scale: 0.6, opacity: 0 }}
+										animate={stepsInView ? { scale: 1, opacity: 1 } : {}}
+										transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1], delay: 0.2 + i * 0.18 }}
+									>
+										<span
+											className="font-mono text-[11px] font-bold text-acc-2 group-hover:text-acc transition-colors duration-300"
+										>
+											{String(i + 1).padStart(2, '0')}
+										</span>
+									</motion.div>
 								</div>
 								<div>
 									<h3

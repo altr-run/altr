@@ -6,6 +6,47 @@ import Reveal from './reveal'
 
 const ROTATING_WORDS = ['clarity', 'ownership', 'control', 'context'] as const
 
+const HERO_STATS = [
+	{ value: 6, suffix: 'h', label: 'saved per engineer per week' },
+	{ value: 18, suffix: 'm', label: 'thread to first reviewable spec' },
+	{ value: 100, suffix: '%', label: 'human approval at every gate' },
+] as const
+
+function HeroCountUp({
+	target,
+	suffix,
+	inView,
+	duration = 1100,
+}: {
+	target: number
+	suffix: string
+	inView: boolean
+	duration?: number
+}) {
+	const [val, setVal] = useState(0)
+	const started = useRef(false)
+
+	useEffect(() => {
+		if (!inView || started.current) return
+		started.current = true
+		const start = performance.now()
+		const tick = (now: number) => {
+			const t = Math.min((now - start) / duration, 1)
+			const ease = 1 - Math.pow(1 - t, 3)
+			setVal(Math.round(target * ease))
+			if (t < 1) requestAnimationFrame(tick)
+		}
+		requestAnimationFrame(tick)
+	}, [inView, target, duration])
+
+	return (
+		<>
+			{val}
+			{suffix}
+		</>
+	)
+}
+
 export default function Hero() {
 	const [wordIndex, setWordIndex] = useState(0)
 
@@ -25,6 +66,9 @@ export default function Hero() {
 
 	const sidebarRef = useRef<HTMLDivElement>(null)
 	const sidebarInView = useInView(sidebarRef, { once: true, margin: '-40px' })
+
+	const statsRef = useRef<HTMLDivElement>(null)
+	const statsInView = useInView(statsRef, { once: true, margin: '-60px' })
 
 	const word = ROTATING_WORDS[wordIndex]
 
@@ -107,16 +151,25 @@ export default function Hero() {
 				</div>
 
 				{/* outcome stat strip */}
-				<div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-2">
-					{[
-						{ stat: '6h', label: 'saved per engineer per week' },
-						{ stat: '18m', label: 'thread to first reviewable spec' },
-						{ stat: '100%', label: 'human approval at every gate' },
-					].map(({ stat, label }) => (
-						<div key={stat} className="flex items-baseline gap-1.5">
-							<span className="font-mono text-[15px] font-semibold text-acc">{stat}</span>
+				<div ref={statsRef} className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-2">
+					{HERO_STATS.map(({ value, suffix, label }, i) => (
+						<motion.div
+							key={label}
+							className="flex items-baseline gap-1.5"
+							initial={{ opacity: 0, y: 6 }}
+							animate={statsInView ? { opacity: 1, y: 0 } : {}}
+							transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1], delay: i * 0.1 }}
+						>
+							<span className="font-mono text-[15px] font-semibold text-acc tabular-nums">
+								<HeroCountUp
+									target={value}
+									suffix={suffix}
+									inView={statsInView}
+									duration={900 + i * 120}
+								/>
+							</span>
 							<span className="font-mono text-[10.5px] text-ink-4 tracking-widest uppercase">{label}</span>
-						</div>
+						</motion.div>
 					))}
 				</div>
 

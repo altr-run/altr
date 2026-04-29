@@ -1,12 +1,14 @@
+import Image from 'next/image'
+import { getBrandLogoUrl } from '@/lib/brand'
 import Reveal from './reveal'
 
-const SOURCES = [
-	'Slack threads',
-	'GitHub PRs',
-	'Linear issues',
-	'Docs and specs',
-	'Customer calls',
-	'CI and monitoring',
+const SOURCE_LOGOS = [
+	{ label: 'Slack threads', tool: 'Slack', domain: 'slack.com' },
+	{ label: 'GitHub PRs', tool: 'GitHub', domain: 'github.com' },
+	{ label: 'Linear issues', tool: 'Linear', domain: 'linear.app' },
+	{ label: 'Docs and specs', tool: 'Notion', domain: 'notion.so' },
+	{ label: 'Customer calls', tool: 'Zoom', domain: 'zoom.us' },
+	{ label: 'CI and monitoring', tool: 'Datadog', domain: 'datadoghq.com' },
 ] as const
 
 export default function Manifesto() {
@@ -106,20 +108,126 @@ export default function Manifesto() {
 						<div className="font-mono text-[10px] tracking-[0.14em] uppercase text-(--ink-4) pt-1.5">
 							Typical sources
 						</div>
-						<div className="flex flex-wrap gap-2.5">
-							{SOURCES.map((source) => (
-								<span
-									key={source}
-									className="py-2 px-3 rounded-full border border-(--line) font-mono text-[10.5px] tracking-[0.03em] text-(--ink-2)"
-									style={{
-										background: 'color-mix(in oklab, var(--panel) 88%, white 12%)',
-										boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.72)',
-										borderColor: 'color-mix(in oklab, var(--line) 82%, transparent)',
-									}}
-								>
-									{source}
-								</span>
-							))}
+						<div
+							className="relative overflow-hidden rounded-[28px] border border-(--line) p-4 md:p-5"
+							style={{
+								background:
+									'linear-gradient(180deg, color-mix(in oklab, var(--panel) 92%, white 8%) 0%, color-mix(in oklab, var(--panel) 96%, var(--bg) 4%) 100%)',
+								boxShadow:
+									'inset 0 1px 0 rgba(255,255,255,0.8), 0 24px 60px rgba(20, 26, 34, 0.08)',
+							}}
+						>
+							<div
+								className="pointer-events-none absolute inset-y-0 left-[36%] w-px opacity-80"
+								style={{
+									background:
+										'linear-gradient(180deg, transparent 0%, color-mix(in oklab, var(--acc) 50%, transparent) 16%, color-mix(in oklab, var(--line) 85%, transparent) 50%, color-mix(in oklab, var(--acc) 50%, transparent) 84%, transparent 100%)',
+								}}
+							/>
+							<div
+								className="pointer-events-none absolute inset-x-[18%] top-1/2 h-px -translate-y-1/2"
+								style={{
+									background:
+										'linear-gradient(90deg, transparent 0%, color-mix(in oklab, var(--line) 70%, transparent) 14%, color-mix(in oklab, var(--acc) 24%, transparent) 50%, color-mix(in oklab, var(--line) 70%, transparent) 86%, transparent 100%)',
+								}}
+							/>
+
+							<div
+								className="overflow-hidden"
+								style={{
+									maskImage:
+										'linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)',
+									WebkitMaskImage:
+										'linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)',
+								}}
+							>
+								<div className="flex w-max gap-4 animate-[marquee_26s_linear_infinite]">
+									{[...SOURCE_LOGOS, ...SOURCE_LOGOS].map((source, index) => {
+										const src = getBrandLogoUrl(source.domain, {
+											height: 24,
+											type: 'logo',
+											theme: 'dark',
+											fallback: 'transparent',
+										})
+										return (
+											<div
+												key={`${source.tool}-${index}`}
+												className="group flex min-w-[216px] items-center gap-3 rounded-[20px] border border-(--line) px-4 py-3"
+												style={{
+													background:
+														'linear-gradient(180deg, rgba(255,255,255,0.72) 0%, color-mix(in oklab, var(--panel) 90%, white 10%) 100%)',
+													borderColor:
+														'color-mix(in oklab, var(--line) 82%, transparent)',
+												}}
+											>
+												<div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/80 ring-1 ring-black/5">
+													<Image
+														src={src}
+														alt={source.tool}
+														height={24}
+														width={72}
+														className="max-h-6 w-auto object-contain grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
+														unoptimized
+													/>
+												</div>
+												<div className="min-w-0">
+													<div className="font-mono text-[9px] uppercase tracking-[0.16em] text-(--ink-4)">
+														{source.tool}
+													</div>
+													<div className="truncate font-sans text-[13px] text-(--ink-2)">
+														{source.label}
+													</div>
+												</div>
+											</div>
+										)
+									})}
+								</div>
+							</div>
+
+							<div
+								className="mt-4 overflow-hidden"
+								style={{
+									maskImage:
+										'linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)',
+									WebkitMaskImage:
+										'linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)',
+								}}
+							>
+								<div className="flex w-max gap-4 [animation-direction:reverse] animate-[marquee_32s_linear_infinite]">
+									{[...SOURCE_LOGOS.slice().reverse(), ...SOURCE_LOGOS.slice().reverse()].map((source, index) => {
+										const src = getBrandLogoUrl(source.domain, {
+											height: 28,
+											type: 'icon',
+											theme: 'dark',
+											fallback: 'lettermark',
+										})
+										return (
+											<div
+												key={`${source.label}-${index}`}
+												className="flex min-w-[172px] items-center gap-3 rounded-full border border-(--line) px-3.5 py-2"
+												style={{
+													background:
+														'color-mix(in oklab, var(--bg) 72%, var(--panel) 28%)',
+													borderColor:
+														'color-mix(in oklab, var(--line) 78%, transparent)',
+												}}
+											>
+												<Image
+													src={src}
+													alt={source.tool}
+													height={28}
+													width={28}
+													className="rounded-full object-contain"
+													unoptimized
+												/>
+												<span className="font-mono text-[10px] tracking-[0.05em] text-(--ink-3)">
+													{source.label}
+												</span>
+											</div>
+										)
+									})}
+								</div>
+							</div>
 						</div>
 					</div>
 				</Reveal>
