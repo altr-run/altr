@@ -27,14 +27,25 @@ export default function TalkTeam() {
 				</Reveal>
 				<Reveal>
 					<div
-						className="border border-line rounded-[28px] p-7"
+						className="relative border border-line rounded-[28px] p-7 overflow-hidden"
 						style={{
 							background: 'radial-gradient(80% 80% at 0% 0%, color-mix(in oklab, var(--acc) 8%, transparent) 0%, transparent 58%), linear-gradient(180deg, rgba(255,255,255,0.84) 0%, rgba(248,248,248,0.92) 100%)',
 							boxShadow: 'var(--sh-md)',
 						}}
 					>
-						<div className="font-mono text-[10px] uppercase tracking-widest text-ink-4 mb-6">
-							Design partner evaluation
+						{/* Subtle grid overlay — Mastra-inspired structural texture */}
+						<div
+							className="absolute inset-0 pointer-events-none opacity-[0.055]"
+							style={{
+								backgroundImage:
+									'linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px)',
+								backgroundSize: '32px 32px',
+							}}
+						/>
+						{/* Urgency strip */}
+						<div className="relative flex items-center gap-2 mb-6 font-mono text-[10px] tracking-[0.1em] uppercase text-ink-4">
+							<span className="w-1.5 h-1.5 rounded-full bg-acc shadow-[0_0_0_3px_color-mix(in_oklab,var(--acc)_14%,transparent)] animate-[pulse-dot_1.6s_ease-in-out_infinite] flex-shrink-0" />
+							Design partner evaluation · limited cohort · Q2 2026
 						</div>
 						<div className="grid gap-9 items-start" style={{ gridTemplateColumns: '1.1fr 0.9fr' }}>
 							<div>

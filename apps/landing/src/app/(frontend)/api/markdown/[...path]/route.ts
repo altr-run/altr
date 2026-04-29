@@ -16,6 +16,7 @@ type ModuleEntry = {
 	headline?: string | null
 	label?: string | null
 	eyebrow?: string | null
+	overline?: string | null
 	introText?: string | null
 	contentText?: string | null
 	body?: string | null
@@ -40,8 +41,24 @@ type ModuleEntry = {
 	}> | null
 	stats?: Array<{
 		value?: string | number | null
+		suffix?: string | null
 		label?: string | null
 		contentText?: string | null
+	}> | null
+	accordions?: Array<{
+		summary?: string | null
+		contentText?: string | null
+	}> | null
+	testimonials?: Array<{
+		quoteText?: string | null
+		author?: {
+			name?: string | null
+			title?: string | null
+		} | null
+	}> | null
+	ctas?: Array<{
+		label?: string | null
+		url?: string | null
 	}> | null
 }
 
@@ -75,8 +92,12 @@ type MarkdownData = {
 	related?: LinkEntry[] | null
 }
 
-export async function GET(request: Request) {
-	const path = normalizePath(new URL(request.url).searchParams.get('path'))
+export async function GET(
+	_request: Request,
+	context: { params: Promise<{ path: string[] }> },
+) {
+	const { path: pathParts } = await context.params
+	const path = normalizePath(pathParts?.join('/'))
 	const data = await getMarkdownData(path)
 	const doc = pickDocument(data, path)
 
@@ -117,15 +138,30 @@ async function getMarkdownData(path: string) {
 					headline,
 					label,
 					eyebrow,
+					overline,
 					body,
 					description,
 					'introText': pt::text(intro),
 					'contentText': pt::text(content),
+					ctas[]{
+						'label': link.label,
+						'url': select(
+							link.type == 'external' => link.external,
+							link.type == 'internal' => link.internal->metadata.slug.current
+						)
+					},
 					cards[]{
 						title,
 						body,
 						description,
-						'contentText': pt::text(content)
+						'contentText': pt::text(content),
+						ctas[]{
+							'label': link.label,
+							'url': select(
+								link.type == 'external' => link.external,
+								link.type == 'internal' => link.internal->metadata.slug.current
+							)
+						}
 					},
 					steps[]{
 						label,
@@ -141,8 +177,18 @@ async function getMarkdownData(path: string) {
 					},
 					stats[]{
 						value,
+						suffix,
 						label,
 						'contentText': pt::text(content)
+					},
+					accordions[]{
+						summary,
+						'contentText': pt::text(content)
+					},
+					testimonials[]{
+						...,
+						_type == 'reference' => @->,
+						'quoteText': pt::text(quote)
 					}
 				}
 			},
@@ -313,6 +359,8 @@ function moduleSections(modules: ModuleEntry[]) {
 			cleanText(module.label) ||
 			formatModuleType(module._type)
 		const body = [
+			module.overline,
+			module.eyebrow,
 			module.introText,
 			module.contentText,
 			module.body,
@@ -336,8 +384,21 @@ function moduleSections(modules: ModuleEntry[]) {
 				item.contentText,
 			]),
 			...(module.stats ?? []).flatMap((stat) => [
-				[stat.value, stat.label].filter(Boolean).join(' '),
+				[stat.value, stat.suffix, stat.label].filter(Boolean).join(' '),
 				stat.contentText,
+			]),
+			...(module.accordions ?? []).flatMap((accordion) => [
+				accordion.summary,
+				accordion.contentText,
+			]),
+			...(module.testimonials ?? []).flatMap((testimonial) => [
+				testimonial.quoteText,
+				[testimonial.author?.name, testimonial.author?.title]
+					.filter(Boolean)
+					.join(', '),
+			]),
+			...(module.ctas ?? []).flatMap((cta) => [
+				[cta.label, normalizeUrl(cta.url)].filter(Boolean).join(': '),
 			]),
 		]
 

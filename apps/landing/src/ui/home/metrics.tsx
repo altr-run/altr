@@ -3,6 +3,41 @@
 import { useEffect, useRef, useState } from 'react'
 import Reveal from './reveal'
 
+// Live counter that increments from a base number, simulating real-time activity
+function LiveCounter({
+	base,
+	ratePerMinute,
+	label,
+	prefix = '',
+	suffix = '',
+}: {
+	base: number
+	ratePerMinute: number
+	label: string
+	prefix?: string
+	suffix?: string
+}) {
+	const [val, setVal] = useState(base)
+	const startTime = useRef(Date.now())
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			const elapsed = (Date.now() - startTime.current) / 60000
+			setVal(Math.floor(base + elapsed * ratePerMinute))
+		}, 1800)
+		return () => clearInterval(interval)
+	}, [base, ratePerMinute])
+
+	return (
+		<div className="flex items-center gap-3">
+			<span className="font-mono text-[13px] font-semibold text-acc tabular-nums">
+				{prefix}{val.toLocaleString()}{suffix}
+			</span>
+			<span className="font-mono text-[10px] tracking-[0.08em] uppercase text-ink-4">{label}</span>
+		</div>
+	)
+}
+
 const STATS = [
 	{ value: 2.7, decimals: 1, suffix: '×', label: 'faster from request to reviewable spec' },
 	{ value: 41, decimals: 0, suffix: '%', label: 'less time spent rebuilding context' },
@@ -63,6 +98,25 @@ export default function Metrics() {
 			className="py-[120px] px-8 border-b border-line overflow-hidden"
 			style={{ background: 'var(--bg-1)' }}
 		>
+			{/* Live signal strip — Stripe-style incrementing counters */}
+			<div
+				className="border-b border-line mb-16 pb-4"
+				style={{ maxWidth: 'var(--maxw)', margin: '0 auto', marginBottom: 64, paddingBottom: 16, paddingLeft: 0, paddingRight: 0 }}
+			>
+				<div className="flex items-center gap-6 flex-wrap px-0">
+					<div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-4">
+						<span className="w-1.5 h-1.5 rounded-full bg-acc shadow-[0_0_0_3px_color-mix(in_oklab,var(--acc)_14%,transparent)] animate-[pulse-dot_1.6s_ease-in-out_infinite]" />
+						live signal
+					</div>
+					<div className="w-px h-3 bg-line flex-shrink-0" />
+					<LiveCounter base={14847} ratePerMinute={3} label="context trails preserved" />
+					<div className="w-px h-3 bg-line flex-shrink-0" />
+					<LiveCounter base={2341} ratePerMinute={1} label="handoff reconstructions eliminated" />
+					<div className="w-px h-3 bg-line flex-shrink-0" />
+					<LiveCounter base={918} ratePerMinute={0.4} label="specs with AC attached at merge" />
+				</div>
+			</div>
+
 			<div className="inner">
 				<div
 					className="grid gap-[80px] items-center"

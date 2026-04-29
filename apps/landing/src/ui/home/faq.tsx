@@ -74,11 +74,11 @@ export default function FAQ() {
 								<Accordion.Item
 									key={i}
 									value={String(i)}
-									className="border-b border-line"
+									className="border-b border-line group/item hover:bg-[color-mix(in_oklab,var(--acc)_2%,var(--bg))] transition-colors duration-200"
 								>
 									<Accordion.Header>
 										<Accordion.Trigger asChild>
-											<button className="flex justify-between items-center w-full py-[22px] text-left font-serif text-[22px] font-normal tracking-[-0.015em] text-ink bg-transparent border-0 cursor-pointer gap-4">
+											<button className="flex justify-between items-center w-full py-[22px] px-2 text-left font-serif text-[22px] font-normal tracking-[-0.015em] text-ink bg-transparent border-0 cursor-pointer gap-4">
 												<span>{item.q}</span>
 												<motion.span
 													animate={{ rotate: isOpen ? 45 : 0 }}
@@ -102,7 +102,7 @@ export default function FAQ() {
 													transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
 													style={{ overflow: 'hidden' }}
 												>
-													<p className="text-[15px] text-ink-2 leading-[1.65] pb-[22px]">
+													<p className="text-[15px] text-ink-2 leading-[1.65] pb-[22px] px-2">
 														{item.a}
 													</p>
 												</motion.div>
