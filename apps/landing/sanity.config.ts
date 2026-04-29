@@ -21,7 +21,7 @@ import { schema } from './src/sanity/schemaTypes'
 import structure from './src/sanity/structure'
 
 export default defineConfig({
-	title: 'SanityPress',
+	title: 'Altr Website',
 	basePath: '/admin',
 	projectId,
 	dataset,
