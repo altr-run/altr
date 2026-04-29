@@ -8,8 +8,8 @@ import Reveal from './reveal'
 const NOTIFICATIONS = [
 	{
 		tool: 'SL',
-		toolColor: '#4A154B',
-		toolBg: 'rgba(74,21,75,0.1)',
+		toolColor: 'var(--brand-slack)',
+		toolBg: 'var(--brand-slack-a)',
 		channel: '#eng-alerts',
 		who: 'priya',
 		avatar: 'P',
@@ -21,12 +21,12 @@ const NOTIFICATIONS = [
 	},
 	{
 		tool: 'LN',
-		toolColor: '#635BFF',
-		toolBg: 'rgba(99,91,255,0.1)',
+		toolColor: 'var(--brand-linear)',
+		toolBg: 'var(--brand-linear-a)',
 		channel: 'Linear',
 		who: 'System',
 		avatar: '▲',
-		avatarBg: '#635BFF',
+		avatarBg: 'var(--brand-linear)',
 		msg: '[ENG-142] Magic-link invite fails silently on mobile — assigned to you',
 		time: '9:04 AM',
 		unread: true,
@@ -34,12 +34,12 @@ const NOTIFICATIONS = [
 	},
 	{
 		tool: 'GH',
-		toolColor: '#1a1a1a',
-		toolBg: 'rgba(26,26,26,0.07)',
+		toolColor: 'var(--brand-github)',
+		toolBg: 'var(--brand-github-a)',
 		channel: 'GitHub',
 		who: 'ci-runner',
 		avatar: '○',
-		avatarBg: '#1a1a1a',
+		avatarBg: 'var(--brand-github)',
 		msg: 'CI failed on main · 2 checks failed · auth/token.test.ts',
 		time: '9:06 AM',
 		unread: true,
@@ -47,8 +47,8 @@ const NOTIFICATIONS = [
 	},
 	{
 		tool: 'SL',
-		toolColor: '#4A154B',
-		toolBg: 'rgba(74,21,75,0.1)',
+		toolColor: 'var(--brand-slack)',
+		toolBg: 'var(--brand-slack-a)',
 		channel: 'alex (DM)',
 		who: 'alex',
 		avatar: 'A',
@@ -60,8 +60,8 @@ const NOTIFICATIONS = [
 	},
 	{
 		tool: 'GH',
-		toolColor: '#1a1a1a',
-		toolBg: 'rgba(26,26,26,0.07)',
+		toolColor: 'var(--brand-github)',
+		toolBg: 'var(--brand-github-a)',
 		channel: 'GitHub',
 		who: 'alex',
 		avatar: 'A',
@@ -73,8 +73,8 @@ const NOTIFICATIONS = [
 	},
 	{
 		tool: 'SL',
-		toolColor: '#4A154B',
-		toolBg: 'rgba(74,21,75,0.1)',
+		toolColor: 'var(--brand-slack)',
+		toolBg: 'var(--brand-slack-a)',
 		channel: '#product',
 		who: 'alex',
 		avatar: 'A',
@@ -86,12 +86,12 @@ const NOTIFICATIONS = [
 	},
 	{
 		tool: 'EM',
-		toolColor: '#B45309',
-		toolBg: 'rgba(180,83,9,0.08)',
+		toolColor: 'var(--amber)',
+		toolBg: 'var(--amber-soft)',
 		channel: 'Support → Eng',
 		who: 'support',
 		avatar: 'S',
-		avatarBg: '#B45309',
+		avatarBg: 'var(--amber)',
 		msg: '[Escalation] 3 enterprise users can\'t log in since Thursday\'s deploy',
 		time: '9:14 AM',
 		unread: true,
@@ -99,12 +99,12 @@ const NOTIFICATIONS = [
 	},
 	{
 		tool: 'LN',
-		toolColor: '#635BFF',
-		toolBg: 'rgba(99,91,255,0.1)',
+		toolColor: 'var(--brand-linear)',
+		toolBg: 'var(--brand-linear-a)',
 		channel: 'Linear',
 		who: 'System',
 		avatar: '▲',
-		avatarBg: '#635BFF',
+		avatarBg: 'var(--brand-linear)',
 		msg: '[ENG-138] Rate limit not enforcing in prod — priority: urgent',
 		time: '9:15 AM',
 		unread: true,
@@ -169,9 +169,9 @@ export default function Flow() {
 							}}
 						>
 							<div className="flex items-center gap-[6px]">
-								<span className="w-[11px] h-[11px] rounded-full bg-[#ff5f57]" />
-								<span className="w-[11px] h-[11px] rounded-full bg-[#ffbd2e]" />
-								<span className="w-[11px] h-[11px] rounded-full bg-[#28c840]" />
+								<span className="w-[11px] h-[11px] rounded-full bg-[var(--macos-close)]" />
+								<span className="w-[11px] h-[11px] rounded-full bg-[var(--macos-minimize)]" />
+								<span className="w-[11px] h-[11px] rounded-full bg-[var(--macos-maximize)]" />
 							</div>
 							<div className="flex items-center gap-3">
 								<span className="font-mono text-[11px] text-ink-3 tracking-wide">
@@ -179,7 +179,7 @@ export default function Flow() {
 								</span>
 								<span
 									className="font-mono text-[10px] px-2 py-0.5 rounded-full text-white font-semibold"
-									style={{ background: '#ef4444' }}
+									style={{ background: 'var(--status-error)' }}
 								>
 									9
 								</span>
@@ -231,7 +231,7 @@ export default function Flow() {
 									{n.unread && (
 										<span
 											className="absolute left-[10px] top-[50%] translate-y-[-50%] w-[5px] h-[5px] rounded-full flex-shrink-0"
-											style={{ background: n.urgent ? '#ef4444' : 'var(--acc)' }}
+											style={{ background: n.urgent ? 'var(--status-error)' : 'var(--acc)' }}
 										/>
 									)}
 
@@ -266,7 +266,7 @@ export default function Flow() {
 											{n.urgent && (
 												<span
 													className="font-mono text-[9px] px-1.5 py-px rounded-full text-white font-semibold ml-auto flex-shrink-0"
-													style={{ background: '#ef4444' }}
+													style={{ background: 'var(--status-error)' }}
 												>
 													urgent
 												</span>
@@ -292,11 +292,11 @@ export default function Flow() {
 								}}
 							>
 								<div className="flex gap-[3px]">
-									{['#4A154B', '#635BFF', '#1a1a1a'].map((c, i) => (
+									{['var(--brand-slack-a)', 'var(--brand-linear-a)', 'var(--brand-github-a)'].map((bg, i) => (
 										<span
 											key={i}
 											className="w-[14px] h-[14px] rounded-[4px] border border-line"
-											style={{ background: `${c}18` }}
+											style={{ background: bg }}
 										/>
 									))}
 								</div>

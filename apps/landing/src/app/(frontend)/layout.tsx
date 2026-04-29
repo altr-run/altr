@@ -1,8 +1,11 @@
 import localFont from 'next/font/local'
 import { Mona_Sans, Shalimar } from 'next/font/google'
+import { groq } from 'next-sanity'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { preconnect } from 'react-dom'
+import { sanityFetchLive } from '@/sanity/lib/live'
 import SiteNav from '@/ui/site/site-nav'
+import type { SiteChromeContent } from '@/ui/site/site-nav'
 import SiteFooter from '@/ui/site/site-footer'
 import FooterCTA from '@/ui/site/footer-cta'
 import FooterReveal from '@/ui/site/footer-reveal'
@@ -43,6 +46,7 @@ export default async function RootLayout({
 	children: React.ReactNode
 }>) {
 	preconnect('https://cdn.sanity.io')
+	const chromeContent = await getSiteChromeContent()
 
 	return (
 		<html
@@ -52,11 +56,11 @@ export default async function RootLayout({
 		>
 			<NuqsAdapter>
 				<body className="bg-background text-foreground antialiased">
-					<SiteNav />
+					<SiteNav content={chromeContent} />
 					<main>{children}</main>
 					<FooterCTA />
 					<FooterReveal>
-						<SiteFooter />
+						<SiteFooter content={chromeContent} />
 					</FooterReveal>
 
 					<VisualEditing />
@@ -64,4 +68,34 @@ export default async function RootLayout({
 			</NuqsAdapter>
 		</html>
 	)
+}
+
+async function getSiteChromeContent(): Promise<SiteChromeContent> {
+	return sanityFetchLive<SiteChromeContent>({
+		query: groq`{
+			"useCases": *[_type == 'use-case' && defined(metadata.slug.current) && metadata.noIndex != true]
+				| order(title asc){
+					title,
+					problem,
+					"slug": metadata.slug.current
+				},
+			"integrations": *[_type == 'integration' && defined(metadata.slug.current) && metadata.noIndex != true]
+				| order(tool asc){
+					tool,
+					category,
+					domain,
+					"slug": metadata.slug.current
+				},
+			"comparePages": *[_type == 'compare.page' && defined(metadata.slug.current) && metadata.noIndex != true]
+				| order(competitor asc){
+					competitor,
+					"slug": metadata.slug.current
+				},
+			"legalPages": *[_type == 'legal.page' && defined(slug.current) && noIndex != true]
+				| order(title asc){
+					title,
+					"slug": slug.current
+				}
+		}`,
+	})
 }

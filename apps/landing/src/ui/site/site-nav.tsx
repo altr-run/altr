@@ -2,7 +2,13 @@
 
 import HoverDetails from '@/ui/hover-details'
 import LogoMark from '@/ui/home/logo-mark'
-import { COMPARE_PAGES, INTEGRATIONS, USE_CASES } from '@/content'
+
+export type SiteChromeContent = {
+	useCases: Array<{ title: string; problem: string | null; slug: string }>
+	integrations: Array<{ tool: string; category: string | null; domain: string | null; slug: string }>
+	comparePages: Array<{ competitor: string; slug: string }>
+	legalPages: Array<{ title: string; slug: string }>
+}
 
 // ── Link style helpers ────────────────────────────────────────────────────────
 
@@ -113,14 +119,9 @@ const AGENT_ITEMS = [
 	},
 ]
 
-const TOP_INTEGRATIONS = [
-	{ abbr: 'SL', label: 'Slack',   desc: 'Feature threads',  slug: 'slack',   color: '#4A154B', bg: 'rgba(74,21,75,0.10)' },
-	{ abbr: 'GH', label: 'GitHub',  desc: 'PR events & CI',   slug: 'github',  color: '#1a1a1a', bg: 'rgba(26,26,26,0.08)' },
-	{ abbr: 'LN', label: 'Linear',  desc: 'Issue updates',    slug: 'linear',  color: '#635BFF', bg: 'rgba(99,91,255,0.10)' },
-	{ abbr: 'NT', label: 'Notion',  desc: 'Product specs',    slug: 'notion',  color: '#1a1a1a', bg: 'rgba(26,26,26,0.06)' },
-]
+function ProductMenu({ integrations }: { integrations: SiteChromeContent['integrations'] }) {
+	const topIntegrations = integrations.slice(0, 4)
 
-function ProductMenu() {
 	return (
 		<HoverDetails safeAreaOnHover closeAfterNavigate className="relative">
 			<summary className={NAV_TRIGGER}>
@@ -172,17 +173,19 @@ function ProductMenu() {
 					{/* Col 3: Integrations */}
 					<div className="pl-8">
 						<div className={PANEL_HEADING}>Integrations</div>
-						{TOP_INTEGRATIONS.map((int) => (
-							<a key={int.abbr} href={`/integrations/${int.slug}`} className={MEGA_ITEM}>
+						{topIntegrations.map((int) => (
+							<a key={int.slug} href={`/integrations/${int.slug}`} className={MEGA_ITEM}>
 								<span
 									className="flex-shrink-0 w-[20px] h-[20px] rounded-[4px] flex items-center justify-center font-mono text-[8px] font-bold border border-(--line) mt-[1px]"
-									style={{ background: int.bg, color: int.color }}
+									style={{ background: 'rgba(26,26,26,0.08)', color: '#1a1a1a' }}
 								>
-									{int.abbr}
+									{int.tool.slice(0, 2).toUpperCase()}
 								</span>
 								<div>
-									<div className="text-[13px] font-semibold text-ink leading-snug">{int.label}</div>
-									<div className="text-[11px] text-ink-4 mt-0.5">{int.desc}</div>
+									<div className="text-[13px] font-semibold text-ink leading-snug">{int.tool}</div>
+									{int.category && (
+										<div className="text-[11px] text-ink-4 mt-0.5">{int.category}</div>
+									)}
 								</div>
 							</a>
 						))}
@@ -190,7 +193,7 @@ function ProductMenu() {
 							href="/integrations"
 							className="font-mono text-[11px] tracking-[0.06em] text-acc no-underline hover:underline mt-3 inline-block"
 						>
-							All 6 integrations →
+							All {integrations.length} integrations →
 						</a>
 					</div>
 				</div>
@@ -214,8 +217,8 @@ const USE_CASE_GROUPS = {
 	'Operations': ['migrations', 'release-follow-through', 'incident-follow-up'],
 } as const
 
-function SolutionsMenu() {
-	const useCases = USE_CASES as Record<string, { title: string; problem?: string | null }>
+function SolutionsMenu({ useCases }: { useCases: SiteChromeContent['useCases'] }) {
+	const useCasesBySlug = new Map(useCases.map((useCase) => [useCase.slug, useCase]))
 
 	return (
 		<HoverDetails safeAreaOnHover closeAfterNavigate className="relative">
@@ -229,7 +232,7 @@ function SolutionsMenu() {
 						<div key={group} className={group === 'Operations' ? 'pl-8' : ''}>
 							<div className={PANEL_HEADING}>{group}</div>
 							{slugs.map((slug) => {
-								const uc = useCases[slug]
+								const uc = useCasesBySlug.get(slug)
 								if (!uc) return null
 								return (
 									<a key={slug} href={`/use-cases/${slug}`} className={MEGA_ITEM}>
@@ -262,8 +265,7 @@ function SolutionsMenu() {
 
 // ── Integrations menu ─────────────────────────────────────────────────────────
 
-function IntegrationsMenu() {
-	const integrations = Object.entries(INTEGRATIONS) as [string, { tool: string; domain?: string; category?: string | null }][]
+function IntegrationsMenu({ integrations }: { integrations: SiteChromeContent['integrations'] }) {
 	return (
 		<HoverDetails safeAreaOnHover closeAfterNavigate className="relative">
 			<summary className={NAV_TRIGGER}>
@@ -272,8 +274,8 @@ function IntegrationsMenu() {
 			</summary>
 			<DropdownPanel>
 				<div className={PANEL_HEADING + ' mb-3'}>Signal sources</div>
-				{integrations.map(([slug, int]) => (
-					<a key={slug} href={`/integrations/${slug}`} className={DROPDOWN_ITEM}>
+				{integrations.map((int) => (
+					<a key={int.slug} href={`/integrations/${int.slug}`} className={DROPDOWN_ITEM}>
 						<span className="block text-ink text-[13px] font-medium leading-snug">{int.tool}</span>
 						{int.category && (
 							<span className="block text-ink-4 text-[11px] font-mono tracking-widest uppercase">{int.category}</span>
@@ -292,8 +294,7 @@ function IntegrationsMenu() {
 
 // ── Compare menu ──────────────────────────────────────────────────────────────
 
-function CompareMenu() {
-	const comparePages = Object.entries(COMPARE_PAGES)
+function CompareMenu({ comparePages }: { comparePages: SiteChromeContent['comparePages'] }) {
 	return (
 		<HoverDetails safeAreaOnHover closeAfterNavigate className="relative">
 			<summary className={NAV_TRIGGER}>
@@ -302,8 +303,8 @@ function CompareMenu() {
 			</summary>
 			<DropdownPanel>
 				<div className={PANEL_HEADING + ' mb-3'}>Altr vs.</div>
-				{comparePages.map(([slug, cp]) => (
-					<a key={slug} href={`/compare/${slug}`} className={DROPDOWN_ITEM}>
+				{comparePages.map((cp) => (
+					<a key={cp.slug} href={`/compare/${cp.slug}`} className={DROPDOWN_ITEM}>
 						<span className="block text-ink text-[13px] font-medium">{cp.competitor}</span>
 					</a>
 				))}
@@ -319,7 +320,7 @@ function CompareMenu() {
 
 // ── Main nav ──────────────────────────────────────────────────────────────────
 
-export default function SiteNav() {
+export default function SiteNav({ content }: { content: SiteChromeContent }) {
 	return (
 		<nav className="fixed top-[14px] left-0 right-0 z-80 px-5 bg-transparent pointer-events-none">
 			<div className="nav-pill pointer-events-auto">
@@ -336,10 +337,10 @@ export default function SiteNav() {
 
 				{/* Center: nav items */}
 				<div className="flex items-center gap-5">
-					<ProductMenu />
-					<SolutionsMenu />
-					<IntegrationsMenu />
-					<CompareMenu />
+					<ProductMenu integrations={content.integrations} />
+					<SolutionsMenu useCases={content.useCases} />
+					<IntegrationsMenu integrations={content.integrations} />
+					<CompareMenu comparePages={content.comparePages} />
 					<a
 						href="/blog"
 						className="text-[13px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink"

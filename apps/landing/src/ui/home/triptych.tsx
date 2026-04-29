@@ -21,11 +21,11 @@ function SceneChrome({ label, status }: { label: string; status: string }) {
 			<div className="flex gap-[5px]">
 				<span
 					className="w-[7px] h-[7px] rounded-full"
-					style={{ background: '#ff5f57' }}
+					style={{ background: 'var(--macos-close)' }}
 				/>
 				<span
 					className="w-[7px] h-[7px] rounded-full"
-					style={{ background: '#ffbd2e' }}
+					style={{ background: 'var(--macos-minimize)' }}
 				/>
 				<span
 					className="w-[7px] h-[7px] rounded-full bg-acc"
@@ -221,7 +221,7 @@ function RoleVisualization() {
 			>
 				{/* Signal pill */}
 				<div
-					className="relative self-start py-2 px-[10px] rounded-full font-mono text-[10px] text-[#15200b]"
+					className="relative self-start py-2 px-[10px] rounded-full font-mono text-[10px] text-(--acc-ink)"
 					style={{
 						fontFamily: 'var(--f-mono)',
 						background:
@@ -250,7 +250,7 @@ function RoleVisualization() {
 						{/* Plan lane */}
 						<div className="grid items-center gap-[14px]" style={{ gridTemplateColumns: '78px 1fr' }}>
 							<span
-								className="inline-flex items-center justify-center py-[6px] px-2 rounded-full font-mono text-[10px] text-[#15200b]"
+								className="inline-flex items-center justify-center py-[6px] px-2 rounded-full font-mono text-[10px] text-(--acc-ink)"
 								style={{
 									fontFamily: 'var(--f-mono)',
 									background: 'var(--acc)',

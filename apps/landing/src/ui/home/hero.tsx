@@ -150,6 +150,33 @@ export default function Hero() {
 					</a>
 				</div>
 
+				{/* Social proof row */}
+				<div className="flex flex-col items-center gap-2.5 mt-1">
+					<div className="flex items-center gap-3">
+						{/* Avatar stack */}
+						<div className="flex -space-x-2">
+							{[
+								{ initials: 'EJ', bg: '#2a3f1a', color: 'var(--acc)' },
+								{ initials: 'RP', bg: '#1a2d3f', color: '#52b8ff' },
+								{ initials: 'MC', bg: '#3f2a1a', color: '#ffb852' },
+								{ initials: 'SK', bg: '#2a1a3f', color: '#c852ff' },
+							].map((a) => (
+								<div
+									key={a.initials}
+									className="w-7 h-7 rounded-full border-2 border-bg flex items-center justify-center font-sans font-semibold text-[9.5px] tracking-tight flex-shrink-0"
+									style={{ background: a.bg, color: a.color }}
+								>
+									{a.initials}
+								</div>
+							))}
+						</div>
+						<div className="flex items-center gap-2 font-mono text-[10.5px] tracking-[0.06em] text-ink-3">
+							<span className="w-1.5 h-1.5 rounded-full bg-acc animate-[pulse-dot_1.6s_ease-in-out_infinite] flex-shrink-0" />
+							<span>10 teams on limited pilot · <em className="not-italic text-ink-2">invite-only</em></span>
+						</div>
+					</div>
+				</div>
+
 				{/* outcome stat strip */}
 				<div ref={statsRef} className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-2">
 					{HERO_STATS.map(({ value, suffix, label }, i) => (
@@ -213,9 +240,9 @@ export default function Hero() {
 							}}
 						>
 							<div className="flex items-center gap-[6px]">
-								<span className="w-[12px] h-[12px] rounded-full bg-[#ff5f57]" />
-								<span className="w-[12px] h-[12px] rounded-full bg-[#ffbd2e]" />
-								<span className="w-[12px] h-[12px] rounded-full bg-[#28c840]" />
+								<span className="w-[12px] h-[12px] rounded-full bg-[var(--macos-close)]" />
+								<span className="w-[12px] h-[12px] rounded-full bg-[var(--macos-minimize)]" />
+								<span className="w-[12px] h-[12px] rounded-full bg-[var(--macos-maximize)]" />
 							</div>
 							<div className="flex items-center gap-1 justify-center overflow-hidden">
 								<span className="font-mono text-[11px] px-[10px] py-[6px] rounded-lg text-ink-3">

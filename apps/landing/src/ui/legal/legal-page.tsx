@@ -1,9 +1,7 @@
 import { PortableText } from 'next-sanity'
 import Reveal from '@/ui/home/reveal'
-import type { LegalPageContent, LegalSection } from '@/content/legal'
 
-// Shape of a page coming from Sanity CMS
-export type SanityLegalPage = {
+export type LegalPageData = {
 	title: string
 	category: string
 	lastUpdated: string | null
@@ -13,11 +11,7 @@ export type SanityLegalPage = {
 }
 
 type Props = {
-	page: LegalPageContent | SanityLegalPage
-}
-
-function isSanityPage(page: LegalPageContent | SanityLegalPage): page is SanityLegalPage {
-	return 'body' in page && Array.isArray((page as SanityLegalPage).body)
+	page: LegalPageData
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -50,26 +44,6 @@ const portableTextComponents = {
 			</ol>
 		),
 	},
-}
-
-function SectionContent({ section }: { section: LegalSection }) {
-	return (
-		<div>
-			<h2 className="font-serif text-2xl text-ink mt-12 mb-4">{section.heading}</h2>
-			{section.body.map((para, i) => (
-				<p key={i} className="text-ink-2 leading-relaxed text-[15px] mb-4">
-					{para}
-				</p>
-			))}
-			{section.list && section.list.length > 0 && (
-				<ul className="list-disc pl-5 flex flex-col gap-1.5 text-ink-2 text-[15px] leading-relaxed mb-4">
-					{section.list.map((item, i) => (
-						<li key={i}>{item}</li>
-					))}
-				</ul>
-			)}
-		</div>
-	)
 }
 
 export default function LegalPage({ page }: Props) {
@@ -111,20 +85,12 @@ export default function LegalPage({ page }: Props) {
 
 			{/* Body */}
 			<section className="max-w-[760px] mx-auto px-6 py-12">
-				{isSanityPage(page) ? (
-					<Reveal>
-						<div className="prose-legal">
-							{/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- next-sanity PortableText accepts unknown[] */}
-							<PortableText value={page.body as any} components={portableTextComponents} />
-						</div>
-					</Reveal>
-				) : (
-					page.sections.map((section, i) => (
-						<Reveal key={section.heading} delay={i * 40}>
-							<SectionContent section={section} />
-						</Reveal>
-					))
-				)}
+				<Reveal>
+					<div className="prose-legal">
+						{/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- next-sanity PortableText accepts unknown[] */}
+						<PortableText value={page.body as any} components={portableTextComponents} />
+					</div>
+				</Reveal>
 			</section>
 
 			{/* CTA */}

@@ -2,7 +2,6 @@ import type { MetadataRoute } from 'next'
 import { groq } from 'next-sanity'
 import { ROUTES } from '@/lib/env'
 import { sanityFetchLive } from '@/sanity/lib/live'
-import { LEGAL_PAGES } from '@/content/legal'
 
 export const dynamic = 'force-dynamic'
 
@@ -91,19 +90,5 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 		},
 	})
 
-	// Add static legal entries for slugs not in Sanity
-	const sanityLegalSlugs = new Set(
-		(data.legalPages ?? []).map((entry) =>
-			String(entry.url ?? '').split('/').pop() ?? '',
-		),
-	)
-	const staticLegalEntries: MetadataRoute.Sitemap = Object.keys(LEGAL_PAGES)
-		.filter((slug) => !sanityLegalSlugs.has(slug))
-		.map((slug) => ({
-			url: `${process.env.NEXT_PUBLIC_BASE_URL}/${ROUTES.legal}/${slug}`,
-			lastModified: new Date(LEGAL_PAGES[slug]!.lastUpdated),
-			priority: 0.3,
-		}))
-
-	return [...Object.values(data).flat().filter(Boolean), ...staticLegalEntries]
+	return Object.values(data).flat().filter(Boolean)
 }

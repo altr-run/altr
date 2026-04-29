@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState, type ComponentProps } from 'react'
 import { useIsDesktop } from '@/hooks/useMatchMedia'
 import { cn } from '@/lib/utils'
-import css from './hover-details.module.css'
 
 /**
  * @param safeAreaOnHover - Adds a safe area around the details element to prevent it from closing when the mouse leaves the element
@@ -49,7 +48,7 @@ export default function ({
 
 	return (
 		<details
-			className={cn(safeAreaOnHover && css.safearea, className)}
+			className={cn(safeAreaOnHover && 'hover-safearea', className)}
 			open={open}
 			key={String(open)}
 			{...events}

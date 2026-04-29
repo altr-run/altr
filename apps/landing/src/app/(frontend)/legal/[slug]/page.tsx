@@ -4,9 +4,7 @@ import { notFound } from 'next/navigation'
 import { ROUTES } from '@/lib/env'
 import { client } from '@/sanity/lib/client'
 import { sanityFetchLive } from '@/sanity/lib/live'
-import { LEGAL_PAGES } from '@/content/legal'
-import LegalPage, { type SanityLegalPage } from '@/ui/legal/legal-page'
-import type { LegalPageContent } from '@/content/legal'
+import LegalPage, { type LegalPageData } from '@/ui/legal/legal-page'
 
 type Props = {
 	params: Promise<{ slug: string }>
@@ -45,12 +43,7 @@ export async function generateStaticParams() {
 			'slug': slug.current
 		}`,
 	)
-	const contentSlugs = Object.keys(LEGAL_PAGES).map((slug) => ({ slug }))
-	const allSlugs = [
-		...sanitySlugs,
-		...contentSlugs.filter((cs) => !sanitySlugs.some((ss) => ss.slug === cs.slug)),
-	]
-	return allSlugs
+	return sanitySlugs
 }
 
 const LEGAL_PAGE_QUERY = groq`*[_type == 'legal.page' && slug.current == $slug][0]{
@@ -62,11 +55,9 @@ const LEGAL_PAGE_QUERY = groq`*[_type == 'legal.page' && slug.current == $slug][
 	noIndex
 }`
 
-async function getPage(slug: string): Promise<LegalPageContent | SanityLegalPage | null> {
-	const fromSanity = await sanityFetchLive<SanityLegalPage | null>({
+async function getPage(slug: string): Promise<LegalPageData | null> {
+	return sanityFetchLive<LegalPageData | null>({
 		query: LEGAL_PAGE_QUERY,
 		params: { slug },
 	})
-	if (fromSanity) return fromSanity
-	return LEGAL_PAGES[slug] ?? null
 }

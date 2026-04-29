@@ -63,18 +63,32 @@
 	--ring-strong:  var(--black-a4);
 	--glow-soft:    color-mix(in oklch, var(--acc-vibrant) 14%, transparent);
 
-	/* Accent — Digital Electric Lime Palette (Reference #89F336) */
-	--acc:          #4A8F00;   /* Compliant Action Lime (Clean, no mud) */
-	--acc-vibrant:  #9DFF52;   /* Electric Glow (for shaders/glows) */
-	--acc-2:        #3D7000;   /* Deeper hover state */
-	--acc-soft:     color-mix(in oklab, var(--acc-vibrant) 18%, var(--bg));
-	--acc-ink:      #0a0a0a;   /* Dark ink on vibrant backgrounds */
+	/* Accent — native Radix lime scale (no overrides) */
+	--acc:          var(--lime-9);   /* Primary lime action */
+	--acc-vibrant:  var(--lime-9);   /* Same — lime-9 IS the vibrant glow */
+	--acc-2:        var(--lime-10);  /* Deeper hover state */
+	--acc-soft:     var(--lime-3);   /* Soft tint background */
+	--acc-ink:      var(--lime-12);  /* Dark ink on lime backgrounds */
 
-	/* Radix Overrides */
-	--lime-9:  #89F336;        /* Raw reference lime */
-	--lime-10: var(--acc);
-	--lime-11: var(--acc-2);
-	--lime-3:  var(--acc-soft);
+	/* Brand colors — integration identity, used in flow/pax-live/context-lost */
+	--brand-slack:   #4A154B;
+	--brand-slack-a: rgba(74, 21, 75, 0.10);
+	--brand-linear:  #5E6AD2;
+	--brand-linear-a: rgba(94, 106, 210, 0.10);
+	--brand-github:  #1a1a1a;
+	--brand-github-a: rgba(26, 26, 26, 0.08);
+	--brand-notion:  #1a1a1a;
+	--brand-notion-a: rgba(26, 26, 26, 0.06);
+	--brand-notion-light-a: rgba(26, 26, 26, 0.04);
+
+	/* macOS traffic light colors — realistic window chrome */
+	--macos-close:    #ff5f57;
+	--macos-minimize: #ffbd2e;
+	--macos-maximize: #28c840;
+
+	/* Status / semantic spot colors */
+	--status-error: #ef4444;
+	--status-warn:  var(--amber-9);
 
 	/* Amber */
 	--amber:      var(--amber-9);
@@ -346,7 +360,7 @@
 		background:
 			linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 100%),
 			color-mix(in oklab, var(--acc) 84%, var(--acc-vibrant) 16%);
-		color: #fff;
+		color: var(--acc-ink);
 		border-color: color-mix(in oklab, var(--acc-vibrant) 42%, rgba(255,255,255,0.18));
 		backdrop-filter: blur(14px) saturate(1.5);
 		-webkit-backdrop-filter: blur(14px) saturate(1.5);
@@ -354,21 +368,23 @@
 			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 22%, transparent),
 			0 12px 28px color-mix(in oklab, var(--acc) 38%, transparent),
 			0 2px 8px color-mix(in oklab, var(--acc-vibrant) 18%, transparent),
-			inset 0 1px 0 rgba(255,255,255,0.30),
-			inset 0 -1px 0 rgba(0,0,0,0.08);
+			inset 0 4px 10px rgba(255,255,255,0.22),
+			inset 0 1px 0 rgba(255,255,255,0.38),
+			inset 0 -2px 6px rgba(0,0,0,0.14);
 
 		&:hover {
 			background:
 				linear-gradient(135deg, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.06) 100%),
 				color-mix(in oklab, var(--acc) 74%, var(--acc-vibrant) 26%);
 			border-color: color-mix(in oklab, var(--acc-vibrant) 58%, rgba(255,255,255,0.22));
-			color: #fff;
+			color: var(--acc-ink);
 			box-shadow:
 				0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 32%, transparent),
 				0 16px 36px color-mix(in oklab, var(--acc) 45%, transparent),
 				0 4px 14px color-mix(in oklab, var(--acc-vibrant) 26%, transparent),
-				inset 0 1px 0 rgba(255,255,255,0.34),
-				inset 0 -1px 0 rgba(0,0,0,0.06);
+				inset 0 4px 12px rgba(255,255,255,0.28),
+				inset 0 1px 0 rgba(255,255,255,0.44),
+				inset 0 -2px 6px rgba(0,0,0,0.12);
 		}
 	}
 
@@ -414,8 +430,9 @@
 			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 28%, transparent),
 			0 10px 24px color-mix(in oklab, var(--acc) 32%, transparent),
 			0 2px 8px color-mix(in oklab, var(--acc-vibrant) 22%, transparent),
-			inset 0 1px 0 rgba(255,255,255,0.38),
-			inset 0 -1px 0 rgba(0,0,0,0.06);
+			inset 0 4px 10px rgba(255,255,255,0.65),
+			inset 0 1px 0 rgba(255,255,255,0.82),
+			inset 0 -2px 6px color-mix(in oklab, var(--acc-2) 38%, rgba(0,0,0,0.10));
 
 		&:hover {
 			background:
@@ -427,8 +444,9 @@
 				0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 40%, transparent),
 				0 14px 30px color-mix(in oklab, var(--acc) 40%, transparent),
 				0 4px 12px color-mix(in oklab, var(--acc-vibrant) 30%, transparent),
-				inset 0 1px 0 rgba(255,255,255,0.44),
-				inset 0 -1px 0 rgba(0,0,0,0.04);
+				inset 0 4px 12px rgba(255,255,255,0.72),
+				inset 0 1px 0 rgba(255,255,255,0.88),
+				inset 0 -2px 6px color-mix(in oklab, var(--acc-2) 45%, rgba(0,0,0,0.08));
 		}
 	}
 
@@ -504,10 +522,71 @@
 }
 
 /* ─────────────────────────────────────────────────────
+   Migrated from CSS modules — component-scoped patterns
+   ───────────────────────────────────────────────────── */
+@layer components {
+
+	/* ── Header: grid-template-areas layout ─────────────
+	   Migrated from src/ui/header/header.module.css
+	   Usage: className="header-nav-grid"                  */
+	.header-nav-grid {
+		grid-template-areas: 'top' 'navigation' 'ctas';
+
+		@media (width >= 48rem) {
+			grid-template-areas: 'top navigation ctas';
+			grid-template-columns: auto 1fr auto;
+		}
+	}
+
+	/* ── Logo list: infinite scroll track ───────────────
+	   Migrated from src/ui/modules/logo-list.module.css
+	   Usage: className="logo-track"                       */
+	.logo-track {
+		& > * {
+			--xi: calc((var(--count) - var(--index)) * 100%);
+			--xf: calc((var(--index) + 1) * -100%);
+			translate: var(--xi) 0;
+			animation: logo-scroll var(--duration) linear infinite;
+			animation-delay: calc(var(--duration) / var(--count) * var(--index) - var(--count) * 2s);
+		}
+
+		&:hover > * {
+			animation-play-state: paused;
+		}
+	}
+
+	/* ── Hover-details: clip-path safe area ─────────────
+	   Migrated from src/ui/hover-details.module.css
+	   Usage: className="hover-safearea"                   */
+	.hover-safearea {
+		@media (width >= 48rem) {
+			--safearea-x: 4rem;
+
+			& > summary {
+				position: relative;
+			}
+
+			&[open] > summary:hover::before {
+				content: '';
+				position: absolute;
+				z-index: 1;
+				inset: 0.25lh calc(var(--safearea-x) * -1) -2rem;
+				translate: -1em 0;
+				clip-path: polygon(50% 0, 100% 100%, 0 100%);
+			}
+		}
+	}
+}
+
+/* ─────────────────────────────────────────────────────
    Keyframes used by home page components
    ───────────────────────────────────────────────────── */
 @keyframes marquee {
 	to { transform: translateX(-50%); }
+}
+
+@keyframes logo-scroll {
+	to { translate: var(--xf) 0; }
 }
 @keyframes tick {
 	to { transform: translateX(-50%); }

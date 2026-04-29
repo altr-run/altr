@@ -1,4 +1,4 @@
-import { COMPARE_PAGES, INTEGRATIONS, LEGAL_PAGES, USE_CASES } from '@/content'
+import type { SiteChromeContent } from './site-nav'
 import LogoMark from '@/ui/home/logo-mark'
 
 const COL_HEAD =
@@ -10,11 +10,8 @@ const NAV_LINK =
 const NAV_LINK_ACCENT =
 	'block font-mono text-[11px] text-acc py-[4px] no-underline hover:opacity-80 transition-opacity leading-snug mt-1'
 
-export default function SiteFooter() {
-	const useCases = Object.entries(USE_CASES)
-	const comparePages = Object.entries(COMPARE_PAGES)
-	const integrations = Object.entries(INTEGRATIONS)
-	const legalPages = Object.entries(LEGAL_PAGES)
+export default function SiteFooter({ content }: { content: SiteChromeContent }) {
+	const { useCases, comparePages, integrations, legalPages } = content
 
 	return (
 		<footer className="bg-bg">
@@ -67,8 +64,8 @@ export default function SiteFooter() {
 						{/* Solutions col */}
 						<div>
 							<div className={COL_HEAD}>Solutions</div>
-							{useCases.map(([slug, uc]) => (
-								<a key={slug} href={`/use-cases/${slug}`} className={NAV_LINK}>
+							{useCases.map((uc) => (
+								<a key={uc.slug} href={`/use-cases/${uc.slug}`} className={NAV_LINK}>
 									{uc.title}
 								</a>
 							))}
@@ -78,8 +75,8 @@ export default function SiteFooter() {
 						{/* Compare col */}
 						<div>
 							<div className={COL_HEAD}>Compare</div>
-							{comparePages.map(([slug, cp]) => (
-								<a key={slug} href={`/compare/${slug}`} className={NAV_LINK}>
+							{comparePages.map((cp) => (
+								<a key={cp.slug} href={`/compare/${cp.slug}`} className={NAV_LINK}>
 									vs {cp.competitor}
 								</a>
 							))}
@@ -89,8 +86,8 @@ export default function SiteFooter() {
 						{/* Integrations col */}
 						<div>
 							<div className={COL_HEAD}>Integrations</div>
-							{integrations.map(([slug, int]) => (
-								<a key={slug} href={`/integrations/${slug}`} className={NAV_LINK}>
+							{integrations.map((int) => (
+								<a key={int.slug} href={`/integrations/${int.slug}`} className={NAV_LINK}>
 									{int.tool}
 								</a>
 							))}
@@ -107,8 +104,8 @@ export default function SiteFooter() {
 							<a href="/#close" className={NAV_LINK}>Early access</a>
 							<div className="mt-5">
 								<div className={COL_HEAD}>Legal</div>
-								{legalPages.map(([slug, page]) => (
-									<a key={slug} href={`/legal/${slug}`} className={NAV_LINK}>
+								{legalPages.map((page) => (
+									<a key={page.slug} href={`/legal/${page.slug}`} className={NAV_LINK}>
 										{page.title}
 									</a>
 								))}

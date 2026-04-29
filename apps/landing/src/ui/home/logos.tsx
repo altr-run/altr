@@ -129,13 +129,32 @@ export default function Logos() {
 										style={{ background: 'var(--acc)' }}
 									/>
 
-									<div className="h-8 flex items-center justify-center grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
+									{/* Top accent line on card hover */}
+									<div
+										className="absolute top-0 left-0 right-0 h-px origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-[360ms] ease-[cubic-bezier(0.25,1,0.5,1)]"
+										style={{ background: 'color-mix(in oklab, var(--acc) 30%, transparent)' }}
+									/>
+
+									{/* Subtle glow on hover */}
+									<div
+										className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500"
+										style={{
+											background: 'radial-gradient(circle at 50% 40%, color-mix(in oklab, var(--acc-soft) 60%, transparent) 0%, transparent 70%)',
+										}}
+									/>
+
+									<div className="relative h-8 flex items-center justify-center grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
 										<Image src={logoSrc} alt={int.tool} height={32} width={100} className="object-contain" unoptimized />
 									</div>
 
-									<div className="text-center">
+									<div className="relative text-center">
 										<p className="font-sans text-[13px] font-medium text-ink mb-0.5">{int.tool}</p>
-										<p className="font-mono text-[9px] uppercase tracking-widest text-ink-4">{int.signal}</p>
+										<p className="font-mono text-[9px] uppercase tracking-widest text-ink-4 group-hover:text-acc transition-colors duration-300">{int.signal}</p>
+									</div>
+
+									{/* Connection indicator — shows a small "linked" dot on hover */}
+									<div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+										<span className="w-1.5 h-1.5 rounded-full bg-acc block animate-[pulse-dot_1.6s_ease-in-out_infinite]" />
 									</div>
 								</motion.div>
 							)

@@ -3,7 +3,6 @@ import { cn } from '@/lib/utils'
 import type { Logo, LogoList } from '@/sanity/types'
 import Img from '@/ui/img'
 import Overline from '@/ui/overline'
-import css from './logo-list.module.css'
 
 export default function ({
 	overline,
@@ -26,7 +25,7 @@ export default function ({
 				className={cn(
 					'mx-auto flex items-center',
 					autoScroll
-						? `${css.track} max-w-max overflow-hidden mask-x-from-[calc(100%-2rem)]`
+						? 'logo-track max-w-max overflow-hidden mask-x-from-[calc(100%-2rem)]'
 						: 'flex-wrap justify-center gap-x-4 gap-y-4',
 				)}
 				style={{

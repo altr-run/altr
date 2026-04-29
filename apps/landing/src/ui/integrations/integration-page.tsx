@@ -1,22 +1,21 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { USE_CASES } from '@/content'
 import { getBrandLogoUrl } from '@/lib/brand'
 
 type Signal = { signal: string; description: string }
+export type RelatedUseCase = { slug: string; title: string }
 
 export type IntegrationPage = {
 	tool: string
 	/** Root domain for Brandfetch logo fetch — e.g. "slack.com". Falls back gracefully if absent. */
-	domain?: string
+	domain?: string | null
 	category: string | null
 	logo: unknown
 	headline: string | null
 	subhead: string | null
 	howItWorks: string | null
 	signals: Signal[] | null
-	// Plain slugs — page routes normalize Sanity's nested shape before passing here
-	relatedUseCases: string[] | null
+	relatedUseCases: RelatedUseCase[] | null
 	metadata: unknown
 }
 
@@ -114,19 +113,16 @@ export default function IntegrationPage({ page }: { page: IntegrationPage }) {
 				<section className="border-t border-line max-w-[var(--maxw-narrow)] mx-auto px-6 py-16">
 					<h3 className="font-mono text-xs text-ink-3 uppercase tracking-wider mb-6">Workflows that use {tool}</h3>
 					<ul className="flex flex-col gap-3">
-						{relatedUseCases.map((slug) => {
-							const uc = USE_CASES[slug]
-							return (
-								<li key={slug}>
-									<Link
-										href={`/use-cases/${slug}`}
-										className="font-serif text-lg text-ink hover:text-acc transition-colors"
-									>
-										{uc?.title ?? slug}
-									</Link>
-								</li>
-							)
-						})}
+						{relatedUseCases.map((uc) => (
+							<li key={uc.slug}>
+								<Link
+									href={`/use-cases/${uc.slug}`}
+									className="font-serif text-lg text-ink hover:text-acc transition-colors"
+								>
+									{uc.title}
+								</Link>
+							</li>
+						))}
 					</ul>
 				</section>
 			)}
