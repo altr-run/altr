@@ -22,23 +22,6 @@ type LlmData = {
 	legalPages?: SeoEntry[] | null
 }
 
-const SECTION_DESCRIPTIONS: Record<string, string> = {
-	'Core pages':
-		'Primary pages that explain what Altr is, pricing, download options, and the main product promise.',
-	Product:
-		'Product pages covering the execution loop, workflow, specialist agents, and how Altr fits into an existing engineering stack.',
-	Integrations:
-		'Integration pages generated from Sanity metadata for tools that Altr reads from or writes to.',
-	'Use cases':
-		'Workflow pages generated from Sanity metadata for common product and engineering scenarios.',
-	Comparisons:
-		'Comparison pages generated from Sanity metadata for evaluating Altr against adjacent tools.',
-	Blog:
-		'Editorial and changelog pages using Sanity metadata where available.',
-	'Trust and legal':
-		'Security, privacy, compliance, and legal pages using Sanity summaries and SEO metadata.',
-}
-
 export async function GET() {
 	const data = await sanityFetchLive<LlmData>({
 		query: groq`{
@@ -152,9 +135,9 @@ function renderLlmsTxt(data: LlmData) {
 		`Important topics covered across the site include: ${formatSeries(getTopics(entries))}.`,
 		'',
 		'The site is organized into key sections:',
-		...Array.from(sections.keys()).map(
-			(section) =>
-				`- **${section}**: ${SECTION_DESCRIPTIONS[section] ?? `Pages about ${section.toLowerCase()}.`}`,
+		...Array.from(sections.entries()).map(
+			([section, sectionEntries]) =>
+				`- **${section}**: ${formatSeries(sectionEntries.slice(0, 4).map((entry) => cleanText(entry.title)))}`,
 		),
 		'',
 		'These are the most useful starting points:',

@@ -75,126 +75,6 @@ type MarkdownData = {
 	related?: LinkEntry[] | null
 }
 
-const STATIC_DOCS: Record<string, MarkdownDoc> = {
-	index: {
-		_type: 'static.page',
-		seoTitle: 'Altr - Close the Execution Loop for Teams & AI Agents',
-		description:
-			'Stop dropping the thread. Altr keeps specs, tickets, and PRs connected end-to-end with context attached at every handoff. Mac-native. Local-first.',
-		canonicalUrl: '/',
-		contentPlainText:
-			'Altr is a Mac-native AI workspace for product and engineering teams. It preserves context across specs, tickets, pull requests, and review decisions so humans and agents work from the same source material.',
-	},
-	product: {
-		_type: 'static.page',
-		seoTitle: 'Product - Altr',
-		description:
-			'The execution loop that keeps context attached from Slack thread to merged PR. Workflow, AI agents, and your existing stack.',
-		canonicalUrl: '/product',
-		contentPlainText:
-			'Altr is a Mac-native workspace where humans and AI teammates collaborate on the same artifacts from first signal to shipped PR.',
-	},
-	'product/workflow': {
-		_type: 'static.page',
-		seoTitle: 'Workflow - Altr',
-		description:
-			'The Signal-to-PR trail. From Slack thread to merged PR, intent attached at every stage, nothing reconstructed from memory.',
-		canonicalUrl: '/product/workflow',
-		contentPlainText:
-			'Altr captures the original signal, turns it into a spec, links the ticket and PR, and keeps review grounded in the same context.',
-	},
-	'product/agents': {
-		_type: 'static.page',
-		seoTitle: 'Specialist Agents - Altr',
-		description:
-			'Specialist agents that plan, build, and review alongside your team. Copilot or autopilot, your call per ticket.',
-		canonicalUrl: '/product/agents',
-		contentPlainText:
-			'Pax structures requirements and acceptance criteria. Eng works in code, proposes changes, and drafts pull requests with human approval gates.',
-	},
-	'product/stack': {
-		_type: 'static.page',
-		seoTitle: 'Stack - Altr',
-		description:
-			'Altr works with the tools you already use: Slack, GitHub, Linear, Notion. No migration. BYOK. Mac-native.',
-		canonicalUrl: '/product/stack',
-		contentPlainText:
-			'Altr reads signal from your existing stack and keeps context attached without requiring a migration to a new workspace.',
-	},
-	integrations: {
-		_type: 'static.page',
-		seoTitle: 'Integrations - Altr',
-		description:
-			'Slack, Linear, GitHub, Notion, calls, CI, monitoring: Altr connects the tools already in your stack without replacing any of them.',
-		canonicalUrl: `/${ROUTES.integrations}`,
-	},
-	'use-cases': {
-		_type: 'static.page',
-		seoTitle: 'Use cases - Altr',
-		description:
-			'Feature delivery, bug triage, PR review, incident follow-through: see how Altr removes reconstruction work from each engineering workflow.',
-		canonicalUrl: `/${ROUTES.useCases}`,
-	},
-	compare: {
-		_type: 'static.page',
-		seoTitle: 'Altr vs the competition - compare',
-		description:
-			'See how Altr compares to Cursor, Devin, ClickUp Codegen, and other tools that touch the engineering execution loop.',
-		canonicalUrl: `/${ROUTES.compare}`,
-	},
-	security: {
-		_type: 'static.page',
-		seoTitle: 'Security & Data Sovereignty - Altr',
-		description:
-			'Your API keys never touch our servers. Your code stays on your Mac. You pay Anthropic directly. Local-first, BYOK, and OS Keychain storage by design.',
-		canonicalUrl: `/${ROUTES.security}`,
-		contentPlainText:
-			'Altr stores API keys in macOS Keychain, keeps workspace context local-first, and avoids proxying LLM calls through Altr servers.',
-	},
-	pricing: {
-		_type: 'static.page',
-		seoTitle: 'Pricing - Altr',
-		description:
-			'Zero-markup AI. You bring the key, we provide the execution loop. Transparent pricing for teams that ship.',
-		canonicalUrl: `/${ROUTES.pricing}`,
-	},
-	download: {
-		_type: 'static.page',
-		seoTitle: 'Download Altr - Mac-native AI Workspace',
-		description:
-			'Download Altr for macOS. Built for Apple Silicon. Local-first, keyboard-centric, and fast.',
-		canonicalUrl: `/${ROUTES.download}`,
-	},
-	blog: {
-		_type: 'static.page',
-		seoTitle: 'Blog - Altr',
-		description:
-			'Writing on AI-native product development, the execution loop, and shipping faster with human and agent teams.',
-		canonicalUrl: `/${ROUTES.blog}`,
-	},
-	legal: {
-		_type: 'static.page',
-		seoTitle: 'Legal - Altr',
-		description:
-			'Privacy policy, terms of service, security documentation, and compliance information for Altr.',
-		canonicalUrl: `/${ROUTES.legal}`,
-	},
-	manifesto: {
-		_type: 'static.page',
-		seoTitle: 'The Manifesto - Altr',
-		description:
-			'The 3-person team that ships like 30. Altr thesis on the future of AI-native execution.',
-		canonicalUrl: `/${ROUTES.manifesto}`,
-	},
-	changelog: {
-		_type: 'static.page',
-		seoTitle: 'Changelog - Altr',
-		description:
-			'What changed, when it changed, and why it matters for engineering teams.',
-		canonicalUrl: `/${ROUTES.changelog}`,
-	},
-}
-
 export async function GET(request: Request) {
 	const path = normalizePath(new URL(request.url).searchParams.get('path'))
 	const data = await getMarkdownData(path)
@@ -375,7 +255,6 @@ function pickDocument(data: MarkdownData, path: string) {
 		data.useCase ??
 		data.integration ??
 		data.legalPage ??
-		STATIC_DOCS[path] ??
 		null
 	)
 }
