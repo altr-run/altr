@@ -240,9 +240,9 @@ export default function Hero() {
 							}}
 						>
 							<div className="flex items-center gap-[6px]">
-								<span className="w-[12px] h-[12px] rounded-full bg-[#ff5f57]" />
-								<span className="w-[12px] h-[12px] rounded-full bg-[#ffbd2e]" />
-								<span className="w-[12px] h-[12px] rounded-full bg-[#28c840]" />
+								<span className="w-[12px] h-[12px] rounded-full bg-[var(--macos-close)]" />
+								<span className="w-[12px] h-[12px] rounded-full bg-[var(--macos-minimize)]" />
+								<span className="w-[12px] h-[12px] rounded-full bg-[var(--macos-maximize)]" />
 							</div>
 							<div className="flex items-center gap-1 justify-center overflow-hidden">
 								<span className="font-mono text-[11px] px-[10px] py-[6px] rounded-lg text-ink-3">

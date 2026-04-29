@@ -22,10 +22,10 @@ function VisualSwitching() {
 	const inView = useInView(ref, { once: true, margin: '-40px' })
 
 	const tools = [
-		{ abbr: 'SL', color: '#4A154B', bg: 'rgba(74,21,75,0.1)' },
-		{ abbr: 'LN', color: '#635BFF', bg: 'rgba(99,91,255,0.1)' },
-		{ abbr: 'GH', color: '#1a1a1a', bg: 'rgba(26,26,26,0.08)' },
-		{ abbr: 'NT', color: '#1a1a1a', bg: 'rgba(26,26,26,0.06)' },
+		{ abbr: 'SL', color: 'var(--brand-slack)', bg: 'var(--brand-slack-a)' },
+		{ abbr: 'LN', color: 'var(--brand-linear)', bg: 'var(--brand-linear-a)' },
+		{ abbr: 'GH', color: 'var(--brand-github)', bg: 'var(--brand-github-a)' },
+		{ abbr: 'NT', color: 'var(--brand-notion)', bg: 'var(--brand-notion-a)' },
 		{ abbr: '?', color: 'var(--ink-4)', bg: 'var(--bg-1)' },
 	]
 

@@ -351,7 +351,14 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 	const mountRef = useRef<HTMLDivElement | null>(null)
 	const speedRef = useRef(BASE_SPEED)
 	const colorBack = useMemo(() => parseHexColor('#00000000'), [])
-	const colorFront = useMemo(() => parseHexColor('#4A8F00'), [])
+	// Read accent from CSS variable at mount — stays in sync with the design token
+	const colorFront = useMemo(() => {
+		const hex =
+			typeof window !== 'undefined'
+				? getComputedStyle(document.documentElement).getPropertyValue('--lime-9').trim()
+				: ''
+		return parseHexColor(hex || '#89F336')
+	}, [])
 
 	useEffect(() => {
 		const mount = mountRef.current

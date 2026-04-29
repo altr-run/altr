@@ -28,31 +28,8 @@ export default function Trust() {
 	return (
 		<section
 			id="security"
-			className="py-[140px] px-8 border-t border-b"
-			style={{
-				background: '#0d0d0d',
-				borderColor: 'rgba(255,255,255,0.08)',
-				// Override all CSS tokens to dark values — cascades to all children
-				'--bg':           '#0d0d0d',
-				'--bg-1':         '#161616',
-				'--bg-2':         '#1e1e1e',
-				'--ink':          '#f2f0eb',
-				'--ink-1':        '#f2f0eb',
-				'--ink-2':        '#c0bdb5',
-				'--ink-3':        '#7a7772',
-				'--ink-4':        '#4a4844',
-				'--ink-5':        '#2c2b28',
-				'--line':         'rgba(255,255,255,0.09)',
-				'--line-2':       'rgba(255,255,255,0.16)',
-				'--acc':          '#9DFF52',
-				'--acc-vibrant':  '#b8ff7a',
-				'--acc-2':        '#7DE832',
-				'--acc-soft':     'rgba(157,255,82,0.10)',
-				'--acc-ink':      '#0a0a0a',
-				'--panel':        'rgba(255,255,255,0.04)',
-				'--panel-strong': 'rgba(255,255,255,0.07)',
-				color: '#f2f0eb',
-			} as React.CSSProperties}
+			data-theme="dark"
+			className="py-[140px] px-8 border-t border-b border-(--line) bg-(--bg) text-(--ink)"
 		>
 			<div className="max-w-[1020px] mx-auto flex flex-col gap-16">
 				<Reveal className="flex flex-col items-start gap-5">
@@ -83,7 +60,7 @@ export default function Trust() {
 							key={p.title}
 							delay={i * 90}
 							className={[
-								'border border-(--line) p-[36px_32px] flex flex-col gap-4',
+								'border border-(--line) bg-(--bg-1) p-[36px_32px] flex flex-col gap-4',
 								'transition-[transform,border-color] duration-300',
 								'hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--acc)_40%,var(--line))]',
 								i === 0 ? 'rounded-tl-[var(--r-lg)]' : '',
@@ -93,7 +70,6 @@ export default function Trust() {
 							]
 								.filter(Boolean)
 								.join(' ')}
-							style={{ background: '#181818' }}
 						>
 							<span className="text-[20px] text-(--acc) leading-none inline-block transition-transform duration-[350ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-[1.28]">
 								{p.mark}
