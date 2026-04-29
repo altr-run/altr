@@ -1,12 +1,14 @@
+'use client'
+
 import dynamic from 'next/dynamic'
 import Hero from './hero'
-import HeroShader from './hero-shader'
-import Logos from './logos'
-import Flow from './flow'
-import ContextLost from './context-lost'
-import PaxLive from './pax-live'
-import CTACallout from './cta-callout'
 
+const HeroShader = dynamic(() => import('./hero-shader'), { ssr: false })
+const ContextLost = dynamic(() => import('./context-lost'))
+const Flow = dynamic(() => import('./flow'))
+const PaxLive = dynamic(() => import('./pax-live'))
+const CTACallout = dynamic(() => import('./cta-callout'))
+const Logos = dynamic(() => import('./logos'))
 const HandoffCalculator = dynamic(() => import('./handoff-calculator'))
 const Triptych = dynamic(() => import('./triptych'))
 const Manifesto = dynamic(() => import('./manifesto'))

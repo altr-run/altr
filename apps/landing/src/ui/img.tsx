@@ -44,7 +44,7 @@ export default function ({
 		<NextImage
 			src={
 				urlFor(image)
-					.withOptions({ auto: 'format', q: 100, ...imageOptions })
+					.withOptions({ auto: 'format', q: 80, ...imageOptions })
 					.url() ?? image.asset.url!
 			}
 			width={width ?? Math.round(height ? (Number(height) * w) / h : w)}
@@ -55,6 +55,7 @@ export default function ({
 				: {})}
 			placeholder={lqip ? 'blur' : undefined}
 			blurDataURL={lqip}
+			sizes={props.sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
 			{...props}
 		/>
 	)

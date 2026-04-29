@@ -72,8 +72,7 @@ export default function Manifesto() {
 								our team&apos;s signal lives in five different tools. Slack
 								threads, GitHub issues, Linear specs, call recordings, monitoring
 								alerts. Every handoff, someone re-summarizes. Every review,
-								context disappears. The brief gets rewritten from scratch &mdash;
-								every single time.
+								context disappears. The brief gets rewritten from scratch &mdash; every single time.
 							</p>
 							<p className="mb-[22px]">
 								Altr runs on your Mac, pulls the full story from your existing

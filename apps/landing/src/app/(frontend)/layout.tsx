@@ -38,6 +38,7 @@ const fontSerif = localFont({
 		},
 	],
 	variable: '--font-serif',
+	display: 'swap',
 })
 
 export default async function RootLayout({

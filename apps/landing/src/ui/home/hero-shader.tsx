@@ -278,7 +278,7 @@ const DEFAULT_MIN_PIXEL_RATIO = 2
 const DEFAULT_MAX_PIXEL_COUNT = 1920 * 1080 * 4
 const BASE_SPEED = 0.2
 const HOVER_SPEED = 0.6
-const ANIMATION_START_DELAY_MS = 300
+const ANIMATION_START_DELAY_MS = 1000
 
 function parseHexColor(hex: string): [number, number, number, number] {
 	let normalized = hex.replace(/^#/, '')
