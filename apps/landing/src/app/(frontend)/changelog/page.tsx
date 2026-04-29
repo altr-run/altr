@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { groq } from 'next-sanity'
 import { ROUTES } from '@/lib/env'
 import { sanityFetchLive } from '@/sanity/lib/live'
-import { CHANGELOG } from '@/content'
 import ChangelogPage from '@/ui/changelog/changelog-page'
 
 export const metadata: Metadata = {
@@ -32,24 +31,9 @@ type ChangelogEntryResult = {
 }
 
 async function getEntries(): Promise<ChangelogEntryResult[]> {
-	const sanityEntries = await sanityFetchLive<ChangelogEntryResult[]>({
+	return sanityFetchLive<ChangelogEntryResult[]>({
 		query: CHANGELOG_ENTRIES_QUERY,
 	})
-
-	// Merge: Sanity entries take precedence; content map fills in any not already present
-	const sanityIds = new Set(sanityEntries.map((e) => e._id))
-	const contentEntries = Object.values(CHANGELOG)
-		.filter((e) => !sanityIds.has(e._id))
-		.map((e) => ({ ...e, body: null, metadata: null }))
-
-	const merged = [...sanityEntries, ...contentEntries]
-
-	// Sort by releaseDate descending
-	merged.sort(
-		(a, b) =>
-			new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime(),
-	)
-	return merged
 }
 
 const CHANGELOG_ENTRIES_QUERY = groq`*[_type == 'changelog.entry'] | order(releaseDate desc){

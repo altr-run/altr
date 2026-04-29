@@ -3,7 +3,6 @@ import { groq } from 'next-sanity'
 import Link from 'next/link'
 import { ROUTES } from '@/lib/env'
 import { sanityFetchLive } from '@/sanity/lib/live'
-import { COMPARE_PAGES } from '@/content'
 
 export const metadata: Metadata = {
 	title: 'Altr vs the competition — compare',
@@ -41,19 +40,7 @@ export default async function CompareIndex() {
 			}`,
 	})
 
-	// Merge content map entries not already in Sanity
-	const sanitySlugs = new Set(sanityPages.map((p) => p.slug))
-	const contentEntries: CompareEntry[] = Object.entries(COMPARE_PAGES)
-		.filter(([slug]) => !sanitySlugs.has(slug))
-		.map(([slug, cp]) => ({
-			competitor: cp.competitor,
-			headline: cp.headline,
-			subhead: cp.subhead,
-			slug,
-		}))
-	const pages = [...sanityPages, ...contentEntries].sort((a, b) =>
-		a.competitor.localeCompare(b.competitor),
-	)
+	const pages = sanityPages
 
 	return (
 		<main className="bg-(--bg) text-ink">

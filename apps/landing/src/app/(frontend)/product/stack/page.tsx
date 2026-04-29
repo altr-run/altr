@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
+import { groq } from 'next-sanity'
 import Link from 'next/link'
-import { INTEGRATIONS } from '@/content'
+import { sanityFetchLive } from '@/sanity/lib/live'
 
 export const metadata: Metadata = {
 	title: 'Stack — Altr',
@@ -31,8 +32,25 @@ const PRINCIPLES = [
 	},
 ] as const
 
-export default function StackPage() {
-	const integrations = Object.entries(INTEGRATIONS)
+type StackIntegration = {
+	tool: string
+	category: string | null
+	subhead: string | null
+	signals: Array<{ signal: string }> | null
+	slug: string
+}
+
+export default async function StackPage() {
+	const integrations = await sanityFetchLive<StackIntegration[]>({
+		query: groq`*[_type == 'integration' && defined(metadata.slug.current) && metadata.noIndex != true]
+			| order(tool asc){
+				tool,
+				category,
+				subhead,
+				signals[]{ signal },
+				'slug': metadata.slug.current
+			}`,
+	})
 
 	return (
 		<main className="bg-bg text-ink">
@@ -69,10 +87,10 @@ export default function StackPage() {
 			<section className="border-b border-line">
 				<div className="mx-auto" style={{ maxWidth: 'var(--maxw)' }}>
 					<div className="grid gap-px bg-line" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
-						{integrations.map(([slug, int]) => (
+						{integrations.map((int) => (
 							<Link
-								key={slug}
-								href={`/integrations/${slug}`}
+								key={int.slug}
+								href={`/integrations/${int.slug}`}
 								className="group flex flex-col gap-5 p-10 no-underline border-b border-line transition-colors duration-200 hover:bg-[color-mix(in_oklab,var(--acc)_3%,var(--bg-1))]"
 								style={{ background: 'var(--bg)' }}
 							>

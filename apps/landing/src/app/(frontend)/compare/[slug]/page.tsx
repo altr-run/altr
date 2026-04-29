@@ -5,7 +5,6 @@ import { ROUTES } from '@/lib/env'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
-import { COMPARE_PAGES } from '@/content'
 import ComparePage from '@/ui/compare/compare-page'
 
 type Props = {
@@ -44,20 +43,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-	// Merge Sanity slugs with content map slugs
 	const sanitySlugs = await client.fetch<{ slug: string }[]>(
 		groq`*[_type == 'compare.page' && defined(metadata.slug.current)]{
 			'slug': metadata.slug.current
 		}`,
 	)
-	const contentSlugs = Object.keys(COMPARE_PAGES).map((slug) => ({ slug }))
-	const allSlugs = [
-		...sanitySlugs,
-		...contentSlugs.filter(
-			(cs) => !sanitySlugs.some((ss) => ss.slug === cs.slug),
-		),
-	]
-	return allSlugs
+	return sanitySlugs
 }
 
 type COMPARE_PAGE_RESULT_SANITY = {
@@ -88,7 +79,7 @@ async function getPage(slug: string) {
 		params: { slug },
 	})
 	if (fromSanity) return fromSanity
-	return COMPARE_PAGES[slug] ?? null
+	return null
 }
 
 const COMPARE_PAGE_QUERY = groq`*[_type == 'compare.page' && metadata.slug.current == $slug][0]{

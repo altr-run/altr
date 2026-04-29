@@ -3,7 +3,6 @@ import { groq } from 'next-sanity'
 import Link from 'next/link'
 import { ROUTES } from '@/lib/env'
 import { sanityFetchLive } from '@/sanity/lib/live'
-import { USE_CASES } from '@/content'
 
 export const metadata: Metadata = {
 	title: 'Use cases — Altr',
@@ -35,19 +34,7 @@ export default async function UseCasesIndex() {
 			}`,
 	})
 
-	// Merge content map entries not already in Sanity
-	const sanitySlugs = new Set(sanityCases.map((c) => c.slug))
-	const contentEntries: UseCaseEntry[] = Object.entries(USE_CASES)
-		.filter(([slug]) => !sanitySlugs.has(slug))
-		.map(([slug, uc]) => ({
-			title: uc.title,
-			subhead: uc.subhead,
-			tools: uc.tools,
-			slug,
-		}))
-	const cases = [...sanityCases, ...contentEntries].sort((a, b) =>
-		a.title.localeCompare(b.title),
-	)
+	const cases = sanityCases
 
 	return (
 		<main className="bg-(--bg) text-ink">

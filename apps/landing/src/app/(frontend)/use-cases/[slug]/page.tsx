@@ -5,7 +5,6 @@ import { ROUTES } from '@/lib/env'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
-import { USE_CASES } from '@/content'
 import type { UseCasePage } from '@/ui/use-cases/use-case-page'
 import UseCasePageComponent from '@/ui/use-cases/use-case-page'
 
@@ -50,14 +49,7 @@ export async function generateStaticParams() {
 			'slug': metadata.slug.current
 		}`,
 	)
-	const contentSlugs = Object.keys(USE_CASES).map((slug) => ({ slug }))
-	const allSlugs = [
-		...sanitySlugs,
-		...contentSlugs.filter(
-			(cs) => !sanitySlugs.some((ss) => ss.slug === cs.slug),
-		),
-	]
-	return allSlugs
+	return sanitySlugs
 }
 
 // Sanity raw shape — relatedUseCases are nested objects
@@ -92,8 +84,11 @@ function normalizeSanity(raw: UseCasePageSanity): UseCasePage {
 		...raw,
 		relatedUseCases:
 			raw.relatedUseCases
-				?.map((uc) => uc.metadata?.slug?.current)
-				.filter((s): s is string => Boolean(s)) ?? null,
+				?.map((uc) => {
+					const slug = uc.metadata?.slug?.current
+					return slug ? { slug, title: uc.title } : null
+				})
+				.filter((uc): uc is { slug: string; title: string } => Boolean(uc)) ?? null,
 		metadata: raw.metadata,
 	}
 }
@@ -104,7 +99,7 @@ async function getPage(slug: string): Promise<UseCasePage | null> {
 		params: { slug },
 	})
 	if (fromSanity) return normalizeSanity(fromSanity)
-	return USE_CASES[slug] ?? null
+	return null
 }
 
 const USE_CASE_PAGE_QUERY = groq`*[_type == 'use-case' && metadata.slug.current == $slug][0]{

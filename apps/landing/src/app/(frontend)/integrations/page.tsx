@@ -3,7 +3,6 @@ import { groq } from 'next-sanity'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ROUTES } from '@/lib/env'
-import { INTEGRATIONS } from '@/content'
 import { getBrandLogoUrl } from '@/lib/brand'
 import { sanityFetchLive } from '@/sanity/lib/live'
 
@@ -57,20 +56,7 @@ export default async function IntegrationsIndex() {
 			}`,
 	})
 
-	// Merge content map entries not already in Sanity
-	const sanitySlugs = new Set(sanityIntegrations.map((i) => i.slug))
-	const contentEntries: IntegrationEntry[] = Object.entries(INTEGRATIONS)
-		.filter(([slug]) => !sanitySlugs.has(slug))
-		.map(([slug, int]) => ({
-			tool: int.tool,
-			domain: int.domain,
-			category: int.category,
-			subhead: int.subhead,
-			slug,
-		}))
-	const integrations = [...sanityIntegrations, ...contentEntries].sort((a, b) =>
-		a.tool.localeCompare(b.tool),
-	)
+	const integrations = sanityIntegrations
 
 	// Group by category
 	const grouped: Record<string, IntegrationEntry[]> = {}

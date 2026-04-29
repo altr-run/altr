@@ -2,8 +2,6 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { groq } from 'next-sanity'
 import { sanityFetchLive } from '@/sanity/lib/live'
-import { LEGAL_PAGES } from '@/content/legal'
-import type { LegalPageContent } from '@/content/legal'
 import Reveal from '@/ui/home/reveal'
 
 export const metadata: Metadata = {
@@ -33,30 +31,15 @@ const LEGAL_PAGE_INDEX_QUERY = groq`*[_type == 'legal.page' && noIndex != true]{
 }`
 
 export default async function LegalIndexPage() {
-	// Load Sanity pages
-	const sanityPages = await sanityFetchLive<SanityLegalIndexItem[]>({
+	const pages = await sanityFetchLive<SanityLegalIndexItem[]>({
 		query: LEGAL_PAGE_INDEX_QUERY,
 	}).then((data) => data ?? [])
-
-	// Merge with content map, Sanity takes precedence for matching slugs
-	const contentPages = Object.entries(LEGAL_PAGES).map(([slug, page]) => ({
-		slug,
-		title: page.title,
-		category: page.category,
-		summary: page.summary,
-	}))
-
-	const sanitySlugSet = new Set(sanityPages.map((p) => p.slug))
-	const mergedPages = [
-		...sanityPages,
-		...contentPages.filter((p) => !sanitySlugSet.has(p.slug)),
-	]
 
 	// Group by category
 	const grouped = CATEGORY_ORDER.map((cat) => ({
 		key: cat,
 		label: CATEGORY_LABELS[cat],
-		pages: mergedPages.filter((p) => p.category === cat),
+		pages: pages.filter((p) => p.category === cat),
 	})).filter((g) => g.pages.length > 0)
 
 	return (

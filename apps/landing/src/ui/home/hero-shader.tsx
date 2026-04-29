@@ -329,7 +329,11 @@ function createProgram(gl: WebGL2RenderingContext): WebGLProgram {
 	}
 
 	const vertexShader = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER_SOURCE)
-	const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, DITHERING_FRAGMENT_SHADER)
+	const fragmentShader = compileShader(
+		gl,
+		gl.FRAGMENT_SHADER,
+		DITHERING_FRAGMENT_SHADER,
+	)
 
 	gl.attachShader(program, vertexShader)
 	gl.attachShader(program, fragmentShader)
@@ -355,7 +359,9 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 	const colorFront = useMemo(() => {
 		const hex =
 			typeof window !== 'undefined'
-				? getComputedStyle(document.documentElement).getPropertyValue('--lime-9').trim()
+				? getComputedStyle(document.documentElement)
+						.getPropertyValue('--lime-9')
+						.trim()
 				: ''
 		return parseHexColor(hex || '#89F336')
 	}, [])
@@ -483,7 +489,11 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 		})
 
 		const handleVisibilityChange = () => {
-			speedRef.current = document.hidden ? 0 : isHovered ? HOVER_SPEED : BASE_SPEED
+			speedRef.current = document.hidden
+				? 0
+				: isHovered
+					? HOVER_SPEED
+					: BASE_SPEED
 		}
 
 		const startAnimation = () => {
@@ -528,7 +538,11 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 	}, [colorBack, colorFront])
 
 	useEffect(() => {
-		speedRef.current = document.hidden ? 0 : isHovered ? HOVER_SPEED : BASE_SPEED
+		speedRef.current = document.hidden
+			? 0
+			: isHovered
+				? HOVER_SPEED
+				: BASE_SPEED
 	}, [isHovered])
 
 	return (

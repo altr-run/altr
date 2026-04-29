@@ -156,7 +156,7 @@ export default function Hero() {
 						{/* Avatar stack */}
 						<div className="flex -space-x-2">
 							{[
-								{ initials: 'EJ', bg: '#2a3f1a', color: '#9DFF52' },
+								{ initials: 'EJ', bg: '#2a3f1a', color: 'var(--acc)' },
 								{ initials: 'RP', bg: '#1a2d3f', color: '#52b8ff' },
 								{ initials: 'MC', bg: '#3f2a1a', color: '#ffb852' },
 								{ initials: 'SK', bg: '#2a1a3f', color: '#c852ff' },
