@@ -87,6 +87,11 @@ async function getSiteChromeContent(): Promise<SiteChromeContent> {
 					domain,
 					"slug": metadata.slug.current
 				},
+			"solutionPages": *[_type == 'page' && metadata.slug.current match 'solutions/*' && metadata.noIndex != true]
+				| order(title asc){
+					title,
+					"slug": metadata.slug.current
+				},
 			"comparePages": *[_type == 'compare.page' && defined(metadata.slug.current) && metadata.noIndex != true]
 				| order(competitor asc){
 					competitor,

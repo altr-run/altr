@@ -1,9 +1,9 @@
 import Reveal from './reveal'
 
 const POINTS = [
-	'Workflow mapping for intake, planning, build, review, and release',
-	'Integration scoping for Slack, GitHub, Linear, docs, and monitoring',
-	'Security, procurement, and rollout handled with engineering and IT leads',
+	'Map which agents your team runs — Claude Code, Codex, Cursor, Copilot, Devin — and where context breaks down today',
+	'Scope the integration: Slack + Linear + GitHub as signal sources; mission control app + MCP + CLI + Slack bot as consumption surfaces',
+	'Security review: BYOK, local SQLite, agent keys in OS keychain — your code never touches Altr servers',
 ]
 
 export default function TalkTeam() {
@@ -49,10 +49,10 @@ export default function TalkTeam() {
 						</div>
 						<div className="grid gap-9 items-start" style={{ gridTemplateColumns: '1.1fr 0.9fr' }}>
 							<div>
-								<h3 className="font-serif font-normal text-[42px] tracking-tight leading-[0.98] mb-4 max-w-[12ch]">
+								<h3 className="font-serif font-normal tracking-tight leading-[1.05] mb-4 max-w-[12ch]" style={{ fontSize: 'clamp(28px, 3vw, 44px)' }}>
 									For teams replacing real coordination overhead.
 								</h3>
-								<p className="text-[15px] text-ink-2 leading-[1.65] max-w-[42ch]">
+								<p className="text-[17px] text-ink-2 leading-[1.65] max-w-[42ch]">
 									Bring product, engineering, design, or security to the
 									table. We'll show the workflow in context and outline where
 									Altr fits into your current systems.
@@ -63,7 +63,7 @@ export default function TalkTeam() {
 									{POINTS.map((point) => (
 										<li
 											key={point}
-											className="relative pl-[18px] text-[14px] text-ink-1 leading-[1.6] before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-[6px] before:h-[6px] before:rounded-full before:bg-acc"
+											className="relative pl-[18px] text-[15px] text-ink-1 leading-[1.6] before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-[6px] before:h-[6px] before:rounded-full before:bg-acc"
 											style={{ ['--tw-shadow-color' as string]: 'color-mix(in oklab, var(--acc) 12%, transparent)' }}
 										>
 											{point}

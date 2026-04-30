@@ -1,4 +1,5 @@
 import type { Form } from '@/sanity/types'
+import { Button } from '@/components/ui/button'
 
 export default function ({ form }: { form: Form }) {
 	return (
@@ -37,9 +38,9 @@ export default function ({ form }: { form: Form }) {
 			</label>
 
 			<div>
-				<button className="action max-md:w-full" type="submit">
+				<Button className="action max-md:w-full" type="submit">
 					Submit
-				</button>
+				</Button>
 			</div>
 		</form>
 	)

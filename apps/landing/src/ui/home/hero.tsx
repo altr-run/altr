@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useInView, useScroll, useTransform } from 'mot
 import { useEffect, useRef, useState } from 'react'
 import Reveal from './reveal'
 
-const ROTATING_WORDS = ['clarity', 'ownership', 'control', 'context'] as const
+const ROTATING_WORDS = ['context', 'intent', 'clarity', 'control'] as const
 
 const HERO_STATS = [
 	{ value: 6, suffix: 'h', label: 'saved per engineer per week' },
@@ -78,26 +78,26 @@ export default function Hero() {
 			style={{ minHeight: '156svh' }}
 		>
 			{/* hero text wrap */}
-			<div className="max-w-[1020px] w-full mx-auto text-center flex flex-col items-center gap-7 relative z-[1] flex-1 pt-[280px] pb-12">
+			<div className="w-full mx-auto text-center flex flex-col items-center gap-7 relative z-[1] flex-1 pt-[280px] pb-12" style={{ maxWidth: 'var(--maxw)' }}>
 				{/* announcement pill */}
 				<div className="inline-flex items-center gap-2.5 border border-line rounded-full px-3 py-1.5 shadow-sm" style={{ background: 'color-mix(in oklab, var(--panel) 92%, white)' }}>
 					<span className="w-1.5 h-1.5 rounded-full bg-acc flex-shrink-0 animate-[pulse-dot_1.6s_ease-in-out_infinite]" />
 					<span className="badge badge-acc">Early Access</span>
 					<span className="font-mono text-[11px] tracking-widest uppercase text-ink-3">
-						One unbroken trail · thread to merged PR
+						Orchestrate any agent · thread to merged PR
 					</span>
 				</div>
 
 				<h1
 					className="font-serif text-center"
 					style={{
-						fontSize: 'clamp(32px, 4.4vw, 68px)',
-						lineHeight: 1.08,
+						fontSize: 'clamp(44px, 5.5vw, 80px)',
+						lineHeight: 1.06,
 						textWrap: 'balance',
 					}}
 				>
 					<span className="block">Build without the archaeology.</span>
-					<span className="block">Close the execution loop.</span>
+					<span className="block">Mission control for every agent you run.</span>
 					<span className="block">
 						Ship with{' '}
 						<span className="inline-block relative">
@@ -135,10 +135,11 @@ export default function Hero() {
 					</span>
 				</h1>
 
-				<p className="font-sans text-[18px] leading-[1.62] text-ink-2 max-w-[56ch] mx-auto">
-					Every artifact carries its source. From the initial signal to the
-					merged PR — one unbroken trail of intent. No rebuilding the brief at
-					handoff. Your agents work inside your actual stack.
+				<p className="font-sans leading-[1.62] text-ink-2 max-w-[56ch] mx-auto" style={{ fontSize: 'clamp(18px, 1.4vw, 22px)' }}>
+					Run Claude Code, Codex, and your whole agent fleet from one
+					execution surface. Context from every Slack thread, Linear ticket,
+					and call — injected via MCP before a session starts, attached to
+					every PR when it opens.
 				</p>
 
 				<div className="flex gap-[10px] flex-wrap justify-center">
@@ -178,7 +179,7 @@ export default function Hero() {
 				</div>
 
 				{/* outcome stat strip */}
-				<div ref={statsRef} className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-2">
+				<div ref={statsRef} className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 mt-2">
 					{HERO_STATS.map(({ value, suffix, label }, i) => (
 						<motion.div
 							key={label}
@@ -187,7 +188,7 @@ export default function Hero() {
 							animate={statsInView ? { opacity: 1, y: 0 } : {}}
 							transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1], delay: i * 0.1 }}
 						>
-							<span className="font-mono text-[15px] font-semibold text-acc tabular-nums">
+							<span className="font-mono text-[17px] font-semibold text-acc tabular-nums">
 								<HeroCountUp
 									target={value}
 									suffix={suffix}
@@ -195,7 +196,7 @@ export default function Hero() {
 									duration={900 + i * 120}
 								/>
 							</span>
-							<span className="font-mono text-[10.5px] text-ink-4 tracking-widest uppercase">{label}</span>
+							<span className="font-mono text-[11px] text-ink-4 tracking-widest uppercase">{label}</span>
 						</motion.div>
 					))}
 				</div>

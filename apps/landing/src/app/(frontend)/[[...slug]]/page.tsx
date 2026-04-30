@@ -8,6 +8,7 @@ import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import {
 	GLOBAL_MODULE_PATH_QUERY,
+	LIVE_DEMO_SCENARIOS_QUERY,
 	MODULES_QUERY,
 } from '@/sanity/lib/queries'
 import type { PAGE_QUERY_RESULT } from '@/sanity/types'
@@ -26,7 +27,8 @@ export default async function Page({ params }: Props) {
 	const { slug } = await params
 
 	if (isHomePage(slug)) {
-		return <HomePage />
+		const liveDemoScenarios = await client.fetch(LIVE_DEMO_SCENARIOS_QUERY).catch(() => [])
+		return <HomePage liveDemoScenarios={liveDemoScenarios} />
 	}
 
 	const page = await getPage(slug)
@@ -40,13 +42,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 	if (isHomePage(slug)) {
 		return {
-			title: 'Altr — Close the Execution Loop for Teams & AI Agents',
+			title: 'Altr — Mission Control for Every Agent You Run',
 			description:
-				'Stop dropping the thread. Altr keeps specs, tickets, and PRs connected end-to-end — with context attached at every handoff. Mac-native. Local-first.',
+				'Run Claude Code, Codex, and your entire agent fleet from one execution surface. Context from every Slack thread and Linear ticket — injected via MCP, attached to every PR.',
 			openGraph: {
-				title: 'Altr — Close the Execution Loop for Teams & AI Agents',
+				title: 'Altr — Mission Control for Every Agent You Run',
 				description:
-					'Stop dropping the thread. Altr keeps specs, tickets, and PRs connected end-to-end — with context attached at every handoff.',
+					'Run Claude Code, Codex, and your entire agent fleet from one execution surface. Context injected via MCP. One unbroken trail from first thread to merged PR.',
 				type: 'website',
 				url: process.env.NEXT_PUBLIC_BASE_URL ?? 'https://altr.run',
 				images: [

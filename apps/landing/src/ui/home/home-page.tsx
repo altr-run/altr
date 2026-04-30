@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import Hero from './hero'
+import type { SanityScenario } from './pax-live'
 
 const HeroShader = dynamic(() => import('./hero-shader'), { ssr: false })
 const ContextLost = dynamic(() => import('./context-lost'))
@@ -21,7 +22,7 @@ const Testimonials = dynamic(() => import('./testimonials'))
 const FAQ = dynamic(() => import('./faq'))
 const TalkTeam = dynamic(() => import('./talk-team'))
 
-export default function HomePage() {
+export default function HomePage({ liveDemoScenarios }: { liveDemoScenarios?: SanityScenario[] }) {
 	return (
 		<div data-home-page="">
 			<div className="relative">
@@ -39,7 +40,7 @@ export default function HomePage() {
 				<div data-nav-theme="light">
 					<ContextLost />
 					<Flow />
-					<PaxLive />
+					<PaxLive sanityScenarios={liveDemoScenarios} />
 					<CTACallout />
 					<Triptych />
 					<Logos />
@@ -49,7 +50,7 @@ export default function HomePage() {
 					<Playground />
 					<Trust />
 					<Metrics />
-					<section className="px-8 py-24 border-b border-line" style={{ background: 'var(--bg-1)' }}>
+					<section className="px-8 py-32 border-b border-line" style={{ background: 'var(--bg-1)' }}>
 						<div className="mx-auto" style={{ maxWidth: 'var(--maxw-narrow)' }}>
 							<p className="font-mono text-[11px] uppercase tracking-widest text-acc mb-10 text-center">Calculate your savings</p>
 							<HandoffCalculator />

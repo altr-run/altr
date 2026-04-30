@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 import type { AccordionList } from '@/sanity/types'
 import CTAList from '@/ui/cta-list'
 import { moduleAttributes } from '.'
+import { Button } from '@/components/ui/button'
 
 export default function ({
 	_key: _module_key,
@@ -123,8 +124,9 @@ function AccordionItem({
 		>
 			<Accordion.Header>
 				<Accordion.Trigger asChild>
-					<button
-						className="flex w-full items-center justify-between gap-4 py-[.5lh] text-left font-bold cursor-pointer bg-transparent border-0"
+					<Button
+						variant="bare"
+						className="flex w-full items-center justify-between gap-4 py-[.5lh] text-left font-bold cursor-pointer"
 						{...(enableSchema && { itemProp: 'name' })}
 					>
 						<span>{summary}</span>
@@ -136,7 +138,7 @@ function AccordionItem({
 						>
 							+
 						</motion.span>
-					</button>
+					</Button>
 				</Accordion.Trigger>
 			</Accordion.Header>
 

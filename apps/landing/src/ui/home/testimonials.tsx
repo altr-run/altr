@@ -127,10 +127,10 @@ function QuoteCard({ q, i }: { q: (typeof QUOTES)[number]; i: number }) {
 
 export default function Testimonials() {
 	return (
-		<section className="py-[140px] px-8 border-b border-line">
+		<section className="py-[160px] px-8 border-b border-line">
 			<div className="inner">
-				<Reveal className="grid grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] gap-16 items-end mb-14">
-					<div>
+				<Reveal className="grid grid-cols-12 gap-12 lg:gap-24 items-end mb-24">
+					<div className="col-span-12 lg:col-span-7">
 						<span className="over inline-block mb-4">from pilot teams</span>
 						<h2 className="heading-2">
 							What shifts when the trail
@@ -138,15 +138,17 @@ export default function Testimonials() {
 							<em>stays intact.</em>
 						</h2>
 					</div>
-					<p className="lede">
-						The recurring pattern is not &ldquo;AI magic.&rdquo; It is fewer reconstruction
-						meetings, stronger specs, and review that starts with the full
-						context already in place.
-					</p>
+					<div className="col-span-12 lg:col-span-5">
+						<p className="lede">
+							The recurring pattern is not &ldquo;AI magic.&rdquo; It is fewer reconstruction
+							meetings, stronger specs, and review that starts with the full
+							context already in place.
+						</p>
+					</div>
 				</Reveal>
-				<div className="grid grid-cols-2 border-t border-b border-line">
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 					{QUOTES.map((q, i) => (
-						<QuoteCard key={i} q={q} i={i} />
+						<QuoteCard key={i} q={{ ...q, featured: false }} i={i} />
 					))}
 				</div>
 			</div>

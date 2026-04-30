@@ -6,6 +6,7 @@ import LogoMark from '@/ui/home/logo-mark'
 export type SiteChromeContent = {
 	useCases: Array<{ title: string; problem: string | null; slug: string }>
 	integrations: Array<{ tool: string; category: string | null; domain: string | null; slug: string }>
+	solutionPages: Array<{ title: string; slug: string }>
 	comparePages: Array<{ competitor: string; slug: string }>
 	legalPages: Array<{ title: string; slug: string }>
 }
@@ -13,16 +14,16 @@ export type SiteChromeContent = {
 // ── Link style helpers ────────────────────────────────────────────────────────
 
 const NAV_TRIGGER =
-	'text-[13px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink cursor-pointer list-none flex items-center gap-1 [&::-webkit-details-marker]:hidden'
+	'text-[14.5px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink cursor-pointer list-none flex items-center gap-1.5 [&::-webkit-details-marker]:hidden'
 
 const PANEL_HEADING =
-	'font-mono text-[9.5px] tracking-[0.14em] uppercase text-ink-4 mb-3 font-semibold'
+	'font-mono text-[10px] tracking-[0.14em] uppercase text-ink-4 mb-4 font-semibold'
 
 const MEGA_ITEM =
-	'flex items-start gap-3 py-2 no-underline rounded-[10px] px-2.5 -mx-2.5 transition-colors hover:bg-[color-mix(in_oklab,var(--acc)_4%,var(--bg-1))] group/item'
+	'flex items-start gap-4 py-3 no-underline rounded-[12px] px-3 -mx-3 transition-colors hover:bg-[color-mix(in_oklab,var(--acc)_4%,var(--bg-1))] group/item'
 
 const DROPDOWN_ITEM =
-	'block text-[13px] text-ink-2 py-1.5 no-underline hover:text-ink transition-colors leading-snug'
+	'block text-[14px] text-ink-2 py-2 no-underline hover:text-ink transition-colors leading-snug'
 
 // ── Chevron icon ──────────────────────────────────────────────────────────────
 
@@ -38,7 +39,7 @@ function ChevronIcon() {
 
 function MegaPanel({ children }: { children: React.ReactNode }) {
 	return (
-		<div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-(--panel-strong) border border-(--line) rounded-[var(--r-xl)] shadow-[var(--sh-lg)] p-6 min-w-[760px] z-50">
+		<div className="absolute top-full left-1/2 -translate-x-1/2 mt-5 bg-(--panel-strong) border border-(--line) rounded-[var(--r-xl)] shadow-[var(--sh-lg)] p-8 min-w-[840px] z-50">
 			{children}
 		</div>
 	)
@@ -46,7 +47,7 @@ function MegaPanel({ children }: { children: React.ReactNode }) {
 
 function DropdownPanel({ children }: { children: React.ReactNode }) {
 	return (
-		<div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-(--panel-strong) border border-(--line) rounded-[var(--r-lg)] shadow-[var(--sh-lg)] p-4 min-w-[220px] z-50">
+		<div className="absolute top-full left-1/2 -translate-x-1/2 mt-5 bg-(--panel-strong) border border-(--line) rounded-[var(--r-lg)] shadow-[var(--sh-lg)] p-5 min-w-[240px] z-50">
 			{children}
 		</div>
 	)
@@ -217,7 +218,7 @@ const USE_CASE_GROUPS = {
 	'Operations': ['migrations', 'release-follow-through', 'incident-follow-up'],
 } as const
 
-function SolutionsMenu({ useCases }: { useCases: SiteChromeContent['useCases'] }) {
+function SolutionsMenu({ useCases, solutionPages }: { useCases: SiteChromeContent['useCases']; solutionPages: SiteChromeContent['solutionPages'] }) {
 	const useCasesBySlug = new Map(useCases.map((useCase) => [useCase.slug, useCase]))
 
 	return (
@@ -227,29 +228,59 @@ function SolutionsMenu({ useCases }: { useCases: SiteChromeContent['useCases'] }
 				<ChevronIcon />
 			</summary>
 			<MegaPanel>
-				<div className="grid grid-cols-2 gap-8 divide-x divide-(--line)">
-					{Object.entries(USE_CASE_GROUPS).map(([group, slugs]) => (
-						<div key={group} className={group === 'Operations' ? 'pl-8' : ''}>
-							<div className={PANEL_HEADING}>{group}</div>
-							{slugs.map((slug) => {
-								const uc = useCasesBySlug.get(slug)
-								if (!uc) return null
-								return (
-									<a key={slug} href={`/use-cases/${slug}`} className={MEGA_ITEM}>
-										<span className="text-acc text-[11px] font-mono leading-none mt-[3px] flex-shrink-0">→</span>
-										<div>
-											<div className="text-[13px] font-semibold text-ink leading-snug">{uc.title}</div>
-											{uc.problem && (
-												<div className="text-[12px] text-ink-3 mt-0.5 leading-snug line-clamp-1">
-													{uc.problem.slice(0, 58)}…
-												</div>
-											)}
-										</div>
-									</a>
-								)
-							})}
-						</div>
-					))}
+				<div className="grid grid-cols-3 gap-8 divide-x divide-(--line)">
+					{/* Col 1: Role-based solution pages */}
+					<div>
+						<div className={PANEL_HEADING}>By role</div>
+						{solutionPages.map((page) => (
+							<a key={page.slug} href={`/${page.slug}`} className={MEGA_ITEM}>
+								<span className="text-acc text-[11px] font-mono leading-none mt-[3px] flex-shrink-0">→</span>
+								<div>
+									<div className="text-[13px] font-semibold text-ink leading-snug">{page.title}</div>
+								</div>
+							</a>
+						))}
+						<a
+							href="/solutions"
+							className="font-mono text-[11px] tracking-[0.06em] text-acc no-underline hover:underline mt-3 inline-block"
+						>
+							All solutions →
+						</a>
+					</div>
+
+					{/* Col 2: Engineering use cases */}
+					<div className="pl-8">
+						<div className={PANEL_HEADING}>Engineering</div>
+						{USE_CASE_GROUPS['Engineering'].map((slug) => {
+							const uc = useCasesBySlug.get(slug)
+							if (!uc) return null
+							return (
+								<a key={slug} href={`/use-cases/${slug}`} className={MEGA_ITEM}>
+									<span className="text-acc text-[11px] font-mono leading-none mt-[3px] flex-shrink-0">→</span>
+									<div>
+										<div className="text-[13px] font-semibold text-ink leading-snug">{uc.title}</div>
+									</div>
+								</a>
+							)
+						})}
+					</div>
+
+					{/* Col 3: Operations use cases */}
+					<div className="pl-8">
+						<div className={PANEL_HEADING}>Operations</div>
+						{USE_CASE_GROUPS['Operations'].map((slug) => {
+							const uc = useCasesBySlug.get(slug)
+							if (!uc) return null
+							return (
+								<a key={slug} href={`/use-cases/${slug}`} className={MEGA_ITEM}>
+									<span className="text-acc text-[11px] font-mono leading-none mt-[3px] flex-shrink-0">→</span>
+									<div>
+										<div className="text-[13px] font-semibold text-ink leading-snug">{uc.title}</div>
+									</div>
+								</a>
+							)
+						})}
+					</div>
 				</div>
 
 				<MegaPanelFooter
@@ -295,6 +326,7 @@ function IntegrationsMenu({ integrations }: { integrations: SiteChromeContent['i
 // ── Compare menu ──────────────────────────────────────────────────────────────
 
 function CompareMenu({ comparePages }: { comparePages: SiteChromeContent['comparePages'] }) {
+	if (!comparePages.length) return null
 	return (
 		<HoverDetails safeAreaOnHover closeAfterNavigate className="relative">
 			<summary className={NAV_TRIGGER}>
@@ -311,6 +343,33 @@ function CompareMenu({ comparePages }: { comparePages: SiteChromeContent['compar
 				<div className="border-t border-(--line) mt-2 pt-2">
 					<a href="/compare" className="text-[12px] text-acc font-mono no-underline hover:underline">
 						All comparisons →
+					</a>
+				</div>
+			</DropdownPanel>
+		</HoverDetails>
+	)
+}
+
+// ── Legal menu ────────────────────────────────────────────────────────────────
+
+function LegalMenu({ legalPages }: { legalPages: SiteChromeContent['legalPages'] }) {
+	if (!legalPages.length) return null
+	return (
+		<HoverDetails safeAreaOnHover closeAfterNavigate className="relative">
+			<summary className={NAV_TRIGGER}>
+				Legal
+				<ChevronIcon />
+			</summary>
+			<DropdownPanel>
+				<div className={PANEL_HEADING + ' mb-3'}>Policies</div>
+				{legalPages.map((page) => (
+					<a key={page.slug} href={`/legal/${page.slug}`} className={DROPDOWN_ITEM}>
+						<span className="block text-ink text-[13px] font-medium">{page.title}</span>
+					</a>
+				))}
+				<div className="border-t border-(--line) mt-2 pt-2">
+					<a href="/legal" className="text-[12px] text-acc font-mono no-underline hover:underline">
+						All policies →
 					</a>
 				</div>
 			</DropdownPanel>
@@ -338,9 +397,10 @@ export default function SiteNav({ content }: { content: SiteChromeContent }) {
 				{/* Center: nav items */}
 				<div className="flex items-center gap-5">
 					<ProductMenu integrations={content.integrations} />
-					<SolutionsMenu useCases={content.useCases} />
+					<SolutionsMenu useCases={content.useCases} solutionPages={content.solutionPages} />
 					<IntegrationsMenu integrations={content.integrations} />
 					<CompareMenu comparePages={content.comparePages} />
+					<LegalMenu legalPages={content.legalPages} />
 					<a
 						href="/blog"
 						className="text-[13px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink"

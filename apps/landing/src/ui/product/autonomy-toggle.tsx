@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
+import { Button } from '@/components/ui/button'
 
 const MODES = [
 	{
@@ -53,15 +54,16 @@ export default function AutonomyToggle() {
 			{/* Mode selector */}
 			<div className="flex gap-px bg-line border border-line rounded-[14px] overflow-hidden p-1" style={{ background: 'var(--bg-1)' }}>
 				{MODES.map((m) => (
-					<button
+					<Button
 						key={m.id}
+						variant="bare"
 						onClick={() => setActive(m)}
 						className={`flex-1 px-4 py-2.5 rounded-[10px] text-[13px] font-sans font-medium transition-all ${
 							active.id === m.id ? 'bg-bg text-ink shadow-sm' : 'text-ink-3 hover:text-ink hover:bg-bg/50'
 						}`}
 					>
 						{m.label}
-					</button>
+					</Button>
 				))}
 			</div>
 

@@ -20,6 +20,7 @@
 	--sh-lg: 0 8px 18px rgba(20, 18, 16, 0.05), 0 28px 64px rgba(20, 18, 16, 0.07);
 
 	/* Layout */
-	--maxw:        1240px;
-	--maxw-narrow: 940px;
+	--maxw:        1400px;
+	--maxw-narrow: 920px;
+	--section-x:   clamp(24px, 5vw, 80px);
 }

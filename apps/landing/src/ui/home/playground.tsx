@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import { clsx } from 'clsx'
 import Reveal from './reveal'
+import { Button } from '@/components/ui/button'
 
 type Example = {
 	text: string
@@ -177,15 +178,15 @@ export default function Playground() {
 							</div>
 							<div className="flex gap-2 mt-[18px] flex-wrap">
 								<span className="w-full font-mono text-[10px] uppercase tracking-widest text-ink-4 mb-0.5">Try one of these →</span>
-								<button className="btn btn-ghost btn-sm" onClick={() => loadExample('invite')}>
+								<Button variant="ghost" size="sm" onClick={() => loadExample('invite')}>
 									invite teammates
-								</button>
-								<button className="btn btn-ghost btn-sm" onClick={() => loadExample('search')}>
+								</Button>
+								<Button variant="ghost" size="sm" onClick={() => loadExample('search')}>
 									full-text search
-								</button>
-								<button className="btn btn-ghost btn-sm" onClick={() => loadExample('billing')}>
+								</Button>
+								<Button variant="ghost" size="sm" onClick={() => loadExample('billing')}>
 									stripe billing
-								</button>
+								</Button>
 							</div>
 							<div className="flex justify-between items-center gap-4 mt-5 pt-[18px] border-t border-dashed border-line">
 								<div className="flex gap-2">
@@ -196,9 +197,9 @@ export default function Playground() {
 									))}
 								</div>
 								<div>
-									<button className="btn btn-acc" onClick={run}>
-										Run it →
-									</button>
+									<Button variant="acc" onClick={run}>
+									Run it →
+								</Button>
 								</div>
 							</div>
 						</div>

@@ -110,29 +110,26 @@ export default function SecurityPage() {
 
 			{/* ── Three pillars ─────────────────────────────────────────────── */}
 			<section className="border-b border-line">
-				<div className="mx-auto px-8 py-20" style={{ maxWidth: 'var(--maxw)' }}>
-					<p className="font-mono text-[11px] uppercase tracking-widest text-ink-3 mb-12 text-center">
+				<div className="mx-auto px-8 py-32" style={{ maxWidth: 'var(--maxw)' }}>
+					<p className="over mb-12 text-center">
 						Three non-negotiables
 					</p>
-					<div className="grid gap-px rounded-[24px] overflow-hidden border border-line" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 						{PILLARS.map((p, i) => (
-							<div key={i} className="p-8 flex flex-col gap-5" style={{ background: 'var(--bg)' }}>
+							<div key={i} className="p-10 flex flex-col gap-6 bg-bg-1/40 border border-line rounded-[32px] transition-all hover:bg-bg-1/80 hover:shadow-lg">
 								<div className="flex items-center gap-2">
 									<span className="font-mono text-[14px] text-acc font-bold">{p.mark}</span>
-									<span className="font-mono text-[10px] uppercase tracking-widest text-ink-3">{p.label}</span>
+									<span className="over text-[10px]">{p.label}</span>
 								</div>
-								<h3
-									className="font-serif font-normal text-ink"
-									style={{ fontSize: 'clamp(18px, 1.8vw, 24px)', lineHeight: 1.2, textWrap: 'balance' }}
-								>
+								<h3 className="heading-3">
 									{p.headline}
 								</h3>
-								<p className="font-sans text-[14px] leading-[1.7] text-ink-2">
+								<p className="font-sans text-[16px] leading-[1.7] text-ink-2">
 									{p.body}
 								</p>
-								<ul className="list-none p-0 m-0 flex flex-col gap-2 pt-3 border-t border-line">
+								<ul className="list-none p-0 m-0 flex flex-col gap-3 pt-6 border-t border-line">
 									{p.items.map((item) => (
-										<li key={item} className="flex items-start gap-2 font-mono text-[10.5px] text-ink-3 tracking-wide">
+										<li key={item} className="flex items-start gap-2 font-mono text-[11px] text-ink-3 tracking-wide">
 											<span className="text-acc mt-0.5 flex-shrink-0">→</span>
 											{item}
 										</li>

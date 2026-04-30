@@ -75,24 +75,21 @@ export default async function IntegrationsIndex() {
 		<main className="bg-(--bg) text-ink">
 			{/* Header */}
 			<section
-				className="border-b border-line"
+				className="border-b border-line px-8 py-[160px]"
 				style={{ background: 'radial-gradient(60% 50% at 50% 0%, color-mix(in oklab, var(--acc) 7%, transparent) 0%, transparent 60%), var(--bg)' }}
 			>
-				<div className="max-w-[var(--maxw)] mx-auto px-6 py-24 grid gap-16 items-end" style={{ gridTemplateColumns: '1.2fr 0.8fr' }}>
-					<div>
-						<p className="font-mono text-[11px] tracking-widest uppercase text-ink-3 mb-6">Integrations</p>
-						<h1
-							className="font-serif text-ink mb-4"
-							style={{ fontSize: 'clamp(32px, 5vw, 72px)', lineHeight: 1.08, textWrap: 'balance' }}
-						>
+				<div className="inner grid grid-cols-12 gap-12 lg:gap-24 items-end">
+					<div className="col-span-12 lg:col-span-7">
+						<p className="over mb-6">Integrations</p>
+						<h1 className="heading-2 mb-4">
 							Your stack, connected.
 							<br />
-							<em className="italic">Nothing replaced.</em>
+							<em className="italic text-acc">Nothing replaced.</em>
 						</h1>
 					</div>
-					<div>
-						<p className="text-ink-2 text-[16px] leading-relaxed mb-5">
-							Altr sits between your tools and carries signal forward. Slack threads, GitHub diffs, Linear tickets, call recordings — the original context stays attached through every handoff.
+					<div className="col-span-12 lg:col-span-5">
+						<p className="lede mb-8">
+							Altr sits between your tools and carries signal forward. Slack threads, GitHub diffs, Linear tickets — the original context stays attached through every handoff.
 						</p>
 						{/* Signal count badges */}
 						<div className="flex flex-wrap gap-2">
@@ -194,6 +191,13 @@ export default async function IntegrationsIndex() {
 							Talk to the founders →
 						</Link>
 						<span className="font-mono text-[10.5px] text-ink-4">No card required. Founder-led onboarding.</span>
+					</div>
+				</div>
+			</section>
+		</main>
+	)
+}
+n className="font-mono text-[10.5px] text-ink-4">No card required. Founder-led onboarding.</span>
 					</div>
 				</div>
 			</section>

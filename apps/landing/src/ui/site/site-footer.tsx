@@ -11,7 +11,7 @@ const NAV_LINK_ACCENT =
 	'block font-mono text-[11px] text-acc py-[4px] no-underline hover:opacity-80 transition-opacity leading-snug mt-1'
 
 export default function SiteFooter({ content }: { content: SiteChromeContent }) {
-	const { useCases, comparePages, integrations, legalPages } = content
+	const { useCases, solutionPages, comparePages, integrations, legalPages } = content
 
 	return (
 		<footer className="bg-bg">
@@ -63,13 +63,22 @@ export default function SiteFooter({ content }: { content: SiteChromeContent }) 
 
 						{/* Solutions col */}
 						<div>
-							<div className={COL_HEAD}>Solutions</div>
-							{useCases.map((uc) => (
-								<a key={uc.slug} href={`/use-cases/${uc.slug}`} className={NAV_LINK}>
-									{uc.title}
+							<div className={COL_HEAD}>By role</div>
+							{solutionPages.map((page) => (
+								<a key={page.slug} href={`/${page.slug}`} className={NAV_LINK}>
+									{page.title}
 								</a>
 							))}
-							<a href="/use-cases" className={NAV_LINK_ACCENT}>All use cases →</a>
+							<a href="/solutions" className={NAV_LINK_ACCENT}>All solutions →</a>
+							<div className="mt-5">
+								<div className={COL_HEAD}>Use cases</div>
+								{useCases.map((uc) => (
+									<a key={uc.slug} href={`/use-cases/${uc.slug}`} className={NAV_LINK}>
+										{uc.title}
+									</a>
+								))}
+								<a href="/use-cases" className={NAV_LINK_ACCENT}>All use cases →</a>
+							</div>
 						</div>
 
 						{/* Compare col */}

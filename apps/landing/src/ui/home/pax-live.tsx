@@ -1,10 +1,12 @@
 'use client'
+'use no memo'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import Reveal from './reveal'
+import { Button } from '@/components/ui/button'
 
-// ── Scenario data ────────────────────────────────────────────────────────────
+// ── Types ────────────────────────────────────────────────────────────────────
 
 type Msg  = { who: string; avatar: string; avatarBg: string; time: string; msg: string }
 type Step = { id: string; icon: string; label: string; detail: string | null; done: boolean }
@@ -19,6 +21,40 @@ type Scenario = {
 	ac: string[]
 	openQuestion: string
 	footerMeta: string
+}
+
+// Shape returned from Sanity — maps to Scenario via sanityToScenario()
+export type SanityScenario = {
+	_id: string
+	label: string
+	channel: string
+	msgCount?: string | null
+	thread: Msg[]
+	acceptanceCriteria: string[]
+	openQuestion: string
+	footerMeta?: string | null
+}
+
+function sanityToScenario(s: SanityScenario, index: number): Scenario {
+	const draftLabel = index === 1 ? 'Drafting issue' : 'Drafting spec'
+	return {
+		id: s._id,
+		label: s.label,
+		channel: s.channel,
+		msgCount: s.msgCount ?? `${s.thread.length} messages`,
+		thread: s.thread,
+		steps: [
+			{ id: 'read',     icon: '↓', label: 'Reading thread',        detail: `${s.thread.length} messages · ${s.channel.split('·')[0]?.trim() ?? ''}`, done: true  },
+			{ id: 'classify', icon: '■', label: 'Signal classified',     detail: 'confidence 96%',                                                          done: true  },
+			{ id: 'problem',  icon: '→', label: 'Problem extracted',     detail: null,                                                                       done: true  },
+			{ id: 'draft',    icon: '■', label: draftLabel,              detail: null,                                                                       done: false },
+			{ id: 'flag',     icon: '◆', label: 'Open question flagged', detail: null,                                                                       done: false },
+			{ id: 'ready',    icon: '✓', label: 'Spec ready for review', detail: 'awaiting human approval',                                                  done: false },
+		],
+		ac: s.acceptanceCriteria,
+		openQuestion: s.openQuestion,
+		footerMeta: s.footerMeta ?? `${s.acceptanceCriteria.length} AC · 1 open question · awaiting your review`,
+	}
 }
 
 const SCENARIOS: Scenario[] = [
@@ -118,7 +154,10 @@ const STEP_DELAYS = [0, 400, 800, 1400, 2200, 3200]
 
 // ── Component ────────────────────────────────────────────────────────────────
 
-export default function AltrLive() {
+export default function AltrLive({ sanityScenarios }: { sanityScenarios?: SanityScenario[] }) {
+	const scenarios: Scenario[] = (sanityScenarios && sanityScenarios.length > 0)
+		? sanityScenarios.map((s, i) => sanityToScenario(s, i))
+		: SCENARIOS
 	const sectionRef     = useRef<HTMLDivElement>(null)
 	const hasEnteredView = useRef(false)
 	const activeTabRef   = useRef(0)
@@ -155,7 +194,7 @@ export default function AltrLive() {
 			([entry]) => {
 				if (entry?.isIntersecting && !hasEnteredView.current) {
 					hasEnteredView.current = true
-					startAnimation(SCENARIOS[activeTabRef.current]!)
+					startAnimation(scenarios[activeTabRef.current]!)
 				}
 			},
 			{ threshold: 0.25 },
@@ -171,33 +210,32 @@ export default function AltrLive() {
 		activeTabRef.current = idx
 		setActiveTab(idx)
 		if (hasEnteredView.current) {
-			setTimeout(() => startAnimation(SCENARIOS[idx]!), 80)
+			setTimeout(() => startAnimation(scenarios[idx]!), 80)
 		}
 	}
 
-	const scenario = SCENARIOS[activeTab]!
+	const scenario = scenarios[activeTab]!
 
 	return (
 		<section
 			ref={sectionRef}
-			className="py-[120px] px-8 border-b border-line overflow-hidden"
+			className="py-[160px] px-8 border-b border-line overflow-hidden"
 			style={{ background: 'var(--bg-1)' }}
 		>
 			<div className="inner">
 				{/* Header */}
-				<Reveal className="mb-10">
-					<span className="over inline-block mb-5">agent transparency</span>
-					<div className="grid gap-10 items-end" style={{ gridTemplateColumns: '1fr 1fr' }}>
+				<Reveal className="mb-24">
+					<span className="over inline-block mb-5">full transparency</span>
+					<div className="grid grid-cols-12 gap-12 lg:gap-24 items-end">
 						<h2
-							className="font-serif font-normal tracking-[-0.03em] text-ink m-0"
-							style={{ fontSize: 'clamp(32px, 4vw, 56px)', lineHeight: 1.06, textWrap: 'balance' }}
+							className="col-span-12 lg:col-span-7 heading-2"
 						>
-							Watch Altr read
+							Every step visible.
 							<br />
-							<em className="italic text-acc">the thread.</em>
+							<em className="italic text-acc">Nothing autonomous.</em>
 						</h2>
-						<p className="font-sans text-[16px] leading-[1.65] text-ink-2 m-0">
-							Altr doesn&apos;t black-box the reasoning. Every step is visible — from the raw thread to the reviewable spec with criteria your team actually wrote.
+						<p className="col-span-12 lg:col-span-5 lede">
+							Watch Altr read the thread and produce a reviewable spec — every classification step visible, every open question flagged, nothing merged without your approval.
 						</p>
 					</div>
 				</Reveal>
@@ -205,18 +243,20 @@ export default function AltrLive() {
 				{/* Scenario tabs */}
 				<Reveal className="mb-6">
 					<div className="flex items-center gap-1 p-1 rounded-full border border-line w-fit" style={{ background: 'var(--bg)' }}>
-						{SCENARIOS.map((s, i) => (
-							<button
+						{scenarios.map((s, i) => (
+							<Button
 								key={s.id}
 								onClick={() => handleTabChange(i)}
+								variant={activeTab === i ? 'acc' : 'bare'}
+								size="sm"
 								className={
 									activeTab === i
-										? 'btn btn-acc btn-sm'
-										: 'font-mono text-[11px] tracking-[0.06em] uppercase rounded-full px-4 py-1.5 transition-all duration-200 cursor-pointer text-ink-3 hover:text-ink'
+										? ''
+										: 'font-mono text-[11px] tracking-[0.06em] uppercase rounded-full px-4 py-1.5 transition-all duration-200 text-ink-3 hover:text-ink'
 								}
 							>
 								{s.label}
-							</button>
+							</Button>
 						))}
 					</div>
 				</Reveal>
@@ -287,7 +327,7 @@ export default function AltrLive() {
 									<div className="flex items-center gap-2">
 										<span className="font-mono text-[14px] text-acc font-bold leading-none">■</span>
 										<span className="font-sans font-semibold text-[13px] text-ink">Altr</span>
-										<span className="font-mono text-[10px] text-ink-4">· spec agent</span>
+										<span className="font-mono text-[10px] text-ink-4">· context agent</span>
 									</div>
 									<span className="inline-flex gap-1.5 items-center font-mono text-[10px] text-acc">
 										<span className="w-[5px] h-[5px] rounded-full bg-acc animate-[pulse-dot_1.6s_ease-in-out_infinite]" />
@@ -394,9 +434,9 @@ export default function AltrLive() {
 											<span className="font-mono text-[10px] text-ink-4 tracking-wide">{scenario.footerMeta}</span>
 										</div>
 										<div className="flex items-center gap-2 flex-shrink-0">
-											<button className="btn btn-ghost btn-sm cursor-default">
+											<Button variant="ghost" size="sm" className="cursor-default">
 												Edit
-											</button>
+											</Button>
 											<motion.button
 												className="btn btn-acc btn-sm cursor-default"
 												animate={{

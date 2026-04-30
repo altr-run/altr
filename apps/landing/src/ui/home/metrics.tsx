@@ -95,7 +95,7 @@ function CountUp({
 export default function Metrics() {
 	return (
 		<section
-			className="py-[120px] px-8 border-b border-line overflow-hidden"
+			className="py-[160px] px-8 border-b border-line overflow-hidden"
 			style={{ background: 'var(--bg-1)' }}
 		>
 			{/* Live signal strip — Stripe-style incrementing counters */}
@@ -118,22 +118,16 @@ export default function Metrics() {
 			</div>
 
 			<div className="inner">
-				<div
-					className="grid gap-[80px] items-center"
-					style={{ gridTemplateColumns: '1fr 1fr' }}
-				>
+				<div className="grid grid-cols-12 gap-12 lg:gap-24 items-center">
 					{/* Left: framing statement */}
-					<Reveal className="flex flex-col gap-6">
+					<Reveal className="col-span-12 lg:col-span-7 flex flex-col gap-8">
 						<span className="over inline-block">pilot signal</span>
-						<h2
-							className="font-serif font-normal leading-[1.04] tracking-[-0.03em] text-ink m-0"
-							style={{ fontSize: 'clamp(36px, 4vw, 58px)', textWrap: 'balance' }}
-						>
+						<h2 className="heading-2">
 							What early teams see when the whole trail
 							<br />
 							<em className="italic text-acc">stays attached.</em>
 						</h2>
-						<p className="font-sans text-[16px] leading-[1.62] text-ink-3 m-0 max-w-[40ch]">
+						<p className="lede">
 							Signal from closed pilots. Teams stopped the reconstruction
 							work — context now travels from the first thread to the merged diff.
 						</p>
@@ -141,27 +135,25 @@ export default function Metrics() {
 							<div
 								className="w-[6px] h-[6px] rounded-full bg-acc animate-[pulse-dot_1.6s_ease-in-out_infinite]"
 							/>
-							<span className="font-mono text-[10.5px] tracking-[0.1em] uppercase text-ink-4">
+							<span className="font-mono text-[11px] tracking-[0.1em] uppercase text-ink-4">
 								Early access cohort · Q1 2026
 							</span>
 						</div>
 					</Reveal>
 
 					{/* Right: stat grid */}
-					<Reveal delay={120}>
+					<Reveal delay={120} className="col-span-12 lg:col-span-5">
 						<div
-							className="grid gap-px bg-line rounded-[20px] overflow-hidden border border-line"
-							style={{ gridTemplateColumns: '1fr 1fr' }}
+							className="grid grid-cols-2 gap-6"
 						>
 							{STATS.map((stat, i) => (
 								<div
 									key={i}
-									className="flex flex-col gap-3 p-7 group transition-colors duration-300 hover:bg-[color-mix(in_oklab,var(--acc)_3%,var(--bg))]"
-									style={{ background: 'var(--bg)' }}
+									className="flex flex-col gap-4 p-8 bg-bg-1/40 border border-line rounded-[24px] group transition-all hover:bg-bg-1/80 hover:shadow-lg"
 								>
 									<div
 										className="font-serif leading-none tracking-[-0.04em] text-ink"
-										style={{ fontSize: 'clamp(42px, 3.6vw, 60px)' }}
+										style={{ fontSize: 'clamp(40px, 4vw, 64px)' }}
 									>
 										<CountUp
 											to={stat.value}

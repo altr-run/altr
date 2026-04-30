@@ -1,6 +1,6 @@
 export default function CTACallout() {
 	return (
-		<section className="px-8 py-20 border-y border-line" style={{ background: 'color-mix(in oklab, var(--acc) 3%, var(--bg))' }}>
+		<section className="px-8 py-32 border-y border-line" style={{ background: 'color-mix(in oklab, var(--acc) 3%, var(--bg))' }}>
 			<div
 				className="mx-auto flex flex-col sm:flex-row items-center justify-between gap-8"
 				style={{ maxWidth: 'var(--maxw)' }}
@@ -12,11 +12,11 @@ export default function CTACallout() {
 					</p>
 					<h2
 						className="font-serif font-normal text-ink leading-[1.12]"
-						style={{ fontSize: 'clamp(22px, 2.6vw, 38px)', textWrap: 'balance' }}
+						style={{ fontSize: 'clamp(22px, 2.6vw, 36px)', textWrap: 'balance' }}
 					>
 						Stop rebuilding the story at every handoff.
 					</h2>
-					<p className="font-sans text-[15px] text-ink-3 leading-[1.65] mt-3 max-w-[52ch]">
+					<p className="font-sans text-[17px] text-ink-3 leading-[1.65] mt-4 max-w-[52ch]">
 						Slack thread → spec → PR → merged. One continuous trail. No archaeology,
 						no sync meetings, no context tax.
 					</p>
@@ -28,7 +28,7 @@ export default function CTACallout() {
 						Get early access →
 					</a>
 					<span className="font-mono text-[10px] text-ink-4 tracking-widest uppercase">
-						Mac-native · BYOK · Free to start
+						Mission control app · MCP + CLI · BYOK
 					</span>
 				</div>
 			</div>

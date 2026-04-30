@@ -18,36 +18,36 @@ export default function PostCardHero({ post }: { post: BlogPost }) {
 	return (
 		<a
 			href={slug}
-			className="group grid md:grid-cols-2 gap-8 items-center no-underline text-current border border-line rounded-2xl overflow-hidden p-0"
+			className="group grid md:grid-cols-2 gap-10 items-center no-underline text-current border border-line rounded-[32px] overflow-hidden p-0 transition-all hover:shadow-xl hover:border-acc/40"
 			style={{ background: 'var(--bg-1)' }}
 		>
 			{/* thumbnail */}
 			<div className="aspect-[16/9] overflow-hidden relative">
 				{post.metadata?.image ? (
 					<img
-						src={urlFor(post.metadata.image).width(1000).height(563).url()}
+						src={urlFor(post.metadata.image).width(1200).height(675).url()}
 						alt={post.title ?? ''}
-						className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+						className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
 					/>
 				) : (
 					<Image
 						src={`/api/og?slug=${ROUTES.blog}/${post.metadata?.slug?.current}&invert=1`}
 						alt={post.title ?? ''}
-						width={1000}
-						height={563}
+						width={1200}
+						height={675}
 						className="w-full h-full object-cover"
 					/>
 				)}
 			</div>
 
 			{/* copy */}
-			<div className="flex flex-col gap-4 px-8 py-8 md:py-0 md:pr-10">
+			<div className="flex flex-col gap-6 px-10 py-10 md:py-0 md:pr-12">
 				{categories?.length > 0 && (
 					<div className="flex flex-wrap gap-2">
 						{categories.map((c) => (
 							<span
 								key={c._id}
-								className="font-mono text-[10.5px] uppercase tracking-widest text-acc border border-acc/30 rounded-full px-2.5 py-0.5"
+								className="over text-[10px]"
 							>
 								{c.title}
 							</span>
@@ -56,34 +56,34 @@ export default function PostCardHero({ post }: { post: BlogPost }) {
 				)}
 
 				<h2
-					className="font-serif font-normal text-ink leading-[1.15] group-hover:text-acc transition-colors"
-					style={{ fontSize: 'clamp(22px, 2.4vw, 36px)', textWrap: 'balance' }}
+					className="font-serif font-normal text-ink leading-[1.1] group-hover:text-acc transition-colors"
+					style={{ fontSize: 'clamp(28px, 2.8vw, 42px)', textWrap: 'balance' }}
 				>
 					{post.title}
 				</h2>
 
 				{post.metadata?.description && (
-					<p className="font-sans text-[15px] text-ink-3 leading-[1.65] line-clamp-3">
+					<p className="font-sans text-[17px] text-ink-3 leading-[1.65] line-clamp-3">
 						{post.metadata.description}
 					</p>
 				)}
 
-				<div className="flex items-center gap-3 mt-2">
+				<div className="flex items-center gap-4 mt-4">
 					{author?.name && (
 						<>
 							{author.image && (
 								<img
-									src={urlFor(author.image).width(40).height(40).url()}
+									src={urlFor(author.image).width(48).height(48).url()}
 									alt={author.name}
-									className="w-7 h-7 rounded-full object-cover"
+									className="w-8 h-8 rounded-full object-cover"
 								/>
 							)}
-							<span className="font-sans text-[13px] text-ink-3">{author.name}</span>
+							<span className="font-sans text-[14px] text-ink-2">{author.name}</span>
 							<span className="text-ink-4">·</span>
 						</>
 					)}
 					{post.publishDate && (
-						<span className="font-mono text-[11px] text-ink-4">
+						<span className="font-mono text-[11px] text-ink-4 uppercase tracking-widest">
 							{formatDate(post.publishDate)}
 						</span>
 					)}

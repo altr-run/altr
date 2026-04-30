@@ -15,27 +15,28 @@ export default function ({
 }: HeroSplit) {
 	return (
 		<section
-			className="section grid items-center gap-8 md:grid-cols-2"
+			className="inner py-24 md:py-32 grid items-center gap-12 lg:gap-24 md:grid-cols-12"
 			{...moduleAttributes(props)}
 		>
 			<figure
 				className={cn(
+					'col-span-12 md:col-span-6 lg:col-span-7',
 					image?.onRight && 'md:order-last',
 					image?.afterContent && 'max-md:order-last',
 				)}
 			>
 				<Img
-					className="w-full"
+					className="w-full rounded-[24px] shadow-lg"
 					image={image}
-					width={600}
+					width={800}
 					alt={image?.alt ?? ''}
 				/>
 			</figure>
 
-			<header className="prose">
+			<header className="col-span-12 md:col-span-6 lg:col-span-5 prose lg:prose-lg">
 				<Overline value={overline} />
 				<PortableText value={content} />
-				<CTAList ctas={ctas} className="max-md:*:w-full" />
+				<CTAList ctas={ctas} className="max-md:*:w-full mt-8" />
 			</header>
 		</section>
 	)

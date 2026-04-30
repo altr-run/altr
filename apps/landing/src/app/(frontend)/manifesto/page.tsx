@@ -8,17 +8,17 @@ export const metadata: Metadata = {
 export default function ManifestoPage() {
 	return (
 		<main className="bg-bg text-ink">
-			<article className="mx-auto px-8 py-[120px] max-w-[720px]">
-				<p className="font-mono text-[11px] tracking-widest uppercase text-acc mb-12">The Manifesto</p>
+			<article className="mx-auto px-8 py-[160px] max-w-[var(--maxw-narrow)]">
+				<p className="over mb-12">The Manifesto</p>
 				
-				<h1 className="font-serif font-normal tracking-[-0.03em] text-ink mb-16" style={{ fontSize: 'clamp(32px, 5vw, 64px)', lineHeight: 1.05 }}>
+				<h1 className="heading-2 mb-20">
 					The 3-person team
 					<br />
 					<em className="italic text-acc">is the new 30.</em>
 				</h1>
 
-				<div className="flex flex-col gap-10 font-sans text-[18px] leading-[1.65] text-ink-2">
-					<p className="font-medium text-ink">
+				<div className="flex flex-col gap-12 font-sans text-[21px] leading-[1.65] text-ink-2">
+					<p className="font-medium text-ink text-[24px]">
 						We are entering the era of the high-leverage founder.
 					</p>
 

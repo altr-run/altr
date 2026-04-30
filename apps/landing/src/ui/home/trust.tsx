@@ -31,14 +31,14 @@ export default function Trust() {
 			data-theme="dark"
 			className="py-[140px] px-8 border-t border-b border-(--line) bg-(--bg) text-(--ink)"
 		>
-			<div className="max-w-[1020px] mx-auto flex flex-col gap-16">
+			<div className="inner flex flex-col gap-16">
 				<Reveal className="flex flex-col items-start gap-5">
 					<span className="over inline-block" style={{ marginBottom: 20 }}>
 						security &amp; control
 					</span>
 					<h2
 						className="font-serif font-normal leading-none tracking-[-0.03em] text-wrap-balance m-0"
-						style={{ fontSize: 'clamp(44px, 5.6vw, 84px)' }}
+						style={{ fontSize: 'clamp(36px, 4vw, 60px)' }}
 					>
 						Your specs and diffs
 						<br />
@@ -46,7 +46,7 @@ export default function Trust() {
 					</h2>
 					<p
 						className="text-(--ink-2) leading-[1.6] mt-0 max-w-[480px]"
-						style={{ fontSize: 'clamp(15px, 1.4vw, 18px)' }}
+						style={{ fontSize: 'clamp(17px, 1.5vw, 20px)' }}
 					>
 						Control is part of the product surface, not a compliance add-on.
 						Teams decide what agents can touch, which models run where, and how

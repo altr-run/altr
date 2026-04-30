@@ -39,34 +39,31 @@ export default async function BlogPage() {
 				className="border-b border-line"
 				style={{ background: 'var(--bg-1)' }}
 			>
-				<div className="mx-auto px-8 py-20" style={{ maxWidth: 'var(--maxw)' }}>
-					<p className="font-mono text-[11px] uppercase tracking-widest text-acc mb-4">
+				<div className="inner py-[160px] px-8">
+					<p className="over mb-4">
 						Journal
 					</p>
-					<h1
-						className="font-serif font-normal text-ink leading-[1.1]"
-						style={{ fontSize: 'clamp(28px, 3.6vw, 56px)' }}
-					>
+					<h1 className="heading-2 mb-6">
 						Thinking out loud.
 					</h1>
-					<p className="font-sans text-[16px] text-ink-3 leading-[1.65] mt-4 max-w-[52ch]">
+					<p className="lede">
 						Notes on AI-native product development, the execution loop, and
 						what it means to ship with human + agent teams.
 					</p>
 				</div>
 			</div>
 
-			<div className="mx-auto px-8 py-16" style={{ maxWidth: 'var(--maxw)' }}>
+			<div className="inner py-24 px-8">
 				{/* featured post */}
 				{hero && (
-					<div className="mb-16">
+					<div className="mb-24">
 						<PostCardHero post={hero} />
 					</div>
 				)}
 
 				{/* post grid */}
 				{rest.length > 0 && (
-					<div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+					<div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
 						{rest.map((post) => (
 							<PostCard key={post._id} post={post} />
 						))}

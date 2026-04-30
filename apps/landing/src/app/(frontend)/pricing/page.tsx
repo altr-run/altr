@@ -63,18 +63,15 @@ export default function PricingPage() {
 		<main className="bg-bg text-ink">
 
 			{/* Hero */}
-			<section className="border-b border-line px-8 py-[120px] text-center" style={{ background: 'radial-gradient(60% 50% at 50% 0%, color-mix(in oklab, var(--acc) 7%, transparent) 0%, transparent 60%), var(--bg)' }}>
+			<section className="border-b border-line px-8 py-[160px] text-center" style={{ background: 'radial-gradient(60% 50% at 50% 0%, color-mix(in oklab, var(--acc) 7%, transparent) 0%, transparent 60%), var(--bg)' }}>
 				<div className="mx-auto flex flex-col items-center" style={{ maxWidth: 'var(--maxw-narrow)' }}>
-					<p className="font-mono text-[11px] tracking-widest uppercase text-acc mb-5">Pricing</p>
-					<h1
-						className="font-serif font-normal tracking-[-0.03em] text-ink mb-6"
-						style={{ fontSize: 'clamp(40px, 5.5vw, 78px)', lineHeight: 1.04, textWrap: 'balance' }}
-					>
+					<p className="over mb-5">Pricing</p>
+					<h1 className="heading-2 mb-6">
 						Zero-markup AI.
 						<br />
 						<em className="italic text-acc">You bring the key.</em>
 					</h1>
-					<p className="font-sans text-[18px] leading-[1.62] text-ink-2 max-w-[48ch] mb-10">
+					<p className="lede mb-10">
 						Altr doesn&apos;t sell AI credits or markup tokens. Connect your own provider directly — paying exactly what the AI costs, with no middleman tax.
 					</p>
 					{/* Social proof strip */}

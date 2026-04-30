@@ -46,22 +46,23 @@ export default async function CompareIndex() {
 		<main className="bg-(--bg) text-ink">
 
 			{/* Hero */}
-			<section className="max-w-[var(--maxw)] mx-auto px-6 py-24 border-b border-line">
-				<div className="grid gap-16 items-end" style={{ gridTemplateColumns: '1.2fr 0.8fr' }}>
-					<div>
-						<p className="font-mono text-[11px] tracking-widest uppercase text-ink-3 mb-6">Compare</p>
-						<h1
-							className="font-serif text-ink mb-4"
-							style={{ fontSize: 'clamp(32px, 5vw, 72px)', lineHeight: 1.08, textWrap: 'balance' }}
-						>
-							Altr vs the tools
-							<br />
-							<em className="italic">already in your loop.</em>
-						</h1>
+			<section className="mx-auto px-8 py-[160px] border-b border-line">
+				<div className="inner">
+					<div className="grid grid-cols-12 gap-12 lg:gap-24 items-end">
+						<div className="col-span-12 lg:col-span-7">
+							<p className="over mb-6">Compare</p>
+							<h1 className="heading-2 mb-4">
+								Altr vs the tools
+								<br />
+								<em className="italic">already in your loop.</em>
+							</h1>
+						</div>
+						<div className="col-span-12 lg:col-span-5">
+							<p className="lede">
+								Coding agents. Project trackers. Task-to-PR tools. See what&apos;s different when the full signal — thread to spec to merged PR — stays attached.
+							</p>
+						</div>
 					</div>
-					<p className="text-ink-2 text-[16px] leading-relaxed max-w-[38ch] mb-1">
-						Coding agents. Project trackers. Task-to-PR tools. See what&apos;s different when the full signal — thread to spec to merged PR — stays attached.
-					</p>
 				</div>
 			</section>
 

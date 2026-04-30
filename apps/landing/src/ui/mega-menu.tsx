@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { AnimatePresence, motion } from 'motion/react'
 import { LuChevronDown } from 'react-icons/lu'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 export type MegaMenuItem = {
 	id: number
@@ -49,7 +50,8 @@ const MegaMenu = React.forwardRef<HTMLUListElement, MegaMenuProps>(
 						onMouseLeave={() => handleHover(null)}
 					>
 						{navItem.subMenus ? (
-							<button
+							<Button
+								variant="bare"
 								type="button"
 								className="text-current/72 hover:text-current group relative flex cursor-pointer items-center justify-center gap-1 rounded-full px-4 py-1.5 text-sm transition-colors duration-300"
 								onMouseEnter={() => setIsHover(navItem.id)}
@@ -69,7 +71,7 @@ const MegaMenu = React.forwardRef<HTMLUListElement, MegaMenuProps>(
 										style={{ borderRadius: 99 }}
 									/>
 								)}
-							</button>
+							</Button>
 						) : (
 							<Link
 								href={navItem.link ?? '#'}

@@ -77,7 +77,7 @@ export default function Logos() {
 	return (
 		<section className="border-b border-line">
 			{/* Part 1: Integration Grid */}
-			<div className="mx-auto px-8 py-20 border-b border-line" style={{ maxWidth: 'var(--maxw)' }}>
+			<div className="mx-auto px-8 py-24 border-b border-line" style={{ maxWidth: 'var(--maxw)' }}>
 				<div className="flex flex-col items-center text-center gap-12">
 					<motion.div
 						initial={{ opacity: 0, y: 12 }}

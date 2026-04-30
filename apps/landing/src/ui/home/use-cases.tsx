@@ -48,10 +48,9 @@ export default function UseCases() {
 		>
 			<div className="inner">
 				<Reveal
-					className="grid gap-16 items-end mb-14"
-					style={{ gridTemplateColumns: 'minmax(0, 1.15fr) minmax(320px, 0.85fr)' }}
+					className="grid grid-cols-12 gap-12 lg:gap-24 items-end mb-24"
 				>
-					<div>
+					<div className="col-span-12 lg:col-span-7">
 						<span
 							className="over inline-block"
 							style={{ marginBottom: 16 }}
@@ -59,40 +58,36 @@ export default function UseCases() {
 							use cases
 						</span>
 						<h2
-							className="font-serif font-normal leading-none tracking-[-0.03em] text-wrap-balance m-0"
-							style={{ fontSize: 'clamp(44px, 5.6vw, 84px)' }}
+							className="heading-2"
 						>
 							Workflows teams already
 							<br />
 							<em className="italic">run every week.</em>
 						</h2>
 					</div>
-					<p className="lede">
-						Altr removes reconstruction work — the moment teams spend copying a
-						bug report from Slack into Jira, summarizing a thread into acceptance
-						criteria, or explaining context in a review comment. Start with any
-						workflow you own. The signal comes with it.
-					</p>
+					<div className="col-span-12 lg:col-span-5">
+						<p className="lede">
+							Altr removes reconstruction work — the moment teams spend copying a
+							bug report from Slack into Jira, summarizing a thread into acceptance
+							criteria, or explaining context in a review comment. Start with any
+							workflow you own. The signal comes with it.
+						</p>
+					</div>
 				</Reveal>
 
 				<div
-					className="grid gap-[1px] border-t border-l border-(--line)"
-					style={{ gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}
+					className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
 				>
 					{CASES.map((item, index) => (
 						<Reveal
 							key={item.label}
 							delay={index * 70}
 							className={[
-								'p-[28px_26px_30px] border-r border-b border-(--line)',
-								'border-t-[3px] border-t-transparent',
-								'flex flex-col gap-4',
-								'transition-[transform,box-shadow,border-color] duration-[280ms] ease-[cubic-bezier(0.25,1,0.5,1)]',
-								'hover:-translate-y-[3px] hover:shadow-md hover:border-t-(--acc) hover:z-[1] hover:relative',
+								'p-[40px_36px] border border-line rounded-[24px]',
+								'flex flex-col gap-5',
+								'transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]',
+								'bg-bg-1/40 hover:bg-bg-1/80 hover:shadow-xl hover:-translate-y-1 hover:border-acc/40',
 							].join(' ')}
-							style={{
-								background: 'color-mix(in oklab, var(--panel-strong) 88%, white 12%)',
-							}}
 						>
 							<div className="font-mono text-[10px] tracking-[0.12em] uppercase text-(--acc-2)">
 								{item.label}
@@ -109,8 +104,7 @@ export default function UseCases() {
 								{item.items.map((point) => (
 									<li
 										key={point}
-										className="relative pl-[14px] font-mono text-[10.5px] leading-[1.45] tracking-[0.02em] text-(--ink-3) uppercase
-											before:content-[''] before:absolute before:left-0 before:top-[6px] before:w-[5px] before:h-[5px] before:rounded-full before:bg-(--acc)"
+										className="relative pl-[14px] font-mono text-[10.5px] leading-[1.45] tracking-[0.02em] text-(--ink-3) uppercase before:content-[''] before:absolute before:left-0 before:top-[6px] before:w-[5px] before:h-[5px] before:rounded-full before:bg-(--acc)"
 									>
 										{point}
 									</li>

@@ -201,7 +201,7 @@ const PAINS: Pain[] = [
 		label: 'Knowledge Erosion',
 		stat: '0 agents',
 		statSuffix: 'remember why',
-		desc: 'Every AI coding session starts blank. The architectural decisions your team made last sprint — which database, which pattern, which approach was rejected — are invisible to the next agent. You re-litigate the same choices, sprint after sprint.',
+		desc: 'Every Claude Code session, every Codex run, every Cursor task starts blank. The architectural decisions from last sprint — which approach was chosen and why the others were rejected — are invisible to the next agent. You re-litigate the same choices, sprint after sprint.',
 		visual: <VisualAgentAmnessia />,
 	},
 ]
@@ -209,53 +209,44 @@ const PAINS: Pain[] = [
 export default function ContextLost() {
 	return (
 		<section
-			className="py-[120px] px-8 border-b border-line overflow-hidden"
+			className="py-[160px] px-8 border-b border-line overflow-hidden"
 			style={{
 				background: 'var(--bg)',
 			}}
 		>
 			<div className="inner">
 				{/* Headline */}
-				<Reveal className="text-center mb-[72px]">
-					<p
-						className="font-mono text-[11px] tracking-widest uppercase text-ink-3 mb-5"
-					>
-						the problem
-					</p>
-					<h2
-						className="font-serif font-normal tracking-[-0.03em] text-ink mx-auto"
-						style={{
-							fontSize: 'clamp(34px, 4.2vw, 62px)',
-							lineHeight: 1.06,
-							maxWidth: 820,
-							textWrap: 'balance',
-						}}
-					>
-						Context dies at every handoff.
-						<br />
-						<em className="italic text-acc">Knowledge erodes across every sprint.</em>
-					</h2>
-					<p
-						className="mt-5 font-sans text-[17px] text-ink-3 mx-auto"
-						style={{ maxWidth: '52ch' }}
-					>
-						Work sprawl destroys the context your team needs to ship. And when
-						everyone uses AI agents, nobody owns the knowledge — decisions
-						evaporate between sessions.
-					</p>
+				<Reveal className="grid grid-cols-12 gap-12 lg:gap-24 items-end mb-24">
+					<div className="col-span-12 lg:col-span-7">
+						<p
+							className="over mb-5"
+						>
+							the problem
+						</p>
+						<h2 className="heading-2">
+							Context dies at <em>every handoff.</em>
+							<br />
+							<em className="italic text-acc">Knowledge erodes across every sprint.</em>
+						</h2>
+					</div>
+					<div className="col-span-12 lg:col-span-5">
+						<p className="lede">
+							Work sprawl destroys the context your team needs to ship. And when
+							everyone uses AI agents, nobody owns the knowledge — decisions
+							evaporate between sessions.
+						</p>
+					</div>
 				</Reveal>
 
 				{/* Pain cards */}
 				<div
-					className="grid gap-px bg-line rounded-[24px] overflow-hidden border border-line"
-					style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}
+					className="grid grid-cols-1 md:grid-cols-2 gap-6"
 				>
 					{PAINS.map((pain, i) => (
 						<Reveal
 							key={i}
 							delay={i * 90}
-							className="flex flex-col p-8 relative group transition-colors duration-300 hover:bg-[color-mix(in_oklab,var(--acc)_3%,white)]"
-							style={{ background: 'var(--bg)' }}
+							className="flex flex-col p-10 relative group transition-all duration-300 bg-bg-1/40 border border-line rounded-[24px] hover:bg-bg-1/80 hover:shadow-xl hover:-translate-y-1"
 						>
 							{/* Index */}
 							<span className="font-mono text-[10px] text-ink-4 tracking-[0.14em] mb-5">

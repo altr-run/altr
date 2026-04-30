@@ -558,102 +558,90 @@ export default function Triptych() {
 				</Reveal>
 
 				{/* Grid */}
-				<div className="border-t border-b border-line" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px' }}>
-					{/* Cell 1 */}
+				<div className="grid grid-cols-12 gap-5" id="context-grid">
+					{/* Cell 1: 5-column span */}
 					<Reveal
 						delay={0}
-						className="p-[44px_32px_36px] border-r border-b border-line flex flex-col gap-[14px] relative transition-all group cursor-default hover:[background:color-mix(in_oklab,var(--panel-soft)_46%,white)]"
+						className="col-span-12 lg:col-span-5 p-[56px_40px] border border-line rounded-[32px] flex flex-col gap-5 relative transition-all group cursor-default bg-bg-1/40 hover:bg-bg-1/80 hover:shadow-lg hover:-translate-y-1"
 					>
 						<span
-							className="font-mono text-[10.5px] tracking-widest uppercase text-acc inline-flex items-center gap-2 before:content-[''] before:inline-block before:w-[18px] before:h-px before:bg-acc transition-all group-hover:before:w-[28px]"
+							className="font-mono text-[11px] tracking-widest uppercase text-acc inline-flex items-center gap-2"
 							style={{ fontFamily: 'var(--f-mono)' }}
 						>
 							01 · capture
 						</span>
 						<h3
-							className="font-serif font-normal text-[30px] tracking-tight leading-[1.05] text-ink"
+							className="font-serif font-normal text-[32px] tracking-tight leading-[1] text-ink"
 							style={{ fontFamily: 'var(--f-serif)' }}
 						>
-							Signals become <em>working context.</em>
+							Signals become<br /><em>working context.</em>
 						</h3>
-						<p className="text-[15px] text-ink-2 leading-[1.6] max-w-[32ch] m-0">
+						<p className="text-[16px] text-ink-2 leading-[1.6] max-w-[34ch] m-0">
 							Requests, notes, customer calls, and internal discussion enter the
 							same room first. Work starts from the original signal, not from a
 							summary pasted somewhere else.
 						</p>
-						<IntakeVisualization />
+						<div className="mt-8 flex-1 flex items-end">
+							<IntakeVisualization />
+						</div>
 					</Reveal>
 
-					{/* Cell 2 */}
+					{/* Cell 2: 7-column span */}
 					<Reveal
 						delay={80}
-						className="p-[44px_32px_36px] border-b border-line flex flex-col gap-[14px] relative transition-all group cursor-default hover:[background:color-mix(in_oklab,var(--panel-soft)_46%,white)]"
+						className="col-span-12 lg:col-span-7 p-[56px_48px] border border-line rounded-[32px] flex flex-col gap-5 relative transition-all group cursor-default bg-bg-1/40 hover:bg-bg-1/80 hover:shadow-lg hover:-translate-y-1"
 					>
 						<span
-							className="font-mono text-[10.5px] tracking-widest uppercase text-acc inline-flex items-center gap-2 before:content-[''] before:inline-block before:w-[18px] before:h-px before:bg-acc transition-all group-hover:before:w-[28px]"
+							className="font-mono text-[11px] tracking-widest uppercase text-acc inline-flex items-center gap-2"
 							style={{ fontFamily: 'var(--f-mono)' }}
 						>
 							02 · assign
 						</span>
 						<h3
-							className="font-serif font-normal text-[30px] tracking-tight leading-[1.05] text-ink"
+							className="font-serif font-normal text-[32px] tracking-tight leading-[1] text-ink"
 							style={{ fontFamily: 'var(--f-serif)' }}
 						>
-							Each stage is <em>distinct and visible.</em>
+							Each stage is<br /><em>distinct and visible.</em>
 						</h3>
-						<p className="text-[15px] text-ink-2 leading-[1.6] max-w-[32ch] m-0">
+						<p className="text-[16px] text-ink-2 leading-[1.6] max-w-[42ch] m-0">
 							Planning, building, and reviewing run in separate lanes with
 							clear handoffs. You can see what is in progress, what is blocked,
 							and what moves next — at any moment, without asking.
 						</p>
-						<RoleVisualization />
+						<div className="mt-8 flex-1 flex items-end">
+							<RoleVisualization />
+						</div>
 					</Reveal>
 
-					{/* Cell 3 — full-width, two-column internal layout */}
+					{/* Cell 3: Full 12-column span with internal split */}
 					<Reveal
 						delay={160}
-						className="col-span-2 p-[56px_48px] flex flex-col gap-[14px] relative transition-all group cursor-default hover:[background:color-mix(in_oklab,var(--panel-soft)_46%,white)]"
-						style={{
-							display: 'grid',
-							gridTemplateColumns: '1fr 1fr',
-							gridTemplateRows: 'auto auto auto auto',
-							gap: '0 72px',
-							padding: '56px 48px',
-						}}
+						className="col-span-12 p-[64px_56px] border border-line rounded-[32px] flex flex-col lg:flex-row gap-12 relative transition-all group cursor-default bg-bg-1/40 hover:bg-bg-1/80 hover:shadow-lg hover:-translate-y-1"
 					>
-						<span
-							className="font-mono text-[10.5px] tracking-widest uppercase text-acc inline-flex items-center gap-2 before:content-[''] before:inline-block before:w-[18px] before:h-px before:bg-acc transition-all group-hover:before:w-[28px]"
-							style={{ fontFamily: 'var(--f-mono)' }}
-						>
-							03 · carry
-						</span>
-						<h3
-							className="font-serif font-normal tracking-tight leading-[1.05] text-ink"
-							style={{
-								fontFamily: 'var(--f-serif)',
-								fontSize: '36px',
-								maxWidth: '20ch',
-							}}
-						>
-							Thread to spec to PR.
-							<br />
-							<em>One continuous trail.</em>
-						</h3>
-						<p className="text-[15px] text-ink-2 leading-[1.6] max-w-[32ch] m-0">
-							The same context follows the work all the way through. Acceptance
-							criteria do not drift, review has the original rationale, and the
-							PR lands with the full trail attached.
-						</p>
-						{/* Illustration spans col 2, rows 1-4 */}
-						<div
-							style={{
-								gridColumn: 2,
-								gridRow: '1/5',
-								height: 'auto',
-								minHeight: '180px',
-								marginTop: 0,
-							}}
-						>
+						<div className="flex-1 flex flex-col gap-5">
+							<span
+								className="font-mono text-[11px] tracking-widest uppercase text-acc inline-flex items-center gap-2"
+								style={{ fontFamily: 'var(--f-mono)' }}
+							>
+								03 · carry
+							</span>
+							<h3
+								className="font-serif font-normal text-[42px] tracking-tight leading-[0.95] text-ink"
+								style={{
+									fontFamily: 'var(--f-serif)',
+									maxWidth: '18ch',
+								}}
+							>
+								Thread to spec to PR.<br />
+								<em>One continuous trail.</em>
+							</h3>
+							<p className="text-[17px] text-ink-2 leading-[1.6] max-w-[34ch] m-0">
+								The same context follows the work all the way through. Acceptance
+								criteria do not drift, review has the original rationale, and the
+								PR lands with the full trail attached.
+							</p>
+						</div>
+						<div className="flex-[1.2] min-h-[280px] flex items-center">
 							<ChainVisualization />
 						</div>
 					</Reveal>

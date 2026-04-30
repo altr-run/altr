@@ -4,8 +4,8 @@ const NAV_LINK = 'block text-[14px] text-ink-2 py-[5px] transition-colors hover:
 
 export default function FooterHome() {
 	return (
-		<footer className="py-20 px-8 pb-10 bg-bg">
-			<div className="max-w-[var(--maxw)] mx-auto grid gap-12" style={{ gridTemplateColumns: '1.4fr repeat(4, 1fr)' }}>
+		<footer className="py-24 px-8 pb-10 bg-bg">
+			<div className="inner grid gap-12" style={{ gridTemplateColumns: '1.4fr repeat(4, 1fr)' }}>
 				<div>
 					<a href="/" className="inline-flex items-center no-underline text-current leading-none">
 						<LogoMark className="h-[26px]" />
@@ -53,7 +53,7 @@ export default function FooterHome() {
 					<a href="/#faq" className={NAV_LINK}>FAQ</a>
 				</div>
 			</div>
-			<div className="max-w-[var(--maxw)] mx-auto mt-16 pt-6 border-t border-line flex justify-between font-mono text-[11px] text-ink-4 tracking-widest">
+			<div className="inner mt-16 pt-6 border-t border-line flex justify-between font-mono text-[11px] text-ink-4 tracking-widest">
 				<span>© 2026 altr labs, inc.</span>
 				<span>shipped with altr · v0.1.2026</span>
 			</div>
