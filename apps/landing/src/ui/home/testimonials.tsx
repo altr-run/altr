@@ -1,51 +1,39 @@
 'use client'
 
-import { clsx } from 'clsx'
+import { cn } from '@/lib/utils'
 import { useRef } from 'react'
 import Reveal from './reveal'
 
 const QUOTES = [
 	{
-		text: (
-			<>
-				&ldquo;<em>We stopped rewriting the brief at every handoff.</em> The
-				request, the acceptance criteria, and the PR now read like one
-				continuous story, which changed the quality of review immediately.&rdquo;
-			</>
-		),
+		text: 'We stopped rewriting the brief at every handoff. The original request, acceptance criteria, and the merged diff now read like one continuous story.',
+		emphasis: 'The PR finally arrives with reasoning attached.',
 		initials: 'EJ',
 		name: 'Elena Joshi',
-		role: 'CTO, Mesa',
-		featured: true,
-		variant: 'default' as const,
+		role: 'CTO',
+		company: 'MESA',
+		colorBg: '#1a2f1a',
+		colorText: '#7fc47f',
 	},
 	{
-		text: (
-			<>
-				&ldquo;We stopped losing the reasoning between Slack, Linear, and
-				GitHub. <em>The PR finally arrives with the trail attached</em>,
-				which means review starts from intent instead of archaeology.&rdquo;
-			</>
-		),
+		text: 'We lost the reasoning between Slack, Linear, and GitHub constantly. Altr threads it through automatically.',
+		emphasis: 'Review starts from intent now, not archaeology.',
 		initials: 'RP',
 		name: 'Ravi Patel',
-		role: 'Head of Eng, Holt & Co',
-		featured: false,
-		variant: 'dark' as const,
+		role: 'Head of Engineering',
+		company: 'Holt & Co',
+		colorBg: '#1a2340',
+		colorText: '#7ab3e8',
 	},
 	{
-		text: (
-			<>
-				&ldquo;Most AI tooling gave us output. Altr gives us a workflow.{' '}
-				<em>The agents show up with context, role, and a visible handoff</em>
-				, which makes the whole thing governable.&rdquo;
-			</>
-		),
+		text: 'Most AI tooling gave us output. Altr gives us a workflow. The agents show up with context, role, and a visible handoff.',
+		emphasis: 'The whole thing is governable now.',
 		initials: 'MC',
 		name: 'Maya Chen',
-		role: 'Founder, Parabola',
-		featured: false,
-		variant: 'default' as const,
+		role: 'Founder',
+		company: 'Parabola',
+		colorBg: '#3a1f0d',
+		colorText: '#e0a96d',
 	},
 ]
 
@@ -56,8 +44,8 @@ function QuoteCard({ q, i }: { q: (typeof QUOTES)[number]; i: number }) {
 		const el = wrapRef.current
 		if (!el) return
 		const rect = el.getBoundingClientRect()
-		const x = ((e.clientX - rect.left) / rect.width - 0.5) * 7
-		const y = ((e.clientY - rect.top) / rect.height - 0.5) * 5
+		const x = ((e.clientX - rect.left) / rect.width - 0.5) * 6
+		const y = ((e.clientY - rect.top) / rect.height - 0.5) * 4
 		el.style.setProperty('--cx', `${x.toFixed(2)}px`)
 		el.style.setProperty('--cy', `${y.toFixed(2)}px`)
 	}
@@ -74,50 +62,54 @@ function QuoteCard({ q, i }: { q: (typeof QUOTES)[number]; i: number }) {
 			ref={wrapRef}
 			onMouseMove={handleMouseMove}
 			onMouseLeave={handleMouseLeave}
-			className={clsx(
-				'border-r border-line flex flex-col last:border-r-0',
-				q.featured && 'col-span-2 border-r-0 border-b',
-			)}
+			className="h-full"
 			style={{
 				transform: 'translate(var(--cx, 0px), var(--cy, 0px))',
-				transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)',
+				transition: 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)',
 			} as React.CSSProperties}
 		>
 			<Reveal
-				delay={i === 0 ? 0 : i * 100}
-				className={clsx(
-					'flex flex-col gap-5 p-10 h-full',
-					'hover:shadow-[0_16px_40px_rgba(0,0,0,0.07),0_0_0_1px_color-mix(in_oklab,var(--acc)_28%,var(--line))] hover:relative hover:z-[1] transition-shadow duration-300',
-					q.featured && 'flex-row gap-16 items-start px-12 py-14 bg-bg-1',
-					!q.featured && q.variant === 'dark' && 'bg-bg-1',
+				delay={i * 80}
+				className={cn(
+					'flex flex-col gap-6 p-8 h-full rounded-[20px]',
+					'border border-[var(--line)] bg-[var(--bg)]',
+					'transition-[border-color,box-shadow] duration-300',
+					'hover:border-[color-mix(in_oklab,var(--acc)_30%,var(--line))] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)]',
 				)}
 			>
+				{/* Quote mark */}
 				<div
-					className={clsx(
-						'font-serif text-[20px] leading-[1.4] text-ink-1 tracking-[-0.01em] [&_em]:italic [&_em]:text-ink',
-						q.featured && 'text-[26px] leading-[1.35] flex-1 max-w-[70ch]',
-					)}
+					className="font-serif text-[40px] leading-none text-[var(--acc)] opacity-30 select-none"
+					aria-hidden="true"
 				>
-					{q.text}
+					&ldquo;
 				</div>
-				<div
-					className={clsx(
-						'flex gap-3 items-center mt-auto',
-						q.featured && 'flex-col items-start gap-4 min-w-[180px]',
-					)}
-				>
+
+				{/* Quote body */}
+				<div className="flex-1 flex flex-col gap-3">
+					<p className="font-serif text-[18px] leading-[1.5] text-[var(--ink-2)] tracking-[-0.01em]">
+						{q.text}
+					</p>
+					<p className="font-serif text-[18px] leading-[1.5] text-[var(--ink)] font-normal italic tracking-[-0.01em]">
+						{q.emphasis}
+					</p>
+				</div>
+
+				{/* Attribution */}
+				<div className="flex items-center gap-3 pt-2 border-t border-[var(--line)]">
 					<div
-						className={clsx(
-							'w-9 h-9 rounded-full bg-acc-soft text-acc-ink grid place-items-center font-sans font-semibold text-[13px] flex-shrink-0',
-							q.featured && 'w-12 h-12 text-[16px]',
-							q.variant === 'dark' && 'bg-ink text-bg',
-						)}
+						className="w-9 h-9 rounded-full flex-shrink-0 grid place-items-center font-sans font-semibold text-[13px]"
+						style={{ background: q.colorBg, color: q.colorText }}
 					>
 						{q.initials}
 					</div>
 					<div>
-						<div className="text-[13px] font-semibold text-ink">{q.name}</div>
-						<div className="font-mono text-[10.5px] text-ink-3 tracking-widest">{q.role}</div>
+						<div className="font-sans text-[13px] font-semibold text-[var(--ink)] leading-tight">
+							{q.name}
+						</div>
+						<div className="font-mono text-[10px] text-[var(--ink-3)] tracking-[0.06em] uppercase mt-0.5">
+							{q.role} · {q.company}
+						</div>
 					</div>
 				</div>
 			</Reveal>
@@ -127,28 +119,46 @@ function QuoteCard({ q, i }: { q: (typeof QUOTES)[number]; i: number }) {
 
 export default function Testimonials() {
 	return (
-		<section className="py-[140px] px-8 border-b border-line">
+		<section className="py-[160px] px-8 border-b border-[var(--line)]">
 			<div className="inner">
-				<Reveal className="grid grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] gap-16 items-end mb-14">
-					<div>
-						<span className="over inline-block mb-4">from pilot teams</span>
-						<h2 className="heading-2">
-							What shifts when the trail
+				<Reveal className="grid grid-cols-12 gap-8 lg:gap-16 items-end mb-16">
+					<div className="col-span-12 lg:col-span-6">
+						<span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--acc)] inline-block mb-4">
+							From pilot teams
+						</span>
+						<h2
+							className="font-serif font-normal text-[var(--ink)] leading-[1.08] tracking-[-0.025em] m-0"
+							style={{ fontSize: 'clamp(32px, 3.5vw, 52px)' }}
+						>
+							What shifts when
 							<br />
-							<em>stays intact.</em>
+							<em className="italic">the trail stays intact.</em>
 						</h2>
 					</div>
-					<p className="lede">
-						The recurring pattern is not &ldquo;AI magic.&rdquo; It is fewer reconstruction
-						meetings, stronger specs, and review that starts with the full
-						context already in place.
-					</p>
+					<div className="col-span-12 lg:col-span-5 lg:col-start-8">
+						<p className="font-sans text-[17px] text-[var(--ink-3)] leading-[1.65] m-0 max-w-[44ch]">
+							The recurring pattern is not AI magic. It is fewer reconstruction
+							meetings, stronger specs, and review that starts from full context.
+						</p>
+					</div>
 				</Reveal>
-				<div className="grid grid-cols-2 border-t border-b border-line">
+
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
 					{QUOTES.map((q, i) => (
 						<QuoteCard key={i} q={q} i={i} />
 					))}
 				</div>
+
+				{/* Bottom strip */}
+				<Reveal className="mt-10 flex items-center justify-between border-t border-[var(--line)] pt-6">
+					<div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--ink-4)]">
+						<span className="w-1.5 h-1.5 rounded-full bg-[var(--acc)] animate-[pulse-dot_1.6s_ease-in-out_infinite]" />
+						10 teams in limited pilot
+					</div>
+					<span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--ink-4)]">
+						Invite-only · Q1–Q2 2026
+					</span>
+				</Reveal>
 			</div>
 		</section>
 	)

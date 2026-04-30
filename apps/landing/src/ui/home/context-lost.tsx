@@ -109,7 +109,7 @@ function VisualRebuilding() {
 				animate={inView ? { opacity: 1, x: 0 } : {}}
 				transition={{ duration: 0.4, ease: EASE }}
 			>
-				<span className="w-[6px] h-[6px] rounded-full flex-shrink-0" style={{ background: '#ffbd2e' }} />
+				<span className="w-[6px] h-[6px] rounded-full flex-shrink-0" style={{ background: 'var(--macos-minimize)' }} />
 				slack thread
 			</motion.div>
 
@@ -201,7 +201,7 @@ const PAINS: Pain[] = [
 		label: 'Knowledge Erosion',
 		stat: '0 agents',
 		statSuffix: 'remember why',
-		desc: 'Every AI coding session starts blank. The architectural decisions your team made last sprint — which database, which pattern, which approach was rejected — are invisible to the next agent. You re-litigate the same choices, sprint after sprint.',
+		desc: 'Every Claude Code session, every Codex run, every Cursor task starts blank. The architectural decisions from last sprint — which approach was chosen and why the others were rejected — are invisible to the next agent. You re-litigate the same choices, sprint after sprint.',
 		visual: <VisualAgentAmnessia />,
 	},
 ]
@@ -209,36 +209,20 @@ const PAINS: Pain[] = [
 export default function ContextLost() {
 	return (
 		<section
-			className="py-[120px] px-8 border-b border-line overflow-hidden"
+			className="py-[160px] px-8 border-b border-line overflow-hidden"
 			style={{
 				background: 'var(--bg)',
 			}}
 		>
 			<div className="inner">
 				{/* Headline */}
-				<Reveal className="text-center mb-[72px]">
-					<p
-						className="font-mono text-[11px] tracking-widest uppercase text-ink-3 mb-5"
-					>
-						the problem
-					</p>
-					<h2
-						className="font-serif font-normal tracking-[-0.03em] text-ink mx-auto"
-						style={{
-							fontSize: 'clamp(34px, 4.2vw, 62px)',
-							lineHeight: 1.06,
-							maxWidth: 820,
-							textWrap: 'balance',
-						}}
-					>
-						Context dies at every handoff.
-						<br />
-						<em className="italic text-acc">Knowledge erodes across every sprint.</em>
+				<Reveal className="flex flex-col gap-5 mb-20 max-w-[760px]">
+					<p className="over">the problem</p>
+					<h2 className="heading-2" style={{ fontSize: 'clamp(34px, 3.8vw, 58px)', textWrap: 'wrap' }}>
+						<span className="block">Context dies at <em>every handoff.</em></span>
+						<span className="block"><em className="italic text-acc">Knowledge erodes across every sprint.</em></span>
 					</h2>
-					<p
-						className="mt-5 font-sans text-[17px] text-ink-3 mx-auto"
-						style={{ maxWidth: '52ch' }}
-					>
+					<p className="font-sans text-[14px] leading-[1.65] text-ink-3 m-0 max-w-[52ch]">
 						Work sprawl destroys the context your team needs to ship. And when
 						everyone uses AI agents, nobody owns the knowledge — decisions
 						evaporate between sessions.
@@ -247,15 +231,13 @@ export default function ContextLost() {
 
 				{/* Pain cards */}
 				<div
-					className="grid gap-px bg-line rounded-[24px] overflow-hidden border border-line"
-					style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}
+					className="grid grid-cols-1 md:grid-cols-2 gap-6"
 				>
 					{PAINS.map((pain, i) => (
 						<Reveal
 							key={i}
 							delay={i * 90}
-							className="flex flex-col p-8 relative group transition-colors duration-300 hover:bg-[color-mix(in_oklab,var(--acc)_3%,white)]"
-							style={{ background: 'var(--bg)' }}
+							className="flex flex-col p-10 relative group transition-all duration-300 bg-bg-1/40 border border-line rounded-[24px] hover:bg-bg-1/80 hover:shadow-xl hover:-translate-y-1"
 						>
 							{/* Index */}
 							<span className="font-mono text-[10px] text-ink-4 tracking-[0.14em] mb-5">

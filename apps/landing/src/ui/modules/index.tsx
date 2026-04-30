@@ -1,26 +1,28 @@
+import dynamic from 'next/dynamic'
 import { createDataAttribute, stegaClean } from 'next-sanity'
 import type {
 	BLOG_POST_QUERY_RESULT,
 	ModuleAttributes,
 	PAGE_QUERY_RESULT,
 } from '@/sanity/types'
-import AccordionList from './accordion-list'
-import BlogIndex from './blog/blog-index'
-import BlogPostContent from './blog/blog-post-content'
-import BlogPostList from './blog/blog-post-list'
 import Breadcrumbs from './breadcrumbs'
 import Callout from './callout'
-import CardList from './card-list'
 import CustomHTML from './custom-html'
-import FormModule from './form-module'
 import HeroSplit from './hero.split'
-import LogoList from './logo-list'
-import PersonList from './person-list'
 import Prose from './prose'
-import QuoteList from './quote-list'
-import SearchModule from './search'
-import StatList from './stat-list'
-import StepList from './step-list'
+
+const AccordionList = dynamic(() => import('./accordion-list'))
+const BlogIndex = dynamic(() => import('./blog/blog-index'))
+const BlogPostContent = dynamic(() => import('./blog/blog-post-content'))
+const BlogPostList = dynamic(() => import('./blog/blog-post-list'))
+const CardList = dynamic(() => import('./card-list'))
+const FormModule = dynamic(() => import('./form-module'))
+const LogoList = dynamic(() => import('./logo-list'))
+const PersonList = dynamic(() => import('./person-list'))
+const QuoteList = dynamic(() => import('./quote-list'))
+const SearchModule = dynamic(() => import('./search'))
+const StatList = dynamic(() => import('./stat-list'))
+const StepList = dynamic(() => import('./step-list'))
 
 const MODULES_MAP: Record<string, React.ComponentType<any>> = {
 	'accordion-list': AccordionList,

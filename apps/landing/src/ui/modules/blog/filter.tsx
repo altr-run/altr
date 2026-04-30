@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils'
 import type { BlogCategory } from '@/sanity/types'
 import { useBlogIndexStore } from './blog-index/store'
+import { Button } from '@/components/ui/button'
 
 export default function ({
 	category,
@@ -14,7 +15,8 @@ export default function ({
 	const slug = category?.slug?.current
 
 	return (
-		<button
+		<Button
+			variant="bare"
 			className={cn(
 				categoryParam === slug || (!categoryParam && !category)
 					? 'action'
@@ -29,6 +31,6 @@ export default function ({
 			}}
 		>
 			{children || category?.title}
-		</button>
+		</Button>
 	)
 }

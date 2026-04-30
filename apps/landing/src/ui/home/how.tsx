@@ -3,23 +3,24 @@
 import { motion, useInView } from 'motion/react'
 import { useRef } from 'react'
 import Reveal from './reveal'
+import { AltrRunsList, AltrPreviewScope } from '@/components/altr-app-preview'
 
 const STEPS = [
 	{
 		title: 'Capture — so nothing gets lost before it starts',
-		desc: 'Pulls threads, calls, notes, and alerts into the trail. Engineering starts from the original signal, not a second-hand retelling.',
+		desc: 'Ingests Slack threads, Linear issues, monitoring alerts, and call transcripts automatically. PMs trigger capture from the Slack bot. Engineering starts from the original signal, not a second-hand retelling.',
 	},
 	{
 		title: 'Plan — so building never starts on assumptions',
-		desc: 'Locks acceptance criteria, flags unresolved decisions, and hands off a reviewable spec. No more discovering the goal mid-PR.',
+		desc: 'Locks acceptance criteria, flags unresolved decisions, and produces a reviewable spec. Human approves in the mission control app before any agent writes a line. No more discovering the goal mid-PR.',
 	},
 	{
 		title: 'Build — so implementation stays tethered to intent',
-		desc: 'Opens the worktree, proposes steps, and drafts changes with the original criteria still attached — visible to every reviewer.',
+		desc: 'Run Claude Code, Codex, or Cursor from the mission control app — or inject the full context trail via MCP directly into your existing agent session. The brief travels with the work.',
 	},
 	{
 		title: 'Review — so merge is a decision, not a gamble',
-		desc: 'Checks the diff against the original goal, flags regressions and missing criteria, and surfaces risk before it becomes a rollback.',
+		desc: 'The PR opens with the original spec and acceptance criteria attached — visible in GitHub, the app, and Slack. Reviewers see why the code was written, not just what changed.',
 	},
 ]
 
@@ -33,15 +34,15 @@ export default function How() {
 			id="agents"
 		>
 			<div className="inner">
-				<div className="grid grid-cols-2 gap-20 items-start">
-					{/* Left sticky column */}
-					<Reveal className="sticky top-[120px] flex flex-col gap-6">
+				<div className="grid grid-cols-12 gap-12 lg:gap-24 items-start">
+					{/* Left sticky column - spans 5 columns */}
+					<Reveal className="col-span-12 lg:col-span-5 lg:sticky lg:top-[160px] flex flex-col gap-8">
 						<span className="over" style={{ display: 'inline-block' }}>
 							how it works
 						</span>
 						<h2
 							className="heading-2"
-							style={{ textWrap: 'balance', marginTop: 20 }}
+							style={{ textWrap: 'balance' }}
 						>
 							Four stages.
 							<br />
@@ -54,8 +55,8 @@ export default function How() {
 						</p>
 					</Reveal>
 
-					{/* Steps with connecting vertical line */}
-					<div ref={stepsRef} className="flex flex-col relative">
+					{/* Steps - spans 7 columns */}
+					<div ref={stepsRef} className="col-span-12 lg:col-span-7 flex flex-col relative mt-12 lg:mt-0">
 						{/* Vertical connecting line — travels from top to bottom */}
 						<div
 							className="absolute left-[27px] top-[36px] bottom-[36px] w-px pointer-events-none overflow-hidden"
@@ -110,6 +111,13 @@ export default function How() {
 								</div>
 							</Reveal>
 						))}
+
+						{/* Active runs preview — what "build" looks like in practice */}
+						<Reveal delay={STEPS.length * 80 + 60} className="mt-8">
+							<AltrPreviewScope>
+								<AltrRunsList />
+							</AltrPreviewScope>
+						</Reveal>
 					</div>
 				</div>
 			</div>

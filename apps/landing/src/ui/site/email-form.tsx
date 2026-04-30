@@ -1,27 +1,33 @@
 'use client'
 
+import { useRef } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+
 export default function EmailForm() {
+	const inputRef = useRef<HTMLInputElement>(null)
+	const btnRef = useRef<HTMLButtonElement>(null)
+
 	return (
 		<form
-			className="inline-flex gap-2 items-center py-[6px] px-[6px] pl-[22px] rounded-full bg-surface border border-line-2 shadow-sm min-w-[460px] max-w-full focus-within:border-[color-mix(in_oklab,var(--acc)_38%,var(--line-2))]"
+			className="inline-flex gap-2 items-center py-2 px-2 pl-8 rounded-full bg-surface border border-line shadow-sm min-w-[520px] max-w-full focus-within:border-[color-mix(in_oklab,var(--acc)_38%,var(--line))]"
 			style={{ ['--focus-ring' as string]: 'none' }}
 			onSubmit={(e) => {
 				e.preventDefault()
-				const input = e.currentTarget.querySelector('input')
-				const btn = e.currentTarget.querySelector('button')
-				if (input) input.value = ''
-				if (btn) btn.textContent = '✓ on the list'
+				if (inputRef.current) inputRef.current.value = ''
+				if (btnRef.current) btnRef.current.textContent = '✓ on the list'
 			}}
 		>
-			<input
+			<Input
+				ref={inputRef}
 				type="email"
 				required
 				placeholder="you@company.com"
-				className="flex-1 border-0 outline-none bg-transparent font-sans text-[15px] text-ink py-[10px] placeholder:text-ink-4"
+				className="text-[17px] py-[14px]"
 			/>
-			<button type="submit" className="btn btn-acc">
+			<Button ref={btnRef} type="submit" variant="acc" size="lg" className="px-8">
 				Request access →
-			</button>
+			</Button>
 		</form>
 	)
 }

@@ -278,7 +278,7 @@ const DEFAULT_MIN_PIXEL_RATIO = 2
 const DEFAULT_MAX_PIXEL_COUNT = 1920 * 1080 * 4
 const BASE_SPEED = 0.2
 const HOVER_SPEED = 0.6
-const ANIMATION_START_DELAY_MS = 300
+const ANIMATION_START_DELAY_MS = 1000
 
 function parseHexColor(hex: string): [number, number, number, number] {
 	let normalized = hex.replace(/^#/, '')
@@ -355,11 +355,9 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 	const mountRef = useRef<HTMLDivElement | null>(null)
 	const speedRef = useRef(BASE_SPEED)
 	const colorBack = useMemo(() => parseHexColor('#00000000'), [])
-	// Radix lime-9 (sRGB) = #bdee63 — medium-light lime that works with multiply blend.
-	// We hardcode the sRGB value to avoid: (a) the P3 format issue where browsers
-	// return color(display-p3 ...) from getComputedStyle instead of a hex string,
-	// and (b) the old override #89F336 which was too bright and invisible with multiply.
-	const colorFront = useMemo(() => parseHexColor('#bdee63'), [])
+	// Bright indigo used with screen blend on dark bg — produces a glowing wash
+	// that picks up the brand accent without blowing out the dithering pattern.
+	const colorFront = useMemo(() => parseHexColor('#2d3a8c'), [])
 
 	useEffect(() => {
 		const mount = mountRef.current
@@ -421,7 +419,7 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 		gl.uniform1f(uniformLocations.worldWidth, 0)
 		gl.uniform1f(uniformLocations.worldHeight, 0)
 		gl.uniform1f(uniformLocations.fit, SHADER_FIT_NONE)
-		gl.uniform1f(uniformLocations.scale, 0.88)
+		gl.uniform1f(uniformLocations.scale, 1.4)
 		gl.uniform1f(uniformLocations.rotation, 0)
 		gl.uniform1f(uniformLocations.offsetX, 0)
 		gl.uniform1f(uniformLocations.offsetY, 0)
@@ -545,10 +543,10 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 			ref={mountRef}
 			className="pointer-events-none absolute inset-0 z-0"
 			style={{
-				opacity: 0.34,
-				mixBlendMode: 'multiply',
+				opacity: 0.68,
+				mixBlendMode: 'screen',
 				maskImage:
-					'radial-gradient(ellipse 76% 78% at 50% 34%, #000 0%, rgba(0,0,0,0.92) 48%, transparent 90%)',
+					'radial-gradient(ellipse 84% 74% at 50% 28%, #000 0%, rgba(0,0,0,0.8) 55%, transparent 90%)',
 			}}
 			aria-hidden="true"
 		>
@@ -556,7 +554,7 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 				className="absolute inset-0"
 				style={{
 					background:
-						'radial-gradient(ellipse 72% 68% at 50% 34%, color-mix(in srgb, var(--acc) 32%, transparent), transparent 74%)',
+						'radial-gradient(ellipse 70% 60% at 50% 28%, color-mix(in srgb, var(--acc) 18%, transparent), transparent 72%)',
 				}}
 			/>
 		</div>

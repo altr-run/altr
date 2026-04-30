@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'motion/react'
+import { Button } from '@/components/ui/button'
 
 export default function HandoffCalculator() {
 	const [teamSize, setTeamSize] = useState(10)
@@ -83,9 +84,9 @@ export default function HandoffCalculator() {
 				<p className="font-sans text-[15px] text-ink-2 text-center max-w-[50ch]">
 					Altr eliminates this tax by carrying the original signal through every handoff automatically.
 				</p>
-				<a href="#close" className="btn btn-acc btn-lg">
+				<Button variant="acc" size="lg" href="#close">
 					Stop dropping the thread →
-				</a>
+				</Button>
 			</div>
 		</div>
 	)

@@ -3,8 +3,8 @@ import Reveal from './reveal'
 export default function Pullquote() {
 	return (
 		<section className="py-[120px] px-8 border-b border-line bg-(--bg-1)">
-			<Reveal className="max-w-[1000px] mx-auto text-center">
-				<q className="[quotes:none] font-serif font-normal text-[clamp(34px,4.2vw,58px)] leading-[1.08] tracking-[-0.02em] text-ink [text-wrap:balance] block">
+			<Reveal className="inner text-center">
+				<q className="[quotes:none] font-serif font-normal text-[clamp(26px,3vw,44px)] leading-[1.08] tracking-[-0.02em] text-ink [text-wrap:balance] block">
 					Altr is the first tool that made my AI teammates feel like{' '}
 					<em className="italic text-acc">teammates</em> — not a chat window I have to babysit.
 				</q>

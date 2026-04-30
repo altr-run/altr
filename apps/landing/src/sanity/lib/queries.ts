@@ -117,6 +117,26 @@ export const MODULES_QUERY = groq`
 	},
 `
 
+// @sanity-typegen-ignore
+export const LIVE_DEMO_SCENARIOS_QUERY = groq`
+	*[_type == 'live-demo-scenario'] | order(order asc) {
+		_id,
+		label,
+		channel,
+		msgCount,
+		thread[]{
+			who,
+			avatar,
+			avatarBg,
+			time,
+			msg,
+		},
+		acceptanceCriteria,
+		openQuestion,
+		footerMeta,
+	}
+`
+
 /* queries */
 
 export const getSite = cache(async function getSite() {

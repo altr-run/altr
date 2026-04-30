@@ -1,12 +1,16 @@
+'use client'
+
 import dynamic from 'next/dynamic'
 import Hero from './hero'
-import HeroShader from './hero-shader'
-import Logos from './logos'
-import Flow from './flow'
-import ContextLost from './context-lost'
-import PaxLive from './pax-live'
-import CTACallout from './cta-callout'
+import BrandStrip from './brand-strip'
+import type { SanityScenario } from './pax-live'
 
+const HeroShader = dynamic(() => import('./hero-shader'), { ssr: false })
+const ContextLost = dynamic(() => import('./context-lost'))
+const Flow = dynamic(() => import('./flow'))
+const PaxLive = dynamic(() => import('./pax-live'))
+const CTACallout = dynamic(() => import('./cta-callout'))
+const Logos = dynamic(() => import('./logos'))
 const HandoffCalculator = dynamic(() => import('./handoff-calculator'))
 const Triptych = dynamic(() => import('./triptych'))
 const Manifesto = dynamic(() => import('./manifesto'))
@@ -19,25 +23,23 @@ const Testimonials = dynamic(() => import('./testimonials'))
 const FAQ = dynamic(() => import('./faq'))
 const TalkTeam = dynamic(() => import('./talk-team'))
 
-export default function HomePage() {
+export default function HomePage({ liveDemoScenarios }: { liveDemoScenarios?: SanityScenario[] }) {
 	return (
 		<div data-home-page="">
 			<div className="relative">
 				<div
 					className="relative overflow-hidden"
-					style={{
-						background:
-							'linear-gradient(180deg, var(--bg) 0%, var(--bg-1) 62%, var(--bg) 100%)',
-					}}
+					style={{ background: '#0f0f12' }}
 					data-nav-theme="light"
 				>
 					<HeroShader isHovered={false} />
 					<Hero />
 				</div>
+				<BrandStrip />
 				<div data-nav-theme="light">
 					<ContextLost />
 					<Flow />
-					<PaxLive />
+					<PaxLive sanityScenarios={liveDemoScenarios} />
 					<CTACallout />
 					<Triptych />
 					<Logos />
@@ -47,7 +49,7 @@ export default function HomePage() {
 					<Playground />
 					<Trust />
 					<Metrics />
-					<section className="px-8 py-24 border-b border-line" style={{ background: 'var(--bg-1)' }}>
+					<section className="px-8 py-32 border-b border-line" style={{ background: 'var(--bg-1)' }}>
 						<div className="mx-auto" style={{ maxWidth: 'var(--maxw-narrow)' }}>
 							<p className="font-mono text-[11px] uppercase tracking-widest text-acc mb-10 text-center">Calculate your savings</p>
 							<HandoffCalculator />

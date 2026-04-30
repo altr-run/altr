@@ -18,17 +18,17 @@ export default function PostCard({ post }: { post: BlogPost & { readTime?: numbe
 	return (
 		<a
 			href={slug}
-			className="group flex flex-col gap-4 no-underline text-current"
+			className="group flex flex-col gap-5 no-underline text-current p-6 rounded-[24px] transition-all hover:bg-[color-mix(in_oklab,var(--acc)_3%,var(--bg))] hover:shadow-lg hover:border border border-transparent hover:border-acc/20"
 		>
 			{/* thumbnail */}
 			<div
-				className="aspect-[16/9] rounded-xl overflow-hidden border border-line bg-bg-1 relative"
+				className="aspect-[16/9] rounded-[16px] overflow-hidden border border-line bg-bg-1 relative"
 			>
 				{post.metadata?.image ? (
 					<img
 						src={urlFor(post.metadata.image).width(720).height(405).url()}
 						alt={post.title ?? ''}
-						className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+						className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
 					/>
 				) : (
 					<Image
@@ -42,13 +42,13 @@ export default function PostCard({ post }: { post: BlogPost & { readTime?: numbe
 			</div>
 
 			{/* meta */}
-			<div className="flex flex-col gap-2">
+			<div className="flex flex-col gap-3">
 				{categories?.length > 0 && (
 					<div className="flex flex-wrap gap-2">
 						{categories.map((c) => (
 							<span
 								key={c._id}
-								className="font-mono text-[10.5px] uppercase tracking-widest text-acc border border-acc/30 rounded-full px-2.5 py-0.5"
+								className="over text-[9px]"
 							>
 								{c.title}
 							</span>
@@ -57,13 +57,13 @@ export default function PostCard({ post }: { post: BlogPost & { readTime?: numbe
 				)}
 
 				<h2 className="font-serif font-normal text-ink leading-[1.2] group-hover:text-acc transition-colors"
-					style={{ fontSize: 'clamp(16px, 1.5vw, 21px)' }}
+					style={{ fontSize: 'clamp(18px, 1.8vw, 24px)' }}
 				>
 					{post.title}
 				</h2>
 
 				{post.metadata?.description && (
-					<p className="font-sans text-[13.5px] text-ink-3 leading-[1.6] line-clamp-2">
+					<p className="font-sans text-[14.5px] text-ink-3 leading-[1.6] line-clamp-2">
 						{post.metadata.description}
 					</p>
 				)}
@@ -73,25 +73,25 @@ export default function PostCard({ post }: { post: BlogPost & { readTime?: numbe
 						<>
 							{author.image && (
 								<img
-									src={urlFor(author.image).width(32).height(32).url()}
+									src={urlFor(author.image).width(48).height(48).url()}
 									alt={author.name}
-									className="w-6 h-6 rounded-full object-cover"
+									className="w-7 h-7 rounded-full object-cover"
 								/>
 							)}
-							<span className="font-sans text-[12px] text-ink-3">{author.name}</span>
+							<span className="font-sans text-[13px] text-ink-3">{author.name}</span>
 							<span className="text-ink-4">·</span>
 						</>
 					)}
 					{post.publishDate && (
-						<span className="font-mono text-[11px] text-ink-4">
+						<span className="font-mono text-[11px] text-ink-4 uppercase tracking-wider">
 							{formatDate(post.publishDate)}
 						</span>
 					)}
 					{post.readTime && (
 						<>
 							<span className="text-ink-4">·</span>
-							<span className="font-mono text-[11px] text-ink-4">
-								{Math.ceil(Number(post.readTime))} min read
+							<span className="font-mono text-[11px] text-ink-4 uppercase tracking-wider">
+								{Math.ceil(Number(post.readTime))} min
 							</span>
 						</>
 					)}

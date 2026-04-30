@@ -3,6 +3,7 @@
 import { useState, type ComponentProps } from 'react'
 import { VscCheck, VscCopy } from 'react-icons/vsc'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 export default function ({
 	value,
@@ -17,7 +18,8 @@ export default function ({
 	const [copied, setCopied] = useState(false)
 
 	return (
-		<button
+		<Button
+			variant="bare"
 			className={cn(
 				'cursor-copy',
 				copied && 'copied pointer-events-none',
@@ -35,6 +37,6 @@ export default function ({
 			{...props}
 		>
 			{copied ? childrenWhenCopied : children}
-		</button>
+		</Button>
 	)
 }

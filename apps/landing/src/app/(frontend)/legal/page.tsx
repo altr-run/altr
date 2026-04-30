@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 import { groq } from 'next-sanity'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import Reveal from '@/ui/home/reveal'
@@ -45,48 +46,48 @@ export default async function LegalIndexPage() {
 	return (
 		<main className="bg-(--bg) text-ink">
 			{/* Header */}
-			<section className="max-w-[var(--maxw-narrow)] mx-auto px-6 py-24 border-b border-line">
-				<Reveal>
-					<p className="font-mono text-[11px] tracking-widest uppercase text-ink-3 mb-6">Legal</p>
-					<h1
-						className="font-serif text-ink"
-						style={{ fontSize: 'clamp(32px, 5vw, 64px)', lineHeight: 1.1, textWrap: 'balance' }}
-					>
+			<section className="px-8 py-[160px] border-b border-line">
+				<Reveal className="mx-auto" style={{ maxWidth: 'var(--maxw-narrow)' }}>
+					<p className="over mb-6">Legal</p>
+					<h1 className="heading-2 mb-8">
 						Policies & compliance
 					</h1>
-					<p className="text-ink-2 mt-4 text-lg leading-relaxed max-w-xl">
+					<p className="lede">
 						Everything you need to understand how Altr handles your data, what you can build with it, and how we keep it secure.
 					</p>
 				</Reveal>
 			</section>
 
 			{/* Grouped policy sections */}
-			<section className="max-w-[var(--maxw-narrow)] mx-auto px-6 py-16 flex flex-col gap-16">
-				{grouped.map((group, gi) => (
-					<Reveal key={group.key} delay={gi * 80}>
-						<div>
-							<h2 className="font-mono text-[11px] tracking-widest uppercase text-ink-3 mb-6">
-								{group.label}
-							</h2>
-							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+			<section className="px-8 py-32 flex flex-col gap-24">
+				<div className="mx-auto" style={{ maxWidth: 'var(--maxw-narrow)' }}>
+					{grouped.map((group, gi) => (
+						<Reveal key={group.key} delay={gi * 80} className="mb-20 last:mb-0">
+							<div className="flex items-center gap-3 mb-12">
+								<h2 className="font-mono text-[11px] tracking-widest uppercase text-ink-3">
+									{group.label}
+								</h2>
+								<div className="flex-1 h-px bg-line" />
+							</div>
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 								{group.pages.map((page) => (
 									<Link
 										key={page.slug}
 										href={`/legal/${page.slug}`}
-										className="block border border-line rounded-[var(--r-lg)] p-6 bg-(--panel) hover:border-acc/40 transition-colors no-underline group"
+										className="block border border-line rounded-[24px] p-10 bg-(--panel) hover:border-acc/40 transition-all hover:shadow-lg no-underline group"
 									>
-										<h3 className="font-serif text-lg text-ink mb-2 group-hover:text-acc transition-colors">
+										<h3 className="heading-3 mb-4 group-hover:text-acc transition-colors">
 											{page.title}
 										</h3>
 										{page.summary && (
-											<p className="text-ink-3 text-sm leading-relaxed">{page.summary}</p>
+											<p className="text-ink-2 text-[16px] leading-relaxed">{page.summary}</p>
 										)}
 									</Link>
 								))}
 							</div>
-						</div>
-					</Reveal>
-				))}
+						</Reveal>
+					))}
+				</div>
 			</section>
 
 			{/* Contact */}
@@ -96,9 +97,9 @@ export default async function LegalIndexPage() {
 						<p className="text-ink-2 text-[15px] mb-4">
 							Questions about our policies? We answer real questions from real people.
 						</p>
-						<a href="mailto:legal@altr.run" className="btn btn-ghost">
+						<Button variant="cta-ghost" href="mailto:legal@altr.run">
 							Email legal@altr.run
-						</a>
+						</Button>
 					</div>
 				</Reveal>
 			</section>

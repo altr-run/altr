@@ -15,18 +15,22 @@ export default function ({
 	...props
 }: CardList) {
 	return (
-		<section className="section space-y-8" {...moduleAttributes(props)}>
+		<section className="section space-y-12 lg:space-y-20" {...moduleAttributes(props)}>
 			{(overline || intro) && (
-				<header className="prose text-center">
-					<Overline value={overline} />
-					<PortableText value={intro ?? []} />
+				<header className="grid grid-cols-12 gap-12 lg:gap-24 items-end mb-16">
+					<div className="col-span-12 lg:col-span-7">
+						<Overline value={overline} className="mb-4" />
+						<div className="heading-2">
+							<PortableText value={intro ?? []} />
+						</div>
+					</div>
 				</header>
 			)}
 
 			{!!cards?.length && (
 				<ul
 					className={cn(
-						'grid gap-8 md:grid-cols-2',
+						'grid gap-12 md:grid-cols-2',
 						columns
 							? 'lg:grid-cols-[repeat(var(--columns,1),minmax(0px,1fr))]'
 							: 'lg:grid-cols-[repeat(auto-fit,minmax(var(--container-3xs),1fr))]',

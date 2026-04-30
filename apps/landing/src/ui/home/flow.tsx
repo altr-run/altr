@@ -125,31 +125,27 @@ export default function Flow() {
 
 	return (
 		<section
-			className="py-[120px] px-8 border-b border-line bg-bg overflow-hidden"
+			className="py-[160px] px-8 border-b border-line bg-bg overflow-hidden"
 			id="workflow"
 		>
 			<div className="inner">
 
 				{/* Header */}
-				<Reveal className="text-center mb-[60px]">
-					<span className="over inline-block mb-5">workflow</span>
-					<h2
-						className="font-serif font-normal tracking-[-0.03em] text-ink mx-auto"
-						style={{
-							fontSize: 'clamp(34px, 4.2vw, 60px)',
-							lineHeight: 1.06,
-							maxWidth: 800,
-							textWrap: 'balance',
-						}}
-					>
-						This is how work actually enters your team.
-						<br />
-						<em className="italic text-acc">Every sprint. Every handoff.</em>
-					</h2>
-					<p className="mt-5 font-sans text-[16px] text-ink-3 mx-auto max-w-[50ch]">
-						Nine notifications. Four tools. Zero shared context. Someone&apos;s
-						about to open a doc and start from scratch.
-					</p>
+				<Reveal className="grid grid-cols-12 gap-12 lg:gap-24 items-end mb-24">
+					<div className="col-span-12 lg:col-span-7">
+						<span className="over inline-block mb-5">workflow</span>
+						<h2 className="heading-2">
+							This is how work actually
+							<br />
+							<em>enters your team.</em>
+						</h2>
+					</div>
+					<div className="col-span-12 lg:col-span-5">
+						<p className="lede">
+							Nine notifications. Four tools. Zero shared context. Someone&apos;s
+							about to open a doc and start from scratch. Altr fixes the archaeology.
+						</p>
+					</div>
 				</Reveal>
 
 				{/* Chaos panel + resolution */}

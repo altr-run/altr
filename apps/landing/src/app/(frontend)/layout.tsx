@@ -38,6 +38,7 @@ const fontSerif = localFont({
 		},
 	],
 	variable: '--font-serif',
+	display: 'swap',
 })
 
 export default async function RootLayout({
@@ -84,6 +85,11 @@ async function getSiteChromeContent(): Promise<SiteChromeContent> {
 					tool,
 					category,
 					domain,
+					"slug": metadata.slug.current
+				},
+			"solutionPages": *[_type == 'page' && metadata.slug.current match 'solutions/*' && metadata.noIndex != true]
+				| order(title asc){
+					title,
 					"slug": metadata.slug.current
 				},
 			"comparePages": *[_type == 'compare.page' && defined(metadata.slug.current) && metadata.noIndex != true]

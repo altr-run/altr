@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
 
 export default function ThemeToggle() {
 	const [dark, setDark] = useState(false)
@@ -21,12 +22,13 @@ export default function ThemeToggle() {
 	}
 
 	return (
-		<button
+		<Button
+			variant="bare"
 			onClick={toggle}
 			aria-label="Toggle dark mode"
-			className="font-mono text-[11px] text-ink-3 hover:text-ink transition-colors cursor-pointer"
+			className="font-mono text-[11px] text-ink-3 hover:text-ink transition-colors"
 		>
 			{dark ? '☀' : '☽'}
-		</button>
+		</Button>
 	)
 }

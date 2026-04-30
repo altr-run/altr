@@ -16,6 +16,10 @@
 @import '@radix-ui/colors/lime-dark.css';
 @import '@radix-ui/colors/lime-alpha.css';
 @import '@radix-ui/colors/lime-dark-alpha.css';
+@import '@radix-ui/colors/indigo.css';
+@import '@radix-ui/colors/indigo-dark.css';
+@import '@radix-ui/colors/indigo-alpha.css';
+@import '@radix-ui/colors/indigo-dark-alpha.css';
 @import '@radix-ui/colors/amber.css';
 @import '@radix-ui/colors/amber-dark.css';
 @import '@radix-ui/colors/amber-alpha.css';
@@ -61,14 +65,14 @@
 	--panel-ink:    var(--gray-12);
 	--ring-soft:    var(--black-a2);
 	--ring-strong:  var(--black-a4);
-	--glow-soft:    color-mix(in oklch, var(--acc-vibrant) 14%, transparent);
+	--glow-soft:    color-mix(in oklch, var(--acc-vibrant) 18%, transparent);
 
-	/* Accent — native Radix lime scale (no overrides) */
-	--acc:          var(--lime-9);   /* Primary lime action */
-	--acc-vibrant:  var(--lime-9);   /* Same — lime-9 IS the vibrant glow */
-	--acc-2:        var(--lime-10);  /* Deeper hover state */
-	--acc-soft:     var(--lime-3);   /* Soft tint background */
-	--acc-ink:      var(--lime-12);  /* Dark ink on lime backgrounds */
+	/* Accent — Radix indigo scale */
+	--acc:          var(--indigo-9);   /* #3e63dd — brand indigo */
+	--acc-vibrant:  var(--indigo-10);  /* #3358d4 — deeper hover/glow */
+	--acc-2:        var(--indigo-10);  /* Deeper hover state */
+	--acc-soft:     var(--indigo-3);   /* Soft tint background */
+	--acc-ink:      #ffffff;           /* White ink on indigo backgrounds */
 
 	/* Brand colors — integration identity, used in flow/pax-live/context-lost */
 	--brand-slack:   #4A154B;
@@ -101,6 +105,14 @@
 	--moss-2:    var(--sage-10);
 	--mint:      var(--sage-8);
 	--mint-soft: var(--sage-3);
+	--sidebar:      hsl(0 0% 98%);
+	--sidebar-foreground:      hsl(240 5.3% 26.1%);
+	--sidebar-primary:      hsl(240 5.9% 10%);
+	--sidebar-primary-foreground:      hsl(0 0% 98%);
+	--sidebar-accent:      hsl(240 4.8% 95.9%);
+	--sidebar-accent-foreground:      hsl(240 5.9% 10%);
+	--sidebar-border:      hsl(220 13% 91%);
+	--sidebar-ring:      hsl(217.2 91.2% 59.8%);
 }
 
 /* ─────────────────────────────────────────────────────
@@ -189,6 +201,14 @@
 	--color-sage-8:   var(--sage-8);
 	--color-sage-9:   var(--sage-9);
 	--color-sage-10:  var(--sage-10);
+	--color-indigo-1:  var(--indigo-1);
+	--color-indigo-2:  var(--indigo-2);
+	--color-indigo-3:  var(--indigo-3);
+	--color-indigo-4:  var(--indigo-4);
+	--color-indigo-9:  var(--indigo-9);
+	--color-indigo-10: var(--indigo-10);
+	--color-indigo-11: var(--indigo-11);
+	--color-indigo-12: var(--indigo-12);
 
 	/* Legacy compat aliases */
 	--color-background: var(--bg);
@@ -235,10 +255,12 @@
 @utility inner {
 	max-width: var(--maxw);
 	margin-inline: auto;
+	padding-inline: var(--section-x);
 }
 @utility inner-narrow {
 	max-width: var(--maxw-narrow);
 	margin-inline: auto;
+	padding-inline: var(--section-x);
 }
 
 /* Overline label — § workflow, § faq etc. */
@@ -262,8 +284,8 @@
 @utility heading-2 {
 	font-family: var(--f-serif);
 	font-weight: 400;
-	font-size: clamp(44px, 5.6vw, 84px);
-	line-height: 1;
+	font-size: clamp(36px, 4vw, 60px);
+	line-height: 1.04;
 	letter-spacing: -0.03em;
 	margin: 0;
 	text-wrap: balance;
@@ -273,16 +295,16 @@
 @utility heading-3 {
 	font-family: var(--f-serif);
 	font-weight: 400;
-	font-size: clamp(28px, 3vw, 38px);
-	line-height: 1.08;
+	font-size: clamp(26px, 2.6vw, 38px);
+	line-height: 1.1;
 	letter-spacing: -0.02em;
 	margin: 0;
 }
 
 /* Body lede */
 @utility lede {
-	font-size: 19px;
-	line-height: 1.55;
+	font-size: clamp(17px, 1.3vw, 20px);
+	line-height: 1.6;
 	color: var(--ink-2);
 	max-width: 52ch;
 	margin: 0;
@@ -316,140 +338,10 @@
 }
 
 /* ─────────────────────────────────────────────────────
-   Button system  — base + variants
-   Complex multi-state styles live here, used as plain classes
+   Badge + nav chip system
+   Button styles live entirely in src/components/ui/button.tsx
    ───────────────────────────────────────────────────── */
 @layer components {
-	.btn {
-		position: relative;
-		isolation: isolate;
-		overflow: hidden;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		font-family: var(--f-sans);
-		font-weight: 560;
-		font-size: 14.5px;
-		letter-spacing: -0.012em;
-		padding: 11px 19px;
-		border-radius: 9999px;
-		border: 1px solid transparent;
-		cursor: pointer;
-		user-select: none;
-		white-space: nowrap;
-		text-decoration: none;
-		color: inherit;
-		transition:
-			transform 0.15s ease,
-			background 0.18s ease,
-			border-color 0.18s ease,
-			color 0.18s ease,
-			box-shadow 0.18s ease;
-
-		&:hover  { transform: translateY(-1px); }
-		&:active { transform: scale(0.97); transition-duration: 0.1s; }
-	}
-
-	.btn-lg {
-		padding: 13px 23px;
-		font-size: 15px;
-	}
-
-	.btn-primary {
-		background:
-			linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 100%),
-			color-mix(in oklab, var(--acc) 84%, var(--acc-vibrant) 16%);
-		color: var(--acc-ink);
-		border-color: color-mix(in oklab, var(--acc-vibrant) 42%, rgba(255,255,255,0.18));
-		backdrop-filter: blur(14px) saturate(1.5);
-		-webkit-backdrop-filter: blur(14px) saturate(1.5);
-		box-shadow:
-			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 22%, transparent),
-			0 12px 28px color-mix(in oklab, var(--acc) 38%, transparent),
-			0 2px 8px color-mix(in oklab, var(--acc-vibrant) 18%, transparent),
-			inset 0 4px 10px rgba(255,255,255,0.22),
-			inset 0 1px 0 rgba(255,255,255,0.38),
-			inset 0 -2px 6px rgba(0,0,0,0.14);
-
-		&:hover {
-			background:
-				linear-gradient(135deg, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.06) 100%),
-				color-mix(in oklab, var(--acc) 74%, var(--acc-vibrant) 26%);
-			border-color: color-mix(in oklab, var(--acc-vibrant) 58%, rgba(255,255,255,0.22));
-			color: var(--acc-ink);
-			box-shadow:
-				0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 32%, transparent),
-				0 16px 36px color-mix(in oklab, var(--acc) 45%, transparent),
-				0 4px 14px color-mix(in oklab, var(--acc-vibrant) 26%, transparent),
-				inset 0 4px 12px rgba(255,255,255,0.28),
-				inset 0 1px 0 rgba(255,255,255,0.44),
-				inset 0 -2px 6px rgba(0,0,0,0.12);
-		}
-	}
-
-	.btn-ghost {
-		/* Frosted glass — secondary counterpart to btn-primary */
-		background:
-			linear-gradient(135deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.28) 100%),
-			color-mix(in oklab, var(--acc) 3%, rgba(255,255,255,0.1));
-		color: var(--ink);
-		border-color: color-mix(in oklab, var(--acc-vibrant) 18%, rgba(255,255,255,0.6));
-		backdrop-filter: blur(20px) saturate(1.3);
-		-webkit-backdrop-filter: blur(20px) saturate(1.3);
-		box-shadow:
-			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 10%, rgba(200,220,180,0.3)),
-			var(--sh-sm),
-			inset 0 1px 0 rgba(255,255,255,0.85),
-			inset 0 -1px 0 rgba(0,0,0,0.04);
-
-		&:hover {
-			background:
-				linear-gradient(135deg, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0.36) 100%),
-				color-mix(in oklab, var(--acc) 6%, rgba(255,255,255,0.1));
-			border-color: color-mix(in oklab, var(--acc-vibrant) 32%, rgba(255,255,255,0.5));
-			color: var(--ink);
-			box-shadow:
-				0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 18%, rgba(200,220,180,0.35)),
-				var(--sh-md),
-				inset 0 1px 0 rgba(255,255,255,0.9),
-				inset 0 -1px 0 rgba(0,0,0,0.03);
-		}
-	}
-
-	.btn-acc {
-		/* Vibrant lime glass — lighter lime = dark text for contrast */
-		background:
-			linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.06) 100%),
-			color-mix(in oklab, var(--acc-vibrant) 72%, var(--acc) 28%);
-		color: var(--acc-ink);
-		border-color: color-mix(in oklab, var(--acc-vibrant) 55%, rgba(255,255,255,0.25));
-		backdrop-filter: blur(14px) saturate(1.5);
-		-webkit-backdrop-filter: blur(14px) saturate(1.5);
-		box-shadow:
-			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 28%, transparent),
-			0 10px 24px color-mix(in oklab, var(--acc) 32%, transparent),
-			0 2px 8px color-mix(in oklab, var(--acc-vibrant) 22%, transparent),
-			inset 0 4px 10px rgba(255,255,255,0.65),
-			inset 0 1px 0 rgba(255,255,255,0.82),
-			inset 0 -2px 6px color-mix(in oklab, var(--acc-2) 38%, rgba(0,0,0,0.10));
-
-		&:hover {
-			background:
-				linear-gradient(135deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.10) 100%),
-				var(--acc-vibrant);
-			border-color: color-mix(in oklab, var(--acc-vibrant) 75%, rgba(255,255,255,0.3));
-			color: var(--acc-ink);
-			box-shadow:
-				0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 40%, transparent),
-				0 14px 30px color-mix(in oklab, var(--acc) 40%, transparent),
-				0 4px 12px color-mix(in oklab, var(--acc-vibrant) 30%, transparent),
-				inset 0 4px 12px rgba(255,255,255,0.72),
-				inset 0 1px 0 rgba(255,255,255,0.88),
-				inset 0 -2px 6px color-mix(in oklab, var(--acc-2) 45%, rgba(0,0,0,0.08));
-		}
-	}
-
 	/* Badge / chip labels — uppercase mono, pill shape */
 	.badge {
 		display: inline-flex;
@@ -478,21 +370,15 @@
 		color: var(--ink-4);
 	}
 
-	/* Small button modifier */
-	.btn-sm {
-		padding: 5px 11px;
-		font-size: 12px;
-	}
-
 	/* Pill nav container */
 	.nav-pill {
-		max-width: min(1180px, calc(100vw - 40px));
+		max-width: min(1280px, calc(100vw - 40px));
 		margin: 0 auto;
-		padding: 14px 24px;
+		padding: 16px 32px;
 		display: grid;
 		grid-template-columns: 1fr auto 1fr;
 		align-items: center;
-		gap: 24px;
+		gap: 32px;
 		border: 1px solid color-mix(in oklab, var(--line) 72%, transparent);
 		border-radius: 9999px;
 		background: color-mix(in oklab, var(--panel-strong) 88%, white 12%);
@@ -501,6 +387,87 @@
 		box-shadow:
 			0 12px 30px var(--black-a2),
 			inset 0 1px 0 rgba(255,255,255,0.56);
+	}
+
+	/* ── Glass CTA buttons — Altr landing variants ──────────────────────────────
+	   Referenced by buttonVariants CVA in src/components/ui/button.tsx
+	   Complex gradients + color-mix() live here since Tailwind can't compose them. */
+
+	.btn-glass-acc {
+		background:
+			linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.06) 100%),
+			color-mix(in oklab, var(--acc-vibrant) 72%, var(--acc) 28%);
+		border-color: color-mix(in oklab, var(--acc-vibrant) 55%, rgba(255,255,255,0.25));
+		box-shadow:
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 28%, transparent),
+			0 10px 24px color-mix(in oklab, var(--acc) 32%, transparent),
+			0 2px 8px color-mix(in oklab, var(--acc-vibrant) 22%, transparent),
+			inset 0 4px 10px rgba(255,255,255,0.65),
+			inset 0 1px 0 rgba(255,255,255,0.82),
+			inset 0 -2px 6px color-mix(in oklab, var(--acc-2) 38%, rgba(0,0,0,0.10));
+	}
+	.btn-glass-acc:hover {
+		background:
+			linear-gradient(135deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.10) 100%),
+			var(--acc-vibrant);
+		border-color: color-mix(in oklab, var(--acc-vibrant) 75%, rgba(255,255,255,0.3));
+		box-shadow:
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 40%, transparent),
+			0 14px 30px color-mix(in oklab, var(--acc) 40%, transparent),
+			0 4px 12px color-mix(in oklab, var(--acc-vibrant) 30%, transparent),
+			inset 0 4px 12px rgba(255,255,255,0.72),
+			inset 0 1px 0 rgba(255,255,255,0.88),
+			inset 0 -2px 6px color-mix(in oklab, var(--acc-2) 45%, rgba(0,0,0,0.08));
+	}
+
+	.btn-glass-ghost {
+		background:
+			linear-gradient(135deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.28) 100%),
+			color-mix(in oklab, var(--acc) 3%, rgba(255,255,255,0.10));
+		border-color: color-mix(in oklab, var(--acc-vibrant) 18%, rgba(255,255,255,0.60));
+		box-shadow:
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 10%, rgba(200,220,180,0.30)),
+			var(--sh-sm),
+			inset 0 1px 0 rgba(255,255,255,0.85),
+			inset 0 -1px 0 rgba(0,0,0,0.04);
+	}
+	.btn-glass-ghost:hover {
+		background:
+			linear-gradient(135deg, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0.36) 100%),
+			color-mix(in oklab, var(--acc) 6%, rgba(255,255,255,0.10));
+		border-color: color-mix(in oklab, var(--acc-vibrant) 32%, rgba(255,255,255,0.50));
+		box-shadow:
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 18%, rgba(200,220,180,0.35)),
+			var(--sh-md),
+			inset 0 1px 0 rgba(255,255,255,0.90),
+			inset 0 -1px 0 rgba(0,0,0,0.03);
+	}
+
+	.btn-glass-primary {
+		background:
+			linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 100%),
+			color-mix(in oklab, var(--acc) 84%, var(--acc-vibrant) 16%);
+		border-color: color-mix(in oklab, var(--acc-vibrant) 42%, rgba(255,255,255,0.18));
+		box-shadow:
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 22%, transparent),
+			0 12px 28px color-mix(in oklab, var(--acc) 38%, transparent),
+			0 2px 8px color-mix(in oklab, var(--acc-vibrant) 18%, transparent),
+			inset 0 4px 10px rgba(255,255,255,0.22),
+			inset 0 1px 0 rgba(255,255,255,0.38),
+			inset 0 -2px 6px rgba(0,0,0,0.14);
+	}
+	.btn-glass-primary:hover {
+		background:
+			linear-gradient(135deg, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.06) 100%),
+			color-mix(in oklab, var(--acc) 74%, var(--acc-vibrant) 26%);
+		border-color: color-mix(in oklab, var(--acc-vibrant) 58%, rgba(255,255,255,0.22));
+		box-shadow:
+			0 0 0 1px color-mix(in oklab, var(--acc-vibrant) 32%, transparent),
+			0 16px 36px color-mix(in oklab, var(--acc) 45%, transparent),
+			0 4px 14px color-mix(in oklab, var(--acc-vibrant) 26%, transparent),
+			inset 0 4px 12px rgba(255,255,255,0.28),
+			inset 0 1px 0 rgba(255,255,255,0.44),
+			inset 0 -2px 6px rgba(0,0,0,0.12);
 	}
 
 	/* Badge chip — nav beta badge */
@@ -583,6 +550,10 @@
    ───────────────────────────────────────────────────── */
 @keyframes marquee {
 	to { transform: translateX(-50%); }
+}
+@keyframes marquee-reverse {
+	from { transform: translateX(-50%); }
+	to   { transform: translateX(0); }
 }
 
 @keyframes logo-scroll {
@@ -705,7 +676,7 @@ body:has([data-home-page]) > main {
 }
 
 /* Section container (Sanity pages) */
-@utility section { @apply mx-auto max-w-7xl px-4 py-12 md:px-8; }
+@utility section { @apply mx-auto max-w-[var(--maxw)] px-8 py-24 md:py-32; }
 
 /* Prose (Sanity rich text) */
 @utility prose {
@@ -891,3 +862,25 @@ body:has([data-home-page]) > main {
 @utility anim-fade-to-r { @apply anim-fade starting:-translate-x-4; }
 @utility anim-fade-to-t { @apply anim-fade starting:-translate-y-4; }
 @utility anim-fade-to-b { @apply anim-fade starting:-translate-y-4; }
+
+.dark {
+	--sidebar:      hsl(240 5.9% 10%);
+	--sidebar-foreground:      hsl(240 4.8% 95.9%);
+	--sidebar-primary:      hsl(224.3 76.3% 48%);
+	--sidebar-primary-foreground:      hsl(0 0% 100%);
+	--sidebar-accent:      hsl(240 3.7% 15.9%);
+	--sidebar-accent-foreground:      hsl(240 4.8% 95.9%);
+	--sidebar-border:      hsl(240 3.7% 15.9%);
+	--sidebar-ring:      hsl(217.2 91.2% 59.8%);
+}
+
+@theme inline {
+	--color-sidebar:      var(--sidebar);
+	--color-sidebar-foreground:      var(--sidebar-foreground);
+	--color-sidebar-primary:      var(--sidebar-primary);
+	--color-sidebar-primary-foreground:      var(--sidebar-primary-foreground);
+	--color-sidebar-accent:      var(--sidebar-accent);
+	--color-sidebar-accent-foreground:      var(--sidebar-accent-foreground);
+	--color-sidebar-border:      var(--sidebar-border);
+	--color-sidebar-ring:      var(--sidebar-ring);
+}

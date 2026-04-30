@@ -1,6 +1,13 @@
 'use client'
 
+import { useRef } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+
 export default function CTAClose() {
+	const inputRef = useRef<HTMLInputElement>(null)
+	const btnRef = useRef<HTMLButtonElement>(null)
+
 	return (
 		<section
 			className="py-[160px] px-8 pb-[140px] text-center border-b border-line"
@@ -11,7 +18,7 @@ export default function CTAClose() {
 		>
 			<h2
 				className="font-serif font-normal tracking-[-0.025em] leading-[0.98] mb-7 text-balance"
-				style={{ fontSize: 'clamp(48px, 6.5vw, 92px)' }}
+				style={{ fontSize: 'clamp(40px, 4.8vw, 72px)' }}
 			>
 				Stop rebuilding
 				<br />
@@ -23,29 +30,29 @@ export default function CTAClose() {
 				and your review standards — and show you where the loop closes.
 			</p>
 			<form
-				className="inline-flex gap-2 items-center py-[6px] px-[6px] pl-[22px] rounded-full bg-surface border border-line-2 shadow-sm min-w-[460px] max-w-full focus-within:border-[color-mix(in_oklab,var(--acc)_38%,var(--line-2))]"
+				className="inline-flex gap-2 items-center py-[7px] px-[7px] pl-[26px] rounded-full bg-surface border border-line-2 min-w-[520px] max-w-full focus-within:border-[color-mix(in_oklab,var(--acc)_48%,var(--line-2))] transition-colors duration-200"
 				style={{
 					['--focus-ring' as string]: 'none',
+					boxShadow: '0 2px 8px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.9)',
 				}}
 				onSubmit={(e) => {
 					e.preventDefault()
-					const input = e.currentTarget.querySelector('input')
-					const btn = e.currentTarget.querySelector('button')
-					if (input) input.value = ''
-					if (btn) btn.textContent = '✓ on the list'
+					if (inputRef.current) inputRef.current.value = ''
+					if (btnRef.current) btnRef.current.textContent = '✓ on the list'
 				}}
 			>
-				<input
+				<Input
+					ref={inputRef}
 					type="email"
 					required
 					placeholder="you@company.com"
-					className="flex-1 border-0 outline-none bg-transparent font-sans text-[15px] text-ink py-[10px] placeholder:text-ink-4"
+					className="text-[16px] py-[12px]"
 				/>
-				<button type="submit" className="btn btn-acc">
+				<Button ref={btnRef} type="submit" variant="acc" size="lg">
 					Request access →
-				</button>
+				</Button>
 			</form>
-			<div className="mt-[18px] font-mono text-[11px] text-ink-4 tracking-widest">
+			<div className="mt-[20px] font-mono text-[11px] text-ink-4 tracking-widest">
 				founder-led onboarding · no spam · unsubscribe anytime
 			</div>
 		</section>

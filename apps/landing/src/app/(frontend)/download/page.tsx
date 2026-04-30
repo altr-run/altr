@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
 	title: 'Download Altr — Mac-native AI Workspace',
@@ -31,48 +32,49 @@ export default function DownloadPage() {
 
 			{/* Hero */}
 			<section
-				className="border-b border-line px-8 py-[120px]"
+				className="border-b border-line px-8 py-[160px]"
 				style={{ background: 'radial-gradient(60% 50% at 50% 0%, color-mix(in oklab, var(--acc) 8%, transparent) 0%, transparent 60%), var(--bg)' }}
 			>
-				<div className="mx-auto" style={{ maxWidth: 'var(--maxw-narrow)' }}>
-					<p className="font-mono text-[11px] tracking-widest uppercase text-acc mb-5">Download</p>
-					<h1
-						className="font-serif font-normal tracking-[-0.03em] text-ink mb-6"
-						style={{ fontSize: 'clamp(40px, 5.5vw, 78px)', lineHeight: 1.04, textWrap: 'balance' }}
-					>
-						Built for the Mac.
-						<br />
-						<em className="italic text-acc">Not the browser.</em>
-					</h1>
-					<p className="font-sans text-[18px] leading-[1.62] text-ink-2 max-w-[48ch] mb-10">
-						Altr is a native Mac app built with Tauri 2 and Rust — not a website in a wrapper. Local-first, keyboard-centric, and lean.
-					</p>
-					{/* Trust pills */}
-					<div className="flex flex-wrap gap-2">
-						{['macOS 14+', 'Apple Silicon', 'Tauri 2 + Rust', 'Local SQLite', 'Signed & notarized'].map((label) => (
-							<span
-								key={label}
-								className="font-mono text-[10.5px] tracking-wide border border-line rounded-full px-3 py-1 text-ink-3"
-								style={{ background: 'var(--bg-1)' }}
-							>
-								{label}
-							</span>
-						))}
+				<div className="inner grid grid-cols-12 gap-12 lg:gap-24 items-end">
+					<div className="col-span-12 lg:col-span-7">
+						<p className="over mb-5">Download</p>
+						<h1 className="heading-2 mb-6">
+							Built for the Mac.
+							<br />
+							<em className="italic text-acc">Not the browser.</em>
+						</h1>
+					</div>
+					<div className="col-span-12 lg:col-span-5">
+						<p className="lede mb-10">
+							Altr is a native Mac app built with Tauri 2 and Rust — not a website in a wrapper. Local-first, keyboard-centric, and lean.
+						</p>
+						{/* Trust pills */}
+						<div className="flex flex-wrap gap-2">
+							{['macOS 14+', 'Apple Silicon', 'Tauri 2 + Rust', 'Local SQLite', 'Signed & notarized'].map((label) => (
+								<span
+									key={label}
+									className="font-mono text-[10.5px] tracking-wide border border-line rounded-full px-3 py-1 text-ink-3"
+									style={{ background: 'var(--bg-1)' }}
+								>
+									{label}
+								</span>
+							))}
+						</div>
 					</div>
 				</div>
 			</section>
 
 			{/* Download card + why native */}
-			<section className="border-b border-line px-8 py-24">
-				<div className="mx-auto" style={{ maxWidth: 'var(--maxw)' }}>
-					<div className="grid gap-12 items-start" style={{ gridTemplateColumns: '1fr 1fr' }}>
+			<section className="border-b border-line px-8 py-32">
+				<div className="inner">
+					<div className="grid grid-cols-12 gap-12 lg:gap-24 items-start">
 
 						{/* Download card */}
 						<div
-							className="relative border border-line rounded-[28px] p-10 flex flex-col items-start gap-7 overflow-hidden"
+							className="col-span-12 lg:col-span-6 relative border border-line rounded-[32px] p-12 flex flex-col items-start gap-8 overflow-hidden"
 							style={{
 								background: 'radial-gradient(80% 70% at 5% 5%, color-mix(in oklab, var(--acc) 9%, transparent) 0%, transparent 55%), linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(248,248,248,0.94) 100%)',
-								boxShadow: 'var(--sh-md), inset 0 1px 0 rgba(255,255,255,0.9)',
+								boxShadow: 'var(--sh-lg), inset 0 1px 0 rgba(255,255,255,0.9)',
 							}}
 						>
 							{/* Grid overlay */}
@@ -125,12 +127,14 @@ export default function DownloadPage() {
 							</div>
 
 							<div className="relative w-full flex flex-col gap-3">
-								<button
+								<Button
+									variant="acc"
+									size="lg"
 									disabled
-									className="btn btn-acc btn-lg w-full opacity-50 cursor-not-allowed pointer-events-none"
+									className="w-full opacity-50 cursor-not-allowed pointer-events-none"
 								>
 									Download v0.1 (.dmg)
-								</button>
+								</Button>
 								<p className="font-sans text-[12px] text-ink-3 text-center">
 									Current status: <span className="text-acc font-medium">Private Pilot Only</span>
 								</p>
@@ -174,9 +178,9 @@ export default function DownloadPage() {
 									<p className="font-sans font-semibold text-[14px] text-ink mb-1">Get pilot access first.</p>
 									<p className="font-sans text-[13px] text-ink-2">Join the limited cohort and get the download link direct from the founders.</p>
 								</div>
-								<a href="/#close" className="btn btn-acc flex-shrink-0">
+								<Button variant="acc" href="/#close" className="flex-shrink-0">
 									Request access →
-								</a>
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -190,12 +194,12 @@ export default function DownloadPage() {
 						Questions about the architecture or security posture?
 					</p>
 					<div className="flex gap-3">
-						<Link href="/security" className="btn btn-ghost">
+						<Button variant="cta-ghost" href="/security">
 							Security & data →
-						</Link>
-						<Link href="/product" className="btn btn-ghost">
+						</Button>
+						<Button variant="cta-ghost" href="/product">
 							See the product →
-						</Link>
+						</Button>
 					</div>
 				</div>
 			</section>

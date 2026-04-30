@@ -30,7 +30,7 @@ export default function Manifesto() {
 				}}
 			/>
 
-			<div className="relative z-[1] max-w-[1040px] mx-auto">
+			<div className="relative z-[1] inner">
 				<Reveal className="text-center mb-20">
 					<span
 						className="over inline-block"
@@ -41,7 +41,7 @@ export default function Manifesto() {
 					<h2
 						className="font-serif font-normal leading-[1.05] tracking-[-0.03em] mt-5 mx-auto"
 						style={{
-							fontSize: 'clamp(36px, 4.4vw, 60px)',
+							fontSize: 'clamp(32px, 3.6vw, 52px)',
 							maxWidth: 920,
 						}}
 					>
@@ -54,7 +54,7 @@ export default function Manifesto() {
 				<Reveal>
 					{/* quote body */}
 					<div
-						className="grid gap-0 font-serif text-[22px] leading-[1.55] text-(--ink-1) tracking-[-0.005em]"
+						className="grid gap-0 font-serif text-[24px] leading-[1.55] text-(--ink-1) tracking-[-0.005em]"
 						style={{ gridTemplateColumns: '60px 1fr 60px' }}
 					>
 						{/* opening quote mark */}
@@ -72,8 +72,7 @@ export default function Manifesto() {
 								our team&apos;s signal lives in five different tools. Slack
 								threads, GitHub issues, Linear specs, call recordings, monitoring
 								alerts. Every handoff, someone re-summarizes. Every review,
-								context disappears. The brief gets rewritten from scratch &mdash;
-								every single time.
+								context disappears. The brief gets rewritten from scratch &mdash; every single time.
 							</p>
 							<p className="mb-[22px]">
 								Altr runs on your Mac, pulls the full story from your existing

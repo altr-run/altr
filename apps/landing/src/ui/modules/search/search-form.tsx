@@ -4,6 +4,7 @@ import { useQueryState } from 'nuqs'
 import { VscSearch } from 'react-icons/vsc'
 import { count, debounce } from '@/lib/utils'
 import type { SearchModule } from '@/sanity/types'
+import { Input, InputWrapper } from '@/components/ui/input'
 import Loading from '@/ui/loading'
 import GoogleResults from './google-results'
 import SearchResults from './search-results'
@@ -15,12 +16,10 @@ export default function ({ scope }: Partial<SearchModule>) {
 
 	return (
 		<search className="group/search relative">
-			<label className="input flex items-center gap-2 py-0">
-				<VscSearch className="shrink-0" />
-
-				<input
+			<InputWrapper className="py-[0.25em]">
+				<VscSearch className="shrink-0 text-[var(--ink-3)] text-[14px]" />
+				<Input
 					id="query"
-					className="grow py-[0.25em] outline-none"
 					type="search"
 					placeholder={scope === 'all' ? 'Search' : `Search ${scope}`}
 					defaultValue={query}
@@ -34,7 +33,7 @@ export default function ({ scope }: Partial<SearchModule>) {
 						})
 					})}
 				/>
-			</label>
+			</InputWrapper>
 
 			{query && (
 				<output

@@ -5,6 +5,7 @@ import * as Accordion from '@radix-ui/react-accordion'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import Reveal from './reveal'
+import { Button } from '@/components/ui/button'
 
 const ITEMS = [
 	{
@@ -37,10 +38,10 @@ export default function FAQ() {
 	const [openValue, setOpenValue] = useState<string>('')
 
 	return (
-		<section className="py-[140px] px-8 border-b border-line" id="faq">
+		<section className="py-[160px] px-8 border-b border-line" id="faq">
 			<div className="inner">
-				<Reveal className="grid grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] gap-16 items-end mb-12">
-					<div>
+				<Reveal className="grid grid-cols-12 gap-12 lg:gap-24 items-end mb-24">
+					<div className="col-span-12 lg:col-span-7">
 						<span className="over inline-block mb-4">faq</span>
 						<h2 className="heading-2">
 							Questions teams ask
@@ -48,17 +49,19 @@ export default function FAQ() {
 							<em>when evaluating.</em>
 						</h2>
 					</div>
-					<p className="lede">
-						If yours isn&apos;t here, write{' '}
-						<a
-							href="mailto:hello@altr.run"
-							className="text-ink no-underline border-b border-acc"
-							style={{ borderBottomWidth: '1.5px' }}
-						>
-							hello@altr.run
-						</a>{' '}
-						— a human reads every one.
-					</p>
+					<div className="col-span-12 lg:col-span-5">
+						<p className="lede">
+							If yours isn&apos;t here, write{' '}
+							<a
+								href="mailto:hello@altr.run"
+								className="text-ink no-underline border-b border-acc"
+								style={{ borderBottomWidth: '1.5px' }}
+							>
+								hello@altr.run
+							</a>{' '}
+							— a human reads every one.
+						</p>
+					</div>
 				</Reveal>
 				<Reveal>
 					<Accordion.Root
@@ -78,7 +81,7 @@ export default function FAQ() {
 								>
 									<Accordion.Header>
 										<Accordion.Trigger asChild>
-											<button className="flex justify-between items-center w-full py-[22px] px-2 text-left font-serif text-[22px] font-normal tracking-[-0.015em] text-ink bg-transparent border-0 cursor-pointer gap-4">
+											<Button variant="bare" className="flex justify-between items-center w-full py-[32px] px-2 text-left font-serif text-[24px] font-normal tracking-[-0.015em] text-ink cursor-pointer gap-8">
 												<span>{item.q}</span>
 												<motion.span
 													animate={{ rotate: isOpen ? 45 : 0 }}
@@ -88,7 +91,7 @@ export default function FAQ() {
 												>
 													+
 												</motion.span>
-											</button>
+											</Button>
 										</Accordion.Trigger>
 									</Accordion.Header>
 									<Accordion.Content forceMount asChild>
