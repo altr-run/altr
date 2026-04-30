@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
 	title: 'Product — Altr',
@@ -237,12 +238,12 @@ export default function ProductHub() {
 						Founder-led onboarding using your stack, your Slack channels, and your review standards.
 					</p>
 					<div className="flex gap-3 justify-center">
-						<a href="/#close" className="btn btn-acc btn-lg">
+						<Button variant="acc" size="lg" href="/#close">
 							Request early access →
-						</a>
-						<Link href="/integrations" className="btn btn-ghost">
+						</Button>
+						<Button variant="cta-ghost" href="/integrations">
 							See integrations →
-						</Link>
+						</Button>
 					</div>
 				</div>
 			</section>

@@ -2,6 +2,7 @@
 
 import HoverDetails from '@/ui/hover-details'
 import LogoMark from '@/ui/home/logo-mark'
+import { Button } from '@/components/ui/button'
 
 export type SiteChromeContent = {
 	useCases: Array<{ title: string; problem: string | null; slug: string }>
@@ -69,9 +70,9 @@ function MegaPanelFooter({ links }: { links: { label: string; href: string }[] }
 					</a>
 				))}
 			</div>
-			<a href="#close" className="btn btn-acc btn-sm">
+			<Button variant="acc" size="sm" href="#close">
 				Request access →
-			</a>
+			</Button>
 		</div>
 	)
 }
@@ -426,9 +427,9 @@ export default function SiteNav({ content }: { content: SiteChromeContent }) {
 					<a href="#close" className="text-[13px] text-ink-2 no-underline hover:text-ink transition-colors">
 						Sign in
 					</a>
-					<a href="#close" className="btn btn-acc">
+					<Button variant="acc" href="#close">
 						Request access →
-					</a>
+					</Button>
 				</div>
 			</div>
 		</nav>

@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import Reveal from './reveal'
 
 const POINTS = [
@@ -71,12 +72,12 @@ export default function TalkTeam() {
 									))}
 								</ul>
 								<div className="flex gap-3 flex-wrap">
-									<a href="#close" className="btn btn-acc">
+									<Button variant="acc" href="#close">
 										Request access →
-									</a>
-									<a href="mailto:hello@altr.run" className="btn btn-ghost">
+									</Button>
+									<Button variant="cta-ghost" href="mailto:hello@altr.run">
 										Email the team
-									</a>
+									</Button>
 								</div>
 							</div>
 						</div>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { groq } from 'next-sanity'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/lib/env'
 import { sanityFetchLive } from '@/sanity/lib/live'
 
@@ -120,12 +121,9 @@ export default async function UseCasesIndex() {
 						</p>
 					</div>
 					<div className="flex flex-col items-end gap-2 flex-shrink-0">
-						<Link
-							href="/#close"
-							className="btn btn-acc"
-						>
+						<Button variant="acc" href="/#close">
 							Talk to the founders →
-						</Link>
+						</Button>
 						<span className="font-mono text-[10.5px] text-ink-4">No card required. Founder-led onboarding.</span>
 					</div>
 				</div>

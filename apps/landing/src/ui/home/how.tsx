@@ -3,6 +3,7 @@
 import { motion, useInView } from 'motion/react'
 import { useRef } from 'react'
 import Reveal from './reveal'
+import { AltrRunsList, AltrPreviewScope } from '@/components/altr-app-preview'
 
 const STEPS = [
 	{
@@ -110,6 +111,13 @@ export default function How() {
 								</div>
 							</Reveal>
 						))}
+
+						{/* Active runs preview — what "build" looks like in practice */}
+						<Reveal delay={STEPS.length * 80 + 60} className="mt-8">
+							<AltrPreviewScope>
+								<AltrRunsList />
+							</AltrPreviewScope>
+						</Reveal>
 					</div>
 				</div>
 			</div>

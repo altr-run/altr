@@ -24,6 +24,19 @@ const PILOT_LOGOS: LogoEntry[] = [
 	{ label: 'depot.dev', variant: 'u' },
 ]
 
+const AGENT_TOOLS: LogoEntry[] = [
+	{ label: 'Claude Code', variant: 's' },
+	{ label: 'Cursor', variant: '' },
+	{ label: 'Codex', variant: 'u' },
+	{ label: 'Devin', variant: '' },
+	{ label: 'Copilot', variant: 's' },
+	{ label: 'Windsurf', variant: 'u' },
+	{ label: 'Gemini CLI', variant: 's' },
+	{ label: 'Aider', variant: '' },
+	{ label: 'Cline', variant: 'u' },
+	{ label: 'Amp', variant: 's' },
+]
+
 const INTEGRATIONS = [
 	{ tool: 'Slack', domain: 'slack.com', signal: 'Feature threads' },
 	{ tool: 'GitHub', domain: 'github.com', signal: 'PR events' },
@@ -173,25 +186,53 @@ export default function Logos() {
 				</div>
 			</div>
 
-			{/* Part 2: Pilot Ticker */}
-			<div className="py-12 bg-bg-1/30">
-				<div className="inner grid gap-7 items-center px-8 mb-7" style={{ gridTemplateColumns: 'auto 1fr auto', maxWidth: 'var(--maxw)', margin: '0 auto 28px' }}>
+			{/* Part 2: Dual Marquee */}
+			<div className="py-10 bg-bg-1/30 overflow-hidden">
+				<div
+					className="px-8 mb-8 flex items-center justify-between gap-4"
+					style={{ maxWidth: 'var(--maxw)', margin: '0 auto 28px' }}
+				>
 					<div className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] uppercase text-acc">
 						<span className="w-1.5 h-1.5 rounded-full bg-acc shadow-[0_0_0_4px_color-mix(in_oklab,var(--acc)_14%,transparent)] animate-[pulse-dot_1.6s_ease-in-out_infinite]" />
 						Pilot teams
 					</div>
-					<div className="font-sans text-[14px] text-ink-3">
+					<div className="font-sans text-[13px] text-ink-4 hidden sm:block">
 						Teams from these organizations are evaluating Altr in limited pilot cycles.
 					</div>
-					<div className="font-mono text-[10px] text-ink-4 tracking-[0.02em] uppercase">
+					<div className="font-mono text-[10px] text-ink-4 tracking-[0.02em] uppercase hidden md:block">
 						Active pilot phase
 					</div>
 				</div>
 
-				<div className="overflow-hidden" style={{ maskImage: 'linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%)', WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%)' }}>
-					<div className="flex items-center gap-16 w-max opacity-60 animate-[marquee_40s_linear_infinite] hover:[animation-play-state:paused]">
-						{[...PILOT_LOGOS, ...PILOT_LOGOS, ...PILOT_LOGOS].map((item, i) => (
+				{/* Row 1 — pilot companies, scroll left */}
+				<div
+					className="overflow-hidden mb-3"
+					style={{
+						maskImage: 'linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)',
+						WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)',
+					}}
+				>
+					<div className="flex items-center gap-14 w-max opacity-60 animate-[marquee_38s_linear_infinite] hover:[animation-play-state:paused]">
+						{[...PILOT_LOGOS, ...PILOT_LOGOS].map((item, i) => (
 							<LogoItem key={i} item={item} />
+						))}
+					</div>
+				</div>
+
+				{/* Row 2 — agent tools, scroll right */}
+				<div
+					className="overflow-hidden"
+					style={{
+						maskImage: 'linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)',
+						WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)',
+					}}
+				>
+					<div className="flex items-center gap-14 w-max opacity-40 animate-[marquee-reverse_52s_linear_infinite] hover:[animation-play-state:paused]">
+						{[...AGENT_TOOLS, ...AGENT_TOOLS].map((item, i) => (
+							<div key={i} className="flex items-center gap-2">
+								<span className="w-1 h-1 rounded-full bg-ink-4 flex-shrink-0" />
+								<LogoItem item={item} />
+							</div>
 						))}
 					</div>
 				</div>

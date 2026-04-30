@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
 	title: 'Security & Data Sovereignty — Altr',
@@ -264,9 +265,9 @@ export default function SecurityPage() {
 					<p className="font-sans text-[16px] text-ink-2 max-w-[42ch] leading-[1.65]">
 						We do founder-led onboarding. Ask us anything about how Altr handles your data — before you sign up.
 					</p>
-					<a href="/#close" className="btn btn-acc btn-lg">
+					<Button variant="acc" size="lg" href="/#close">
 						Talk to the founders →
-					</a>
+					</Button>
 					<Link href="/product/workflow" className="font-mono text-[12px] text-ink-3 hover:text-acc transition-colors no-underline">
 						Read about the workflow →
 					</Link>

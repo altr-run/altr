@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { groq } from 'next-sanity'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 import { sanityFetchLive } from '@/sanity/lib/live'
 
 export const metadata: Metadata = {
@@ -168,7 +169,7 @@ export default async function StackPage() {
 							← Agents
 						</Link>
 					</div>
-					<a href="/#close" className="btn btn-acc">Request access →</a>
+					<Button variant="acc" href="/#close">Request access →</Button>
 				</div>
 			</section>
 		</main>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
 	title: 'Download Altr — Mac-native AI Workspace',
@@ -126,12 +127,14 @@ export default function DownloadPage() {
 							</div>
 
 							<div className="relative w-full flex flex-col gap-3">
-								<button
+								<Button
+									variant="acc"
+									size="lg"
 									disabled
-									className="btn btn-acc btn-lg w-full opacity-50 cursor-not-allowed pointer-events-none"
+									className="w-full opacity-50 cursor-not-allowed pointer-events-none"
 								>
 									Download v0.1 (.dmg)
-								</button>
+								</Button>
 								<p className="font-sans text-[12px] text-ink-3 text-center">
 									Current status: <span className="text-acc font-medium">Private Pilot Only</span>
 								</p>
@@ -175,9 +178,9 @@ export default function DownloadPage() {
 									<p className="font-sans font-semibold text-[14px] text-ink mb-1">Get pilot access first.</p>
 									<p className="font-sans text-[13px] text-ink-2">Join the limited cohort and get the download link direct from the founders.</p>
 								</div>
-								<a href="/#close" className="btn btn-acc flex-shrink-0">
+								<Button variant="acc" href="/#close" className="flex-shrink-0">
 									Request access →
-								</a>
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -191,12 +194,12 @@ export default function DownloadPage() {
 						Questions about the architecture or security posture?
 					</p>
 					<div className="flex gap-3">
-						<Link href="/security" className="btn btn-ghost">
+						<Button variant="cta-ghost" href="/security">
 							Security & data →
-						</Link>
-						<Link href="/product" className="btn btn-ghost">
+						</Button>
+						<Button variant="cta-ghost" href="/product">
 							See the product →
-						</Link>
+						</Button>
 					</div>
 				</div>
 			</section>

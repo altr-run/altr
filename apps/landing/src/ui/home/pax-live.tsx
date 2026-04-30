@@ -3,8 +3,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import Reveal from './reveal'
 import { Button } from '@/components/ui/button'
+import Reveal from './reveal'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -437,8 +437,8 @@ export default function AltrLive({ sanityScenarios }: { sanityScenarios?: Sanity
 											<Button variant="ghost" size="sm" className="cursor-default">
 												Edit
 											</Button>
-											<motion.button
-												className="btn btn-acc btn-sm cursor-default"
+											<motion.div
+												className="rounded-full"
 												animate={{
 													boxShadow: [
 														'0 0 0 0px color-mix(in oklab, var(--acc-vibrant) 0%, transparent)',
@@ -448,8 +448,10 @@ export default function AltrLive({ sanityScenarios }: { sanityScenarios?: Sanity
 												}}
 												transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
 											>
-												Approve →
-											</motion.button>
+												<Button variant="acc" size="sm" className="cursor-default">
+													Approve →
+												</Button>
+											</motion.div>
 										</div>
 									</motion.div>
 								)}

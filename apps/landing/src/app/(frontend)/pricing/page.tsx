@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
 	title: 'Pricing — Altr',
@@ -174,9 +174,9 @@ export default function PricingPage() {
 									<p className="font-mono text-[10px] text-ink-4 pl-7 tracking-wide">+ everything below →</p>
 								</div>
 
-								<a href="/#close" className="relative btn btn-acc btn-lg w-full mt-auto text-center">
+								<Button variant="acc" size="lg" href="/#close" className="w-full mt-auto justify-center">
 									Request early access →
-								</a>
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -244,12 +244,12 @@ export default function PricingPage() {
 				<p className="font-serif text-[22px] text-ink mb-2">Questions about pricing?</p>
 				<p className="font-sans text-[15px] text-ink-3 mb-7 max-w-[40ch] mx-auto">Whether it&apos;s about seat limits, enterprise procurement, or BYOK cost modeling — talk to a founder.</p>
 				<div className="flex gap-3 justify-center">
-					<a href="/#close" className="btn btn-acc">
+					<Button variant="acc" href="/#close">
 						Talk to the founders →
-					</a>
-					<Link href="/security" className="btn btn-ghost">
+					</Button>
+					<Button variant="cta-ghost" href="/security">
 						Security & data →
-					</Link>
+					</Button>
 				</div>
 			</section>
 		</main>

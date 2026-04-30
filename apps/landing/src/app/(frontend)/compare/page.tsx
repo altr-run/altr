@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { groq } from 'next-sanity'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/lib/env'
 import { sanityFetchLive } from '@/sanity/lib/live'
 
@@ -133,15 +134,12 @@ export default async function CompareIndex() {
 					Tell us what you&apos;re evaluating and we&apos;ll walk through it together — live demo with your actual stack.
 				</p>
 				<div className="flex gap-3 flex-wrap justify-center mt-2">
-					<Link
-						href="/#close"
-						className="btn btn-acc"
-					>
+					<Button variant="acc" href="/#close">
 						Talk to the founders →
-					</Link>
-					<Link href="/pricing" className="btn btn-ghost">
+					</Button>
+					<Button variant="cta-ghost" href="/pricing">
 						See pricing →
-					</Link>
+					</Button>
 				</div>
 				<span className="font-mono text-[10.5px] text-ink-4 mt-1">No card required. Founder-led onboarding.</span>
 			</section>

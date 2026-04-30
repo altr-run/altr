@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 import { groq } from 'next-sanity'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import Reveal from '@/ui/home/reveal'
@@ -96,9 +97,9 @@ export default async function LegalIndexPage() {
 						<p className="text-ink-2 text-[15px] mb-4">
 							Questions about our policies? We answer real questions from real people.
 						</p>
-						<a href="mailto:legal@altr.run" className="btn btn-ghost">
+						<Button variant="cta-ghost" href="mailto:legal@altr.run">
 							Email legal@altr.run
-						</a>
+						</Button>
 					</div>
 				</Reveal>
 			</section>

@@ -1,5 +1,6 @@
 import { PortableText } from 'next-sanity'
 import Reveal from '@/ui/home/reveal'
+import { Button } from '@/components/ui/button'
 
 export type LegalPageData = {
 	title: string
@@ -100,12 +101,9 @@ export default function LegalPage({ page }: Props) {
 						<p className="text-ink-2 text-[15px] mb-4">
 							Questions about this policy?
 						</p>
-						<a
-							href="mailto:legal@altr.run"
-							className="btn btn-ghost"
-						>
+						<Button variant="cta-ghost" href="mailto:legal@altr.run">
 							Email legal@altr.run
-						</a>
+						</Button>
 					</div>
 				</Reveal>
 			</section>

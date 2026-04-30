@@ -355,11 +355,11 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 	const mountRef = useRef<HTMLDivElement | null>(null)
 	const speedRef = useRef(BASE_SPEED)
 	const colorBack = useMemo(() => parseHexColor('#00000000'), [])
-	// Radix lime-9 (sRGB) = #bdee63 — medium-light lime that works with multiply blend.
-	// We hardcode the sRGB value to avoid: (a) the P3 format issue where browsers
-	// return color(display-p3 ...) from getComputedStyle instead of a hex string,
-	// and (b) the old override #89F336 which was too bright and invisible with multiply.
-	const colorFront = useMemo(() => parseHexColor('#bdee63'), [])
+	// Radix indigo-7 (sRGB) = #aec0f5 — a light indigo that reads cleanly under
+	// multiply blend on a warm off-white background, matching the brand indigo accent.
+	// We use a lighter shade (7 vs 9) because multiply with dark colors on light bg
+	// produces an overly heavy effect; this value gives a gentle blue-violet wash.
+	const colorFront = useMemo(() => parseHexColor('#aec0f5'), [])
 
 	useEffect(() => {
 		const mount = mountRef.current
@@ -545,7 +545,7 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 			ref={mountRef}
 			className="pointer-events-none absolute inset-0 z-0"
 			style={{
-				opacity: 0.34,
+				opacity: 0.48,
 				mixBlendMode: 'multiply',
 				maskImage:
 					'radial-gradient(ellipse 76% 78% at 50% 34%, #000 0%, rgba(0,0,0,0.92) 48%, transparent 90%)',

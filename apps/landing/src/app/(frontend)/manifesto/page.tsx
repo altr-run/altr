@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
 	title: 'The Manifesto — Altr',
@@ -79,7 +80,7 @@ export default function ManifestoPage() {
 
 					<div className="mt-20 p-10 bg-bg-1 border border-line rounded-[24px] text-center flex flex-col items-center gap-6">
 						<p className="font-serif text-[24px] text-ink">Ready to ship with leverage?</p>
-						<a href="/#close" className="btn btn-acc btn-lg">Request access →</a>
+						<Button variant="acc" size="lg" href="/#close">Request access →</Button>
 					</div>
 				</div>
 			</article>
