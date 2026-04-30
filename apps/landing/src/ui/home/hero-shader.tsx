@@ -355,11 +355,9 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 	const mountRef = useRef<HTMLDivElement | null>(null)
 	const speedRef = useRef(BASE_SPEED)
 	const colorBack = useMemo(() => parseHexColor('#00000000'), [])
-	// Radix indigo-7 (sRGB) = #aec0f5 — a light indigo that reads cleanly under
-	// multiply blend on a warm off-white background, matching the brand indigo accent.
-	// We use a lighter shade (7 vs 9) because multiply with dark colors on light bg
-	// produces an overly heavy effect; this value gives a gentle blue-violet wash.
-	const colorFront = useMemo(() => parseHexColor('#aec0f5'), [])
+	// Bright indigo used with screen blend on dark bg — produces a glowing wash
+	// that picks up the brand accent without blowing out the dithering pattern.
+	const colorFront = useMemo(() => parseHexColor('#2d3a8c'), [])
 
 	useEffect(() => {
 		const mount = mountRef.current
@@ -421,7 +419,7 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 		gl.uniform1f(uniformLocations.worldWidth, 0)
 		gl.uniform1f(uniformLocations.worldHeight, 0)
 		gl.uniform1f(uniformLocations.fit, SHADER_FIT_NONE)
-		gl.uniform1f(uniformLocations.scale, 0.88)
+		gl.uniform1f(uniformLocations.scale, 1.4)
 		gl.uniform1f(uniformLocations.rotation, 0)
 		gl.uniform1f(uniformLocations.offsetX, 0)
 		gl.uniform1f(uniformLocations.offsetY, 0)
@@ -545,10 +543,10 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 			ref={mountRef}
 			className="pointer-events-none absolute inset-0 z-0"
 			style={{
-				opacity: 0.48,
-				mixBlendMode: 'multiply',
+				opacity: 0.68,
+				mixBlendMode: 'screen',
 				maskImage:
-					'radial-gradient(ellipse 76% 78% at 50% 34%, #000 0%, rgba(0,0,0,0.92) 48%, transparent 90%)',
+					'radial-gradient(ellipse 84% 74% at 50% 28%, #000 0%, rgba(0,0,0,0.8) 55%, transparent 90%)',
 			}}
 			aria-hidden="true"
 		>
@@ -556,7 +554,7 @@ export default function HeroShader({ isHovered }: HeroShaderProps) {
 				className="absolute inset-0"
 				style={{
 					background:
-						'radial-gradient(ellipse 72% 68% at 50% 34%, color-mix(in srgb, var(--acc) 32%, transparent), transparent 74%)',
+						'radial-gradient(ellipse 70% 60% at 50% 28%, color-mix(in srgb, var(--acc) 18%, transparent), transparent 72%)',
 				}}
 			/>
 		</div>

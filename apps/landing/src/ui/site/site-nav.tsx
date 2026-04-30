@@ -12,6 +12,37 @@ export type SiteChromeContent = {
 	legalPages: Array<{ title: string; slug: string }>
 }
 
+// ── Fallbacks (shown when Sanity has no published documents) ──────────────────
+
+const FALLBACK_USE_CASES: SiteChromeContent['useCases'] = [
+	{ title: 'Feature delivery', problem: null, slug: 'feature-delivery' },
+	{ title: 'Bug triage', problem: null, slug: 'bug-triage' },
+	{ title: 'PR review', problem: null, slug: 'pr-review' },
+	{ title: 'Migrations', problem: null, slug: 'migrations' },
+	{ title: 'Release follow-through', problem: null, slug: 'release-follow-through' },
+	{ title: 'Incident follow-up', problem: null, slug: 'incident-follow-up' },
+]
+
+const FALLBACK_INTEGRATIONS: SiteChromeContent['integrations'] = [
+	{ tool: 'Slack', category: 'Communication', domain: 'slack.com', slug: 'slack' },
+	{ tool: 'GitHub', category: 'Version control', domain: 'github.com', slug: 'github' },
+	{ tool: 'Linear', category: 'Project management', domain: 'linear.app', slug: 'linear' },
+	{ tool: 'Notion', category: 'Knowledge base', domain: 'notion.so', slug: 'notion' },
+]
+
+const FALLBACK_SOLUTION_PAGES: SiteChromeContent['solutionPages'] = [
+	{ title: 'Engineering managers', slug: 'solutions/engineering-managers' },
+	{ title: 'Engineering teams', slug: 'solutions/engineering-teams' },
+	{ title: 'Product managers', slug: 'solutions/product-managers' },
+]
+
+const FALLBACK_COMPARE_PAGES: SiteChromeContent['comparePages'] = [
+	{ competitor: 'Cursor', slug: 'altr-vs-cursor' },
+	{ competitor: 'Devin', slug: 'altr-vs-devin' },
+	{ competitor: 'Linear', slug: 'altr-vs-linear' },
+	{ competitor: 'ClickUp AI', slug: 'altr-vs-clickup-codegen' },
+]
+
 // ── Link style helpers ────────────────────────────────────────────────────────
 
 const NAV_TRIGGER =
@@ -381,6 +412,12 @@ function LegalMenu({ legalPages }: { legalPages: SiteChromeContent['legalPages']
 // ── Main nav ──────────────────────────────────────────────────────────────────
 
 export default function SiteNav({ content }: { content: SiteChromeContent }) {
+	const useCases = content.useCases?.length ? content.useCases : FALLBACK_USE_CASES
+	const integrations = content.integrations?.length ? content.integrations : FALLBACK_INTEGRATIONS
+	const solutionPages = content.solutionPages?.length ? content.solutionPages : FALLBACK_SOLUTION_PAGES
+	const comparePages = content.comparePages?.length ? content.comparePages : FALLBACK_COMPARE_PAGES
+	const legalPages = content.legalPages ?? []
+
 	return (
 		<nav className="fixed top-[14px] left-0 right-0 z-80 px-5 bg-transparent pointer-events-none">
 			<div className="nav-pill pointer-events-auto">
@@ -397,11 +434,11 @@ export default function SiteNav({ content }: { content: SiteChromeContent }) {
 
 				{/* Center: nav items */}
 				<div className="flex items-center gap-5">
-					<ProductMenu integrations={content.integrations} />
-					<SolutionsMenu useCases={content.useCases} solutionPages={content.solutionPages} />
-					<IntegrationsMenu integrations={content.integrations} />
-					<CompareMenu comparePages={content.comparePages} />
-					<LegalMenu legalPages={content.legalPages} />
+					<ProductMenu integrations={integrations} />
+					<SolutionsMenu useCases={useCases} solutionPages={solutionPages} />
+					<IntegrationsMenu integrations={integrations} />
+					<CompareMenu comparePages={comparePages} />
+					<LegalMenu legalPages={legalPages} />
 					<a
 						href="/blog"
 						className="text-[13px] tracking-[0.01em] text-ink-2 no-underline transition-colors duration-150 hover:text-ink"

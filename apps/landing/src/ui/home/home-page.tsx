@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import Hero from './hero'
+import BrandStrip from './brand-strip'
 import type { SanityScenario } from './pax-live'
 
 const HeroShader = dynamic(() => import('./hero-shader'), { ssr: false })
@@ -28,15 +29,13 @@ export default function HomePage({ liveDemoScenarios }: { liveDemoScenarios?: Sa
 			<div className="relative">
 				<div
 					className="relative overflow-hidden"
-					style={{
-						background:
-							'linear-gradient(180deg, var(--bg) 0%, var(--bg-1) 62%, var(--bg) 100%)',
-					}}
+					style={{ background: '#0f0f12' }}
 					data-nav-theme="light"
 				>
 					<HeroShader isHovered={false} />
 					<Hero />
 				</div>
+				<BrandStrip />
 				<div data-nav-theme="light">
 					<ContextLost />
 					<Flow />

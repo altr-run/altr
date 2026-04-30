@@ -73,16 +73,16 @@ export default function Hero() {
 
 	return (
 		<section
-			className="px-8 pb-0 flex flex-col relative overflow-hidden bg-transparent text-ink border-b border-[color-mix(in_oklab,var(--line)_78%,transparent)]"
-			style={{ minHeight: '156svh' }}
+			className="px-8 pb-0 flex flex-col relative overflow-hidden bg-transparent text-white border-b border-white/[8%]"
+			style={{ minHeight: '130svh' }}
 		>
 			{/* hero text wrap */}
-			<div className="w-full mx-auto text-center flex flex-col items-center gap-7 relative z-[1] flex-1 pt-[280px] pb-12" style={{ maxWidth: 'var(--maxw)' }}>
+			<div className="w-full mx-auto text-center flex flex-col items-center gap-5 relative z-[1] flex-1 pt-[240px] pb-10" style={{ maxWidth: 'var(--maxw)' }}>
 				{/* announcement pill */}
-				<div className="inline-flex items-center gap-2.5 border border-line rounded-full px-3 py-1.5 shadow-sm" style={{ background: 'color-mix(in oklab, var(--panel) 92%, white)' }}>
+				<div className="inline-flex items-center gap-2 border border-white/15 rounded-full px-3 py-1" style={{ background: 'rgba(255,255,255,0.06)' }}>
 					<span className="w-1.5 h-1.5 rounded-full bg-acc flex-shrink-0 animate-[pulse-dot_1.6s_ease-in-out_infinite]" />
 					<span className="badge badge-acc">Early Access</span>
-					<span className="font-mono text-[11px] tracking-widest uppercase text-ink-3">
+					<span className="font-mono text-[10.5px] tracking-widest uppercase text-white/45">
 						Orchestrate any agent · thread to merged PR
 					</span>
 				</div>
@@ -90,7 +90,7 @@ export default function Hero() {
 				<h1
 					className="font-serif text-center"
 					style={{
-						fontSize: 'clamp(44px, 5.5vw, 80px)',
+						fontSize: 'clamp(36px, 4.2vw, 64px)',
 						lineHeight: 1.06,
 						textWrap: 'balance',
 					}}
@@ -103,10 +103,13 @@ export default function Hero() {
 							<AnimatePresence mode="wait" initial={false}>
 								<motion.span
 									key={word}
-									className="text-acc inline-block"
+									className="inline-block rounded-[6px] px-3 py-0.5"
 									style={{
 										display: 'inline-block',
 										clipPath: 'inset(0 100% 0 0)',
+										background: 'rgba(62,99,221,0.25)',
+										border: '1px solid rgba(62,99,221,0.35)',
+										color: '#ffffff',
 									}}
 									animate={{
 										clipPath: 'inset(0 0% 0 0)',
@@ -134,7 +137,7 @@ export default function Hero() {
 					</span>
 				</h1>
 
-				<p className="font-sans leading-[1.62] text-ink-2 max-w-[56ch] mx-auto" style={{ fontSize: 'clamp(18px, 1.4vw, 22px)' }}>
+				<p className="font-sans leading-[1.62] text-white/65 max-w-[52ch] mx-auto" style={{ fontSize: 'clamp(15px, 1.1vw, 18px)' }}>
 					Run Claude Code, Codex, and your whole agent fleet from one
 					execution surface. Context from every Slack thread, Linear ticket,
 					and call — injected via MCP before a session starts, attached to
@@ -163,16 +166,16 @@ export default function Hero() {
 							].map((a) => (
 								<div
 									key={a.initials}
-									className="w-7 h-7 rounded-full border-2 border-bg flex items-center justify-center font-sans font-semibold text-[9.5px] tracking-tight flex-shrink-0"
+									className="w-7 h-7 rounded-full border-2 border-[#0f0f12] flex items-center justify-center font-sans font-semibold text-[9.5px] tracking-tight flex-shrink-0"
 									style={{ background: a.bg, color: a.color }}
 								>
 									{a.initials}
 								</div>
 							))}
 						</div>
-						<div className="flex items-center gap-2 font-mono text-[10.5px] tracking-[0.06em] text-ink-3">
+						<div className="flex items-center gap-2 font-mono text-[10.5px] tracking-[0.06em] text-white/40">
 							<span className="w-1.5 h-1.5 rounded-full bg-acc animate-[pulse-dot_1.6s_ease-in-out_infinite] flex-shrink-0" />
-							<span>10 teams on limited pilot · <em className="not-italic text-ink-2">invite-only</em></span>
+							<span>10 teams on limited pilot · <em className="not-italic text-white/60">invite-only</em></span>
 						</div>
 					</div>
 				</div>
@@ -195,7 +198,7 @@ export default function Hero() {
 									duration={900 + i * 120}
 								/>
 							</span>
-							<span className="font-mono text-[11px] text-ink-4 tracking-widest uppercase">{label}</span>
+							<span className="font-mono text-[11px] text-white/30 tracking-widest uppercase">{label}</span>
 						</motion.div>
 					))}
 				</div>

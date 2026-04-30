@@ -216,26 +216,17 @@ export default function ContextLost() {
 		>
 			<div className="inner">
 				{/* Headline */}
-				<Reveal className="grid grid-cols-12 gap-12 lg:gap-24 items-end mb-24">
-					<div className="col-span-12 lg:col-span-7">
-						<p
-							className="over mb-5"
-						>
-							the problem
-						</p>
-						<h2 className="heading-2">
-							Context dies at <em>every handoff.</em>
-							<br />
-							<em className="italic text-acc">Knowledge erodes across every sprint.</em>
-						</h2>
-					</div>
-					<div className="col-span-12 lg:col-span-5">
-						<p className="lede">
-							Work sprawl destroys the context your team needs to ship. And when
-							everyone uses AI agents, nobody owns the knowledge — decisions
-							evaporate between sessions.
-						</p>
-					</div>
+				<Reveal className="flex flex-col gap-5 mb-20 max-w-[760px]">
+					<p className="over">the problem</p>
+					<h2 className="heading-2" style={{ fontSize: 'clamp(34px, 3.8vw, 58px)', textWrap: 'wrap' }}>
+						<span className="block">Context dies at <em>every handoff.</em></span>
+						<span className="block"><em className="italic text-acc">Knowledge erodes across every sprint.</em></span>
+					</h2>
+					<p className="font-sans text-[14px] leading-[1.65] text-ink-3 m-0 max-w-[52ch]">
+						Work sprawl destroys the context your team needs to ship. And when
+						everyone uses AI agents, nobody owns the knowledge — decisions
+						evaporate between sessions.
+					</p>
 				</Reveal>
 
 				{/* Pain cards */}

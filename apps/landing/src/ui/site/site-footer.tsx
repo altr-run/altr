@@ -10,8 +10,46 @@ const NAV_LINK =
 const NAV_LINK_ACCENT =
 	'block font-mono text-[11px] text-acc py-[4px] no-underline hover:opacity-80 transition-opacity leading-snug mt-1'
 
+const FALLBACK_USE_CASES = [
+	{ title: 'Feature delivery', slug: 'feature-delivery' },
+	{ title: 'Bug triage', slug: 'bug-triage' },
+	{ title: 'PR review', slug: 'pr-review' },
+	{ title: 'Migrations', slug: 'migrations' },
+	{ title: 'Incident follow-up', slug: 'incident-follow-up' },
+]
+
+const FALLBACK_COMPARE = [
+	{ competitor: 'Cursor', slug: 'altr-vs-cursor' },
+	{ competitor: 'Devin', slug: 'altr-vs-devin' },
+	{ competitor: 'Linear', slug: 'altr-vs-linear' },
+	{ competitor: 'ClickUp AI', slug: 'altr-vs-clickup-codegen' },
+]
+
+const FALLBACK_INTEGRATIONS = [
+	{ tool: 'Slack', slug: 'slack' },
+	{ tool: 'GitHub', slug: 'github' },
+	{ tool: 'Linear', slug: 'linear' },
+	{ tool: 'Notion', slug: 'notion' },
+]
+
+const FALLBACK_SOLUTIONS = [
+	{ title: 'Engineering managers', slug: 'solutions/engineering-managers' },
+	{ title: 'Engineering teams', slug: 'solutions/engineering-teams' },
+	{ title: 'Product managers', slug: 'solutions/product-managers' },
+]
+
+const FALLBACK_LEGAL = [
+	{ title: 'Privacy policy', slug: 'privacy' },
+	{ title: 'Terms of service', slug: 'terms' },
+	{ title: 'Security', slug: 'security-overview' },
+]
+
 export default function SiteFooter({ content }: { content: SiteChromeContent }) {
-	const { useCases, solutionPages, comparePages, integrations, legalPages } = content
+	const useCases = content.useCases?.length ? content.useCases : FALLBACK_USE_CASES
+	const comparePages = content.comparePages?.length ? content.comparePages : FALLBACK_COMPARE
+	const integrations = content.integrations?.length ? content.integrations : FALLBACK_INTEGRATIONS
+	const solutionPages = content.solutionPages?.length ? content.solutionPages : FALLBACK_SOLUTIONS
+	const legalPages = content.legalPages?.length ? content.legalPages : FALLBACK_LEGAL
 
 	return (
 		<footer className="bg-zinc-950">
